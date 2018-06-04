@@ -70,10 +70,10 @@ class NewsController extends AbstractController
         $news->setTypeNews($params['type_news']);
         $news->setCreatedAt();
 
-        dump($params);
-        return new Response('<html><body>ttt</body></html>');
-
-        die;
+//        dump($params);
+//        return new Response('<html><body>ttt</body></html>');
+//
+//        die;
 
 
 //        $em->remove($news);
