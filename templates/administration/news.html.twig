@@ -26,6 +26,13 @@
                     <td></td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.title }}</td>
+                    <td>{{ item.url }}</td>
+                    <td>{{ item.createdAt|date('Y-m-d') }}</td>
+                    <td>{{ item.typeNews }}</td>
+                    <td>{{ item.company }}</td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="{{ path('news_delete', {'id': item.id}) }}">Удалить</a></td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -36,5 +43,40 @@
     </div>
 
 </div>
+
+    <div class="wrapper">
+        <div class="main_menu"></div>
+        <div class="content">
+            <form action="{{ path('news_create') }}" method="post">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>название <input name="name" type="text"></td>
+                            <td>компания <input name="company" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>тип новости <input name="type_news" type="text"></td>
+                            <td>дата <input name="created_at" type="text"></td>
+                            <td>показывать <input name="display" type="checkbox"></td>
+                            <td>показывать на главной <input name="display_on_main" type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>текст <textarea></textarea></td>
+                        </tr>
+                    <tr>
+                        <td><input value="Сохранить" type="submit"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+
+
+{% block javascripts %}
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
+{% endblock %}
 
 {% endblock auth_user_content %}

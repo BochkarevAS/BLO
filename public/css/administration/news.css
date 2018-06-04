@@ -1,0 +1,41 @@
+#tbl {
+    width: 100%;
+    border: 1px double black;
+    border-collapse: collapse;
+}
+#tbl th {
+    text-align: left;
+    background: #ccc;
+    padding: 5px;
+    border: 1px solid black;
+}
+#tbl td {
+    padding: 5px;
+    border: 1px solid black;
+}
+#idl {
+    color: red;
+}
+
+/*---------------------------*/
+
+.wrapper {
+    width: 1000px;
+    margin: 0 auto;
+    border: 1px solid #8e8e8e;
+    padding-bottom: 30px;
+}
+.main_menu {
+    background: #6682B2;
+
+}
+.main_menu a {
+    color: #FFF;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 6px 8px;
+}
+.main_menu a:hover {
+    color: #cb8748;
+}

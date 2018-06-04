@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a63d8b6cd12e5ecc2f3651348c5e11b8",
+    "content-hash": "32a1864fc2e94372cbf50d7d465d133b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -5127,16 +5127,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "e4a54fa90a5cd8e8dd3fb4099942681731c5cdd3"
+                "reference": "35b8caf75e791ba1b2d24fec1552168d72692b12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e4a54fa90a5cd8e8dd3fb4099942681731c5cdd3",
-                "reference": "e4a54fa90a5cd8e8dd3fb4099942681731c5cdd3",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/35b8caf75e791ba1b2d24fec1552168d72692b12",
+                "reference": "35b8caf75e791ba1b2d24fec1552168d72692b12",
                 "shasum": ""
             },
             "require": {
@@ -5174,7 +5174,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-03-25T17:35:16+00:00"
+            "time": "2018-06-03T11:33:10+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -5350,36 +5350,6 @@
             "description": "Symfony DebugBundle",
             "homepage": "https://symfony.com",
             "time": "2018-05-04T00:01:20+00:00"
-        },
-        {
-            "name": "symfony/debug-pack",
-            "version": "v1.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/debug-pack.git",
-                "reference": "ae4b15596788f9592f67f8615398671bf3f796e4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug-pack/zipball/ae4b15596788f9592f67f8615398671bf3f796e4",
-                "reference": "ae4b15596788f9592f67f8615398671bf3f796e4",
-                "shasum": ""
-            },
-            "require": {
-                "easycorp/easy-log-handler": "^1.0.2",
-                "php": "^7.0",
-                "symfony/debug-bundle": "^3.3|^4.0",
-                "symfony/monolog-bundle": "^3.0",
-                "symfony/profiler-pack": "^1.0",
-                "symfony/var-dumper": "^3.3|^4.0"
-            },
-            "type": "symfony-pack",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A debug pack for Symfony projects",
-            "time": "2018-03-29T13:53:44+00:00"
         },
         {
             "name": "symfony/dom-crawler",
