@@ -3,6 +3,7 @@
 namespace App\Entity\Administration;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -34,6 +35,7 @@ class News
     private $title;
 
     /**
+     * @Gedmo\Slug(fields={"title"}, unique=false)
      * @ORM\Column(type="string")
      */
     private $url;
@@ -108,19 +110,14 @@ class News
         return $this->url;
     }
 
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt()
+    public function setCreatedAt($createdAt)
     {
-        $this->createdAt = new \DateTime('now');
+        $this->createdAt = $createdAt;
     }
 
     public function getTypeNews()

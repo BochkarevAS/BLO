@@ -1,0 +1,51 @@
+textarea {
+    width: 100%;
+    resize: none;
+}
+
+.content {
+    text-align: center;
+}
+
+/*BUTTON*/
+
+button {
+    padding: 5px 15px;
+    margin: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+/*END BUTTON*/
+
+/*POPUP*/
+
+.overlay_popup {
+    display:none;
+    /*position:fixed*/
+    /*z-index: 999;*/
+    /*top:0;*/
+    /*right:0;*/
+    /*left:0;*/
+    /*bottom:0;*/
+    background:#000;;
+    /*opacity:0.5;*/
+}
+
+.popup {
+    display: none;
+    position: relative;
+    z-index: 1000;
+    margin: 0 25% 0 25%;
+    width: 50%;
+}
+
+/*END POPUP*/
+
+.object{
+    width: 700px;
+    height: 700px;
+    text-align: center;
+    background-color: #eee;
+    padding: 50px 70px;
+}

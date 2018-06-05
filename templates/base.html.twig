@@ -5,6 +5,7 @@
         <title>{% block title %}BIMBILO{% endblock %}</title>
         {% block stylesheets %}
             <link href="{{ asset('css/administration/news.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/popup.css') }}" rel="stylesheet" />
         {% endblock %}
     </head>
     <body>
@@ -12,6 +13,8 @@
 
         {% block body %}{% endblock %}
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        {% endblock %}
     </body>
 </html>

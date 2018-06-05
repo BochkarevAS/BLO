@@ -1,21 +1,49 @@
-#tbl {
-    width: 100%;
-    border: 1px double black;
+table {
+    width: 1000px; /* Ширина таблицы */
+    border: 1px solid green; /* Рамка вокруг таблицы */
+    margin: auto; /* Выравниваем таблицу по центру окна  */
     border-collapse: collapse;
 }
-#tbl th {
-    text-align: left;
+th {
+    text-align: center;
     background: #ccc;
     padding: 5px;
     border: 1px solid black;
 }
-#tbl td {
-    padding: 5px;
+td {
+    text-align: center; /* Выравниваем текст по центру ячейки */
     border: 1px solid black;
 }
-#idl {
-    color: red;
+
+/* pagination */
+
+.pagination {
+    text-align: center;
+    padding: 30px;
 }
+
+.pagination ul {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {display: inline;}
+
+.pagination ul li .active a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination ul li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pagination ul li a:hover:not(.active) {background-color: #ddd;}
 
 /*---------------------------*/
 

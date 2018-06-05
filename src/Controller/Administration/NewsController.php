@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controller\Administration;
+
 use App\Entity\Administration\News;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,13 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NewsController extends AbstractController
 {
-
     /**
      * @Route("/", name="news_render")
      */
     public function renderNews(Request $request, PaginatorInterface $paginator)
     {
-        $newsAll = $this->getDoctrine()->getRepository(News::class)->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $newsAll = $em->getRepository(News::class)->createQueryBuilder('news')->getQuery();
 
         $news = $paginator->paginate(
             $newsAll,
@@ -29,6 +31,19 @@ class NewsController extends AbstractController
         return $this->render('administration/news.html.twig', [
             'news' => $news
         ]);
+    }
+
+    /**
+     * @Route("/edit", name="news_edit")
+     */
+    public function editNews(Request $request)
+    {
+        $params = $request->request->all();
+
+
+
+
+        return $this->redirectToRoute('news_render');
     }
 
     /**
@@ -54,30 +69,22 @@ class NewsController extends AbstractController
      */
     public function createNews(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $params = $request->request->all();
 
         $news = new News();
         $news->setName($params['name']);
-        $news->setImg($params['img']);
-        $news->setUrl($params['url']);
-        $news->setTitle($params['title']);
+        $news->setImg('img');
+        $news->setTitle($params['name']);
         $news->setCompany($params['company']);
-        $news->setUid($params['uid']);
-        $news->setDisplay($params['display']);
-        $news->setDisplayOnMain($params['display_on_main']);
+        $news->setUid(1);
+        $news->setDisplay(1);
+        $news->setDisplayOnMain(1);
         $news->setTypeNews($params['type_news']);
-        $news->setCreatedAt();
+        $news->setCreatedAt($params['created_at']);
 
-//        dump($params);
-//        return new Response('<html><body>ttt</body></html>');
-//
-//        die;
-
-
-//        $em->remove($news);
-//        $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
 
         return $this->redirectToRoute('news_render');
     }

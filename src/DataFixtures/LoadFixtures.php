@@ -23,14 +23,13 @@ class LoadFixtures extends Fixture
             $news = new News();
             $news->setName($this->faker->creditCardType());
             $news->setImg($this->faker->imageUrl($width = 640, $height = 480));
-            $news->setUrl($this->faker->url());
-            $news->setTitle($this->faker->realText($maxNbChars = 200, $indexSize = 2));
+            $news->setTitle($this->faker->text($maxNbChars = 50));
             $news->setCompany($this->faker->creditCardType());
             $news->setUid($this->faker->numberBetween(1, 100));
             $news->setDisplay($this->faker->numberBetween(1, 2));
             $news->setDisplayOnMain($this->faker->numberBetween(1, 2));
             $news->setTypeNews($this->faker->numberBetween(1, 10));
-            $news->setCreatedAt();
+            $news->setCreatedAt($this->faker->date);
             $this->setReference('news_' . $i, $news);
             $manager->persist($news);
         }
