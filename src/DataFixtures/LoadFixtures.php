@@ -19,7 +19,7 @@ class LoadFixtures extends Fixture
 
     private function addNews($manager)
     {
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             $news = new News();
             $news->setName($this->faker->creditCardType());
             $news->setImg($this->faker->imageUrl($width = 640, $height = 480));
@@ -29,7 +29,7 @@ class LoadFixtures extends Fixture
             $news->setDisplay($this->faker->numberBetween(1, 2));
             $news->setDisplayOnMain($this->faker->numberBetween(1, 2));
             $news->setTypeNews($this->faker->numberBetween(1, 10));
-            $news->setCreatedAt($this->faker->date);
+            $news->setCreatedAt(new \DateTime());
             $this->setReference('news_' . $i, $news);
             $manager->persist($news);
         }

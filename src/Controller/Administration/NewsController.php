@@ -33,6 +33,28 @@ class NewsController extends AbstractController
         ]);
     }
 
+    /*
+     * @Route("/display/{id}", name="new_display", options={"expose"=true})
+     */
+    public function display($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $news = $em->getRepository(News::class)->find($id);
+
+        if (!$news) {
+            throw $this->createNotFoundException('No news found for id ' . $id);
+        }
+
+        $display = $news->getDisplay();
+        $display = ($display == 'no') ? 'yes' : 'no';
+
+        $news->setDisplay($display);
+
+        $em->flush();
+
+        return new Response(null, 204);
+    }
+
     /**
      * @Route("/edit", name="news_edit")
      */
@@ -40,8 +62,24 @@ class NewsController extends AbstractController
     {
         $params = $request->request->all();
 
+        $em = $this->getDoctrine()->getManager();
+        $news = $em->getRepository(News::class)->find($params['id']);
 
+        if (!$news) {
+            throw $this->createNotFoundException('No news found for id ' . $params['id']);
+        }
 
+        $news->setName($params['name']);
+        $news->setImg(1);
+        $news->setTitle($params['title']);
+        $news->setCompany($params['company']);
+        $news->setUid($params['uid']);
+        $news->setDisplay($params['display']);
+        $news->setDisplayOnMain($params['display_on_main']);
+        $news->setTypeNews($params['type_news']);
+//        $news->setCreatedAt($params['created_at']);
+
+        $em->flush();
 
         return $this->redirectToRoute('news_render');
     }
