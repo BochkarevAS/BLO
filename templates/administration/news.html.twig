@@ -11,7 +11,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Edit</th>
+                    <th></th>
                     <th>{{ knp_pagination_sortable(news, 'Id', 'news.id', {'direction': 'desc'}) }}</th>
                     <th>&nbsp</th>
                     <th>{{ knp_pagination_sortable(news, 'название', 'news.name') }}</th>
@@ -28,22 +28,12 @@
             <tbody>
                 {% for item in news %}
                     <tr>
-                        {# Блок редактирования #}
                         <td>
-                            <a href="#" class="btn">
+                            <a class="btn" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
                                 <span class="fa fa-edit"></span>
                             </a>
-                            {#<div class="content">#}
-                                {#<button class="show_popup" rel="popup_{{ item.id }}">Редактировать</button>#}
-                            {#</div>#}
-
-                            {#<div class="popup" id="popup_{{ item.id }}">#}
-                                {#<div class="object">#}
-                                    {#{{ include('/administration/news_form.html.twig') }}#}
-                                {#</div>#}
-                            {#</div>#}
+                            {{ include('/administration/news_form.html.twig') }}
                         </td>
-                        {# ---------------------- #}
                         <td>{{ item.id }}</td>
                         <td></td>
                         <td>{{ item.name }}</td>
@@ -72,16 +62,15 @@
 
     <script src="{{ asset('build/app.js') }}"></script>
 
-    {#<script>#}
-        {#$('.show_popup').click(function() {#}
-            {#var popup_id = $('#' + $(this).attr("rel"));#}
-            {#$(popup_id).show();#}
-            {#$('.overlay_popup').show();#}
-        {#});#}
-        {#$('.overlay_popup').click(function() {#}
-            {#$('.overlay_popup, .popup').hide();#}
-        {#})#}
-    {#</script>#}
+    <script>
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Кнопка, что спровоцировало модальное окно
+            var recipient = button.data('whatever'); // Извлечение информации из данных-* атрибутов
+            var modal = $(this);
+            modal.find('.modal-title').text('New message to ' + recipient);
+            modal.find('.modal-body input').val(recipient)
+        })
+    </script>
 
 {% endblock %}
 
