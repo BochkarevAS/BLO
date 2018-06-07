@@ -1,0 +1,69 @@
+{% extends 'layout.html.twig' %}
+
+{% block auth_user_content %}
+
+    <div class="container js-news-categories-module">
+
+    <div class="navigator">
+        {{ knp_pagination_render(categories) }}
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Edit</th>
+            <th>{{ knp_pagination_sortable(categories, 'Id', 'categories.id', {'direction': 'desc'}) }}</th>
+            <th>{{ knp_pagination_sortable(categories, 'название', 'categories.name') }}</th>
+            <th>{{ knp_pagination_sortable(categories, 'рейтинг', 'categories.rating') }}</th>
+            <th>&nbsp</th>
+            <th>&nbsp</th>
+            <th>&nbsp</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in categories %}
+            <tr>
+                {# Блок редактирования #}
+                <td>
+                    {#<div class="content">#}
+                        {#<button class="show_popup" rel="popup_{{ item.id }}">Редактировать</button>#}
+                    {#</div>#}
+
+                    <a href="#" class="btn">
+                        <span class="fa fa-edit">
+                            {#{{ include('/administration/news_form.html.twig') }}#}
+                        </span>
+                    </a>
+
+                    {#<div class="popup" id="popup_{{ item.id }}">#}
+                    {#<div class="object">#}
+                    {#{{ include('/administration/news_form.html.twig') }}#}
+                    {#</div>#}
+                    {#</div>#}
+                </td>
+                {# ---------------------- #}
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.rating }}</td>
+                <td><a href="#">Показать на главной</a></td>
+                <td><a href="#" class="js-news-categories-display" data-id="{{ item.id }}">Показать</a></td>
+                <td><a href="{{ path('news_categories_delete', {'id': item.id}) }}"><span class="fa fa-trash"></span></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigator">
+        {{ knp_pagination_render(categories) }}
+    </div>
+
+    <div>
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('build/app.js') }}"></script>
+
+    {% endblock %}
+
+{% endblock auth_user_content %}

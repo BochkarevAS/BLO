@@ -11,7 +11,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class News
 {
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -56,17 +55,17 @@ class News
     private $company;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
     private $display;
 
     /**
-     * @ORM\Column(type="string", name="display_on_main")
+     * @ORM\Column(type="integer", name="display_on_main")
      */
     private $displayOnMain;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
     private $uid;
 

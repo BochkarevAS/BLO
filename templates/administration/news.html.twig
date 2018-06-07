@@ -2,17 +2,13 @@
 
 {% block auth_user_content %}
 
-<div>
-
-    {#<a href="{{ path('news_add') }}">Добавить новсти</a>#}
-
-    <div class="navigator">
-        {{ knp_pagination_render(news) }}
-    </div>
-
     <div class="container js-news-module">
 
-        <table class="tbl">
+        <div class="navigator">
+            {{ knp_pagination_render(news) }}
+        </div>
+
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Edit</th>
@@ -34,15 +30,18 @@
                     <tr>
                         {# Блок редактирования #}
                         <td>
-                            <div class="content">
-                                <button class="show_popup" rel="popup_{{ item.id }}">Редактировать</button>
-                            </div>
+                            <a href="#" class="btn">
+                                <span class="fa fa-edit"></span>
+                            </a>
+                            {#<div class="content">#}
+                                {#<button class="show_popup" rel="popup_{{ item.id }}">Редактировать</button>#}
+                            {#</div>#}
 
-                            <div class="popup" id="popup_{{ item.id }}">
-                                <div class="object">
-                                    {{ include('/administration/news_form.html.twig') }}
-                                </div>
-                            </div>
+                            {#<div class="popup" id="popup_{{ item.id }}">#}
+                                {#<div class="object">#}
+                                    {#{{ include('/administration/news_form.html.twig') }}#}
+                                {#</div>#}
+                            {#</div>#}
                         </td>
                         {# ---------------------- #}
                         <td>{{ item.id }}</td>
@@ -53,21 +52,19 @@
                         <td>{{ item.createdAt|date('Y-m-d') }}</td>
                         <td>{{ item.typeNews }}</td>
                         <td>{{ item.company }}</td>
-                        <td><a href="{{ path('news_delete', {'id': item.id}) }}">Показать на главной</a></td>
-                        <td><a href="#" class="js-news-display" data-id="{{ item.id }}"><span class="fa fa-trash"></span></a></td>
-                        <td><a href="{{ path('news_delete', {'id': item.id}) }}">Удалить</a></td>
+                        <td><a href="#">Показать на главной</a></td>
+                        <td><a href="#" class="js-news-display" data-id="{{ item.id }}">Показать</a></td>
+                        <td><a href="{{ path('news_delete', {'id': item.id}) }}"><span class="fa fa-trash"></span></a></td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
 
+        <div class="navigator">
+            {{ knp_pagination_render(news) }}
+        </div>
+
     <div>
-
-    <div class="navigator">
-        {{ knp_pagination_render(news) }}
-    </div>
-
-</div>
 
 {% block javascripts %}
     {{ parent() }}
@@ -85,6 +82,7 @@
             {#$('.overlay_popup, .popup').hide();#}
         {#})#}
     {#</script>#}
+
 {% endblock %}
 
 {% endblock auth_user_content %}

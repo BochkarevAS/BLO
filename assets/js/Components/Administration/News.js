@@ -17,33 +17,21 @@ class News {
         e.preventDefault();
 
         let $link = $(e.currentTarget);
-        let displayUrl = $link.data('url');
         let id = $link.data('id');
 
-        $link.addClass('text-danger');
-        $link.find('.fa').removeClass('fa-trash').addClass('fa-spinner').addClass('fa-spin');
-
-
-        console.log(Routing);
+        // $link.addClass('text-danger');
+        // $link.find('.fa').removeClass('fa-trash').addClass('fa-spinner').addClass('fa-spin');
 
         $.ajax({
             url: Routing.generate('news_display', {id: id}),
-            // url: displayUrl,
             method: 'POST'
         }).then(() => {
 
-            console.log(111);
+            console.log(new Date().getTime());
             // $row.fadeOut('normal', () => {
             //
             // });
         });
-
-        // console.log(displayUrl);
-
-        // $.ajax({
-        //
-        // });
-
     }
 }
 

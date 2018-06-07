@@ -25,7 +25,7 @@ class NewsController extends AbstractController
         $news = $paginator->paginate(
             $newsAll,
             $request->query->getInt('page', 1),
-            5
+            15
         );
 
         return $this->render('administration/news.html.twig', [
@@ -33,8 +33,8 @@ class NewsController extends AbstractController
         ]);
     }
 
-    /*
-     * @Route("/display/{id}", name="new_display", options={"expose"=true})
+    /**
+     * @Route("/display/{id}", name="news_display", options={"expose"=true})
      */
     public function display($id)
     {
@@ -46,10 +46,9 @@ class NewsController extends AbstractController
         }
 
         $display = $news->getDisplay();
-        $display = ($display == 'no') ? 'yes' : 'no';
+        $display = ($display) ? 1 : 0;
 
         $news->setDisplay($display);
-
         $em->flush();
 
         return new Response(null, 204);
