@@ -8,7 +8,11 @@ class News {
     constructor($wrapper) {
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on('click', '.js-news-display',
+        // this.$wrapper.on('click', '.js-news-display',
+        //     this.display.bind(this)
+        // );
+
+        this.$wrapper.on('submit', '.js-news-display',
             this.display.bind(this)
         );
     }
@@ -19,19 +23,21 @@ class News {
         let $link = $(e.currentTarget);
         let id = $link.data('id');
 
+        console.log(new Date().getTime());
+
         // $link.addClass('text-danger');
         // $link.find('.fa').removeClass('fa-trash').addClass('fa-spinner').addClass('fa-spin');
-
-        $.ajax({
-            url: Routing.generate('news_display', {id: id}),
-            method: 'POST'
-        }).then(() => {
-
-            console.log(new Date().getTime());
-            // $row.fadeOut('normal', () => {
-            //
-            // });
-        });
+        //
+        // $.ajax({
+        //     url: Routing.generate('news_display', {id: id}),
+        //     method: 'POST'
+        // }).then(() => {
+        //
+        //     console.log(new Date().getTime());
+        //     // $row.fadeOut('normal', () => {
+        //     //
+        //     // });
+        // });
     }
 }
 

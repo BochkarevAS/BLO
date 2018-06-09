@@ -9,13 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/news")
- */
 class NewsController extends AbstractController
 {
     /**
-     * @Route("/", name="news_render")
+     * @Route("/news", name="news_render")
      */
     public function renderNews(Request $request, PaginatorInterface $paginator)
     {
@@ -34,7 +31,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("/display/{id}", name="news_display", options={"expose"=true})
+     * @Route("/news/display/{id}", name="news_display", options={"expose"=true})
      */
     public function display($id)
     {
@@ -55,7 +52,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("/edit", name="news_edit")
+     * @Route("/news/edit", name="news_edit")
      */
     public function editNews(Request $request)
     {
@@ -84,7 +81,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="news_delete")
+     * @Route("/news/delete/{id}", name="news_delete")
      */
     public function deleteNews($id)
     {
@@ -102,7 +99,7 @@ class NewsController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="news_create")
+     * @Route("/news/create", name="news_create")
      */
     public function createNews(Request $request)
     {

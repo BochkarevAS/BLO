@@ -6,7 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="price")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="price", schema="client")
  */
 class Price
 {
@@ -22,6 +23,34 @@ class Price
      */
     private $price;
 
+    /**
+     * @ORM\Column(type="integer", name="id_company")
+     */
+    private $idCompany;
+
+    /**
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     */
+    private $createdAt;
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     *  @ORM\PrePersist
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime('now');
+    }
+
+    public function setIdCompany($idCompany)
+    {
+        $this->idCompany = $idCompany;
+    }
+
     public function getPrice()
     {
         return $this->price;
@@ -31,5 +60,4 @@ class Price
     {
         $this->price = $price;
     }
-
 }

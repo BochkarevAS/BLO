@@ -7,7 +7,6 @@ use App\Form\Client\PriceType;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PriceController extends AbstractController
@@ -27,7 +26,7 @@ class PriceController extends AbstractController
     /**
      * @Route("/price/load", name="price_load")
      */
-    public function priceLoad(Request $request/*, FileUploader $fileUploader*/)
+    public function priceLoad(Request $request, FileUploader $fileUploader)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -36,36 +35,20 @@ class PriceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $price->getPrice()[0];
+            $files = $price->getPrice();
 
+            foreach ($files as $file) {
+                $fileName = $fileUploader->upload($file);
+                $price->setPrice($fileName);
+                $price->setIdCompany(1);
+                $em->persist($price);
+            }
 
-
-
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
-
-
-//           dump($fileName);
-//           return new Response('<html><body>rrr</body></html>');
-//           die;
-
-            $file->move(
-                $this->getParameter('prices_directory'),
-                $fileName
-            );
-
-            $price->setPrice($fileName);
-
-            $em->persist($price);
             $em->flush();
 
             return $this->redirect($this->generateUrl('price_render'));
         }
 
         return $this->render('client/price_load.html.twig');
-    }
-
-    private function generateUniqueFileName()
-    {
-        return md5(uniqid());
     }
 }

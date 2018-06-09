@@ -59,18 +59,7 @@
 {% block javascripts %}
     {{ parent() }}
 
-
     <script src="{{ asset('build/app.js') }}"></script>
-
-    <script>
-        $('#exampleModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Кнопка, что спровоцировало модальное окно
-            var recipient = button.data('whatever'); // Извлечение информации из данных-* атрибутов
-            var modal = $(this);
-            modal.find('.modal-title').text('New message to ' + recipient);
-            modal.find('.modal-body input').val(recipient)
-        })
-    </script>
 
 {% endblock %}
 

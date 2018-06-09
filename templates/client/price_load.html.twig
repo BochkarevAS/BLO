@@ -2,10 +2,6 @@
 
 {% block auth_user_content %}
 
-    {#{{ form_start(form) }}#}
-        {#{{ form_row(form.price) }}#}
-    {#{{ form_end(form) }}#}
-
     <form action="{{ path('price_load') }}" name="price" method="post" enctype="multipart/form-data">
         <div>
             <label for="price_price" class="required">Price</label>
