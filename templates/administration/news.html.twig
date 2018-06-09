@@ -56,11 +56,11 @@
 
     <div>
 
+{% endblock auth_user_content %}
+
 {% block javascripts %}
     {{ parent() }}
 
     <script src="{{ asset('build/app.js') }}"></script>
 
 {% endblock %}
-
-{% endblock auth_user_content %}
