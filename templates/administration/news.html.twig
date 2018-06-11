@@ -20,8 +20,8 @@
                     <th>{{ knp_pagination_sortable(news, 'дата', 'news.createdAt') }}</th>
                     <th>тип новости</th>
                     <th>компания</th>
-                    <th>&nbsp</th>
-                    <th>&nbsp</th>
+                    <th>показать на главной</th>
+                    <th>показать</th>
                     <th>&nbsp</th>
                 </tr>
             </thead>
@@ -42,8 +42,24 @@
                         <td>{{ item.createdAt|date('Y-m-d') }}</td>
                         <td>{{ item.typeNews }}</td>
                         <td>{{ item.company }}</td>
-                        <td><a href="#">Показать на главной</a></td>
-                        <td><a href="#" class="js-news-display" data-id="{{ item.id }}">Показать</a></td>
+                        <td>
+                            <a href="#" class="js-news-display-on-main" data-id="{{ item.id }}">
+                                {% if item.displayOnMain == 1 %}
+                                    <span class="fa fa-bell"></span>
+                                {% else %}
+                                    <span class="fa fa-bell-slash"></span>
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="js-news-display" data-id="{{ item.id }}">
+                                {% if item.display == 1 %}
+                                    <span class="fa fa-bell"></span>
+                                {% else %}
+                                    <span class="fa fa-bell-slash"></span>
+                                {% endif %}
+                            </a>
+                        </td>
                         <td><a href="{{ path('news_delete', {'id': item.id}) }}"><span class="fa fa-trash"></span></a></td>
                     </tr>
                 {% endfor %}

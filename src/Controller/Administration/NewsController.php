@@ -43,9 +43,30 @@ class NewsController extends AbstractController
         }
 
         $display = $news->getDisplay();
-        $display = ($display) ? 1 : 0;
+        $display = ($display) ? 0 : 1;
 
         $news->setDisplay($display);
+        $em->flush();
+
+        return new Response(null, 204);
+    }
+
+    /**
+     * @Route("/news/display_on_main/{id}", name="news_display_on_main", options={"expose"=true})
+     */
+    public function displayOnMain($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $news = $em->getRepository(News::class)->find($id);
+
+        if (!$news) {
+            throw $this->createNotFoundException('No news found for id ' . $id);
+        }
+
+        $display = $news->getDisplayOnMain();
+        $display = ($display) ? 0 : 1;
+
+        $news->setDisplayOnMain($display);
         $em->flush();
 
         return new Response(null, 204);
