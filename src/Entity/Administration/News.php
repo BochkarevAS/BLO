@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="news", schema="admin")
  */
 class News
@@ -50,9 +51,9 @@ class News
     private $typeNews;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer", name="id_company")
      */
-    private $company;
+    private $idCompany;
 
     /**
      * @ORM\Column(type="integer")
@@ -68,6 +69,51 @@ class News
      * @ORM\Column(type="integer")
      */
     private $uid;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $massage;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $keywords;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $description;
+
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getMassage()
+    {
+        return $this->massage;
+    }
+
+    public function setMassage($massage)
+    {
+        $this->massage = $massage;
+    }
 
     public function getId()
     {
@@ -114,9 +160,12 @@ class News
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt)
+    /**
+     *  @ORM\PrePersist
+     */
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime('now');
     }
 
     public function getTypeNews()
@@ -129,14 +178,14 @@ class News
         $this->typeNews = $typeNews;
     }
 
-    public function getCompany()
+    public function getIdCompany()
     {
-        return $this->company;
+        return $this->idCompany;
     }
 
-    public function setCompany($company)
+    public function setIdCompany($idCompany)
     {
-        $this->company = $company;
+        $this->idCompany = $idCompany;
     }
 
     public function getDisplay()

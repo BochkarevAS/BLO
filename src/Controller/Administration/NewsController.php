@@ -3,6 +3,7 @@
 namespace App\Controller\Administration;
 
 use App\Entity\Administration\News;
+use App\Form\Administration\NewsType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,9 @@ class NewsController extends AbstractController
      */
     public function renderNews(Request $request, PaginatorInterface $paginator)
     {
+
+        $form = $this->createForm(NewsType::class);
+
         $em = $this->getDoctrine()->getManager();
         $newsAll = $em->getRepository(News::class)->createQueryBuilder('news')->getQuery();
 
@@ -26,7 +30,8 @@ class NewsController extends AbstractController
         );
 
         return $this->render('administration/news.html.twig', [
-            'news' => $news
+            'news' => $news,
+            'form' => $form->createView()
         ]);
     }
 
@@ -124,22 +129,23 @@ class NewsController extends AbstractController
      */
     public function createNews(Request $request)
     {
+
         $params = $request->request->all();
 
         $news = new News();
         $news->setName($params['name']);
         $news->setImg('img');
         $news->setTitle($params['name']);
-        $news->setCompany($params['company']);
+        $news->setIdCompany(1);
         $news->setUid(1);
         $news->setDisplay(1);
         $news->setDisplayOnMain(1);
         $news->setTypeNews($params['type_news']);
-        $news->setCreatedAt($params['created_at']);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($news);
         $em->flush();
+
 
         return $this->redirectToRoute('news_render');
     }

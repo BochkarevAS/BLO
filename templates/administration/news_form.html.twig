@@ -15,19 +15,15 @@
                         <input name="uid" type="hidden" value="{{ item.uid }}">
                         <div class="form-group">
                             <label for="name" class="form-control-label">название</label>
-                            <input name="name" type="text" class="form-control" id="name">
+                            <input name="name" value="{{ item.name }}" type="text" class="form-control" id="name">
                         </div>
                         <div class="form-group">
                             <label for="company" class="form-control-label">компания</label>
-                            <input name="company" type="text" class="form-control" id="company">
+                            <input name="company" type="text" value="{{ item.idCompany }}" class="form-control" id="company">
                         </div>
                         <div class="form-group">
                             <label for="type_news" class="form-control-label">тип новости</label>
-                            <input name="type_news" type="text" class="form-control" id="type_news">
-                        </div>
-                        <div class="form-group">
-                            <label for="created_at" class="form-control-label">дата</label>
-                            <input name="created_at" type="text" class="form-control" id="created_at">
+                            <input name="type_news" type="text" value="{{ item.typeNews }}" class="form-control" id="type_news">
                         </div>
                         <div class="form-group">
                             <div class="form-group">
