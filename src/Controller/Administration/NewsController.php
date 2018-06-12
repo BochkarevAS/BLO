@@ -17,7 +17,6 @@ class NewsController extends AbstractController
      */
     public function renderNews(Request $request, PaginatorInterface $paginator)
     {
-
         $form = $this->createForm(NewsType::class);
 
         $em = $this->getDoctrine()->getManager();
@@ -129,24 +128,20 @@ class NewsController extends AbstractController
      */
     public function createNews(Request $request)
     {
+        $form = $this->createForm(NewsType::class);
+        $form->handleRequest($request);
 
-        $params = $request->request->all();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $news = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
 
-        $news = new News();
-        $news->setName($params['name']);
-        $news->setImg('img');
-        $news->setTitle($params['name']);
-        $news->setIdCompany(1);
-        $news->setUid(1);
-        $news->setDisplay(1);
-        $news->setDisplayOnMain(1);
-        $news->setTypeNews($params['type_news']);
+            return $this->redirectToRoute('news_render');
+        }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($news);
-        $em->flush();
-
-
-        return $this->redirectToRoute('news_render');
+        return $this->render('administration/news.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

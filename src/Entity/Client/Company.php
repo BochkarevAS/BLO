@@ -2,6 +2,7 @@
 
 namespace App\Entity\Client;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +29,21 @@ class Company
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Administration\News", mappedBy="company")
+     */
+    private $news;
+
+    public function __construct()
+    {
+        $this->news = new ArrayCollection();
+    }
+
+    public function getNews()
+    {
+        return $this->news;
+    }
+
     public function getName()
     {
         return $this->name;
@@ -53,6 +69,6 @@ class Company
 
     public function __toString()
     {
-        return $this->getName();
+        return (string) $this->getName();
     }
 }

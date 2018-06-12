@@ -12,13 +12,14 @@ use Faker\Factory;
 class LoadFixtures extends Fixture
 {
     private $faker;
+    private $listCompanys = [];
 
     public function load(ObjectManager $manager)
     {
         $this->faker = Factory::create();
+        $this->addCompany($manager);
         $this->addNews($manager);
         $this->addNewsCategoeys($manager);
-        $this->addCompany($manager);
     }
 
     private function addNews($manager)
@@ -28,7 +29,7 @@ class LoadFixtures extends Fixture
             $news->setName($this->faker->creditCardType());
             $news->setImg($this->faker->imageUrl($width = 640, $height = 480));
             $news->setTitle($this->faker->text($maxNbChars = 20));
-            $news->setIdCompany($this->faker->numberBetween(1, 10));
+            $news->setIdCompany($this->listCompanys[array_rand($this->listCompanys)]);
             $news->setUid($this->faker->numberBetween(1, 100));
             $news->setDisplay($this->faker->numberBetween(0, 1));
             $news->setDisplayOnMain($this->faker->numberBetween(0, 1));
@@ -63,6 +64,7 @@ class LoadFixtures extends Fixture
             $company = new Company();
             $company->setName($this->faker->creditCardType());
             $this->setReference('company_' . $i, $company);
+            $this->listCompanys[] = $company;
 
             $manager->persist($company);
         }

@@ -30,12 +30,12 @@ class News
     private $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $title;
 
     /**
-     * @Gedmo\Slug(fields={"title"}, unique=false)
+     * @Gedmo\Slug(fields={"name"}, unique=false)
      * @ORM\Column(type="string")
      */
     private $url;
@@ -51,9 +51,10 @@ class News
     private $typeNews;
 
     /**
-     * @ORM\Column(type="integer", name="id_company")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company", inversedBy="news")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $idCompany;
+    private $company;
 
     /**
      * @ORM\Column(type="integer")
@@ -71,7 +72,7 @@ class News
     private $uid;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $massage;
 
@@ -180,12 +181,12 @@ class News
 
     public function getIdCompany()
     {
-        return $this->idCompany;
+        return $this->company;
     }
 
-    public function setIdCompany($idCompany)
+    public function setIdCompany($company)
     {
-        $this->idCompany = $idCompany;
+        $this->company = $company;
     }
 
     public function getDisplay()

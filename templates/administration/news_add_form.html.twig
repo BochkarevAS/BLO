@@ -8,46 +8,28 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    {{ form_start(form, {'action': path('news_create'), 'method': 'POST'}) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.idCompany) }}
+                        {{ form_row(form.typeNews) }}
+                        {{ form_row(form.displayOnMain) }}
+                        {{ form_row(form.display) }}
+                        {{ form_row(form.massage) }}
+                        {{ form_row(form.img) }}
+                        {{ form_row(form.url) }}
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.keywords) }}
+                        {{ form_row(form.description) }}
 
-                {{ form_start(form) }}
-                    {{ form_row(form.name, {
-                        'label': 'название'
-                    }) }}
-                    {{ form_row(form.company, {
-                        'label': 'компания'
-                    }) }}
-                    {{ form_row(form.typeNews, {
-                        'label': 'тип новости'
-                    }) }}
-                    {{ form_row(form.displayOnMain, {
-                        'label': 'показать на главной'
-                    }) }}
-                    {{ form_row(form.display, {
-                        'label': 'показать'
-                    }) }}
-                    {{ form_row(form.massage, {
-                        'label': 'текст'
-                    }) }}
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
 
-
-
-
-                {{ form_row(form.url, {
-                    'label': 'показать на главной'
-                }) }}
-                {{ form_row(form.title, {
-                    'label': 'показать на главной'
-                }) }}
-                {{ form_row(form.displayOnMain, {
-                    'label': 'показать на главной'
-                }) }}
-
-                    <button type="submit" class="btn btn-primary">Save</button>
-                {{ form_end(form) }}
-
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-
