@@ -2,22 +2,35 @@
 
 namespace App\Service\Client;
 
+use GuzzleHttp\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 class PriceService
 {
 
     public function redirectToAPI()
     {
-        $scope = [
-            ''
-        ];
 
-        $http = [
-            'redirect_uri'  => 'http://127.0.0.1:8000/receive',
-            'scope'         => implode(',', $scope)
-        ];
+        $client = new Client([
+            'base_uri' => 'http://parser.bimbilo.ru/',
+            'timeout'  => 10
+        ]);
 
-        return http_build_query($http);
+        $response = $client->request('POST', '/api', [
+            'form_params' => [
+                'auth'   => 'bimbilo_13062018',
+                'module' => 'PricesBimbilo',
+                'action' => 'setPrice',
+                'args'   => [1, 1, 'C:\PHP_projects\bimbilo/public/uploads/prices/33ce5cde50a251e8564378be1f2232a5.xlsx']
+            ]
+        ]);
+
+        $contents = $response->getBody()->getContents();
+
+        var_dump($contents);
+        die;
+
+//        return 'http://parser.bimbilo.ru/api/' . http_build_query($http);
     }
 
 }

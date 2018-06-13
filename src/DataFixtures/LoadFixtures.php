@@ -4,10 +4,15 @@ namespace App\DataFixtures;
 
 use App\Entity\Administration\News;
 use App\Entity\Administration\NewsCategories;
+use App\Entity\Region\City;
 use App\Entity\Client\Company;
+use App\Entity\Region\Region;
+use App\Entity\Client\Vendor;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Faker\Generator;
+use Faker\Provider\en_US\Address;
 
 class LoadFixtures extends Fixture
 {
@@ -17,9 +22,54 @@ class LoadFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->faker = Factory::create();
+        $faker = new Generator();
+        $faker->addProvider(new Address($faker));
+
+        $this->addVendor($manager);
+        $this->addCity($manager);
+        $this->addRegion($manager);
         $this->addCompany($manager);
         $this->addNews($manager);
         $this->addNewsCategoeys($manager);
+    }
+
+    private function addVendor($manager)
+    {
+        for ($i = 1; $i <= 25; $i++) {
+            $vendor = new Vendor();
+            $vendor->setName($this->faker->name);
+            $this->setReference('vendor_' . $i, $vendor);
+
+            $manager->persist($vendor);
+        }
+
+        $manager->flush();
+    }
+
+    private function addRegion($manager)
+    {
+        for ($i = 1; $i <= 10; $i++) {
+            $region = new Region();
+            $region->setName($this->faker->country);
+            $this->setReference('region_' . $i, $region);
+
+            $manager->persist($region);
+        }
+
+        $manager->flush();
+    }
+
+    private function addCity($manager)
+    {
+        for ($i = 1; $i <= 10; $i++) {
+            $city = new City();
+            $city->setName($this->faker->city);
+            $this->setReference('city_' . $i, $city);
+
+            $manager->persist($city);
+        }
+
+        $manager->flush();
     }
 
     private function addNews($manager)
@@ -36,6 +86,7 @@ class LoadFixtures extends Fixture
             $news->setTypeNews($this->faker->numberBetween(1, 10));
             $news->setMassage($this->faker->text($maxNbChars = 50));
             $this->setReference('news_' . $i, $news);
+
             $manager->persist($news);
         }
 
