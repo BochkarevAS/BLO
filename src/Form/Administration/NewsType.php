@@ -27,7 +27,6 @@ class NewsType extends AbstractType
                 'attr'          => ['class' => 'form-control'],
                 'label'         => 'компания',
                 'choice_label'  => 'name',
-                'data'          => 1,
                 'class'         => Company::class,
                 'query_builder' => function (CompanyRepository $repository) {
                     return $repository->createCompanyQueryBuilder();

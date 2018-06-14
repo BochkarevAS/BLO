@@ -22,11 +22,6 @@ class Region
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Spare\SpareEngine", mappedBy="region")
-     */
-    private $engine;
-
     public function getName()
     {
         return $this->name;

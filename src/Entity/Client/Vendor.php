@@ -22,11 +22,6 @@ class Vendor
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Spare\SpareEngine", mappedBy="vendor")
-     */
-    private $engine;
-
     public function getName()
     {
         return $this->name;

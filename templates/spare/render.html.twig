@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block auth_user_content %}
+
+    <div class="container">
+
+        {{ form_start(form, {'action': path('news_create'), 'method': 'GET'}) }}
+            {{ form_row(form.mark) }}
+            {{ form_row(form.model) }}
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock auth_user_content %}

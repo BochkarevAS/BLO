@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Entity\Region;
+namespace App\Entity\Spare;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="county", schema="region")
+ * @ORM\Table(name="carcase", schema="spare")
  */
-class County
+class Carcase
 {
     /**
      * @ORM\Id
@@ -31,5 +31,4 @@ class County
     {
         $this->name = $name;
     }
-
 }

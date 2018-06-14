@@ -22,11 +22,6 @@ class City
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Spare\SpareEngine", mappedBy="city")
-     */
-    private $engine;
-
     public function getName()
     {
         return $this->name;
