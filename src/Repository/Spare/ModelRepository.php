@@ -11,4 +11,9 @@ class ModelRepository extends EntityRepository
         return $this->createQueryBuilder('m')
             ->orderBy('m.name', 'ASC');
     }
+
+    public function searchSpareByMarkModel()
+    {
+        return $this->createQueryBuilder('s');
+    }
 }

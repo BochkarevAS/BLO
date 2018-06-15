@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="engine", schema="spare")
+ * @ORM\Table(name="spare_part", schema="spare")
  */
-class Engine
+class SparePart
 {
     /**
      * @ORM\Id
@@ -23,7 +23,7 @@ class Engine
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Spare\Model", mappedBy="engines")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Spare\Model", mappedBy="spareParts")
      */
     private $models;
 
@@ -42,13 +42,13 @@ class Engine
         $this->name = $name;
     }
 
-    public function setModels($model)
-    {
-        $this->models = $model;
-    }
-
     public function getModels()
     {
         return $this->models;
+    }
+
+    public function setModels($models)
+    {
+        $this->models = $models;
     }
 }

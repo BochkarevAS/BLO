@@ -14,6 +14,7 @@ use App\Entity\Spare\Carcase;
 use App\Entity\Spare\Engine;
 use App\Entity\Spare\Mark;
 use App\Entity\Spare\Model;
+use App\Entity\Spare\SparePart;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -31,7 +32,6 @@ class LoadFixtures extends Fixture
     private $listCounty   = [];
     private $listOem      = [];
     private $listModel    = [];
-    private $listEngine   = [];
     private $listCarcase  = [];
 
     public function load(ObjectManager $manager)
@@ -41,18 +41,45 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
+
+        $this->addEntityRelation($manager);
+        $this->addMark($manager);           // Марка
+
 //        $this->addCarcase($manager);        // Кузов
-        $this->addEngine($manager);         // Двигатель
-        $this->addModel($manager);          // Модель
 //        $this->addOem($manager);            // ОЕМ
 //        $this->addCounty($manager);         // Округ
 //        $this->addVendor($manager);         // Продавец
 //        $this->addCity($manager);           // Город
 //        $this->addRegion($manager);         // Регион
 //        $this->addCompany($manager);        // Компания
-//        $this->addMark($manager);           // Марка
-        $this->addNews($manager);           // Новость
-        $this->addNewsCategoeys($manager);  // Категория новостей
+
+//        $this->addNews($manager);           // Новость
+//        $this->addNewsCategoeys($manager);  // Категория новостей
+    }
+
+    private function addEntityRelation($manager)
+    {
+        for ($i = 1; $i <= 10; $i++) {
+            $model = new Model();
+            $model->setName($this->faker->departmentName);
+            $manager->persist($model);
+
+            for ($j = 1; $j <= 10; $j++) {
+                $engine = new Engine();
+                $engine->setName($this->faker->cpr);
+                $model->addEngine($engine);
+                $manager->persist($engine);
+            }
+
+            for ($k = 1; $k <= 10; $k++) {
+                $sparePart = new SparePart();
+                $sparePart->setName($this->faker->cpr);
+                $model->addSparePart($sparePart);
+                $manager->persist($sparePart);
+            }
+
+            $manager->flush();
+        }
     }
 
     private function addMark($manager)
@@ -60,18 +87,18 @@ class LoadFixtures extends Fixture
         for ($i = 1; $i <= 10; $i++) {
             $mark = new Mark();
             $mark->setName($this->faker->departmentName);
-            $mark->setLocationRightLeft($this->faker->numberBetween(0, 2));
-            $mark->setLocationBeforeBack($this->faker->numberBetween(0, 2));
-            $mark->setLocationUpDown($this->faker->numberBetween(0, 2));
-            $mark->setState($this->faker->numberBetween(0, 2));
-            $mark->setPresence($this->faker->numberBetween(0, 2));
-            $mark->setCityId($this->listCity[array_rand($this->listCity)]);
-            $mark->setRegionId($this->listRegion[array_rand($this->listRegion)]);
-            $mark->setVendorId($this->listVendor[array_rand($this->listVendor)]);
-            $mark->setCountyId($this->listCounty[array_rand($this->listCounty)]);
-            $mark->setOemId($this->listOem[array_rand($this->listOem)]);
-            $mark->setModelId($this->listModel[array_rand($this->listModel)]);
-            $mark->setCarcaseId($this->listCarcase[array_rand($this->listCarcase)]);
+//            $mark->setLocationRightLeft($this->faker->numberBetween(0, 2));
+//            $mark->setLocationBeforeBack($this->faker->numberBetween(0, 2));
+//            $mark->setLocationUpDown($this->faker->numberBetween(0, 2));
+//            $mark->setState($this->faker->numberBetween(0, 2));
+//            $mark->setPresence($this->faker->numberBetween(0, 2));
+//            $mark->setCityId($this->listCity[array_rand($this->listCity)]);
+//            $mark->setRegionId($this->listRegion[array_rand($this->listRegion)]);
+//            $mark->setVendorId($this->listVendor[array_rand($this->listVendor)]);
+//            $mark->setCountyId($this->listCounty[array_rand($this->listCounty)]);
+//            $mark->setOemId($this->listOem[array_rand($this->listOem)]);
+//            $mark->setModelId($this->listModel[array_rand($this->listModel)]);
+//            $mark->setCarcaseId($this->listCarcase[array_rand($this->listCarcase)]);
             $this->setReference('mark_' . $i, $mark);
 
             $manager->persist($mark);
@@ -89,34 +116,6 @@ class LoadFixtures extends Fixture
             $this->listCarcase[] = $сarcase;
 
             $manager->persist($сarcase);
-        }
-
-        $manager->flush();
-    }
-
-    private function addEngine($manager)
-    {
-        for ($i = 1; $i <= 50; $i++) {
-            $engine = new Engine();
-            $engine->setName($this->faker->cpr);
-            $this->setReference('engine_' . $i, $engine);
-            $this->listEngine[] = $engine;
-
-            $manager->persist($engine);
-        }
-
-        $manager->flush();
-    }
-
-    private function addModel($manager)
-    {
-        for ($i = 1; $i <= 15; $i++) {
-            $model = new Model();
-            $model->setName($this->faker->departmentName);
-            $this->setReference('model_' . $i, $model);
-            $this->listModel[] = $model;
-
-            $manager->persist($model);
         }
 
         $manager->flush();
