@@ -98,7 +98,6 @@ class NewsController extends AbstractController
         $news->setDisplay($params['display']);
         $news->setDisplayOnMain($params['display_on_main']);
         $news->setTypeNews($params['type_news']);
-//        $news->setCreatedAt($params['created_at']);
 
         $em->flush();
 

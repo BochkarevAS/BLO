@@ -33,5 +33,13 @@ class SpareController extends AbstractController
 
         $spare = $em->getRepository(Model::class)->searchSpareByMarkModel();
 
+
+//        return $this->render('spare/render.html.twig', [
+//            'form' => $form->createView()
+//        ]);
+
+        var_dump($spare);
+//        return new Response('<html><body>1</body></html>');
+        die;
     }
 }

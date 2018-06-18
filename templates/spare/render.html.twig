@@ -4,14 +4,18 @@
 
     <div class="container">
 
+
+
         {{ form_start(form, {'action': path('spare_search'), 'method': 'GET'}) }}
             {{ form_row(form.mark) }}
             {{ form_row(form.model) }}
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
         {{ form_end(form) }}
+
+
 
     </div>
 

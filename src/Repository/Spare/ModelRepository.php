@@ -14,6 +14,9 @@ class ModelRepository extends EntityRepository
 
     public function searchSpareByMarkModel()
     {
-        return $this->createQueryBuilder('s');
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.name = :name')
+            ->setParameter('name', 'Aube')
+            ->getQuery();
     }
 }

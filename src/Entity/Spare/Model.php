@@ -2,6 +2,7 @@
 
 namespace App\Entity\Spare;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,12 @@ class Model
      */
     private $name;
 
+//    /**
+//     * @ORM\ManyToOne(targetEntity="App\Entity\Spare\Mark", inversedBy="models")
+//     * @ORM\JoinColumn(name="mark_id", schema="spare")
+//     */
+//    private $mark;
+
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Spare\Engine", inversedBy="models")
      * @ORM\JoinTable(name="model_engine", schema="spare")
@@ -34,16 +41,30 @@ class Model
      */
     private $spareParts;
 
+    public function __construct()
+    {
+        $this->engines = new ArrayCollection();
+        $this->spareParts = new ArrayCollection();
+    }
+
     public function addEngine(Engine $engine)
     {
+        if ($this->engines->contains($engine)) {
+            return;
+        }
+
+        $this->engines->add($engine);
         $engine->addModel($this);
-        $this->engines[] = $engine;
     }
 
     public function addSparePart(SparePart $sparePart)
     {
+        if ($this->spareParts->contains($sparePart)) {
+            return;
+        }
+
+        $this->spareParts->add($sparePart);
         $sparePart->addModel($this);
-        $this->spareParts[] = $sparePart;
     }
 
     public function getName()

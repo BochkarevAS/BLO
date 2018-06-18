@@ -2,6 +2,7 @@
 
 namespace App\Entity\Spare;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,9 +28,18 @@ class Engine
      */
     private $models;
 
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
+
     public function addModel(Model $model)
     {
-        $this->models[] = $model;
+        if ($this->models->contains($model)) {
+            return;
+        }
+
+        $this->models->add($model);
     }
 
     public function getName()
