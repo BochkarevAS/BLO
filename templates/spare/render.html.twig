@@ -2,11 +2,11 @@
 
 {% block auth_user_content %}
 
+    {{ dump(spares) }}
+
     <div class="container">
 
-
-
-        {{ form_start(form, {'action': path('spare_search'), 'method': 'GET'}) }}
+        {{ form_start(form, {'action': path('spare_render'), 'method': 'GET'}) }}
             {{ form_row(form.mark) }}
             {{ form_row(form.model) }}
 
@@ -15,7 +15,30 @@
             </div>
         {{ form_end(form) }}
 
+        <div class="navigator">
+            {{ knp_pagination_render(spares) }}
+        </div>
 
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Название запчасти</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if spares %}
+                    {% for spare in spares %}
+                        <tr>
+                            <td>{{ spare.name }} </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div class="navigator">
+            {{ knp_pagination_render(spares) }}
+        </div>
 
     </div>
 

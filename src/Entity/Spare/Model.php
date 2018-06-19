@@ -23,11 +23,10 @@ class Model
      */
     private $name;
 
-//    /**
-//     * @ORM\ManyToOne(targetEntity="App\Entity\Spare\Mark", inversedBy="models")
-//     * @ORM\JoinColumn(name="mark_id", schema="spare")
-//     */
-//    private $mark;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Spare\Mark", inversedBy="models")
+     */
+    private $mark;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Spare\Engine", inversedBy="models")
@@ -95,5 +94,15 @@ class Model
     public function setSpareParts($spareParts)
     {
         $this->spareParts = $spareParts;
+    }
+
+    public function getMark()
+    {
+        return $this->mark;
+    }
+
+    public function setMark($mark)
+    {
+        $this->mark = $mark;
     }
 }

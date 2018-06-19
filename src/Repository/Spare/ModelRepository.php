@@ -12,11 +12,17 @@ class ModelRepository extends EntityRepository
             ->orderBy('m.name', 'ASC');
     }
 
-    public function searchSpareByMarkModel()
+    public function spareAll()
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.name = :name')
-            ->setParameter('name', 'Aube')
-            ->getQuery();
+        return $this->createQueryBuilder('model')
+            ->Join('model.mark', 'm')
+            ->leftJoin('model.engines', 'e')
+            ->leftJoin('model.spareParts', 's')
+            ->addSelect('m.name')
+            ->addSelect('e.id')
+            ->getQuery()
+            ->getResult();
+
+//        var_dump($q->getSQL());die;
     }
 }

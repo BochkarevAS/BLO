@@ -20,10 +20,14 @@ class NewsController extends AbstractController
         $form = $this->createForm(NewsType::class);
 
         $em = $this->getDoctrine()->getManager();
-        $newsAll = $em->getRepository(News::class)->createQueryBuilder('news')->getQuery();
+        $query = $em->getRepository(News::class)->createQueryBuilder('news')->getQuery();
+
+        if (!$query) {
+            throw $this->createNotFoundException();
+        }
 
         $news = $paginator->paginate(
-            $newsAll,
+            $query,
             $request->query->getInt('page', 1),
             15
         );

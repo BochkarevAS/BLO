@@ -31,7 +31,6 @@ class LoadFixtures extends Fixture
     private $listVendor   = [];
     private $listCounty   = [];
     private $listOem      = [];
-    private $listModel    = [];
     private $listCarcase  = [];
 
     public function load(ObjectManager $manager)
@@ -41,9 +40,7 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-
         $this->addEntityRelation($manager);
-        $this->addMark($manager);           // Марка
 
 //        $this->addCarcase($manager);        // Кузов
 //        $this->addOem($manager);            // ОЕМ
@@ -64,6 +61,11 @@ class LoadFixtures extends Fixture
             $model->setName($this->faker->departmentName);
             $manager->persist($model);
 
+            $mark = new Mark();
+            $mark->setName($this->faker->departmentName);
+            $model->setMark($mark);
+            $manager->persist($mark);
+
             for ($j = 1; $j <= 10; $j++) {
                 $engine = new Engine();
                 $engine->setName($this->faker->cpr);
@@ -80,31 +82,6 @@ class LoadFixtures extends Fixture
 
             $manager->flush();
         }
-    }
-
-    private function addMark($manager)
-    {
-        for ($i = 1; $i <= 10; $i++) {
-            $mark = new Mark();
-            $mark->setName($this->faker->departmentName);
-//            $mark->setLocationRightLeft($this->faker->numberBetween(0, 2));
-//            $mark->setLocationBeforeBack($this->faker->numberBetween(0, 2));
-//            $mark->setLocationUpDown($this->faker->numberBetween(0, 2));
-//            $mark->setState($this->faker->numberBetween(0, 2));
-//            $mark->setPresence($this->faker->numberBetween(0, 2));
-//            $mark->setCityId($this->listCity[array_rand($this->listCity)]);
-//            $mark->setRegionId($this->listRegion[array_rand($this->listRegion)]);
-//            $mark->setVendorId($this->listVendor[array_rand($this->listVendor)]);
-//            $mark->setCountyId($this->listCounty[array_rand($this->listCounty)]);
-//            $mark->setOemId($this->listOem[array_rand($this->listOem)]);
-//            $mark->setModelId($this->listModel[array_rand($this->listModel)]);
-//            $mark->setCarcaseId($this->listCarcase[array_rand($this->listCarcase)]);
-            $this->setReference('mark_' . $i, $mark);
-
-            $manager->persist($mark);
-        }
-
-        $manager->flush();
     }
 
     private function addCarcase($manager)
