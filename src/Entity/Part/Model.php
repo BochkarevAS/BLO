@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity\Spare;
+namespace App\Entity\Part;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Spare\ModelRepository")
- * @ORM\Table(name="model", schema="spare")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\ModelRepository")
+ * @ORM\Table(name="model", schema="part")
  */
 class Model
 {
@@ -24,26 +24,26 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Spare\Mark", inversedBy="models")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Part\Brand", inversedBy="models")
      */
-    private $mark;
+    private $brands;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Spare\Engine", inversedBy="models")
-     * @ORM\JoinTable(name="model_engine", schema="spare")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Engine", inversedBy="models")
+     * @ORM\JoinTable(name="model_engine", schema="part")
      */
     private $engines;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Spare\SparePart", inversedBy="models")
-     * @ORM\JoinTable(name="model_spare", schema="spare")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Part", inversedBy="models")
+     * @ORM\JoinTable(name="model_part", schema="part")
      */
-    private $spareParts;
+    private $parts;
 
     public function __construct()
     {
         $this->engines = new ArrayCollection();
-        $this->spareParts = new ArrayCollection();
+        $this->parts = new ArrayCollection();
     }
 
     public function addEngine(Engine $engine)
@@ -56,14 +56,14 @@ class Model
         $engine->addModel($this);
     }
 
-    public function addSparePart(SparePart $sparePart)
+    public function addPart(Part $part)
     {
-        if ($this->spareParts->contains($sparePart)) {
+        if ($this->parts->contains($part)) {
             return;
         }
 
-        $this->spareParts->add($sparePart);
-        $sparePart->addModel($this);
+        $this->parts->add($part);
+        $part->addModel($this);
     }
 
     public function getName()
@@ -86,23 +86,23 @@ class Model
         $this->engines = $engine;
     }
 
-    public function getSpareParts()
+    public function getParts()
     {
-        return $this->spareParts;
+        return $this->parts;
     }
 
-    public function setSpareParts($spareParts)
+    public function setParts($parts)
     {
-        $this->spareParts = $spareParts;
+        $this->parts = $parts;
     }
 
-    public function getMark()
+    public function getBrands()
     {
-        return $this->mark;
+        return $this->brands;
     }
 
-    public function setMark($mark)
+    public function setBrands($brands)
     {
-        $this->mark = $mark;
+        $this->brands = $brands;
     }
 }

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Entity\Spare;
+namespace App\Entity\Part;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="spare_part", schema="spare")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\BrandRepository")
+ * @ORM\Table(name="brand", schema="part")
  */
-class SparePart
+class Brand
 {
     /**
      * @ORM\Id
@@ -24,22 +24,13 @@ class SparePart
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Spare\Model", mappedBy="spareParts")
+     * @ORM\OneToMany(targetEntity="App\Entity\Part\Model", mappedBy="brands")
      */
     private $models;
 
     public function __construct()
     {
         $this->models = new ArrayCollection();
-    }
-
-    public function addModel(Model $model)
-    {
-        if ($this->models->contains($model)) {
-            return;
-        }
-
-        $this->models->add($model);
     }
 
     public function getName()

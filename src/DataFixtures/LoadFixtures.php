@@ -4,17 +4,17 @@ namespace App\DataFixtures;
 
 use App\Entity\Administration\News;
 use App\Entity\Administration\NewsCategories;
-use App\Entity\Spare\Oem;
+use App\Entity\Part\Oem;
 use App\Entity\Region\City;
 use App\Entity\Client\Company;
 use App\Entity\Region\County;
 use App\Entity\Region\Region;
 use App\Entity\Client\Vendor;
-use App\Entity\Spare\Carcase;
-use App\Entity\Spare\Engine;
-use App\Entity\Spare\Mark;
-use App\Entity\Spare\Model;
-use App\Entity\Spare\SparePart;
+use App\Entity\Part\Carcase;
+use App\Entity\Part\Engine;
+use App\Entity\Part\Brand;
+use App\Entity\Part\Model;
+use App\Entity\Part\Part;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -61,9 +61,9 @@ class LoadFixtures extends Fixture
             $model->setName($this->faker->departmentName);
             $manager->persist($model);
 
-            $mark = new Mark();
+            $mark = new Brand();
             $mark->setName($this->faker->departmentName);
-            $model->setMark($mark);
+            $model->setBrands($mark);
             $manager->persist($mark);
 
             for ($j = 1; $j <= 10; $j++) {
@@ -74,9 +74,9 @@ class LoadFixtures extends Fixture
             }
 
             for ($k = 1; $k <= 10; $k++) {
-                $sparePart = new SparePart();
+                $sparePart = new Part();
                 $sparePart->setName($this->faker->cpr);
-                $model->addSparePart($sparePart);
+                $model->addPart($sparePart);
                 $manager->persist($sparePart);
             }
 

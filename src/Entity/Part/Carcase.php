@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity\Spare;
+namespace App\Entity\Part;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="carcase", schema="spare")
+ * @ORM\Table(name="carcase", schema="part")
  */
 class Carcase
 {

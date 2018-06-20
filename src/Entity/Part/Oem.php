@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity\Spare;
+namespace App\Entity\Part;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="oem", schema="spare")
+ * @ORM\Table(name="oem", schema="part")
  */
 class Oem
 {

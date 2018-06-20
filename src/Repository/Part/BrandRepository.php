@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repository\Spare;
+namespace App\Repository\Part;
 
 use Doctrine\ORM\EntityRepository;
 
-class MarkRepository extends EntityRepository
+class BrandRepository extends EntityRepository
 {
     public function setOrderBy()
     {

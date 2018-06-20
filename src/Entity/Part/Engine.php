@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity\Spare;
+namespace App\Entity\Part;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="engine", schema="spare")
+ * @ORM\Table(name="engine", schema="part")
  */
 class Engine
 {
@@ -24,7 +24,7 @@ class Engine
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Spare\Model", mappedBy="engines")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Model", mappedBy="engines")
      */
     private $models;
 
