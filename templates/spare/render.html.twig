@@ -4,14 +4,9 @@
 
     <div class="container">
 
-        {{ form_start(form, {'action': path('part_render'), 'method': 'GET'}) }}
-            {{ form_row(form.price) }}
-            {{ form_row(form.name) }}
-
-
-
-            {#{{ form_row(form.brand) }}#}
-            {#{{ form_row(form.model) }}#}
+        {{ form_start(form, {'action': path('part_render'), 'method': 'POST', 'attr': {'id': 'form'}}) }}
+            {{ form_row(form.brand, {'id': 'test', 'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.name, {'id': 'test1', 'attr': {'class': 'form-control'}}) }}
             {#{{ form_row(form.engine) }}#}
             {#{{ form_row(form.part) }}#}
 
@@ -19,6 +14,8 @@
                 <button type="submit" class="btn btn-primary">Найти</button>
             </div>
         {{ form_end(form) }}
+
+        {#{{ form(form) }}#}
 
         {% if spares %}
             <div class="navigator">
@@ -48,3 +45,10 @@
     </div>
 
 {% endblock auth_user_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('build/app.js') }}"></script>
+
+{% endblock %}

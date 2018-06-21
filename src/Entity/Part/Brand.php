@@ -24,7 +24,7 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Part\Model", mappedBy="brands")
+     * @ORM\OneToMany(targetEntity="App\Entity\Part\Model", mappedBy="brand")
      */
     private $models;
 
@@ -50,6 +50,20 @@ class Brand
 
     public function setModels($models)
     {
-        $this->models = $models;
+        if ($this->models->contains($models)) {
+            return;
+        }
+
+        $this->models->add($models);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 }

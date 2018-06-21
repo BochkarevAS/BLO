@@ -24,9 +24,9 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Part\Brand", inversedBy="models")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Part\Brand", inversedBy="models", cascade={"persist"})
      */
-    private $brands;
+    private $brand;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Part\Engine", inversedBy="models")
@@ -96,13 +96,23 @@ class Model
         $this->parts = $parts;
     }
 
-    public function getBrands()
+    public function getBrand()
     {
-        return $this->brands;
+        return $this->brand;
     }
 
-    public function setBrands($brands)
+    public function setBrand($brand)
     {
-        $this->brands = $brands;
+        $this->brand = $brand;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 }

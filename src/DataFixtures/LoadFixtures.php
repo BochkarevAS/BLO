@@ -63,8 +63,7 @@ class LoadFixtures extends Fixture
 
             $mark = new Brand();
             $mark->setName($this->faker->departmentName);
-            $model->setBrands($mark);
-            $manager->persist($mark);
+            $model->setBrand($mark);
 
             for ($j = 1; $j <= 10; $j++) {
                 $engine = new Engine();
