@@ -3,6 +3,7 @@
 namespace App\Form\Part;
 
 use App\Entity\Part\Brand;
+use App\Entity\Part\Carcase;
 use App\Entity\Part\Model;
 use App\Repository\Part\BrandRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -45,7 +46,14 @@ class ModelType extends AbstractType
             $form->add('name', EntityType::class, [
                 'class'        => Model::class,
                 'label'        => 'Модель',
-                'choices'      => $models,
+//                'choices'      => $models,
+                'choice_label' => 'name',
+            ]);
+
+            $form->add('carcases', EntityType::class, [
+                'class'        => Carcase::class,
+                'label'        => 'Кузов',
+//                'choices'      => $models,
                 'choice_label' => 'name',
             ]);
         };

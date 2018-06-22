@@ -29,6 +29,12 @@ class Model
     private $brand;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Carcase", inversedBy="models")
+     * @ORM\JoinTable(name="model_carcase", schema="part")
+     */
+    private $carcases;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Part\Engine", inversedBy="models")
      * @ORM\JoinTable(name="model_engine", schema="part")
      */
@@ -43,6 +49,7 @@ class Model
     public function __construct()
     {
         $this->engines = new ArrayCollection();
+        $this->carcases = new ArrayCollection();
         $this->parts = new ArrayCollection();
     }
 
@@ -64,6 +71,16 @@ class Model
 
         $this->parts->add($part);
         $part->addModel($this);
+    }
+
+    public function addCarcase(Carcase $carcase)
+    {
+        if ($this->carcases->contains($carcase)) {
+            return;
+        }
+
+        $this->carcases->add($carcase);
+        $carcase->addModel($this);
     }
 
     public function getName()
@@ -104,6 +121,16 @@ class Model
     public function setBrand($brand)
     {
         $this->brand = $brand;
+    }
+
+    public function getCarcases()
+    {
+        return $this->carcases;
+    }
+
+    public function setCarcases($carcases)
+    {
+        $this->carcases = $carcases;
     }
 
     public function getId()

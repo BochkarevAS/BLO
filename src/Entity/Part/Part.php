@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="spare_part", schema="part")
+ * @ORM\Table(name="part", schema="part")
  */
 class Part
 {

@@ -31,7 +31,6 @@ class LoadFixtures extends Fixture
     private $listVendor   = [];
     private $listCounty   = [];
     private $listOem      = [];
-    private $listCarcase  = [];
 
     public function load(ObjectManager $manager)
     {
@@ -42,7 +41,6 @@ class LoadFixtures extends Fixture
 
         $this->addEntityRelation($manager);
 
-//        $this->addCarcase($manager);        // Кузов
 //        $this->addOem($manager);            // ОЕМ
 //        $this->addCounty($manager);         // Округ
 //        $this->addVendor($manager);         // Продавец
@@ -61,40 +59,29 @@ class LoadFixtures extends Fixture
             $model->setName($this->faker->departmentName);
             $manager->persist($model);
 
-            $mark = new Brand();
-            $mark->setName($this->faker->departmentName);
-            $model->setBrand($mark);
+            $brand = new Brand();
+            $brand->setName($this->faker->departmentName);
+            $model->setBrand($brand);
 
             for ($j = 1; $j <= 10; $j++) {
                 $engine = new Engine();
                 $engine->setName($this->faker->cpr);
                 $model->addEngine($engine);
                 $manager->persist($engine);
-            }
 
-            for ($k = 1; $k <= 10; $k++) {
-                $sparePart = new Part();
-                $sparePart->setName($this->faker->cpr);
-                $model->addPart($sparePart);
-                $manager->persist($sparePart);
+                $part = new Part();
+                $part->setName($this->faker->cpr);
+                $model->addPart($part);
+                $manager->persist($part);
+
+                $carcase = new Carcase();
+                $carcase->setName($this->faker->cpr);
+                $model->addCarcase($carcase);
+                $manager->persist($carcase);
             }
 
             $manager->flush();
         }
-    }
-
-    private function addCarcase($manager)
-    {
-        for ($i = 1; $i <= 50; $i++) {
-            $сarcase = new Carcase();
-            $сarcase->setName($this->faker->secondaryAddress);
-            $this->setReference('сarcase_' . $i, $сarcase);
-            $this->listCarcase[] = $сarcase;
-
-            $manager->persist($сarcase);
-        }
-
-        $manager->flush();
     }
 
     private function addOem($manager)
