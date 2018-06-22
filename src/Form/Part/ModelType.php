@@ -4,8 +4,10 @@ namespace App\Form\Part;
 
 use App\Entity\Part\Brand;
 use App\Entity\Part\Model;
+use App\Repository\Part\BrandRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -16,42 +18,24 @@ class ModelType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $builder
-//            ->add('brand', EntityType::class, [
-//                'attr'          => ['class' => 'form-control'],
-//                'label'         => 'Марка',
-//                'choice_label'  => 'name',
-//                'class'         => Brand::class,
-//                'query_builder' => function (BrandRepository $repository) {
-//                    return $repository->setOrderBy();
-//                },
-//            ])
-////            ->add('model', EntityType::class, [
-////                'attr'          => ['class' => 'form-control'],
-////                'label'         => 'Модель',
-////                'choice_label'  => 'name',
-////                'class'         => Model::class,
-////                'query_builder' => function (ModelRepository $repository) {
-////                    return $repository->setOrderBy();
-////                },
-////            ])
-////            ->add('engine', TextType::class, [
-////                'attr' => ['class' => 'form-control'],
-////                'label' => 'Двигатель',
-////                'required' => false
-////            ])
-////            ->add('part', TextType::class, [
-////                'attr' => ['class' => 'form-control'],
-////                'label' => 'Номер, маркировка запчасти',
-////                'required' => false
-////            ])
-//        ;
-
         $builder
             ->add('brand', EntityType::class, [
-                'class'        => Brand::class,
-                'placeholder'  => 'Все марки',
-                'choice_label' => 'name',
+                'class'         => Brand::class,
+                'label'         => 'Марка',
+                'choice_label'  => 'name',
+                'query_builder' => function (BrandRepository $repository) {
+                    return $repository->setOrderBy();
+                },
+            ])
+            ->add('engines', TextType::class, [
+                'attr'     => ['class' => 'form-control'],
+                'label'    => 'Двигатель',
+                'required' => false
+            ])
+            ->add('parts', TextType::class, [
+                'attr'     => ['class' => 'form-control'],
+                'label'    => 'Номер, маркировка запчасти',
+                'required' => false
             ])
         ;
 
@@ -60,6 +44,7 @@ class ModelType extends AbstractType
 
             $form->add('name', EntityType::class, [
                 'class'        => Model::class,
+                'label'        => 'Модель',
                 'choices'      => $models,
                 'choice_label' => 'name',
             ]);

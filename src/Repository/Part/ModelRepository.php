@@ -2,6 +2,7 @@
 
 namespace App\Repository\Part;
 
+use App\Entity\Part\Model;
 use Doctrine\ORM\EntityRepository;
 
 class ModelRepository extends EntityRepository
@@ -12,21 +13,25 @@ class ModelRepository extends EntityRepository
             ->orderBy('m.name', 'ASC');
     }
 
-    public function search(array $search = [])
+    public function search(Model $model)
     {
-        return $this->createQueryBuilder('m')
-            ->Join('m.brands', 'b')
-            ->Join('m.engines', 'e')
-            ->Join('m.parts', 's')
-            ->andWhere('b.id = :brand AND 
-                        m.id = :model AND 
-                        e.name LIKE :engine AND
-                        s.name LIKE :part')
-            ->setParameters($search)
-            ->addSelect('m.name')
-            ->addSelect('e.id')
-            ->getQuery()
-            ->getResult();
+        $qb = $this->createQueryBuilder('m');
+        $qb->Join('m.brand', 'b');
+        $qb->Join('m.engines', 'e');
+        $qb->Join('m.parts', 's');
+        $qb->andWhere('b.id = :brand AND m.id = :model')
+            ->setParameter('brand', $model->getBrand())
+            ->setParameter('model', $model->getName());
+
+        if ($model->getEngines()) {
+            $qb->andWhere('e.name = :engine')->setParameter('engine', $model->getEngines());
+        }
+
+        if ($model->getParts()) {
+            $qb->andWhere('s.name = :part')->setParameter('part', $model->getParts());
+        }
+
+        return $qb->getQuery()->execute();
 
 //        var_dump($q->getSQL());die;
     }

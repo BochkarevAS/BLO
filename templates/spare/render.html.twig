@@ -4,18 +4,23 @@
 
     <div class="container">
 
-        {{ form_start(form, {'action': path('part_render'), 'method': 'POST', 'attr': {'id': 'form'}}) }}
-            {{ form_row(form.brand, {'id': 'test', 'attr': {'class': 'form-control'}}) }}
-            {{ form_widget(form.name, {'id': 'test1', 'attr': {'class': 'form-control'}}) }}
-            {#{{ form_row(form.engine) }}#}
-            {#{{ form_row(form.part) }}#}
+        {{ form_start(form, {'action': path('part_render'), 'method': 'GET', 'attr': {'id': 'form'}}) }}
+            {{ form_row(form.brand, {'id': 'brand', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.brand) }}
+
+            {{ form_row(form.name, {'id': 'model', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.name) }}
+
+            {{ form_row(form.engines) }}
+            {{ form_errors(form.engines) }}
+
+            {{ form_row(form.parts) }}
+            {{ form_errors(form.parts) }}
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Найти</button>
             </div>
         {{ form_end(form) }}
-
-        {#{{ form(form) }}#}
 
         {% if spares %}
             <div class="navigator">

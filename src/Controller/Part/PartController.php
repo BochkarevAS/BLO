@@ -19,32 +19,23 @@ class PartController extends AbstractController
     public function renderPart(Request $request, PaginatorInterface $paginator)
     {
         $model = new Model();
-        $form = $this->createForm(ModelType::class, $model);
+        $form = $this->createForm(ModelType::class, $model, ['method' => 'GET']);
         $form->handleRequest($request);
+        $spares = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $em->persist($model);
-            $em->flush();
-        }
+            $query = $em->getRepository(Model::class)->search($data);
 
-//        $search = $request->query->get('part');
-        $spares = false;
-//
-//        dump($search);
-//
-//        if ($search) {
-//            $em = $this->getDoctrine()->getManager();
-//            $query = $em->getRepository(Model::class)->search($search);
-//
-//            if ($query) {
-//                $spares = $paginator->paginate(
-//                    $query,
-//                    $request->query->getInt('page', 1),
-//                    5
-//                );
-//            }
-//        }
+            if ($query) {
+                $spares = $paginator->paginate(
+                    $query,
+                    $request->query->getInt('page', 1),
+                    5
+                );
+            }
+        }
 
         return $this->render('spare/render.html.twig', [
             'spares' => $spares,
