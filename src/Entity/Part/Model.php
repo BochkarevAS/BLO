@@ -4,6 +4,7 @@ namespace App\Entity\Part;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Part\ModelRepository")
@@ -45,6 +46,18 @@ class Model
      * @ORM\JoinTable(name="model_part", schema="part")
      */
     private $parts;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", name="created_at")
+     */
+    private $createdAt;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", name="updated_at")
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -131,6 +144,16 @@ class Model
     public function setCarcases($carcases)
     {
         $this->carcases = $carcases;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
     public function getId()
