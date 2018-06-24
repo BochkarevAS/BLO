@@ -96,6 +96,21 @@ class Model
         $carcase->addModel($this);
     }
 
+    public function removeEngine(Engine $engine)
+    {
+        $this->engines->removeElement($engine);
+    }
+
+    public function removePart(Part $part)
+    {
+        $this->parts->removeElement($part);
+    }
+
+    public function removeCarcase(Carcase $carcase)
+    {
+        $this->carcases->removeElement($carcase);
+    }
+
     public function getName()
     {
         return $this->name;
