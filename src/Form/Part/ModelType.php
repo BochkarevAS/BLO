@@ -46,7 +46,7 @@ class ModelType extends AbstractType
             $form->add('name', EntityType::class, [
                 'class'        => Model::class,
                 'label'        => 'Модель',
-//                'choices'      => $models,
+                'choices'      => $models,
                 'choice_label' => 'name',
             ]);
 

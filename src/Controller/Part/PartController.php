@@ -44,22 +44,46 @@ class PartController extends AbstractController
     }
 
     /**
-     * @Route("/part/ajax/call", name="part_ajax_call", options={"expose"=true})
+     * @Route("/part/ajax/model", name="part_ajax_model", options={"expose"=true})
      */
-    public function ajaxAction(Request $request)
+    public function ajaxModel(Request $request)
     {
         if (!$request->isXmlHttpRequest()) {
             throw new NotFoundHttpException();
         }
 
-        $id = $request->query->get('part_id');
+        $id = $request->query->get('model_id');
         $list = [];
 
-        $repo = $this->getDoctrine()->getManager()->getRepository(Model::class);
-        $brands = $repo->findBy(['brand' => $id]);
+        $brands = $this->getDoctrine()->getManager()->getRepository(Model::class)
+            ->findBy(['brand' => $id]);
 
         foreach ($brands as $brand) {
             $list[$brand->getName()] = $brand->getId();
+        }
+
+        $json = $this->get('serializer')->serialize($list, 'json');
+
+        return new JsonResponse($json, 200, [], true);
+    }
+
+    /**
+     * @Route("/part/ajax/model", name="part_ajax_model", options={"expose"=true})
+     */
+    public function ajaxEngine(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new NotFoundHttpException();
+        }
+
+        $id = $request->query->get('engine_id');
+        $list = [];
+
+        $models = $this->getDoctrine()->getManager()->getRepository(Model::class)
+            ->findBy(['model' => $id]);
+
+        foreach ($models as $model) {
+            $list[$model->getName()] = $model->getId();
         }
 
         $json = $this->get('serializer')->serialize($list, 'json');

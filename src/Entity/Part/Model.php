@@ -61,9 +61,9 @@ class Model
 
     public function __construct()
     {
-        $this->engines = new ArrayCollection();
+        $this->engines  = new ArrayCollection();
         $this->carcases = new ArrayCollection();
-        $this->parts = new ArrayCollection();
+        $this->parts    = new ArrayCollection();
     }
 
     public function addEngine(Engine $engine)
@@ -121,6 +121,9 @@ class Model
         $this->name = $name;
     }
 
+    /**
+     * @return ArrayCollection|Engine[]
+     */
     public function getEngines()
     {
         return $this->engines;
