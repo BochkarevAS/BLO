@@ -28,6 +28,14 @@ class ModelType extends AbstractType
                     return $repository->setOrderBy();
                 },
             ])
+            ->add('name', EntityType::class, [
+                'class'        => Model::class,
+                'label'        => 'Модель',
+            ])
+            ->add('carcases', EntityType::class, [
+                'class'        => Carcase::class,
+                'label'        => 'Кузов',
+            ])
             ->add('engines', TextType::class, [
                 'attr'     => ['class' => 'form-control'],
                 'label'    => 'Двигатель',
@@ -40,37 +48,34 @@ class ModelType extends AbstractType
             ])
         ;
 
-        $formModifier = function (FormInterface $form, Brand $brand = null) {
-            $models = null === $brand ? [] : $brand->getModels();
-
-            $form->add('name', EntityType::class, [
-                'class'        => Model::class,
-                'label'        => 'Модель',
-                'choices'      => $models,
-                'choice_label' => 'name',
-            ]);
-
-            $form->add('carcases', EntityType::class, [
-                'class'        => Carcase::class,
-                'label'        => 'Кузов',
+//        $formModifier = function (FormInterface $form, Brand $brand = null) {
+//            $models = null === $brand ? [] : $brand->getModels();
+//
+//            $form->add('name', EntityType::class, [
+//                'class'        => Model::class,
+//                'label'        => 'Модель',
 //                'choices'      => $models,
-                'choice_label' => 'name',
-            ]);
-        };
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
-                $data = $event->getData();
-                $formModifier($event->getForm(), $data->getBrand());
-            }
-        );
-
-        $builder->get('brand')->addEventListener(FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
-                $brand = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $brand);
-            }
-        );
+//            ]);
+//
+//            $form->add('carcases', EntityType::class, [
+//                'class'        => Carcase::class,
+//                'label'        => 'Кузов',
+//            ]);
+//        };
+//
+//        $builder->addEventListener(FormEvents::PRE_SET_DATA,
+//            function (FormEvent $event) use ($formModifier) {
+//                $data = $event->getData();
+//                $formModifier($event->getForm(), $data->getBrand());
+//            }
+//        );
+//
+//        $builder->get('brand')->addEventListener(FormEvents::POST_SUBMIT,
+//            function (FormEvent $event) use ($formModifier) {
+//                $brand = $event->getForm()->getData();
+//                $formModifier($event->getForm()->getParent(), $brand);
+//            }
+//        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

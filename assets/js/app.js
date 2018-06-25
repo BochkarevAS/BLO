@@ -9,5 +9,6 @@ $(document).ready(function() {
     let news = new News($wrapper);
 
     let model = new Model();
-    model.changed();
+    model.changedModel();
+    model.changedCarcase();
 });

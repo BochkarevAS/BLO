@@ -24,12 +24,14 @@ class Model {
         });
     }
 
-    changedEngine() {
+    changedCarcase() {
         $('#model').change(function() {
             let id = $(this).val();
 
+            console.log(id);
+
             $.ajax({
-                url: Routing.generate('part_ajax_engine', {engine_id: id})
+                url: Routing.generate('part_ajax_carcase', {carcase_id: id})
             }).then((data) => {
                 $('#carcase').html('');
                 $.each(data, function(k, v) {

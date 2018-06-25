@@ -55,8 +55,7 @@ class PartController extends AbstractController
         $id = $request->query->get('model_id');
         $list = [];
 
-        $brands = $this->getDoctrine()->getManager()->getRepository(Model::class)
-            ->findBy(['brand' => $id]);
+        $brands = $this->getDoctrine()->getManager()->getRepository(Model::class)->findBy(['brand' => $id]);
 
         foreach ($brands as $brand) {
             $list[$brand->getName()] = $brand->getId();
@@ -68,22 +67,22 @@ class PartController extends AbstractController
     }
 
     /**
-     * @Route("/part/ajax/model", name="part_ajax_model", options={"expose"=true})
+     * @Route("/part/ajax/engine", name="part_ajax_carcase", options={"expose"=true})
      */
-    public function ajaxEngine(Request $request)
+    public function ajaxCarcase(Request $request)
     {
         if (!$request->isXmlHttpRequest()) {
             throw new NotFoundHttpException();
         }
 
-        $id = $request->query->get('engine_id');
+        $id = $request->query->get('carcase_id');
         $list = [];
 
-        $models = $this->getDoctrine()->getManager()->getRepository(Model::class)
-            ->findBy(['model' => $id]);
+        $model = $this->getDoctrine()->getManager()->getRepository(Model::class)->find($id);
+        $carcases = $model->getCarcases();
 
-        foreach ($models as $model) {
-            $list[$model->getName()] = $model->getId();
+        foreach ($carcases as $carcase) {
+            $list[$carcase->getName()] = $carcase->getId();
         }
 
         $json = $this->get('serializer')->serialize($list, 'json');

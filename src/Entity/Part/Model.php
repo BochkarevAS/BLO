@@ -25,24 +25,24 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Part\Brand", inversedBy="models", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Part\Brand", inversedBy="models", cascade={"persist"}, fetch="EAGER")
      */
     private $brand;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Carcase", inversedBy="models")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Carcase", inversedBy="models", fetch="EAGER")
      * @ORM\JoinTable(name="model_carcase", schema="part")
      */
     private $carcases;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Engine", inversedBy="models")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Engine", inversedBy="models", fetch="EAGER")
      * @ORM\JoinTable(name="model_engine", schema="part")
      */
     private $engines;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Part", inversedBy="models")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Part", inversedBy="models", fetch="EAGER")
      * @ORM\JoinTable(name="model_part", schema="part")
      */
     private $parts;
@@ -134,6 +134,9 @@ class Model
         $this->engines = $engine;
     }
 
+    /**
+     * @return ArrayCollection|Part[]
+     */
     public function getParts()
     {
         return $this->parts;
@@ -154,6 +157,9 @@ class Model
         $this->brand = $brand;
     }
 
+    /**
+     * @return ArrayCollection|Carcase[]
+     */
     public function getCarcases()
     {
         return $this->carcases;

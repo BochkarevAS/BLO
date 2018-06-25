@@ -13,16 +13,6 @@ class ModelRepository extends EntityRepository
             ->orderBy('m.name', 'ASC');
     }
 
-    public function getEngineByModel(int $id)
-    {
-        return $this->createQueryBuilder('m')
-            ->join('m.engines', 'e')
-            ->where('m.id = :model_id')
-            ->setParameter('model_id', 1)
-            ->getQuery()
-            ->getResult();
-    }
-
     public function search(Model $model)
     {
         $qb = $this->createQueryBuilder('m');
@@ -41,7 +31,7 @@ class ModelRepository extends EntityRepository
             $qb->andWhere('s.name = :part')->setParameter('part', $model->getParts());
         }
 
-        return $qb->getQuery()->execute();
+        return $qb->getQuery();
 
 //        var_dump($q->getSQL());die;
     }
