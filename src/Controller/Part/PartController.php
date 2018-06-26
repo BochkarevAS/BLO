@@ -24,16 +24,13 @@ class PartController extends AbstractController
         $spares = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+            $entity = $form->getData();
+            $entity->setCity($form->get('city')->getData());
             $em = $this->getDoctrine()->getManager();
-            $query = $em->getRepository(Model::class)->search($data);
+            $query = $em->getRepository(Model::class)->search($entity);
 
             if ($query) {
-                $spares = $paginator->paginate(
-                    $query,
-                    $request->query->getInt('page', 1),
-                    5
-                );
+                $spares = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
             }
         }
 
@@ -56,9 +53,9 @@ class PartController extends AbstractController
         $list = [];
 
         if ($id = $request->query->get('model_id')) {
-            $elements = $this->getDoctrine()->getManager()->getRepository(Model::class)->findBy(['brand' => $id]);
+            $elements = $this->getDoctrine()->getRepository(Model::class)->findBy(['brand' => $id]);
         } elseif ($id = $request->query->get('carcase_id')) {
-            $carcases = $this->getDoctrine()->getManager()->getRepository(Model::class)->find($id);
+            $carcases = $this->getDoctrine()->getRepository(Model::class)->find($id);
             $elements = $carcases->getCarcases();
         }
 

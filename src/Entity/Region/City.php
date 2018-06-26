@@ -5,7 +5,7 @@ namespace App\Entity\Region;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Parts\CityRepository")
  * @ORM\Table(name="city", schema="region")
  */
 class City

@@ -18,7 +18,8 @@ class ModelRepository extends EntityRepository
         $qb = $this->createQueryBuilder('m');
         $qb->Join('m.brand', 'b');
         $qb->Join('m.engines', 'e');
-        $qb->Join('m.parts', 's');
+        $qb->Join('m.parts', 'p');
+        $qb->Join('p.id', 'r');
         $qb->andWhere('b.id = :brand AND m.id = :model')
             ->setParameter('brand', $model->getBrand())
             ->setParameter('model', $model->getName());
@@ -28,7 +29,7 @@ class ModelRepository extends EntityRepository
         }
 
         if ($model->getParts()) {
-            $qb->andWhere('s.name = :part')->setParameter('part', $model->getParts());
+            $qb->andWhere('p.name = :part')->setParameter('part', $model->getParts());
         }
 
         return $qb->getQuery();

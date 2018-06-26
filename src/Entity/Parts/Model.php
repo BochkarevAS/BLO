@@ -59,6 +59,8 @@ class Model
      */
     private $updatedAt;
 
+    private $city;
+
     public function __construct()
     {
         $this->engines  = new ArrayCollection();
@@ -147,16 +149,6 @@ class Model
         $this->parts = $parts;
     }
 
-    public function getBrand()
-    {
-        return $this->brand;
-    }
-
-    public function setBrand($brand)
-    {
-        $this->brand = $brand;
-    }
-
     /**
      * @return ArrayCollection|Carcase[]
      */
@@ -170,6 +162,16 @@ class Model
         $this->carcases = $carcases;
     }
 
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    }
+
     public function getCreatedAt()
     {
         return $this->createdAt;
@@ -178,6 +180,16 @@ class Model
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setCity($city)
+    {
+        $this->city = $city;
     }
 
     public function getId()

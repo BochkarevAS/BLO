@@ -15,6 +15,8 @@ class Part
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="parts")
      */
     private $id;
 

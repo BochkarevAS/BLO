@@ -26,11 +26,6 @@ use Faker\Provider\fr_FR\Address;
 class LoadFixtures extends Fixture
 {
     private $faker;
-    private $listCompanys = [];
-    private $listRegion   = [];
-    private $listVendor   = [];
-    private $listCounty   = [];
-    private $listOem      = [];
 
     public function load(ObjectManager $manager)
     {
@@ -46,7 +41,6 @@ class LoadFixtures extends Fixture
 //        $this->addVendor($manager);         // Продавец
 //        $this->addRegion($manager);         // Регион
 //        $this->addCompany($manager);        // Компания
-
 //        $this->addNews($manager);           // Новость
 //        $this->addNewsCategoeys($manager);  // Категория новостей
     }
@@ -54,49 +48,54 @@ class LoadFixtures extends Fixture
     private function addEntityRelation($manager)
     {
         $brands = [
-            'Toyota', 'Nissan', 'Subaru',
-            'JIP', 'Audi', 'Jaguar', 'Firarri',
-            'Hammer', 'Lexsus', 'Mazda'
+            'Toyota', 'Nissan', 'Subaru', 'JIP', 'Audi',
+            'Jaguar', 'Ferrari', 'Hammer', 'Lexus', 'Mazda'
         ];
 
         $citys = [
-            'Владивосток', 'Хабаровск', 'Москва',
-            'Находка', 'Иркутск', 'Новосебирск', 'Пенза',
-            'Ростов-на-дону', 'Якутск', 'Уссурийск'
+            'Владивосток', 'Хабаровск', 'Москва', 'Находка', 'Иркутск',
+            'Новосебирск', 'Пенза', 'Ростов-на-Дону', 'Якутск', 'Уссурийск'
         ];
 
         for ($i = 1; $i <= 10; $i++) {
-            $model = new Model();
-            $model->setName($this->faker->departmentName);
-            $manager->persist($model);
-
             $brand = new Brand();
             $brand->setName($brands[$i-1]);
-            $model->setBrand($brand);
+            $this->setReference('brand_' . $i, $brand);
+            $manager->persist($brand);
 
             $city = new City();
             $city->setName($citys[$i-1]);
-//            $manager->persist($city);
+            $this->setReference('city_' . $i, $city);
+            $manager->persist($city);
+        }
+
+        for ($i = 1; $i <= 50; $i++) {
+            $model = new Model();
+            $model->setName($this->faker->departmentName);
+            $model->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+            $manager->persist($model);
 
             $relation = new PartEngineRelation();
-            $relation->setCitys($city);
+            $relation->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 3)));
+            $manager->persist($relation);
 
             for ($j = 1; $j <= 10; $j++) {
                 $engine = new Engine();
                 $engine->setName($this->faker->cpr);
                 $model->addEngine($engine);
-//                $relation->getEngines($engine);
-//                $manager->persist($engine);
+                $relation->setEngines($engine);
+                $manager->persist($engine);
 
                 $part = new Part();
                 $part->setName($this->faker->cpr);
                 $model->addPart($part);
-//                $manager->persist($part);
+                $relation->setParts($part);
+                $manager->persist($part);
 
                 $carcase = new Carcase();
                 $carcase->setName($this->faker->cpr);
                 $model->addCarcase($carcase);
-//                $manager->persist($carcase);
+                $manager->persist($carcase);
             }
 
             $manager->flush();
@@ -166,7 +165,7 @@ class LoadFixtures extends Fixture
             $news->setName($this->faker->creditCardType());
             $news->setImg($this->faker->imageUrl($width = 640, $height = 480));
             $news->setTitle($this->faker->text($maxNbChars = 20));
-            $news->setIdCompany($this->listCompanys[array_rand($this->listCompanys)]);
+            $news->setIdCompany($this->getReference('company_' . $this->faker->numberBetween(1, 10)));
             $news->setUid($this->faker->numberBetween(1, 100));
             $news->setDisplay($this->faker->numberBetween(0, 1));
             $news->setDisplayOnMain($this->faker->numberBetween(0, 1));
@@ -189,7 +188,6 @@ class LoadFixtures extends Fixture
             $newsCategories->setDisplay($this->faker->numberBetween(0, 1));
             $newsCategories->setRating($this->faker->numberBetween(1, 10));
             $this->setReference('news_categories_' . $i, $newsCategories);
-
             $manager->persist($newsCategories);
         }
 
@@ -202,8 +200,6 @@ class LoadFixtures extends Fixture
             $company = new Company();
             $company->setName($this->faker->creditCardType());
             $this->setReference('company_' . $i, $company);
-            $this->listCompanys[] = $company;
-
             $manager->persist($company);
         }
 

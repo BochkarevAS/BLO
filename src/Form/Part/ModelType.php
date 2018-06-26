@@ -5,15 +5,14 @@ namespace App\Form\Part;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Model;
+use App\Entity\Region\City;
 use App\Repository\Parts\BrandRepository;
+use App\Repository\Parts\CityRepository;
 use App\Repository\Parts\ModelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModelType extends AbstractType
@@ -21,6 +20,15 @@ class ModelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('city', EntityType::class, [
+                'class'         => City::class,
+                'label'         => 'Город',
+                'choice_label'  => 'name',
+                'mapped'        => false,
+                'query_builder' => function (CityRepository $repository) {
+                    return $repository->orderBy();
+                },
+            ])
             ->add('brand', EntityType::class, [
                 'class'         => Brand::class,
                 'label'         => 'Марка',
