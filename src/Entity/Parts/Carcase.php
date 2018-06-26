@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Part;
+namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +24,7 @@ class Carcase
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Model", mappedBy="carcases")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="carcases")
      */
     private $models;
 

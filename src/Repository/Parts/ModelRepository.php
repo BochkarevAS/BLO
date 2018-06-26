@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repository\Part;
+namespace App\Repository\Parts;
 
-use App\Entity\Part\Model;
+use App\Entity\Parts\Model;
 use Doctrine\ORM\EntityRepository;
 
 class ModelRepository extends EntityRepository
 {
-    public function setOrderBy()
+    public function orderBy()
     {
         return $this->createQueryBuilder('m')
             ->orderBy('m.name', 'ASC');

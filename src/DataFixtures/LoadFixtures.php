@@ -4,17 +4,18 @@ namespace App\DataFixtures;
 
 use App\Entity\Administration\News;
 use App\Entity\Administration\NewsCategories;
-use App\Entity\Part\Oem;
+use App\Entity\Parts\Oem;
+use App\Entity\Parts\PartEngineRelation;
 use App\Entity\Region\City;
 use App\Entity\Client\Company;
 use App\Entity\Region\County;
 use App\Entity\Region\Region;
 use App\Entity\Client\Vendor;
-use App\Entity\Part\Carcase;
-use App\Entity\Part\Engine;
-use App\Entity\Part\Brand;
-use App\Entity\Part\Model;
-use App\Entity\Part\Part;
+use App\Entity\Parts\Carcase;
+use App\Entity\Parts\Engine;
+use App\Entity\Parts\Brand;
+use App\Entity\Parts\Model;
+use App\Entity\Parts\Part;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -26,7 +27,6 @@ class LoadFixtures extends Fixture
 {
     private $faker;
     private $listCompanys = [];
-    private $listCity     = [];
     private $listRegion   = [];
     private $listVendor   = [];
     private $listCounty   = [];
@@ -44,7 +44,6 @@ class LoadFixtures extends Fixture
 //        $this->addOem($manager);            // ОЕМ
 //        $this->addCounty($manager);         // Округ
 //        $this->addVendor($manager);         // Продавец
-//        $this->addCity($manager);           // Город
 //        $this->addRegion($manager);         // Регион
 //        $this->addCompany($manager);        // Компания
 
@@ -54,30 +53,50 @@ class LoadFixtures extends Fixture
 
     private function addEntityRelation($manager)
     {
+        $brands = [
+            'Toyota', 'Nissan', 'Subaru',
+            'JIP', 'Audi', 'Jaguar', 'Firarri',
+            'Hammer', 'Lexsus', 'Mazda'
+        ];
+
+        $citys = [
+            'Владивосток', 'Хабаровск', 'Москва',
+            'Находка', 'Иркутск', 'Новосебирск', 'Пенза',
+            'Ростов-на-дону', 'Якутск', 'Уссурийск'
+        ];
+
         for ($i = 1; $i <= 10; $i++) {
             $model = new Model();
             $model->setName($this->faker->departmentName);
             $manager->persist($model);
 
             $brand = new Brand();
-            $brand->setName($this->faker->departmentName);
+            $brand->setName($brands[$i-1]);
             $model->setBrand($brand);
+
+            $city = new City();
+            $city->setName($citys[$i-1]);
+//            $manager->persist($city);
+
+            $relation = new PartEngineRelation();
+            $relation->setCitys($city);
 
             for ($j = 1; $j <= 10; $j++) {
                 $engine = new Engine();
                 $engine->setName($this->faker->cpr);
                 $model->addEngine($engine);
-                $manager->persist($engine);
+//                $relation->getEngines($engine);
+//                $manager->persist($engine);
 
                 $part = new Part();
                 $part->setName($this->faker->cpr);
                 $model->addPart($part);
-                $manager->persist($part);
+//                $manager->persist($part);
 
                 $carcase = new Carcase();
                 $carcase->setName($this->faker->cpr);
                 $model->addCarcase($carcase);
-                $manager->persist($carcase);
+//                $manager->persist($carcase);
             }
 
             $manager->flush();
@@ -135,20 +154,6 @@ class LoadFixtures extends Fixture
             $this->listRegion[] = $region;
 
             $manager->persist($region);
-        }
-
-        $manager->flush();
-    }
-
-    private function addCity($manager)
-    {
-        for ($i = 1; $i <= 10; $i++) {
-            $city = new City();
-            $city->setName($this->faker->city);
-            $this->setReference('city_' . $i, $city);
-            $this->listCity[] = $city;
-
-            $manager->persist($city);
         }
 
         $manager->flush();

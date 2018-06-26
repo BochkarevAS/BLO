@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repository\Part;
+namespace App\Repository\Parts;
 
 use Doctrine\ORM\EntityRepository;
 
 class BrandRepository extends EntityRepository
 {
-    public function setOrderBy()
+    public function orderBy()
     {
         return $this->createQueryBuilder('m')
             ->orderBy('m.name', 'ASC');

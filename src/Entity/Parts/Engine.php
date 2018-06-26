@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Entity\Part;
+namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="part", schema="part")
+ * @ORM\Table(name="engine", schema="part")
  */
-class Part
+class Engine
 {
     /**
      * @ORM\Id
@@ -24,7 +24,7 @@ class Part
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Model", mappedBy="parts")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="engines")
      */
     private $models;
 
@@ -52,13 +52,13 @@ class Part
         $this->name = $name;
     }
 
+    public function setModels($model)
+    {
+        $this->models = $model;
+    }
+
     public function getModels()
     {
         return $this->models;
-    }
-
-    public function setModels($models)
-    {
-        $this->models = $models;
     }
 }

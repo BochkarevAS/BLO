@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity\Part;
+namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Part\BrandRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Parts\BrandRepository")
  * @ORM\Table(name="brand", schema="part")
  */
 class Brand
@@ -24,7 +24,7 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Part\Model", mappedBy="brand")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brand")
      */
     private $models;
 

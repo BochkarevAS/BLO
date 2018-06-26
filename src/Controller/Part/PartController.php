@@ -2,7 +2,7 @@
 
 namespace App\Controller\Part;
 
-use App\Entity\Part\Model;
+use App\Entity\Parts\Model;
 use App\Form\Part\ModelType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,45 +44,26 @@ class PartController extends AbstractController
     }
 
     /**
-     * @Route("/part/ajax/model", name="part_ajax_model", options={"expose"=true})
+     * @Route("/part/ajax", name="part_ajax", options={"expose"=true})
      */
-    public function ajaxModel(Request $request)
+    public function ajaxPart(Request $request)
     {
         if (!$request->isXmlHttpRequest()) {
             throw new NotFoundHttpException();
         }
 
-        $id = $request->query->get('model_id');
+        $elements = null;
         $list = [];
 
-        $brands = $this->getDoctrine()->getManager()->getRepository(Model::class)->findBy(['brand' => $id]);
-
-        foreach ($brands as $brand) {
-            $list[$brand->getName()] = $brand->getId();
+        if ($id = $request->query->get('model_id')) {
+            $elements = $this->getDoctrine()->getManager()->getRepository(Model::class)->findBy(['brand' => $id]);
+        } elseif ($id = $request->query->get('carcase_id')) {
+            $carcases = $this->getDoctrine()->getManager()->getRepository(Model::class)->find($id);
+            $elements = $carcases->getCarcases();
         }
 
-        $json = $this->get('serializer')->serialize($list, 'json');
-
-        return new JsonResponse($json, 200, [], true);
-    }
-
-    /**
-     * @Route("/part/ajax/engine", name="part_ajax_carcase", options={"expose"=true})
-     */
-    public function ajaxCarcase(Request $request)
-    {
-        if (!$request->isXmlHttpRequest()) {
-            throw new NotFoundHttpException();
-        }
-
-        $id = $request->query->get('carcase_id');
-        $list = [];
-
-        $model = $this->getDoctrine()->getManager()->getRepository(Model::class)->find($id);
-        $carcases = $model->getCarcases();
-
-        foreach ($carcases as $carcase) {
-            $list[$carcase->getName()] = $carcase->getId();
+        foreach ($elements as $element) {
+            $list[$element->getName()] = $element->getId();
         }
 
         $json = $this->get('serializer')->serialize($list, 'json');

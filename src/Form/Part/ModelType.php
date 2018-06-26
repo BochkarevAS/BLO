@@ -2,10 +2,11 @@
 
 namespace App\Form\Part;
 
-use App\Entity\Part\Brand;
-use App\Entity\Part\Carcase;
-use App\Entity\Part\Model;
-use App\Repository\Part\BrandRepository;
+use App\Entity\Parts\Brand;
+use App\Entity\Parts\Carcase;
+use App\Entity\Parts\Model;
+use App\Repository\Parts\BrandRepository;
+use App\Repository\Parts\ModelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,12 +26,15 @@ class ModelType extends AbstractType
                 'label'         => 'Марка',
                 'choice_label'  => 'name',
                 'query_builder' => function (BrandRepository $repository) {
-                    return $repository->setOrderBy();
+                    return $repository->orderBy();
                 },
             ])
             ->add('name', EntityType::class, [
-                'class'        => Model::class,
-                'label'        => 'Модель',
+                'class'         => Model::class,
+                'label'         => 'Модель',
+                'query_builder' => function (ModelRepository $repository) {
+                    return $repository->orderBy();
+                },
             ])
             ->add('carcases', EntityType::class, [
                 'class'        => Carcase::class,

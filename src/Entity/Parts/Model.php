@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Entity\Part;
+namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Part\ModelRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Parts\ModelRepository")
  * @ORM\Table(name="model", schema="part")
  */
 class Model
@@ -25,24 +25,24 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Part\Brand", inversedBy="models", cascade={"persist"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="models", cascade={"persist"}, fetch="EAGER")
      */
     private $brand;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Carcase", inversedBy="models", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="models", fetch="EAGER")
      * @ORM\JoinTable(name="model_carcase", schema="part")
      */
     private $carcases;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Engine", inversedBy="models", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="models", fetch="EAGER")
      * @ORM\JoinTable(name="model_engine", schema="part")
      */
     private $engines;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Part\Part", inversedBy="models", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", inversedBy="models", fetch="EAGER")
      * @ORM\JoinTable(name="model_part", schema="part")
      */
     private $parts;

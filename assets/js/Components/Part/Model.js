@@ -10,7 +10,7 @@ class Model {
             let id = $(this).val();
 
             $.ajax({
-                url: Routing.generate('part_ajax_model', {model_id: id})
+                url: Routing.generate('part_ajax', {model_id: id})
             }).then((data) => {
                 $('#model').html('');
                 $.each(data, function(k, v) {
@@ -28,10 +28,8 @@ class Model {
         $('#model').change(function() {
             let id = $(this).val();
 
-            console.log(id);
-
             $.ajax({
-                url: Routing.generate('part_ajax_carcase', {carcase_id: id})
+                url: Routing.generate('part_ajax', {carcase_id: id})
             }).then((data) => {
                 $('#carcase').html('');
                 $.each(data, function(k, v) {
