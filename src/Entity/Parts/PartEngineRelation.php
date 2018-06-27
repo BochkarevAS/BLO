@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="part_engine_city_relation", schema="part")
+ * @ORM\Table(name="part_engine_city_relation", schema="parts")
  */
 class PartEngineRelation
 {
@@ -19,17 +19,17 @@ class PartEngineRelation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Engine", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Engine", inversedBy="relation")
      */
     private $engines;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Part", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Part", inversedBy="relation")
      */
     private $parts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="relation")
      */
     private $citys;
 

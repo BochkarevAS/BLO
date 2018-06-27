@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="carcase", schema="part")
+ * @ORM\Table(name="carcase", schema="parts")
  */
 class Carcase
 {

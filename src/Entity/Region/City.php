@@ -14,6 +14,7 @@ class City
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="citys")
      */
     private $id;
 
@@ -21,6 +22,11 @@ class City
      * @ORM\Column(type="string")
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="citys")
+     */
+    private $relation;
 
     public function getName()
     {
@@ -30,5 +36,15 @@ class City
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getRelation()
+    {
+        return $this->relation;
+    }
+
+    public function setRelation($relation)
+    {
+        $this->relation = $relation;
     }
 }

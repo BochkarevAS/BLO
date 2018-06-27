@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="oem", schema="part")
+ * @ORM\Table(name="oem", schema="parts")
  */
 class Oem
 {

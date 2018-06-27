@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="engine", schema="part")
+ * @ORM\Table(name="engine", schema="parts")
  */
 class Engine
 {
@@ -27,6 +27,11 @@ class Engine
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="engines")
      */
     private $models;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="engines")
+     */
+    private $relation;
 
     public function __construct()
     {
@@ -60,5 +65,15 @@ class Engine
     public function getModels()
     {
         return $this->models;
+    }
+
+    public function getRelation()
+    {
+        return $this->relation;
+    }
+
+    public function setRelation($relation)
+    {
+        $this->relation = $relation;
     }
 }

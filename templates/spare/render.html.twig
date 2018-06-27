@@ -28,6 +28,8 @@
             </div>
         {{ form_end(form) }}
 
+        {{ dump(spares) }}
+
         {% if spares %}
             <div class="navigator">
                 {{ knp_pagination_render(spares) }}
@@ -37,23 +39,24 @@
                 <thead>
                     <tr>
                         <th>Название / OEM</th>
-                        <th>Модель</th>
-                        <th>Кузов</th>
+                        <th>Расп. / Двиг. / Куз.</th>
+                        <th>Продавец / Город</th>
+                        <th>Цена</th>
+                        <th>Дата</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for spare in spares %}
-                        <tr>
-                            <td>{{ spare.brand }}</td>
-                            <td>{{ spare.name }}</td>
-                            <td>
-                                {% for carcase in spare.carcases %}
-                                    <span>
-                                        {{ carcase.name }}{% if spare.carcases|last != carcase.name  %},{% endif %}
-                                    </span>
-                                {% endfor %}
-                            </td>
-                        </tr>
+                        {% for part in spare.parts %}
+                            <tr>
+                                <td>
+                                    {{ part.name }} на {{ spare.brand }} {{ spare.name }}
+                                    {#кузов #}{#{{ spare.carcases.name }}#}
+                                </td>
+                                <td>{{ spare.name }}</td>
+                                <td>{{ part.name }}</td>
+                            </tr>
+                        {% endfor %}
                     {% endfor %}
                 </tbody>
             </table>

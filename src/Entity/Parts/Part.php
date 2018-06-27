@@ -15,8 +15,6 @@ class Part
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="parts")
      */
     private $id;
 
@@ -29,6 +27,11 @@ class Part
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="parts")
      */
     private $models;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="parts")
+     */
+    private $relation;
 
     public function __construct()
     {
@@ -62,5 +65,15 @@ class Part
     public function setModels($models)
     {
         $this->models = $models;
+    }
+
+    public function getRelation()
+    {
+        return $this->relation;
+    }
+
+    public function setRelation($relation)
+    {
+        $this->relation = $relation;
     }
 }

@@ -45,8 +45,8 @@ class ModelType extends AbstractType
                 },
             ])
             ->add('carcases', EntityType::class, [
-                'class'        => Carcase::class,
-                'label'        => 'Кузов',
+                'class' => Carcase::class,
+                'label' => 'Кузов',
             ])
             ->add('engines', TextType::class, [
                 'attr'     => ['class' => 'form-control'],

@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\ModelRepository")
- * @ORM\Table(name="model", schema="part")
+ * @ORM\Table(name="model", schema="parts")
  */
 class Model
 {
