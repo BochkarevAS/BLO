@@ -5,14 +5,14 @@
     <div class="container">
 
         {{ form_start(form, {'action': path('part_render'), 'method': 'GET', 'attr': {'id': 'form'}}) }}
-            {{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.city) }}
+            {#{{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}#}
+            {#{{ form_errors(form.city) }}#}
 
-            {{ form_row(form.brand, {'id': 'brand', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.brand) }}
+            {{ form_row(form.brands, {'id': 'brand', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.brands) }}
 
-            {{ form_row(form.name, {'id': 'model', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.name) }}
+            {{ form_row(form.models, {'id': 'model', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.models) }}
 
             {{ form_row(form.carcases, {'id': 'carcase', 'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.carcases) }}
@@ -20,8 +20,8 @@
             {{ form_row(form.engines) }}
             {{ form_errors(form.engines) }}
 
-            {{ form_row(form.parts) }}
-            {{ form_errors(form.parts) }}
+            {#{{ form_row(form.parts) }}#}
+            {#{{ form_errors(form.parts) }}#}
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Найти</button>
@@ -53,8 +53,8 @@
                                     {{ part.name }} на {{ spare.brand }} {{ spare.name }}
                                     {#кузов #}{#{{ spare.carcases.name }}#}
                                 </td>
-                                <td>{{ spare.name }}</td>
-                                <td>{{ part.name }}</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         {% endfor %}
                     {% endfor %}

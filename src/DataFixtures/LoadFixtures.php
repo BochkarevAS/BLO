@@ -70,31 +70,29 @@ class LoadFixtures extends Fixture
         }
 
         for ($i = 1; $i <= 50; $i++) {
+            $part = new Part();
+            $part->setName($this->faker->cpr);
+            $part->addBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+            $manager->persist($part);
+
             $model = new Model();
             $model->setName($this->faker->departmentName);
-            $model->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+            $part->addModel($model);
             $manager->persist($model);
 
-            $relation = new PartEngineRelation();
-            $relation->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 3)));
-            $manager->persist($relation);
+//            $relation = new PartEngineRelation();
+//            $relation->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 3)));
+//            $manager->persist($relation);
 
             for ($j = 1; $j <= 10; $j++) {
                 $engine = new Engine();
                 $engine->setName($this->faker->cpr);
-                $model->addEngine($engine);
-                $relation->setEngines($engine);
+                $part->addEngine($engine);
                 $manager->persist($engine);
-
-                $part = new Part();
-                $part->setName($this->faker->cpr);
-                $model->addPart($part);
-                $relation->setParts($part);
-                $manager->persist($part);
 
                 $carcase = new Carcase();
                 $carcase->setName($this->faker->cpr);
-                $model->addCarcase($carcase);
+                $part->addCarcase($carcase);
                 $manager->persist($carcase);
             }
 

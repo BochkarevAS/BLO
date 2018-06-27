@@ -1,35 +1,36 @@
 <?php
 
-namespace App\Form\Part;
+namespace App\Form\Parts;
 
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Model;
+use App\Entity\Parts\Part;
 use App\Entity\Region\City;
 use App\Repository\Parts\BrandRepository;
 use App\Repository\Parts\CityRepository;
-use App\Repository\Parts\ModelRepository;
+use App\Repository\Parts\PartRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ModelType extends AbstractType
+class PartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city', EntityType::class, [
-                'class'         => City::class,
-                'label'         => 'Город',
-                'choice_label'  => 'name',
-                'mapped'        => false,
-                'query_builder' => function (CityRepository $repository) {
-                    return $repository->orderBy();
-                },
-            ])
-            ->add('brand', EntityType::class, [
+//            ->add('city', EntityType::class, [
+//                'class'         => City::class,
+//                'label'         => 'Город',
+//                'choice_label'  => 'name',
+//                'mapped'        => false,
+//                'query_builder' => function (CityRepository $repository) {
+//                    return $repository->orderBy();
+//                },
+//            ])
+            ->add('brands', EntityType::class, [
                 'class'         => Brand::class,
                 'label'         => 'Марка',
                 'choice_label'  => 'name',
@@ -37,12 +38,12 @@ class ModelType extends AbstractType
                     return $repository->orderBy();
                 },
             ])
-            ->add('name', EntityType::class, [
+            ->add('models', EntityType::class, [
                 'class'         => Model::class,
                 'label'         => 'Модель',
-                'query_builder' => function (ModelRepository $repository) {
-                    return $repository->orderBy();
-                },
+//                'query_builder' => function (PartRepository $repository) {
+//                    return $repository->orderBy();
+//                },
             ])
             ->add('carcases', EntityType::class, [
                 'class' => Carcase::class,
@@ -53,11 +54,11 @@ class ModelType extends AbstractType
                 'label'    => 'Двигатель',
                 'required' => false
             ])
-            ->add('parts', TextType::class, [
-                'attr'     => ['class' => 'form-control'],
-                'label'    => 'Номер, маркировка запчасти',
-                'required' => false
-            ])
+//            ->add('parts', TextType::class, [
+//                'attr'     => ['class' => 'form-control'],
+//                'label'    => 'Номер, маркировка запчасти',
+//                'required' => false
+//            ])
         ;
 
 //        $formModifier = function (FormInterface $form, Brand $brand = null) {
@@ -93,7 +94,7 @@ class ModelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'      => Model::class,
+            'data_class'      => Part::class,
             'csrf_protection' => false,
         ]);
     }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Parts\ModelRepository")
+ * @ORM\Entity
  * @ORM\Table(name="model", schema="parts")
  */
 class Model
@@ -25,25 +25,7 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="models", cascade={"persist"}, fetch="EAGER")
-     */
-    private $brand;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="models", fetch="EAGER")
-     * @ORM\JoinTable(name="model_carcase", schema="part")
-     */
-    private $carcases;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="models", fetch="EAGER")
-     * @ORM\JoinTable(name="model_engine", schema="part")
-     */
-    private $engines;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", inversedBy="models", fetch="EAGER")
-     * @ORM\JoinTable(name="model_part", schema="part")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="models")
      */
     private $parts;
 
@@ -59,58 +41,9 @@ class Model
      */
     private $updatedAt;
 
-    private $city;
-
     public function __construct()
     {
-        $this->engines  = new ArrayCollection();
-        $this->carcases = new ArrayCollection();
-        $this->parts    = new ArrayCollection();
-    }
-
-    public function addEngine(Engine $engine)
-    {
-        if ($this->engines->contains($engine)) {
-            return;
-        }
-
-        $this->engines->add($engine);
-        $engine->addModel($this);
-    }
-
-    public function addPart(Part $part)
-    {
-        if ($this->parts->contains($part)) {
-            return;
-        }
-
-        $this->parts->add($part);
-        $part->addModel($this);
-    }
-
-    public function addCarcase(Carcase $carcase)
-    {
-        if ($this->carcases->contains($carcase)) {
-            return;
-        }
-
-        $this->carcases->add($carcase);
-        $carcase->addModel($this);
-    }
-
-    public function removeEngine(Engine $engine)
-    {
-        $this->engines->removeElement($engine);
-    }
-
-    public function removePart(Part $part)
-    {
-        $this->parts->removeElement($part);
-    }
-
-    public function removeCarcase(Carcase $carcase)
-    {
-        $this->carcases->removeElement($carcase);
+        $this->parts = new ArrayCollection();
     }
 
     public function getName()
@@ -123,53 +56,13 @@ class Model
         $this->name = $name;
     }
 
-    /**
-     * @return ArrayCollection|Engine[]
-     */
-    public function getEngines()
+    public function addPart(Part $parts): self
     {
-        return $this->engines;
-    }
+        if (!$this->parts->contains($parts)) {
+            $this->parts->add($parts);
+        }
 
-    public function setEngines($engine)
-    {
-        $this->engines = $engine;
-    }
-
-    /**
-     * @return ArrayCollection|Part[]
-     */
-    public function getParts()
-    {
-        return $this->parts;
-    }
-
-    public function setParts($parts)
-    {
-        $this->parts = $parts;
-    }
-
-    /**
-     * @return ArrayCollection|Carcase[]
-     */
-    public function getCarcases()
-    {
-        return $this->carcases;
-    }
-
-    public function setCarcases($carcases)
-    {
-        $this->carcases = $carcases;
-    }
-
-    public function getBrand()
-    {
-        return $this->brand;
-    }
-
-    public function setBrand($brand)
-    {
-        $this->brand = $brand;
+        return $this;
     }
 
     public function getCreatedAt()
@@ -180,16 +73,6 @@ class Model
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    public function setCity($city)
-    {
-        $this->city = $city;
     }
 
     public function getId()

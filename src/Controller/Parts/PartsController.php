@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\Part;
+namespace App\Controller\Parts;
 
-use App\Entity\Parts\Model;
-use App\Form\Part\ModelType;
+use App\Entity\Parts\Part;
+use App\Form\Parts\PartType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,23 +11,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PartController extends AbstractController
+class PartsController extends AbstractController
 {
     /**
-     * @Route("/part", name="part_render")
+     * @Route("/parts", name="part_render")
      */
     public function renderPart(Request $request, PaginatorInterface $paginator)
     {
-        $model = new Model();
-        $form = $this->createForm(ModelType::class, $model, ['method' => 'GET']);
+        $part = new Part();
+        $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
         $form->handleRequest($request);
         $spares = false;
+
+        $this->getDoctrine()->getRepository(Part::class)->getBrandById(21);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $entity->setCity($form->get('city')->getData());
             $em = $this->getDoctrine()->getManager();
-            $query = $em->getRepository(Model::class)->search($entity);
+            $query = $em->getRepository(Part::class)->search($entity);
 
             if ($query) {
                 $spares = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
@@ -41,7 +43,7 @@ class PartController extends AbstractController
     }
 
     /**
-     * @Route("/part/ajax", name="part_ajax", options={"expose"=true})
+     * @Route("/parts/ajax", name="part_ajax", options={"expose"=true})
      */
     public function ajaxPart(Request $request)
     {
@@ -53,9 +55,9 @@ class PartController extends AbstractController
         $list = [];
 
         if ($id = $request->query->get('model_id')) {
-            $elements = $this->getDoctrine()->getRepository(Model::class)->findBy(['brand' => $id]);
+            $elements = $this->getDoctrine()->getRepository(Part::class)->getBrandById($id);
         } elseif ($id = $request->query->get('carcase_id')) {
-            $carcases = $this->getDoctrine()->getRepository(Model::class)->find($id);
+            $carcases = $this->getDoctrine()->getRepository(Part::class)->find($id);
             $elements = $carcases->getCarcases();
         }
 

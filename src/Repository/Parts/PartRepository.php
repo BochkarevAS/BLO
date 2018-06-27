@@ -2,19 +2,35 @@
 
 namespace App\Repository\Parts;
 
-use App\Entity\Parts\Model;
+use App\Entity\Parts\Part;
 use App\Entity\Parts\PartEngineRelation;
 use Doctrine\ORM\EntityRepository;
 
-class ModelRepository extends EntityRepository
+class PartRepository extends EntityRepository
 {
     public function orderBy()
     {
-        return $this->createQueryBuilder('m')
-            ->orderBy('m.name', 'ASC');
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.name', 'ASC');
     }
 
-    public function search(Model $model)
+    public function getBrandById($id)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->Join('p.brands', 'b')
+            ->Join('p.models', 'm')
+            ->addSelect('m.name')
+            ->addSelect('p.id')
+            ->andWhere('b.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+            //->execute();
+
+        //        $query = $qb->getQuery();
+        var_dump($query->getSQL());die;
+    }
+
+    public function search(Part $part)
     {
         $qb = $this->createQueryBuilder('m');
         $qb->Join('m.brand', 'b');
