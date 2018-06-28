@@ -2,7 +2,6 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -30,6 +29,16 @@ class Oem
     private $parts;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="oem")
+     */
+    private $citys;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Vendor", inversedBy="oem")
+     */
+    private $vendors;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -40,11 +49,6 @@ class Oem
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
-
-    public function __construct()
-    {
-        $this->parts = new ArrayCollection();
-    }
 
     public function getName()
     {
@@ -64,5 +68,35 @@ class Oem
     public function setParts($parts)
     {
         $this->parts = $parts;
+    }
+
+    public function getCitys()
+    {
+        return $this->citys;
+    }
+
+    public function setCitys($citys)
+    {
+        $this->citys = $citys;
+    }
+
+    public function getVendors()
+    {
+        return $this->vendors;
+    }
+
+    public function setVendors($vendors)
+    {
+        $this->vendors = $vendors;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

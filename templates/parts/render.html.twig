@@ -4,9 +4,9 @@
 
     <div class="container">
 
-        {{ form_start(form, {'action': path('part_render'), 'method': 'GET', 'attr': {'id': 'form'}}) }}
-            {#{{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}#}
-            {#{{ form_errors(form.city) }}#}
+        {{ form_start(form, {'action': path('parts_render'), 'method': 'GET', 'attr': {'id': 'form'}}) }}
+            {{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.city) }}
 
             {{ form_row(form.brands, {'id': 'brand', 'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.brands) }}
@@ -17,8 +17,11 @@
             {{ form_row(form.carcases, {'id': 'carcase', 'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.carcases) }}
 
-            {#{{ form_row(form.engines) }}#}
-            {#{{ form_errors(form.engines) }}#}
+            {{ form_row(form.oem) }}
+            {{ form_errors(form.oem) }}
+
+            {{ form_row(form.engines) }}
+            {{ form_errors(form.engines) }}
 
             {{ form_row(form.name) }}
             {{ form_errors(form.name) }}
@@ -28,11 +31,9 @@
             </div>
         {{ form_end(form) }}
 
-        {{ dump(parts) }}
-
-        {% if parts %}
+        {% if oems %}
             <div class="navigator">
-                {{ knp_pagination_render(parts) }}
+                {{ knp_pagination_render(oems) }}
             </div>
 
             <table class="table table-hover">
@@ -46,39 +47,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for part in parts %}
-
-                        {{ dump(part.parts ) }}
-
+                    {% for oem in oems %}
                         <tr>
                             <td>
-                                {{ part.name }} на
-                                {% for part in part.parts %}
-                                    {{ part.id }}
+                                {{ oem.parts.name }}  / {{ oem.name }} на
+                                {% for brand in oem.parts.brands %}
+                                    {{ brand }}
                                 {% endfor %}
                             </td>
                             <td>
-                                {#{% for carcase in part.carcases %}#}
-                                    {#{{ carcase.name }}#}
-                                {#{% endfor %}#}
+                                {% for engine in oem.parts.engines %}
+                                    <span class="text-success"> {{ engine }} </span>
+                                {% endfor %}
+                                /
+                                {% for carcase in oem.parts.carcases %}
+                                    {{ carcase }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {{ oem.vendors.name }} / {{ oem.citys.name }}
+                            </td>
+                            <td>
+                                {{ random(1500) }} руб.
+                            </td>
+                            <td>
+                                {{ oem.updatedAt|date }}
                             </td>
                         </tr>
-                        {#{% for part in spare.parts %}#}
-                            {#<tr>#}
-                                {#<td>#}
-                                    {#{{ part.name }} на {{ spare.brand }} {{ spare.name }}#}
-                                    {#кузов #}{##}{#{{ spare.carcases.name }}#}
-                                {#</td>#}
-                                {#<td></td>#}
-                                {#<td></td>#}
-                            {#</tr>#}
-                        {#{% endfor %}#}
                     {% endfor %}
                 </tbody>
             </table>
 
             <div class="navigator">
-                {{ knp_pagination_render(parts) }}
+                {{ knp_pagination_render(oems) }}
             </div>
         {% endif %}
 

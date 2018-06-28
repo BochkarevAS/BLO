@@ -3,7 +3,6 @@
 namespace App\Repository\Parts;
 
 use App\Entity\Parts\Part;
-use App\Entity\Parts\PartEngineRelation;
 use Doctrine\ORM\EntityRepository;
 
 class PartRepository extends EntityRepository

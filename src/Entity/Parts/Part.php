@@ -2,6 +2,7 @@
 
 namespace App\Entity\Parts;
 
+use App\Entity\Region\City;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -49,14 +50,11 @@ class Part
     private $brands;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="parts")
-     */
-    private $relation;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
      */
     private $oem;
+
+    private $city;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -180,6 +178,9 @@ class Part
         $this->brands = $brands;
     }
 
+    /**
+     * @return ArrayCollection|Oem
+     */
     public function getOem()
     {
         return $this->oem;
@@ -190,14 +191,17 @@ class Part
         $this->oem = $oem;
     }
 
-    public function getRelation()
+    /**
+     * @return City
+     */
+    public function getCity()
     {
-        return $this->relation;
+        return $this->city;
     }
 
-    public function setRelation($relation)
+    public function setCity($city)
     {
-        $this->relation = $relation;
+        $this->city = $city;
     }
 
     public function getId()

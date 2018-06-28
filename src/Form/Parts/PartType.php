@@ -21,15 +21,15 @@ class PartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('city', EntityType::class, [
-//                'class'         => City::class,
-//                'label'         => 'Город',
-//                'choice_label'  => 'name',
-//                'mapped'        => false,
-//                'query_builder' => function (CityRepository $repository) {
-//                    return $repository->orderBy();
-//                },
-//            ])
+            ->add('city', EntityType::class, [
+                'class'         => City::class,
+                'label'         => 'Город',
+                'choice_label'  => 'name',
+                'mapped'        => false,
+                'query_builder' => function (CityRepository $repository) {
+                    return $repository->orderBy();
+                },
+            ])
             ->add('brands', EntityType::class, [
                 'class'         => Brand::class,
                 'label'         => 'Марка',
@@ -49,11 +49,16 @@ class PartType extends AbstractType
                 'class' => Carcase::class,
                 'label' => 'Кузов',
             ])
-//            ->add('engines', TextType::class, [
-//                'attr'     => ['class' => 'form-control'],
-//                'label'    => 'Двигатель',
-//                'required' => false
-//            ])
+            ->add('oem', TextType::class, [
+                'attr'     => ['class' => 'form-control'],
+                'label'    => 'OEM, артикул',
+                'required' => false
+            ])
+            ->add('engines', TextType::class, [
+                'attr'     => ['class' => 'form-control'],
+                'label'    => 'Двигатель',
+                'required' => false
+            ])
             ->add('name', TextType::class, [
                 'attr'     => ['class' => 'form-control'],
                 'label'    => 'Номер, маркировка запчасти',

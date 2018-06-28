@@ -17,35 +17,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class PartsController extends AbstractController
 {
     /**
-     * @Route("/parts", name="part_render")
+     * @Route("/parts", name="parts_render")
      */
     public function renderPart(Request $request, PaginatorInterface $paginator)
     {
         $part = new Part();
         $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
         $form->handleRequest($request);
-        $parts = false;
-
-//        $this->getDoctrine()->getRepository(Carcase::class)->getCarcaseById(237);
-//        $this->getDoctrine()->getRepository(Model::class)->getModelById(21);
+        $oems = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-//            $entity->setCity($form->get('city')->getData());
+            $entity->setCity($form->get('city')->getData());
             $em = $this->getDoctrine()->getManager();
-//            $query = $em->getRepository(Part::class)->search($entity);
             $query = $em->getRepository(Oem::class)->search($entity);
 
-            dump($entity);
-
             if ($query) {
-                $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
+                $oems = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
             }
         }
 
-        return $this->render('spare/render.html.twig', [
-            'parts' => $parts,
-            'form'  => $form->createView()
+        return $this->render('parts/render.html.twig', [
+            'oems'  => $oems,
+            'form' => $form->createView()
         ]);
     }
 

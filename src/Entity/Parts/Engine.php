@@ -30,11 +30,6 @@ class Engine
     private $parts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="engines")
-     */
-    private $relation;
-
-    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -70,13 +65,28 @@ class Engine
         $this->name = $name;
     }
 
-    public function getRelation()
+    public function getCreatedAt()
     {
-        return $this->relation;
+        return $this->createdAt;
     }
 
-    public function setRelation($relation)
+    public function setCreatedAt($createdAt)
     {
-        $this->relation = $relation;
+        $this->createdAt = $createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 }

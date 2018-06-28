@@ -36,7 +36,6 @@ class LoadFixtures extends Fixture
         $this->addEntityRelation($manager);
 
 //        $this->addCounty($manager);         // Округ
-//        $this->addVendor($manager);         // Продавец
 //        $this->addRegion($manager);         // Регион
 //        $this->addCompany($manager);        // Компания
 //        $this->addNews($manager);           // Новость
@@ -50,14 +49,14 @@ class LoadFixtures extends Fixture
             'Jaguar', 'Ferrari', 'Hammer', 'Lexus', 'Mazda'
         ];
 
+        $vendors = [
+            'Владмоторс', 'Гугл', 'Яндекс', 'Apple', 'HP',
+            'Droom', 'Japancar', 'Coca-cola', 'ВК', 'Бимбило'
+        ];
+
         $citys = [
             'Владивосток', 'Хабаровск', 'Москва', 'Находка', 'Иркутск',
             'Новосебирск', 'Пенза', 'Ростов-на-Дону', 'Якутск', 'Уссурийск'
-        ];
-
-        $parts = [
-            'Фара', 'Фарсунка', 'Радиатор', 'Решётка', 'Замок',
-            'Насос', 'Бампер', 'Ресора', 'Акамулятор', 'Болт'
         ];
 
         for ($i = 1; $i <= 10; $i++) {
@@ -70,6 +69,11 @@ class LoadFixtures extends Fixture
             $city->setName($citys[$i-1]);
             $this->setReference('city_' . $i, $city);
             $manager->persist($city);
+
+            $vendor = new Vendor();
+            $vendor->setName($vendors[$i-1]);
+            $this->setReference('vendor_' . $i, $vendor);
+            $manager->persist($vendor);
         }
 
         for ($i = 1; $i <= 50; $i++) {
@@ -81,21 +85,25 @@ class LoadFixtures extends Fixture
             $oem = new Oem();
             $oem->setName('OEM' . $this->faker->cpr);
             $oem->setParts($part);
+            $oem->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
+            $oem->setVendors($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
             $manager->persist($oem);
 
-            for ($j = 1; $j <= 10; $j++) {
+            for ($k = 1; $k <= 10; $k++) {
                 $model = new Model();
                 $model->setName($this->faker->departmentName);
                 $part->addModel($model);
                 $manager->persist($model);
+            }
 
+            for ($j = 1; $j <= 5; $j++) {
                 $engine = new Engine();
-                $engine->setName($this->faker->cpr);
+                $engine->setName('EN' . $this->faker->vat);
                 $part->addEngine($engine);
                 $manager->persist($engine);
 
                 $carcase = new Carcase();
-                $carcase->setName($this->faker->cpr);
+                $carcase->setName('CAR' . $this->faker->vat);
                 $part->addCarcase($carcase);
                 $manager->persist($carcase);
             }
@@ -103,7 +111,6 @@ class LoadFixtures extends Fixture
             $manager->flush();
         }
     }
-
 
     private function addCounty($manager)
     {
@@ -114,20 +121,6 @@ class LoadFixtures extends Fixture
             $this->listCounty[] = $country;
 
             $manager->persist($country);
-        }
-
-        $manager->flush();
-    }
-
-    private function addVendor($manager)
-    {
-        for ($i = 1; $i <= 25; $i++) {
-            $vendor = new Vendor();
-            $vendor->setName($this->faker->name);
-            $this->setReference('vendor_' . $i, $vendor);
-            $this->listVendor[] = $vendor;
-
-            $manager->persist($vendor);
         }
 
         $manager->flush();

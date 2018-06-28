@@ -4,7 +4,7 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-import '../css/popup.css';
+import '../css/pagination.css';
 
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
