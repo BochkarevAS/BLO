@@ -2,10 +2,12 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Parts\OemRepository")
  * @ORM\Table(name="oem", schema="parts")
  */
 class Oem
@@ -22,6 +24,28 @@ class Oem
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Part", inversedBy="oem")
+     */
+    private $parts;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", name="created_at")
+     */
+    private $createdAt;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", name="updated_at")
+     */
+    private $updatedAt;
+
+    public function __construct()
+    {
+        $this->parts = new ArrayCollection();
+    }
+
     public function getName()
     {
         return $this->name;
@@ -30,5 +54,15 @@ class Oem
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getParts()
+    {
+        return $this->parts;
+    }
+
+    public function setParts($parts)
+    {
+        $this->parts = $parts;
     }
 }

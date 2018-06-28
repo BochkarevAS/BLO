@@ -54,6 +54,11 @@ class Part
     private $relation;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
+     */
+    private $oem;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -131,12 +136,22 @@ class Part
         return $this->models;
     }
 
+    public function setModels($models)
+    {
+        $this->models = $models;
+    }
+
     /**
      * @return ArrayCollection|Carcase[]
      */
     public function getCarcases()
     {
         return $this->carcases;
+    }
+
+    public function setCarcases($carcases)
+    {
+        $this->carcases = $carcases;
     }
 
     /**
@@ -147,12 +162,32 @@ class Part
         return $this->engines;
     }
 
+    public function setEngines($engines)
+    {
+        $this->engines = $engines;
+    }
+
     /**
      * @return ArrayCollection|Brand[]
      */
     public function getBrands()
     {
         return $this->brands;
+    }
+
+    public function setBrands($brands)
+    {
+        $this->brands = $brands;
+    }
+
+    public function getOem()
+    {
+        return $this->oem;
+    }
+
+    public function setOem($oem)
+    {
+        $this->oem = $oem;
     }
 
     public function getRelation()

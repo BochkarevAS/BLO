@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Parts\CarcaseRepository")
  * @ORM\Table(name="carcase", schema="parts")
  */
 class Carcase

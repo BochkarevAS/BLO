@@ -2,6 +2,9 @@
 
 namespace App\Controller\Parts;
 
+use App\Entity\Parts\Carcase;
+use App\Entity\Parts\Model;
+use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
 use App\Form\Parts\PartType;
 use Knp\Component\Pager\PaginatorInterface;
@@ -21,24 +24,28 @@ class PartsController extends AbstractController
         $part = new Part();
         $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
         $form->handleRequest($request);
-        $spares = false;
+        $parts = false;
 
-        $this->getDoctrine()->getRepository(Part::class)->getBrandById(21);
+//        $this->getDoctrine()->getRepository(Carcase::class)->getCarcaseById(237);
+//        $this->getDoctrine()->getRepository(Model::class)->getModelById(21);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $entity->setCity($form->get('city')->getData());
+//            $entity->setCity($form->get('city')->getData());
             $em = $this->getDoctrine()->getManager();
-            $query = $em->getRepository(Part::class)->search($entity);
+//            $query = $em->getRepository(Part::class)->search($entity);
+            $query = $em->getRepository(Oem::class)->search($entity);
+
+            dump($entity);
 
             if ($query) {
-                $spares = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
+                $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
             }
         }
 
         return $this->render('spare/render.html.twig', [
-            'spares' => $spares,
-            'form'   => $form->createView()
+            'parts' => $parts,
+            'form'  => $form->createView()
         ]);
     }
 
@@ -55,10 +62,9 @@ class PartsController extends AbstractController
         $list = [];
 
         if ($id = $request->query->get('model_id')) {
-            $elements = $this->getDoctrine()->getRepository(Part::class)->getBrandById($id);
+            $elements = $this->getDoctrine()->getRepository(Model::class)->getModelById($id);
         } elseif ($id = $request->query->get('carcase_id')) {
-            $carcases = $this->getDoctrine()->getRepository(Part::class)->find($id);
-            $elements = $carcases->getCarcases();
+            $elements = $this->getDoctrine()->getRepository(Carcase::class)->getCarcaseById($id);
         }
 
         foreach ($elements as $element) {

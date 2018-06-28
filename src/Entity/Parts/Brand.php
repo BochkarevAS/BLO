@@ -25,7 +25,7 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brands")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brands")
      */
     private $parts;
 

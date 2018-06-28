@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Entity\Administration\News;
 use App\Entity\Administration\NewsCategories;
 use App\Entity\Parts\Oem;
-use App\Entity\Parts\PartEngineRelation;
 use App\Entity\Region\City;
 use App\Entity\Client\Company;
 use App\Entity\Region\County;
@@ -36,7 +35,6 @@ class LoadFixtures extends Fixture
 
         $this->addEntityRelation($manager);
 
-//        $this->addOem($manager);            // ОЕМ
 //        $this->addCounty($manager);         // Округ
 //        $this->addVendor($manager);         // Продавец
 //        $this->addRegion($manager);         // Регион
@@ -57,6 +55,11 @@ class LoadFixtures extends Fixture
             'Новосебирск', 'Пенза', 'Ростов-на-Дону', 'Якутск', 'Уссурийск'
         ];
 
+        $parts = [
+            'Фара', 'Фарсунка', 'Радиатор', 'Решётка', 'Замок',
+            'Насос', 'Бампер', 'Ресора', 'Акамулятор', 'Болт'
+        ];
+
         for ($i = 1; $i <= 10; $i++) {
             $brand = new Brand();
             $brand->setName($brands[$i-1]);
@@ -71,20 +74,21 @@ class LoadFixtures extends Fixture
 
         for ($i = 1; $i <= 50; $i++) {
             $part = new Part();
-            $part->setName($this->faker->cpr);
+            $part->setName("Фара_$i");
             $part->addBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
             $manager->persist($part);
 
-            $model = new Model();
-            $model->setName($this->faker->departmentName);
-            $part->addModel($model);
-            $manager->persist($model);
-
-//            $relation = new PartEngineRelation();
-//            $relation->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 3)));
-//            $manager->persist($relation);
+            $oem = new Oem();
+            $oem->setName('OEM' . $this->faker->cpr);
+            $oem->setParts($part);
+            $manager->persist($oem);
 
             for ($j = 1; $j <= 10; $j++) {
+                $model = new Model();
+                $model->setName($this->faker->departmentName);
+                $part->addModel($model);
+                $manager->persist($model);
+
                 $engine = new Engine();
                 $engine->setName($this->faker->cpr);
                 $part->addEngine($engine);
@@ -100,19 +104,6 @@ class LoadFixtures extends Fixture
         }
     }
 
-    private function addOem($manager)
-    {
-        for ($i = 1; $i <= 50; $i++) {
-            $oem = new Oem();
-            $oem->setName($this->faker->vat(false));
-            $this->setReference('oem_' . $i, $oem);
-            $this->listOem[] = $oem;
-
-            $manager->persist($oem);
-        }
-
-        $manager->flush();
-    }
 
     private function addCounty($manager)
     {

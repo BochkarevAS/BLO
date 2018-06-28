@@ -17,22 +17,22 @@
             {{ form_row(form.carcases, {'id': 'carcase', 'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.carcases) }}
 
-            {{ form_row(form.engines) }}
-            {{ form_errors(form.engines) }}
+            {#{{ form_row(form.engines) }}#}
+            {#{{ form_errors(form.engines) }}#}
 
-            {#{{ form_row(form.parts) }}#}
-            {#{{ form_errors(form.parts) }}#}
+            {{ form_row(form.name) }}
+            {{ form_errors(form.name) }}
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Найти</button>
             </div>
         {{ form_end(form) }}
 
-        {{ dump(spares) }}
+        {{ dump(parts) }}
 
-        {% if spares %}
+        {% if parts %}
             <div class="navigator">
-                {{ knp_pagination_render(spares) }}
+                {{ knp_pagination_render(parts) }}
             </div>
 
             <table class="table table-hover">
@@ -46,23 +46,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for spare in spares %}
-                        {% for part in spare.parts %}
-                            <tr>
-                                <td>
-                                    {{ part.name }} на {{ spare.brand }} {{ spare.name }}
-                                    {#кузов #}{#{{ spare.carcases.name }}#}
-                                </td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        {% endfor %}
+                    {% for part in parts %}
+
+                        {{ dump(part.parts ) }}
+
+                        <tr>
+                            <td>
+                                {{ part.name }} на
+                                {% for part in part.parts %}
+                                    {{ part.id }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {#{% for carcase in part.carcases %}#}
+                                    {#{{ carcase.name }}#}
+                                {#{% endfor %}#}
+                            </td>
+                        </tr>
+                        {#{% for part in spare.parts %}#}
+                            {#<tr>#}
+                                {#<td>#}
+                                    {#{{ part.name }} на {{ spare.brand }} {{ spare.name }}#}
+                                    {#кузов #}{##}{#{{ spare.carcases.name }}#}
+                                {#</td>#}
+                                {#<td></td>#}
+                                {#<td></td>#}
+                            {#</tr>#}
+                        {#{% endfor %}#}
                     {% endfor %}
                 </tbody>
             </table>
 
             <div class="navigator">
-                {{ knp_pagination_render(spares) }}
+                {{ knp_pagination_render(parts) }}
             </div>
         {% endif %}
 

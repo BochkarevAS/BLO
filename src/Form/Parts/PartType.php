@@ -49,16 +49,16 @@ class PartType extends AbstractType
                 'class' => Carcase::class,
                 'label' => 'Кузов',
             ])
-            ->add('engines', TextType::class, [
-                'attr'     => ['class' => 'form-control'],
-                'label'    => 'Двигатель',
-                'required' => false
-            ])
-//            ->add('parts', TextType::class, [
+//            ->add('engines', TextType::class, [
 //                'attr'     => ['class' => 'form-control'],
-//                'label'    => 'Номер, маркировка запчасти',
+//                'label'    => 'Двигатель',
 //                'required' => false
 //            ])
+            ->add('name', TextType::class, [
+                'attr'     => ['class' => 'form-control'],
+                'label'    => 'Номер, маркировка запчасти',
+                'required' => false
+            ])
         ;
 
 //        $formModifier = function (FormInterface $form, Brand $brand = null) {
