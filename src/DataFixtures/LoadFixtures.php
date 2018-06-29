@@ -33,7 +33,7 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-        $this->addEntityRelation($manager);
+        $this->addPartsRelation($manager);
 
 //        $this->addCounty($manager);         // Округ
 //        $this->addRegion($manager);         // Регион
@@ -42,7 +42,7 @@ class LoadFixtures extends Fixture
 //        $this->addNewsCategoeys($manager);  // Категория новостей
     }
 
-    private function addEntityRelation($manager)
+    private function addPartsRelation($manager)
     {
         $brands = [
             'Toyota', 'Nissan', 'Subaru', 'JIP', 'Audi',

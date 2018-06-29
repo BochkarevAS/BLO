@@ -4,32 +4,7 @@
 
     <div class="container">
 
-        {{ form_start(form, {'action': path('parts_render'), 'method': 'GET', 'attr': {'id': 'form'}}) }}
-            {{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.city) }}
-
-            {{ form_row(form.brands, {'id': 'brand', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.brands) }}
-
-            {{ form_row(form.models, {'id': 'model', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.models) }}
-
-            {{ form_row(form.carcases, {'id': 'carcase', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.carcases) }}
-
-            {{ form_row(form.oem) }}
-            {{ form_errors(form.oem) }}
-
-            {{ form_row(form.engines) }}
-            {{ form_errors(form.engines) }}
-
-            {{ form_row(form.name) }}
-            {{ form_errors(form.name) }}
-
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Найти</button>
-            </div>
-        {{ form_end(form) }}
+        {{ include('/parts/parts_form.html.twig') }}
 
         {% if oems %}
             <div class="navigator">

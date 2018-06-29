@@ -8,12 +8,13 @@
             <link href="{{ asset('build/layout.css') }}" rel="stylesheet" />
         {% endblock %}
     </head>
-    <body>
 
+    <body>
         <a href="{{ path('news_render') }}">Новости</a>
         <a href="{{ path('news_categories_render') }}">Категории новостей</a>
-        <a href="{{ path('price_render') }}">ПРАЙСЫ КОМПАНИИ</a>
+        <a href="{{ path('price_render') }}">Прайсы компании</a>
         <a href="{{ path('parts_render') }}">Запчасти</a>
+        <a href="{{ path('tyres_render') }}">Шины</a>
 
         {% block body %}{% endblock %}
 

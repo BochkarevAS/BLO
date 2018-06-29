@@ -37,8 +37,8 @@ class PartsController extends AbstractController
             }
         }
 
-        return $this->render('parts/render.html.twig', [
-            'oems'  => $oems,
+        return $this->render('parts/parts_render.html.twig', [
+            'oems' => $oems,
             'form' => $form->createView()
         ]);
     }

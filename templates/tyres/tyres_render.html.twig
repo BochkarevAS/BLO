@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block auth_user_content %}
+
+
+
+{% endblock auth_user_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('build/app.js') }}"></script>
+
+{% endblock %}
