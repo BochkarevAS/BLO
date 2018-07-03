@@ -15,6 +15,9 @@ use App\Entity\Parts\Engine;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
+use App\Entity\Tyres\Manufacturer;
+use App\Entity\Tyres\Seasonality;
+use App\Entity\Tyres\Thorn;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -33,13 +36,65 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-        $this->addPartsRelation($manager);
+        $this->addTyresRelation($manager);  // Шины
+//        $this->addPartsRelation($manager);  // Запчасти
 
 //        $this->addCounty($manager);         // Округ
 //        $this->addRegion($manager);         // Регион
 //        $this->addCompany($manager);        // Компания
 //        $this->addNews($manager);           // Новость
 //        $this->addNewsCategoeys($manager);  // Категория новостей
+    }
+
+    private function addTyresRelation($manager)
+    {
+        $manufacturers = [
+            "Amtel", "BFGoodrich", "Brasa", "Bridgestone", "Continental", "Cordiant",
+            "Dmack", "Dunlop", "Firestone", "Formula", "FORWARD", "General Tire", "Gislaved",
+            "Goodyear", "Hankook", "Jinyu", "Marshal", "Matador", "Maxxis", "Nankang", "Nexen",
+            "Nitto", "Nokian", "Pirelli", "PROFIL", "Riken", "Roadstone", "Rosava", "Sailun",
+            "Sava", "Tigar", "Toyo", "Triangle Group", "Tunga", "Viatti", "Yokohama"
+        ];
+        $seasonalitys = ['Зима', 'Лето', 'Всесезонные'];
+        $thorns = ['Шипованные', 'Без шипов'];
+        $models = [
+            'AS-1', 'CW-20', 'CW-25', 'CX-668', 'ECO-1', 'ECO-2', 'ESSN-1',
+            'FT-4', 'FT-7', 'IA-1', 'Mudstar Radial M/T', 'N-605', 'N-830',
+            'N-889', 'N-890', 'N-990', 'NR-066', 'NS-1', 'NS-2', 'NS-20',
+            'NS-2R', 'RX-615', 'S-600', 'S-900', 'SL-6', 'SN-1', 'SNC-1',
+            'Snow Viva SV-1', 'SP-5', 'SP-7', 'SV-1', 'SV-2', 'SV-55', 'SW-5',
+            'SW-7', 'WA-1', 'XR-611', 'NS-2 Ultra Sport'
+        ];
+        $i = 1;
+
+        foreach ($manufacturers as $record) {
+            $manufacturer = new Manufacturer();
+            $manufacturer->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $this->setReference('manufacturer_' . $i, $manufacturer);
+            $manager->persist($manufacturer);
+            $i++;
+        }
+
+        foreach ($models as $record) {
+            $model = new \App\Entity\Tyres\Model();
+            $model->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $model->setManufacturers($this->getReference('manufacturer_' . $this->faker->numberBetween(1, count($models)-2)));
+            $manager->persist($model);
+        }
+
+        foreach ($seasonalitys as $record) {
+            $seasonality = new Seasonality();
+            $seasonality->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $manager->persist($seasonality);
+        }
+
+        foreach ($thorns as $record) {
+            $thorn = new Thorn();
+            $thorn->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $manager->persist($thorn);
+        }
+
+        $manager->flush();
     }
 
     private function addPartsRelation($manager)

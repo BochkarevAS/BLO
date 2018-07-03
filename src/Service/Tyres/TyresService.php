@@ -23,49 +23,66 @@ class TyresService
 
     public function parse()
     {
-//        $file = 'test.csv';
-        $file = '795.csv';
+        set_time_limit(300);
+
+        $file = 'test.csv';
+//        $file = '795.csv';
+//        $file = '615.csv';
+//        $file = '616.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . $file;
         $reader = Reader::createFromPath($path);
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
         $header = [
-            'header', 'type_tyres', 'year', 'vendor', 'model', 'width_prof', 'height_prof',
-            'height_tyres', 'diametr_mm', 'diametr_inch', 'komerc', 'seasonality',
-            'condition', 'count', 'thorns', 'rating', 'speed', 'load', 'mud_at',
-            'mud_mt', 'axis', 'camera', 'radius', 'availability', 'order_by', 'tra',
-            'lt', 'description', 'pictures', 'wholesale', 'region', 'city', 'youtube'
+            'header', 'tire_type', 'year', 'manufacturer', 'model', 'profile_width_mm',
+            'profile_height_proc', 'wheel_width_inc', 'wheel_height_inc', 'landing_diameter_mm',
+            'landing_diameter_inc', 'commercial', 'seasonality', 'status',
+            'quantity', 'thorns', 'ply_rating', 'index_of_speed', 'load_index',
+            'mud_at', 'dirt_mt', 'axis', 'presence_of_camera', 'radius', 'moto_class',
+            'in_order', 'tra_code', 'lt_tire_function', 'price', 'availability',
+            'description', 'pictures', 'opt', 'region', 'city', 'link_youtube'
         ];
+
         $records = $reader->getRecords($header);
+        $i = 0;
+        $batchSize = 100;
 
         foreach ($records as $offset => $record) {
+            dump($record);
+//            $q = $this->em->createQuery('update MyProject\Model\Manager m set m.salary = m.salary * 0.9');
+//            $numUpdated = $q->execute();
 
-//            dump($record);
+            $manufacturer = $this->em->getRepository(Manufacturer::class)->findOneBy([
+                'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1252')
+            ]);
 
-            $manufacturer = new Manufacturer();
-            $manufacturer->setName(mb_convert_encoding($record['vendor'], 'UTF-8', 'Windows-1252'));
-            $this->em->persist($manufacturer);
+            $seasonality = $this->em->getRepository(Seasonality::class)->findOneBy([
+                'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1252')
+            ]);
 
-            $seasonality = new Seasonality();
-            $seasonality->setName($record['seasonality']);
-            $this->em->persist($seasonality);
-
-            $thorn = new Thorn();
-            $thorn->setName($record['thorns']);
-            $this->em->persist($thorn);
+            $thorn = $this->em->getRepository(Thorn::class)->findOneBy([
+                'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1252')
+            ]);
 
             $tyre = new Tyre();
-            $tyre->setDiameter((int) $record['diametr_mm']);
-            $tyre->setHeight((int) $record['height_prof']);
-            $tyre->setWidth($record['width_prof'] == "" ? (int) $record['width_prof'] : 0);
-            $tyre->setCount($record['count'] == "" ? (int) $record['count'] : 0);
+            $tyre->setDiameter((int) $record['landing_diameter_mm']);
+            $tyre->setHeight((int) $record['profile_height_proc']);
+            $tyre->setWidth($record['profile_width_mm'] == "" ? (int) $record['profile_width_mm'] : 0);
+            $tyre->setCount($record['quantity'] == "" ? (int) $record['quantity'] : 0);
             $tyre->setManufacturers($manufacturer);
             $tyre->setSeasonalitys($seasonality);
             $tyre->setThorns($thorn);
             $this->em->persist($tyre);
+
+            if (($i % $batchSize) === 0) {
+                $this->em->flush();
+                $this->em->clear();
+            }
+            $i++;
         }
 
         $this->em->flush();
+        $this->em->clear();
     }
 }

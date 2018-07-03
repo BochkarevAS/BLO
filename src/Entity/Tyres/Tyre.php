@@ -19,39 +19,69 @@ class Tyre
     private $id;
 
     /**
+     * Ширина профиля (мм)
+     *
      * @ORM\Column(type="integer")
      */
     private $width;
 
     /**
+     * Высота профиля (%)
+     *
      * @ORM\Column(type="integer")
      */
     private $height;
 
     /**
+     * Посадочный диаметр (мм)
+     *
      * @ORM\Column(type="integer")
      */
     private $diameter;
 
     /**
+     * Количество
+     *
      * @ORM\Column(type="integer")
      */
     private $count;
 
     /**
+     * Шипы
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn", inversedBy="tyre"))
      */
     private $thorns;
 
     /**
+     * Сезонность
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality", inversedBy="tyre")
      */
     private $seasonalitys;
 
     /**
+     * Производитель
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Manufacturer", inversedBy="tyre")
      */
     private $manufacturers;
+
+    /**
+     * Состояние.
+     * Один из вариантов 0 => Любая, 1 => Контрактная (б/у), 2 => Новая
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $status;
+
+    /**
+     * Наличие.
+     * Один из вариантов 0 => Все, 1 => Под заказ, 2 => В наличии
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $availability;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -133,6 +163,26 @@ class Tyre
     public function setManufacturers($manufacturers)
     {
         $this->manufacturers = $manufacturers;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability($availability)
+    {
+        $this->availability = $availability;
     }
 
     public function getCreatedAt()
