@@ -2,11 +2,12 @@
 
 namespace App\Entity\Tyres;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Tyres\TyresRepository")
  * @ORM\Table(name="tyre", schema="tyres")
  */
 class Tyre
@@ -84,6 +85,14 @@ class Tyre
     private $availability;
 
     /**
+     * Производитель
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tyres\Vendor", inversedBy="tyres")
+     * @ORM\JoinTable(name="tyre_vendor", schema="tyres")
+     */
+    private $vendors;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -94,6 +103,11 @@ class Tyre
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
+
+    public function __construct()
+    {
+        $this->vendors = new ArrayCollection();
+    }
 
     public function getWidth()
     {
@@ -183,6 +197,21 @@ class Tyre
     public function setAvailability($availability)
     {
         $this->availability = $availability;
+    }
+
+    public function addVendors(Vendor $vendor): self
+    {
+        if (!$this->vendors->contains($vendor)) {
+            $this->vendors->add($vendor);
+            $vendor->addTyres($this);
+        }
+
+        return $this;
+    }
+
+    public function getVendors()
+    {
+        return $this->vendors;
     }
 
     public function getCreatedAt()

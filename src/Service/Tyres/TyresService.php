@@ -6,6 +6,7 @@ use App\Entity\Tyres\Manufacturer;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
+use App\Entity\Tyres\Vendor;
 use Doctrine\Common\Persistence\ObjectManager;
 use League\Csv\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -25,9 +26,9 @@ class TyresService
     {
         set_time_limit(300);
 
-        $file = 'test.csv';
+//        $file = 'test.csv';
 //        $file = '795.csv';
-//        $file = '615.csv';
+        $file = '615.csv';
 //        $file = '616.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . $file;
@@ -47,11 +48,16 @@ class TyresService
         $records = $reader->getRecords($header);
         $i = 0;
         $batchSize = 100;
+        $nameVendor = 'ALFACAR';
 
         foreach ($records as $offset => $record) {
-            dump($record);
+//            dump($record);
 //            $q = $this->em->createQuery('update MyProject\Model\Manager m set m.salary = m.salary * 0.9');
 //            $numUpdated = $q->execute();
+
+            $vendor = $this->em->getRepository(Vendor::class)->findOneBy([
+                'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1252')
+            ]);
 
             $manufacturer = $this->em->getRepository(Manufacturer::class)->findOneBy([
                 'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1252')
@@ -70,6 +76,9 @@ class TyresService
             $tyre->setHeight((int) $record['profile_height_proc']);
             $tyre->setWidth($record['profile_width_mm'] == "" ? (int) $record['profile_width_mm'] : 0);
             $tyre->setCount($record['quantity'] == "" ? (int) $record['quantity'] : 0);
+            $tyre->setStatus(0);
+            $tyre->setAvailability(0);
+            $tyre->addVendors($vendor);
             $tyre->setManufacturers($manufacturer);
             $tyre->setSeasonalitys($seasonality);
             $tyre->setThorns($thorn);

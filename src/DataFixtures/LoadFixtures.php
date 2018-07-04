@@ -65,7 +65,20 @@ class LoadFixtures extends Fixture
             'Snow Viva SV-1', 'SP-5', 'SP-7', 'SV-1', 'SV-2', 'SV-55', 'SW-5',
             'SW-7', 'WA-1', 'XR-611', 'NS-2 Ultra Sport'
         ];
+        $vendors = [
+            '«ЛегионТрейд»', 'АВТОМАРКЕТ', 'ЛЕВОБЕРЕЖНЫЙ', 'Авторесурс-Сервис', 'Стол заказов', 'Контрактавто',
+            'Штутгарт', '1-й Автомаркет Запчастей', '100 процентов', '1000 запчастей', '159AVTO', '25 All Auto',
+            '38РЕГИОН', '4 Такта', '4x4cars', '4 Runner', 'a-ligaPRO', 'Abs-auto', 'Ads54', 'ADX-Motors',
+            'AGIRA', 'Airbag102', 'AKPP-MARKET', 'AlexAuto', 'ALFACAR', 'Alphagarage', 'AlphaParts',
+            'Amotomo', 'AmourMotor', 'Aprice72.ru', 'Arsenal Auto', 'AsiaTrek'
+        ];
         $i = 1;
+
+        foreach ($vendors as $record) {
+            $vendor = new \App\Entity\Tyres\Vendor();
+            $vendor->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $manager->persist($vendor);
+        }
 
         foreach ($manufacturers as $record) {
             $manufacturer = new Manufacturer();

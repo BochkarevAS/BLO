@@ -2,11 +2,38 @@
 
 {% block auth_user_content %}
 
-
-
-
-
     <span>Шины</span>
+
+    <a href="{{ path('tyres_parse') }}">Импорт CSV</a>
+
+    <div class="container">
+
+        {% if tyres %}
+            <div class="navigator">
+                {{ knp_pagination_render(tyres) }}
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>id</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tyre in tyres %}
+                    <tr>
+                        <td>{{ tyre.manufacturers.name }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigator">
+                {{ knp_pagination_render(tyres) }}
+            </div>
+        {% endif %}
+
+    </div>
 
 
 
