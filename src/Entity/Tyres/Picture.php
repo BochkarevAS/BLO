@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Сущность для хранения фотографий с шинами
  *
  * @ORM\Entity
- * @ORM\Table(name="picture")
+ * @ORM\Table(name="picture", schema="tyres")
  */
 class Picture
 {
@@ -26,6 +26,14 @@ class Picture
      * @ORM\Column(type="string")
      */
     private $path;
+
+    /**
+     * ID шин
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Tyre")
+     * @ORM\JoinColumn(name="tyre_id", referencedColumnName="id")
+     */
+    private $tyres;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -47,6 +55,16 @@ class Picture
     public function setPath($path)
     {
         $this->path = $path;
+    }
+
+    public function getTyres()
+    {
+        return $this->tyres;
+    }
+
+    public function setTyres($tyres)
+    {
+        $this->tyres = $tyres;
     }
 
     public function getCreatedAt()

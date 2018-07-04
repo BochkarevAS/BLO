@@ -3,6 +3,7 @@
 namespace App\Service\Tyres;
 
 use App\Entity\Tyres\Manufacturer;
+use App\Entity\Tyres\Picture;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
@@ -56,26 +57,26 @@ class TyresService
 //            $numUpdated = $q->execute();
 
             $vendor = $this->em->getRepository(Vendor::class)->findOneBy([
-                'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1252')
+                'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
             ]);
 
             $manufacturer = $this->em->getRepository(Manufacturer::class)->findOneBy([
-                'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1252')
+                'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1251')
             ]);
 
             $seasonality = $this->em->getRepository(Seasonality::class)->findOneBy([
-                'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1252')
+                'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
             ]);
 
             $thorn = $this->em->getRepository(Thorn::class)->findOneBy([
-                'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1252')
+                'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
             ]);
 
             $tyre = new Tyre();
             $tyre->setDiameter((int) $record['landing_diameter_mm']);
             $tyre->setHeight((int) $record['profile_height_proc']);
-            $tyre->setWidth($record['profile_width_mm'] == "" ? (int) $record['profile_width_mm'] : 0);
-            $tyre->setCount($record['quantity'] == "" ? (int) $record['quantity'] : 0);
+            $tyre->setWidth((int) $record['profile_width_mm']);
+            $tyre->setCount((int) $record['quantity']);
             $tyre->setStatus(0);
             $tyre->setAvailability(0);
             $tyre->addVendors($vendor);
@@ -83,6 +84,15 @@ class TyresService
             $tyre->setSeasonalitys($seasonality);
             $tyre->setThorns($thorn);
             $this->em->persist($tyre);
+
+            $pictures = explode(',', $record['pictures']);
+
+            foreach ($pictures as $item) {
+                $picture = new Picture();
+                $picture->setPath(mb_convert_encoding($item, 'UTF-8', 'Windows-1251'));
+                $picture->setTyres($tyre);
+                $this->em->persist($picture);
+            }
 
             if (($i % $batchSize) === 0) {
                 $this->em->flush();

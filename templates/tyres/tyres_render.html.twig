@@ -8,28 +8,45 @@
 
     <div class="container">
 
-        {% if tyres %}
+        {% if pictures %}
             <div class="navigator">
-                {{ knp_pagination_render(tyres) }}
+                {{ knp_pagination_render(pictures) }}
             </div>
 
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>id</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for tyre in tyres %}
+                {% for picture in pictures %}
                     <tr>
-                        <td>{{ tyre.manufacturers.name }}</td>
+                        <td><img src="{{ picture.path | raw | convert_encoding('UTF-8', 'ISO-8859-1') }}"></td>
+                        <td>
+                            Шина {{ picture.tyres.width }}/{{ picture.tyres.height }} {{ picture.tyres.manufacturers.name }}
+                            {#{{ picture.tyres.diameter }}#}
+                            {#{{ picture.tyres.count }}#}
+                            {#{{ picture.tyres.thorns.name }}#}
+                        </td>
+                        <td>
+                            {% for vandor in picture.tyres.vendors %}
+                                {{ vandor.name }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ picture.tyres.updatedAt|date }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
 
+            {#{{ dump(pictures) }}#}
+
             <div class="navigator">
-                {{ knp_pagination_render(tyres) }}
+                {{ knp_pagination_render(pictures) }}
             </div>
         {% endif %}
 

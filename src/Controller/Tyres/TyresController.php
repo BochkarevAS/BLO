@@ -18,11 +18,11 @@ class TyresController extends AbstractController
     {
         $query = $this->getDoctrine()->getRepository(Tyre::class)->renderTyre();
 
-        $tyres = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
+        $pictures = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
 
 
         return $this->render('tyres/tyres_render.html.twig', [
-            'tyres' => $tyres,
+            'pictures' => $pictures,
         ]);
     }
 
@@ -34,7 +34,7 @@ class TyresController extends AbstractController
         $tyresService->parse();
 
         return $this->render('tyres/tyres_render.html.twig', [
-
+            'pictures' => null,
         ]);
     }
 }

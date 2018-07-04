@@ -76,7 +76,7 @@ class LoadFixtures extends Fixture
 
         foreach ($vendors as $record) {
             $vendor = new \App\Entity\Tyres\Vendor();
-            $vendor->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $vendor->setName($record);
             $manager->persist($vendor);
         }
 
@@ -97,13 +97,13 @@ class LoadFixtures extends Fixture
 
         foreach ($seasonalitys as $record) {
             $seasonality = new Seasonality();
-            $seasonality->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $seasonality->setName($record);
             $manager->persist($seasonality);
         }
 
         foreach ($thorns as $record) {
             $thorn = new Thorn();
-            $thorn->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $thorn->setName($record);
             $manager->persist($thorn);
         }
 
