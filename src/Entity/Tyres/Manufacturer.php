@@ -29,6 +29,11 @@ class Manufacturer
     private $tyre;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Model", mappedBy="manufacturers")
+     */
+    private $model;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -58,6 +63,21 @@ class Manufacturer
     public function setTyre($tyre)
     {
         $this->tyre = $tyre;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getCreatedAt()

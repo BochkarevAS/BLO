@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.manufacturers, {'id': 'tyres_manufacturers', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.manufacturers) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.thorns, {'id': 'tyres_thorn', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.thorns) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.seasonalitys, {'id': 'tyres_seasonality', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.seasonalitys) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.model, {'id': 'tyres_model', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.model) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.vendors, {'id': 'tyres_vendor', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.vendors) }}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Найти</button>
+    </div>
+{{ form_end(form) }}

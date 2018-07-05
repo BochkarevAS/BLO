@@ -24,13 +24,12 @@ class PartsController extends AbstractController
         $part = new Part();
         $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
         $form->handleRequest($request);
-        $oems = false;
+        $oems = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $entity->setCity($form->get('city')->getData());
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->getRepository(Oem::class)->search($entity);
+            $query = $this->getDoctrine()->getRepository(Oem::class)->search($entity);
 
             if ($query) {
                 $oems = $paginator->paginate($query, $request->query->getInt('page', 1), 5);

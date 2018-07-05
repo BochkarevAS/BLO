@@ -46,4 +46,9 @@ class Thorn
     {
         $this->tyre = $tyre;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

@@ -3,6 +3,7 @@
 import $ from 'jquery';
 import News from './Components/Administration/News';
 import Model from './Components/Part/Model';
+import Tyre from './Components/Tyres/Tyre';
 
 $(document).ready(function() {
     let $wrapper = $('.js-news-module');
@@ -11,4 +12,6 @@ $(document).ready(function() {
     let model = new Model();
     model.changedModel();
     model.changedCarcase();
+
+    let tyre = new Tyre();
 });

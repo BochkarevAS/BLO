@@ -3,6 +3,7 @@
 namespace App\Controller\Tyres;
 
 use App\Entity\Tyres\Tyre;
+use App\Form\Tyres\TyreType;
 use App\Service\Tyres\TyresService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,29 @@ class TyresController extends AbstractController
      */
     public function renderTyres(Request $request, PaginatorInterface $paginator)
     {
-        $query = $this->getDoctrine()->getRepository(Tyre::class)->renderTyre();
+        $tyre = new Tyre();
+        $form = $this->createForm(TyreType::class, $tyre, ['method' => 'GET']);
+        $form->handleRequest($request);
+        $pictures = null;
 
-        $pictures = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entity = $form->getData();
 
+            dump($entity);
+
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->getRepository(Tyre::class)->search($entity);
+
+            if ($query) {
+                $pictures = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
+            }
+        }
+
+//        $query = $this->getDoctrine()->getRepository(Tyre::class)->renderTyre();
 
         return $this->render('tyres/tyres_render.html.twig', [
             'pictures' => $pictures,
+            'form'     => $form->createView()
         ]);
     }
 
@@ -35,6 +52,7 @@ class TyresController extends AbstractController
 
         return $this->render('tyres/tyres_render.html.twig', [
             'pictures' => null,
+            'form'     => null
         ]);
     }
 }

@@ -159,6 +159,9 @@ class Tyre
         $this->seasonalitys = $seasonalitys;
     }
 
+    /**
+     * @return Thorn
+     */
     public function getThorns()
     {
         return $this->thorns;
@@ -169,6 +172,9 @@ class Tyre
         $this->thorns = $thorns;
     }
 
+    /**
+     * @return Manufacturer
+     */
     public function getManufacturers()
     {
         return $this->manufacturers;
@@ -209,6 +215,9 @@ class Tyre
         return $this;
     }
 
+    /**
+     * @return ArrayCollection|Vendor[]
+     */
     public function getVendors()
     {
         return $this->vendors;

@@ -27,9 +27,9 @@ class TyresService
     {
         set_time_limit(300);
 
-//        $file = 'test.csv';
+        $file = 'test.csv';
 //        $file = '795.csv';
-        $file = '615.csv';
+//        $file = '615.csv';
 //        $file = '616.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . $file;

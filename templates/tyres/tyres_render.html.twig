@@ -8,6 +8,8 @@
 
     <div class="container">
 
+        {{ include('/tyres/tyres_form.html.twig') }}
+
         {% if pictures %}
             <div class="navigator">
                 {{ knp_pagination_render(pictures) }}
@@ -25,7 +27,7 @@
                 <tbody>
                 {% for picture in pictures %}
                     <tr>
-                        <td><img src="{{ picture.path | raw | convert_encoding('UTF-8', 'ISO-8859-1') }}"></td>
+                        <td><img src="{{ picture.path }}" width="110" height="110"></td>
                         <td>
                             Шина {{ picture.tyres.width }}/{{ picture.tyres.height }} {{ picture.tyres.manufacturers.name }}
                             {#{{ picture.tyres.diameter }}#}
@@ -51,10 +53,6 @@
         {% endif %}
 
     </div>
-
-
-
-
 
 {% endblock auth_user_content %}
 
