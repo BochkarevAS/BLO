@@ -16,6 +16,12 @@ use App\Entity\Parts\Brand;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
 use App\Entity\Tyres\Manufacturer;
+use App\Entity\Tyres\Profile\ProfileAvailability;
+use App\Entity\Tyres\Profile\ProfileCount;
+use App\Entity\Tyres\Profile\ProfileDiameter;
+use App\Entity\Tyres\Profile\ProfileHeight;
+use App\Entity\Tyres\Profile\ProfileStatus;
+use App\Entity\Tyres\Profile\ProfileWidth;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -36,7 +42,8 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-        $this->addTyresRelation($manager);  // Шины
+        $this->addProfileRelation($manager);  // Профиль шин
+        $this->addTyresRelation($manager);    // Шины
 //        $this->addPartsRelation($manager);  // Запчасти
 
 //        $this->addCounty($manager);         // Округ
@@ -44,6 +51,75 @@ class LoadFixtures extends Fixture
 //        $this->addCompany($manager);        // Компания
 //        $this->addNews($manager);           // Новость
 //        $this->addNewsCategoeys($manager);  // Категория новостей
+    }
+
+    private function addProfileRelation($manager)
+    {
+        $count    = [];
+        $width    = [];
+        $height   = [];
+        $diameter = [];
+        $status = [
+            0 => 'Любая',
+            1 => 'Контрактная (б/у)',
+            2 => 'Новая'
+        ];
+        $availability = [
+            0 => 'Все',
+            1 => 'Под заказ',
+            2 => 'В наличии'
+        ];
+
+        for ($i = 105; $i <= 815; $i = $i + 5) {
+            $width[] = $i;
+        }
+        for ($i = 25; $i <= 110; $i = $i + 5) {
+            $height[] = $i;
+        };
+        for ($i = 6; $i <= 57; $i = $i + 0.5) {
+            $diameter[] = $i;
+        }
+        for ($i = 1; $i <= 10; $i++) {
+            $count[] = $i;
+        }
+
+        foreach ($status as $item) {
+            $profileStatus = new ProfileStatus();
+            $profileStatus->setName($item);
+            $manager->persist($profileStatus);
+        }
+
+        foreach ($availability as $item) {
+            $profileAvailability = new ProfileAvailability();
+            $profileAvailability->setName($item);
+            $manager->persist($profileAvailability);
+        }
+
+        foreach ($width as $item) {
+            $profileWidth = new ProfileWidth();
+            $profileWidth->setName($item);
+            $manager->persist($profileWidth);
+        }
+
+        foreach ($height as $item) {
+            $profileHeight = new ProfileHeight();
+            $profileHeight->setName($item);
+            $manager->persist($profileHeight);
+        }
+
+        foreach ($diameter as $item) {
+            $profileDiameter = new ProfileDiameter();
+            $profileDiameter->setName($item);
+            $manager->persist($profileDiameter);
+        }
+
+        foreach ($count as $item) {
+            $profileCount = new ProfileCount();
+            $profileCount->setName($item);
+            $manager->persist($profileCount);
+        }
+
+        $manager->flush();
     }
 
     private function addTyresRelation($manager)

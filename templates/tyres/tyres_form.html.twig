@@ -23,6 +23,32 @@
             {{ form_errors(form.vendors) }}
         </div>
     </div>
+    <div class="row">
+        <div class="col-2">
+            {{ form_row(form.diameter, {'id': 'tyres_diameter', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.diameter) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.height, {'id': 'tyres_height', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.height) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.width, {'id': 'tyres_width', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.width) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.count, {'id': 'tyres_count', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.count) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.status, {'id': 'tyres_status', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.status) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.availability, {'id': 'tyres_availability', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.availability) }}
+        </div>
+    </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Найти</button>
     </div>

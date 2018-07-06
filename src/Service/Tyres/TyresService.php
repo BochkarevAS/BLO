@@ -8,31 +8,31 @@ use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
 use App\Entity\Tyres\Vendor;
-use Doctrine\Common\Persistence\ObjectManager;
 use League\Csv\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TyresService
 {
     private $container;
-    private $em;
 
-    public function __construct(ContainerInterface $container, ObjectManager $em)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->em = $em;
     }
 
     public function parse()
     {
         set_time_limit(300);
 
-        $file = 'test.csv';
+//        $file = 'test.csv';
 //        $file = '795.csv';
-//        $file = '615.csv';
+        $file = '615.csv';
 //        $file = '616.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . $file;
+        $em   = $this->container->get('doctrine.orm.default_entity_manager');
+        $em->getConnection()->getConfiguration()->setSQLLogger(null);
+
         $reader = Reader::createFromPath($path);
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
@@ -45,10 +45,9 @@ class TyresService
             'in_order', 'tra_code', 'lt_tire_function', 'price', 'availability',
             'description', 'pictures', 'opt', 'region', 'city', 'link_youtube'
         ];
-
         $records = $reader->getRecords($header);
         $i = 0;
-        $batchSize = 100;
+        $batchSize = 25;
         $nameVendor = 'ALFACAR';
 
         foreach ($records as $offset => $record) {
@@ -56,19 +55,19 @@ class TyresService
 //            $q = $this->em->createQuery('update MyProject\Model\Manager m set m.salary = m.salary * 0.9');
 //            $numUpdated = $q->execute();
 
-            $vendor = $this->em->getRepository(Vendor::class)->findOneBy([
+            $vendor = $em->getRepository(Vendor::class)->findOneBy([
                 'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
             ]);
 
-            $manufacturer = $this->em->getRepository(Manufacturer::class)->findOneBy([
+            $manufacturer = $em->getRepository(Manufacturer::class)->findOneBy([
                 'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1251')
             ]);
 
-            $seasonality = $this->em->getRepository(Seasonality::class)->findOneBy([
+            $seasonality = $em->getRepository(Seasonality::class)->findOneBy([
                 'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
             ]);
 
-            $thorn = $this->em->getRepository(Thorn::class)->findOneBy([
+            $thorn = $em->getRepository(Thorn::class)->findOneBy([
                 'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
             ]);
 
@@ -83,7 +82,7 @@ class TyresService
             $tyre->setManufacturers($manufacturer);
             $tyre->setSeasonalitys($seasonality);
             $tyre->setThorns($thorn);
-            $this->em->persist($tyre);
+            $em->persist($tyre);
 
             $pictures = explode(',', $record['pictures']);
 
@@ -91,17 +90,17 @@ class TyresService
                 $picture = new Picture();
                 $picture->setPath(mb_convert_encoding($item, 'UTF-8', 'Windows-1251'));
                 $picture->setTyres($tyre);
-                $this->em->persist($picture);
+                $em->persist($picture);
             }
 
             if (($i % $batchSize) === 0) {
-                $this->em->flush();
-                $this->em->clear();
+                $em->flush();
+                $em->clear();
             }
             $i++;
         }
 
-        $this->em->flush();
-        $this->em->clear();
+        $em->flush();
+        $em->clear();
     }
 }

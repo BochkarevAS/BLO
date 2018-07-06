@@ -4,6 +4,12 @@ namespace App\Form\Tyres;
 
 use App\Entity\Tyres\Manufacturer;
 use App\Entity\Tyres\Model;
+use App\Entity\Tyres\Profile\ProfileAvailability;
+use App\Entity\Tyres\Profile\ProfileCount;
+use App\Entity\Tyres\Profile\ProfileDiameter;
+use App\Entity\Tyres\Profile\ProfileHeight;
+use App\Entity\Tyres\Profile\ProfileStatus;
+use App\Entity\Tyres\Profile\ProfileWidth;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
@@ -45,6 +51,42 @@ class TyreType extends AbstractType
             ->add('seasonalitys', EntityType::class, [
                 'class'         => Seasonality::class,
                 'label'         => 'Сезонность',
+                'choice_label'  => 'name',
+            ])
+            ->add('diameter', EntityType::class, [
+                'class'         => ProfileDiameter::class,
+                'label'         => 'Диаметр',
+                'mapped'        => false,
+                'choice_label'  => 'name',
+            ])
+            ->add('height', EntityType::class, [
+                'class'         => ProfileHeight::class,
+                'label'         => 'Высота',
+                'mapped'        => false,
+                'choice_label'  => 'name',
+            ])
+            ->add('width', EntityType::class, [
+                'class'         => ProfileWidth::class,
+                'label'         => 'Ширина',
+                'mapped'        => false,
+                'choice_label'  => 'name',
+            ])
+            ->add('count', EntityType::class, [
+                'class'         => ProfileCount::class,
+                'label'         => 'Количество',
+                'mapped'        => false,
+                'choice_label'  => 'name',
+            ])
+            ->add('status', EntityType::class, [
+                'class'         => ProfileStatus::class,
+                'label'         => 'Состояние',
+                'mapped'        => false,
+                'choice_label'  => 'name',
+            ])
+            ->add('availability', EntityType::class, [
+                'class'         => ProfileAvailability::class,
+                'label'         => 'Наличие',
+                'mapped'        => false,
                 'choice_label'  => 'name',
             ])
         ;
