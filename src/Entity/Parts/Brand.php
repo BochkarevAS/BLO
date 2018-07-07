@@ -2,9 +2,7 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\BrandRepository")
@@ -25,35 +23,9 @@ class Brand
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brands")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brands")
      */
-    private $parts;
-
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", name="created_at")
-     */
-    private $createdAt;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", name="updated_at")
-     */
-    private $updatedAt;
-
-    public function __construct()
-    {
-        $this->parts = new ArrayCollection();
-    }
-
-    public function addPart(Part $parts): self
-    {
-        if (!$this->parts->contains($parts)) {
-            $this->parts->add($parts);
-        }
-
-        return $this;
-    }
+    private $model;
 
     public function getName()
     {
@@ -63,6 +35,16 @@ class Brand
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
     }
 
     public function getId()

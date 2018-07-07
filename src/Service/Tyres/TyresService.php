@@ -26,10 +26,10 @@ class TyresService
 
 //        $file = 'test.csv';
 //        $file = '795.csv';
-        $file = '615.csv';
-//        $file = '616.csv';
+//        $file = '615.csv';
+        $file = '616.csv';
 
-        $path = $this->container->get('kernel')->getProjectDir() . '/public/' . $file;
+        $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->container->get('doctrine.orm.default_entity_manager');
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 

@@ -6,6 +6,8 @@
 
         {{ include('/parts/parts_form.html.twig') }}
 
+        {#{{ dump(form)}}#}
+
         {% if oems %}
             <div class="navigator">
                 {{ knp_pagination_render(oems) }}

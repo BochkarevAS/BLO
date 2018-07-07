@@ -1,25 +1,38 @@
 {{ form_start(form, {'action': path('parts_render'), 'method': 'GET', 'attr': {'id': 'form'}}) }}
-    {{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}
-    {{ form_errors(form.city) }}
-
-    {{ form_row(form.brands, {'id': 'brand', 'attr': {'class': 'form-control'}}) }}
-    {{ form_errors(form.brands) }}
-
-    {{ form_row(form.models, {'id': 'model', 'attr': {'class': 'form-control'}}) }}
-    {{ form_errors(form.models) }}
-
-    {{ form_row(form.carcases, {'id': 'carcase', 'attr': {'class': 'form-control'}}) }}
-    {{ form_errors(form.carcases) }}
-
-    {{ form_row(form.oem) }}
-    {{ form_errors(form.oem) }}
-
-    {{ form_row(form.engines) }}
-    {{ form_errors(form.engines) }}
-
-    {{ form_row(form.name) }}
-    {{ form_errors(form.name) }}
-
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.brand, {'id': 'brand', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.brand) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.model, {'id': 'model', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.model) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.carcase, {'id': 'carcase', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.carcase) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.oem) }}
+            {{ form_errors(form.oem) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.engines) }}
+            {{ form_errors(form.engines) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.city) }}
+        </div>
+    </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Найти</button>
     </div>

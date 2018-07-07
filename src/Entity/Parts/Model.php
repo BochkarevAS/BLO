@@ -4,7 +4,6 @@ namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\ModelRepository")
@@ -25,21 +24,19 @@ class Model
     private $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="model")
+     */
+    private $brands;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Carcase", mappedBy="models")
+     */
+    private $carcase;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="models")
      */
     private $parts;
-
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", name="created_at")
-     */
-    private $createdAt;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", name="updated_at")
-     */
-    private $updatedAt;
 
     public function __construct()
     {
@@ -65,14 +62,24 @@ class Model
         return $this;
     }
 
-    public function getCreatedAt()
+    public function getBrands()
     {
-        return $this->createdAt;
+        return $this->brands;
     }
 
-    public function getUpdatedAt()
+    public function setBrands($brands)
     {
-        return $this->updatedAt;
+        $this->brands = $brands;
+    }
+
+    public function getCarcase()
+    {
+        return $this->carcase;
+    }
+
+    public function setCarcase($carcase)
+    {
+        $this->carcase = $carcase;
     }
 
     public function getId()

@@ -2,9 +2,7 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\CarcaseRepository")
@@ -25,35 +23,9 @@ class Carcase
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="model")
      */
-    private $parts;
-
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", name="created_at")
-     */
-    private $createdAt;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", name="updated_at")
-     */
-    private $updatedAt;
-
-    public function __construct()
-    {
-        $this->parts = new ArrayCollection();
-    }
-
-    public function addPart(Part $parts): self
-    {
-        if (!$this->parts->contains($parts)) {
-            $this->parts->add($parts);
-        }
-
-        return $this;
-    }
+    private $models;
 
     public function getName()
     {
@@ -63,6 +35,16 @@ class Carcase
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getModels()
+    {
+        return $this->models;
+    }
+
+    public function setModels($models)
+    {
+        $this->models = $models;
     }
 
     public function getId()

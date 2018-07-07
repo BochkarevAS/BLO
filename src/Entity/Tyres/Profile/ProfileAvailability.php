@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="profile_availability")
+ * @ORM\Table(name="profile_availability", schema="tyres")
  */
 class ProfileAvailability
 {

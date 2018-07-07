@@ -26,12 +26,6 @@ class Part
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
-     * @ORM\JoinTable(name="parts_carcases", schema="parts")
-     */
-    private $carcases;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="parts")
      * @ORM\JoinTable(name="parts_engines", schema="parts")
      */
@@ -42,12 +36,6 @@ class Part
      * @ORM\JoinTable(name="parts_models", schema="parts")
      */
     private $models;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Brand", inversedBy="parts")
-     * @ORM\JoinTable(name="parts_brands", schema="parts")
-     */
-    private $brands;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
@@ -70,20 +58,8 @@ class Part
 
     public function __construct()
     {
-        $this->brands   = new ArrayCollection();
         $this->models   = new ArrayCollection();
         $this->engines  = new ArrayCollection();
-        $this->carcases = new ArrayCollection();
-    }
-
-    public function addBrand(Brand $brand): self
-    {
-        if (!$this->brands->contains($brand)) {
-            $this->brands->add($brand);
-            $brand->addPart($this);
-        }
-
-        return $this;
     }
 
     public function addModel(Model $model): self
@@ -101,16 +77,6 @@ class Part
         if (!$this->engines->contains($engine)) {
             $this->engines->add($engine);
             $engine->addPart($this);
-        }
-
-        return $this;
-    }
-
-    public function addCarcase(Carcase $carcase): self
-    {
-        if (!$this->carcases->contains($carcase)) {
-            $this->carcases->add($carcase);
-            $carcase->addPart($this);
         }
 
         return $this;
@@ -140,19 +106,6 @@ class Part
     }
 
     /**
-     * @return ArrayCollection|Carcase[]
-     */
-    public function getCarcases()
-    {
-        return $this->carcases;
-    }
-
-    public function setCarcases($carcases)
-    {
-        $this->carcases = $carcases;
-    }
-
-    /**
      * @return ArrayCollection|Engine[]
      */
     public function getEngines()
@@ -163,19 +116,6 @@ class Part
     public function setEngines($engines)
     {
         $this->engines = $engines;
-    }
-
-    /**
-     * @return ArrayCollection|Brand[]
-     */
-    public function getBrands()
-    {
-        return $this->brands;
-    }
-
-    public function setBrands($brands)
-    {
-        $this->brands = $brands;
     }
 
     /**

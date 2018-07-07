@@ -42,9 +42,9 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-        $this->addProfileRelation($manager);  // Профиль шин
-        $this->addTyresRelation($manager);    // Шины
-//        $this->addPartsRelation($manager);  // Запчасти
+//        $this->addProfileRelation($manager);  // Профиль шин
+//        $this->addTyresRelation($manager);    // Шины
+        $this->addPartsRelation($manager);    // Запчасти
 
 //        $this->addCounty($manager);         // Округ
 //        $this->addRegion($manager);         // Регион
@@ -223,7 +223,6 @@ class LoadFixtures extends Fixture
         for ($i = 1; $i <= 50; $i++) {
             $part = new Part();
             $part->setName("Фара_$i");
-            $part->addBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
             $manager->persist($part);
 
             $oem = new Oem();
@@ -233,23 +232,23 @@ class LoadFixtures extends Fixture
             $oem->setVendors($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
             $manager->persist($oem);
 
-            for ($k = 1; $k <= 10; $k++) {
-                $model = new Model();
-                $model->setName($this->faker->departmentName);
-                $part->addModel($model);
-                $manager->persist($model);
-            }
+            $model = new Model();
+            $model->setName('Model_' . $i);
+            $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+            $this->setReference('model_' . $i, $model);
+            $manager->persist($model);
+
+            $carcase = new Carcase();
+            $carcase->setName('CAR' . $this->faker->vat);
+            $carcase->setModels($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
+            $manager->persist($carcase);
 
             for ($j = 1; $j <= 5; $j++) {
                 $engine = new Engine();
                 $engine->setName('EN' . $this->faker->vat);
                 $part->addEngine($engine);
+                $part->addModel($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
                 $manager->persist($engine);
-
-                $carcase = new Carcase();
-                $carcase->setName('CAR' . $this->faker->vat);
-                $part->addCarcase($carcase);
-                $manager->persist($carcase);
             }
 
             $manager->flush();

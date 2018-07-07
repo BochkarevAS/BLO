@@ -29,11 +29,11 @@ class PartsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $entity->setCity($form->get('city')->getData());
-            $query = $this->getDoctrine()->getRepository(Oem::class)->search($entity);
-
-            if ($query) {
-                $oems = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
-            }
+//            $query = $this->getDoctrine()->getRepository(Oem::class)->search($entity);
+//
+//            if ($query) {
+//                $oems = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
+//            }
         }
 
         return $this->render('parts/parts_render.html.twig', [
