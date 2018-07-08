@@ -2,11 +2,9 @@
 
 {% block auth_user_content %}
 
-    <div class="container">
+    <div class="container js-parts-module">
 
         {{ include('/parts/parts_form.html.twig') }}
-
-        {#{{ dump(form)}}#}
 
         {% if oems %}
             <div class="navigator">

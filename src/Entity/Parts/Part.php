@@ -2,7 +2,6 @@
 
 namespace App\Entity\Parts;
 
-use App\Entity\Region\City;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -32,17 +31,15 @@ class Part
     private $engines;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
-     * @ORM\JoinTable(name="parts_models", schema="parts")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
+     * @ORM\JoinTable(name="parts_carcases", schema="parts")
      */
-    private $models;
+    private $carcases;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
      */
     private $oem;
-
-    private $city;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -58,15 +55,16 @@ class Part
 
     public function __construct()
     {
-        $this->models   = new ArrayCollection();
-        $this->engines  = new ArrayCollection();
+        $this->models    = new ArrayCollection();
+        $this->carcases  = new ArrayCollection();
+        $this->engines   = new ArrayCollection();
     }
 
-    public function addModel(Model $model): self
+    public function addCarcase(Carcase $carcase): self
     {
-        if (!$this->models->contains($model)) {
-            $this->models->add($model);
-            $model->addPart($this);
+        if (!$this->carcase->contains($carcase)) {
+            $this->carcase->add($carcase);
+            $carcase->addPart($this);
         }
 
         return $this;
@@ -93,19 +91,6 @@ class Part
     }
 
     /**
-     * @return ArrayCollection|Model[]
-     */
-    public function getModels()
-    {
-        return $this->models;
-    }
-
-    public function setModels($models)
-    {
-        $this->models = $models;
-    }
-
-    /**
      * @return ArrayCollection|Engine[]
      */
     public function getEngines()
@@ -119,6 +104,19 @@ class Part
     }
 
     /**
+     * @return ArrayCollection|Carcase[]
+     */
+    public function getCarcases()
+    {
+        return $this->carcases;
+    }
+
+    public function setCarcases($carcases)
+    {
+        $this->carcases = $carcases;
+    }
+
+    /**
      * @return ArrayCollection|Oem
      */
     public function getOem()
@@ -129,19 +127,6 @@ class Part
     public function setOem($oem)
     {
         $this->oem = $oem;
-    }
-
-    /**
-     * @return City
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    public function setCity($city)
-    {
-        $this->city = $city;
     }
 
     public function getId()

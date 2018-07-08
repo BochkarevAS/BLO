@@ -9,9 +9,8 @@ $(document).ready(function() {
     let $wrapper = $('.js-news-module');
     let news = new News($wrapper);
 
-    let model = new Model();
-    model.changedModel();
-    model.changedCarcase();
+    $wrapper = $('.js-parts-module');
+    let model = new Model($wrapper);
 
     let tyre = new Tyre();
 });

@@ -5,42 +5,34 @@ import Routing from '../Routing';
 
 class Model {
 
-    changedModel() {
-        $('#brand').change(function() {
-            let id = $(this).val();
+    constructor($wrapper) {
+        this.$wrapper = $wrapper;
 
-            $.ajax({
-                url: Routing.generate('part_ajax', {model_id: id})
-            }).then((data) => {
-                $('#model').html('');
-                $.each(data, function(k, v) {
-                    $('#model').append('<option value="' + v + '">' + k + '</option>');
-                });
-            }).catch(jqXHR => {
-                let errorData = JSON.parse(jqXHR.responseText);
-            });
-
-            return false;
-        });
+        this.$wrapper.on('change', '#parts_brand, #parts_model',
+            this.setRelation.bind(this)
+        );
     }
 
-    changedCarcase() {
-        $('#model').change(function() {
-            let id = $(this).val();
+    setRelation(e) {
+        let $field = $(e.currentTarget);
+        let $brandField = $('#parts_brand');
+        let target = '#' + $field.attr('id').replace('model', 'carcase').replace('brand', 'model');
+        let data = {};
 
-            $.ajax({
-                url: Routing.generate('part_ajax', {carcase_id: id})
-            }).then((data) => {
-                $('#carcase').html('');
-                $.each(data, function(k, v) {
-                    $('#carcase').append('<option value="' + v + '">' + k + '</option>');
-                });
-            }).catch(jqXHR => {
-                let errorData = JSON.parse(jqXHR.responseText);
-            });
+        if ('#parts_model' === target) {
+            $('#parts_carcase').replaceWith('<select id="parts_carcase" name="brand[carcase]" class="form-control"></select>');
+        }
 
-            return false;
-        });
+        data[$brandField.attr('name')] = $brandField.val();
+        data[$field.attr('name')] = $field.val();
+
+        $.ajax({
+            url: Routing.generate('parts_render'),
+            data: data
+        }).then((data) => {
+            let $input = $(data).find(target);
+            $(target).replaceWith($input);
+        })
     }
 }
 

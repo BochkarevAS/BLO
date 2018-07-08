@@ -33,11 +33,6 @@ class Model
      */
     private $carcase;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="models")
-     */
-    private $parts;
-
     public function __construct()
     {
         $this->parts = new ArrayCollection();
@@ -51,15 +46,6 @@ class Model
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    public function addPart(Part $parts): self
-    {
-        if (!$this->parts->contains($parts)) {
-            $this->parts->add($parts);
-        }
-
-        return $this;
     }
 
     public function getBrands()
