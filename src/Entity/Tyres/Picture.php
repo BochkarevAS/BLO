@@ -23,7 +23,7 @@ class Picture
     /**
      * Путь по которому лежит фотография
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="json")
      */
     private $path;
 

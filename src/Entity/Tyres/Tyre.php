@@ -100,6 +100,13 @@ class Tyre
     private $hash;
 
     /**
+     * Стоимость шины
+     *
+     * @ORM\Column(type="decimal")
+     */
+    private $price;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -238,6 +245,21 @@ class Tyre
     public function setHash($hash)
     {
         $this->hash = $hash;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function getId()

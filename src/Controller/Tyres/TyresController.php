@@ -24,9 +24,6 @@ class TyresController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-
-            dump($entity);
-
             $em = $this->getDoctrine()->getManager();
             $query = $em->getRepository(Tyre::class)->search($entity);
 
@@ -34,8 +31,6 @@ class TyresController extends AbstractController
                 $pictures = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
             }
         }
-
-//        $query = $this->getDoctrine()->getRepository(Tyre::class)->renderTyre();
 
         return $this->render('tyres/tyres_render.html.twig', [
             'pictures' => $pictures,
@@ -50,9 +45,6 @@ class TyresController extends AbstractController
     {
         $tyresService->parse();
 
-        return $this->render('tyres/tyres_render.html.twig', [
-            'pictures' => null,
-            'form'     => null
-        ]);
+        return $this->redirectToRoute('tyres_render');
     }
 }

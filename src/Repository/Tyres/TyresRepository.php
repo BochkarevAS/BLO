@@ -13,7 +13,7 @@ class TyresRepository extends EntityRepository
         $qb = $this->createQueryBuilder('t')
             ->select('p')
             ->join('t.manufacturers', 'm')
-            ->join(Picture::class, 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.tyres = t.id');
+            ->leftJoin(Picture::class, 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.tyres = t.id');
 
         /* Фильтр по производителям */
         if ($tyre->getManufacturers()) {
@@ -50,5 +50,4 @@ class TyresRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
-
 }

@@ -32,6 +32,7 @@ class TyresService
         $serializer = $this->container->get('serializer');
         $path       = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em         = $this->container->get('doctrine.orm.default_entity_manager');
+
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         $reader = Reader::createFromPath($path);
@@ -52,10 +53,6 @@ class TyresService
         $nameVendor = 'ALFACAR';
 
         foreach ($records as $offset => $record) {
-
-//            $q = $this->em->createQuery('update MyProject\Model\Manager m set m.salary = m.salary * 0.9');
-//            $numUpdated = $q->execute();
-
             $hash = md5(
                 $record['landing_diameter_mm'] .
                 $record['profile_height_proc'] .
@@ -66,100 +63,26 @@ class TyresService
                 $record['pictures'] .
                 $record['manufacturer']
             );
+            $record = $this->valid($record, $em, $nameVendor);
+            $tyre   = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
 
-            $vendor = $em->getRepository(Vendor::class)->findOneBy([
-                'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
-            ]);
-
-            $manufacturer = $em->getRepository(Manufacturer::class)->findOneBy([
-                'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1251')
-            ]);
-
-            $seasonality = $em->getRepository(Seasonality::class)->findOneBy([
-                'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
-            ]);
-
-            $thorn = $em->getRepository(Thorn::class)->findOneBy([
-                'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
-            ]);
-
-
-
-            if ($record['availability'] = mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251')) {
-                $availability = mb_strtoupper($record['availability']) === '? ???????' ? 1 : 2;
-            } else {
-                $availability = 0;
-            }
-
-            if ($record['status'] = mb_convert_encoding($record['status'], 'UTF-8', 'Windows-1251')) {
-                $status = mb_strtoupper($record['status']) === '??????????? (?/?)' ? 1 : 2;
-            } else {
-                $status = 0;
-            }
-
-            $tyre = $em->getRepository(Tyre::class)->findOneBy([
-                'hash' => $hash
-            ]);
-
-            if ($tyre) {
-                $tyre->setDiameter((int) $record['landing_diameter_mm']);
-                $tyre->setHeight((int) $record['profile_height_proc']);
-                $tyre->setWidth((int) $record['profile_width_mm']);
-                $tyre->setCount((int) $record['quantity']);
-                $tyre->setStatus($status);
-                $tyre->setAvailability($availability);
-                $tyre->setHash($hash);
-                $tyre->addVendors($vendor);
-                $tyre->setManufacturers($manufacturer);
-                $tyre->setSeasonalitys($seasonality);
-                $tyre->setThorns($thorn);
-                $em->persist($tyre);
-
-                $json = [
-                    'idProduct'  => $tyre->getId(),
-                    'idModule'   => 1,
-                    'imgsJson'   => 0,
-                    'imgsResult' => 0,
-                    'imgsLinks'  => $record['pictures']
-                ];
-
-                $json = $serializer->serialize($json, 'json');
-
-                $picture = $em->getRepository(Picture::class)->find($tyre->getId());
-                $picture->setPath($json);
-                $picture->setIdModule(1);
-                $picture->setTyres($tyre);
-                $em->persist($picture);
-            } else {
+            if ($tyre === null) {
                 $tyre = new Tyre();
-                $tyre->setDiameter((int) $record['landing_diameter_mm']);
-                $tyre->setHeight((int) $record['profile_height_proc']);
-                $tyre->setWidth((int) $record['profile_width_mm']);
-                $tyre->setCount((int) $record['quantity']);
-                $tyre->setStatus($status);
-                $tyre->setAvailability($availability);
-                $tyre->setHash($hash);
-                $tyre->addVendors($vendor);
-                $tyre->setManufacturers($manufacturer);
-                $tyre->setSeasonalitys($seasonality);
-                $tyre->setThorns($thorn);
+                $this->tyre($tyre, $record, $hash);
                 $em->persist($tyre);
-
-                $json = [
-                    'idProduct'  => $tyre->getId(),
-                    'idModule'   => 1,
-                    'imgsJson'   => 0,
-                    'imgsResult' => 0,
-                    'imgsLinks'  => $record['pictures']
-                ];
-
-                $json = $serializer->serialize($json, 'json');
 
                 $picture = new Picture();
-                $picture->setPath($json);
-                $picture->setIdModule(1);
-                $picture->setTyres($tyre);
+                $this->json($tyre, $picture, $record['pictures'], $serializer);
                 $em->persist($picture);
+            } else {
+                $this->tyre($tyre, $record, $hash);
+                $em->merge($tyre);
+                $picture = $em->getRepository(Picture::class)->find($tyre->getId());
+
+                if (!$picture) {
+                    $this->json($tyre, $picture, $record['pictures'], $serializer);
+                    $em->merge($picture);
+                }
             }
 
             if (($i % $batchSize) === 0) {
@@ -173,17 +96,79 @@ class TyresService
         $em->clear();
     }
 
+    private function valid(array $record, $em, $nameVendor)
+    {
+        $record['vendor'] = $em->getRepository(Vendor::class)->findOneBy([
+            'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
+        ]);
 
-//    private function setJson()
-//    {
-//        $json = [
-//            'idProduct'  => $tyre->getId(),
-//            'idModule'   => 1,
-//            'imgsJson'   => 0,
-//            'imgsResult' => 0,
-//            'imgsLinks'  => $record['pictures']
-//        ];
-//
-//        $json = $serializer->serialize($json, 'json');
-//    }
+        $record['manufacturer'] = $em->getRepository(Manufacturer::class)->findOneBy([
+            'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1251')
+        ]);
+
+        $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
+            'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
+        ]);
+
+        $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
+            'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
+        ]);
+
+        if ($record['availability'] = mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251')) {
+            $record['availability'] = mb_strtoupper($record['availability']) === '? ???????' ? 1 : 2;
+        } else {
+            $record['availability'] = 0;
+        }
+
+        if ($record['status'] = mb_convert_encoding($record['status'], 'UTF-8', 'Windows-1251')) {
+            $record['status'] = mb_strtoupper($record['status']) === '??????????? (?/?)' ? 1 : 2;
+        } else {
+            $record['status'] = 0;
+        }
+
+        return $record;
+    }
+
+    /**
+     * @param Tyre $tyre
+     * @param $record
+     * @param $hash
+     */
+    private function tyre($tyre, array $record, $hash)
+    {
+        $tyre->setDiameter((int) $record['landing_diameter_mm']);
+        $tyre->setHeight((int) $record['profile_height_proc']);
+        $tyre->setWidth((int) $record['profile_width_mm']);
+        $tyre->setCount((int) $record['quantity']);
+        $tyre->setStatus($record['status']);
+        $tyre->setAvailability($record['availability']);
+        $tyre->setHash($hash);
+        $tyre->addVendors($record['vendor']);
+        $tyre->setManufacturers($record['manufacturer']);
+        $tyre->setSeasonalitys($record['seasonality']);
+        $tyre->setThorns($record['thorn']);
+        $tyre->setPrice($record['price']);
+    }
+
+    /**
+     * @param Tyre $tyreId
+     * @param Picture $picture
+     * @param $serializer
+     */
+    private function json($tyre, $picture, $linkPicture, $serializer)
+    {
+        $json = [
+            'idProduct'  => $tyre->getId(),
+            'idModule'   => 1,
+            'imgsJson'   => 0,
+            'imgsResult' => 0,
+            'imgsLinks'  => mb_convert_encoding($linkPicture, 'UTF-8', 'Windows-1251')
+        ];
+
+        $json = $serializer->serialize($json, 'json');
+
+        $picture->setIdModule(1);
+        $picture->setTyres($tyre);
+        $picture->setPath($json);
+    }
 }
