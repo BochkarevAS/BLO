@@ -27,66 +27,76 @@ class TyreType extends AbstractType
             ->add('manufacturers', EntityType::class, [
                 'class'         => Manufacturer::class,
                 'label'         => 'Производитель',
-                'choice_label'  => 'name',
-                'choice_value'  => 'id',
+                'required'      => false,
+                'choice_label'  => 'name'
             ])
             ->add('model', EntityType::class, [
                 'class'         => Model::class,
                 'label'         => 'Модель',
                 'multiple'      => true,
                 'mapped'        => false,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('vendors', EntityType::class, [
                 'class'         => Vendor::class,
                 'label'         => 'Продавец',
                 'multiple'      => true,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('thorns', EntityType::class, [
                 'class'         => Thorn::class,
                 'label'         => 'Шипы',
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('seasonalitys', EntityType::class, [
                 'class'         => Seasonality::class,
                 'label'         => 'Сезонность',
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('diameter', EntityType::class, [
                 'class'         => ProfileDiameter::class,
                 'label'         => 'Диаметр',
                 'mapped'        => false,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('height', EntityType::class, [
                 'class'         => ProfileHeight::class,
                 'label'         => 'Высота',
                 'mapped'        => false,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('width', EntityType::class, [
                 'class'         => ProfileWidth::class,
                 'label'         => 'Ширина',
                 'mapped'        => false,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('count', EntityType::class, [
                 'class'         => ProfileCount::class,
                 'label'         => 'Количество',
                 'mapped'        => false,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('status', EntityType::class, [
                 'class'         => ProfileStatus::class,
                 'label'         => 'Состояние',
                 'mapped'        => false,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('availability', EntityType::class, [
                 'class'         => ProfileAvailability::class,
                 'label'         => 'Наличие',
                 'mapped'        => false,
+                'required'      => false,
                 'choice_label'  => 'name',
             ])
         ;

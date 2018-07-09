@@ -19,10 +19,6 @@ class Model {
         let target = '#' + $field.attr('id').replace('model', 'carcase').replace('brand', 'model');
         let data = {};
 
-        if ('#parts_model' === target) {
-            $('#parts_carcase').replaceWith('<select id="parts_carcase" name="brand[carcase]" class="form-control"></select>');
-        }
-
         data[$brandField.attr('name')] = $brandField.val();
         data[$field.attr('name')] = $field.val();
 
@@ -32,6 +28,10 @@ class Model {
         }).then((data) => {
             let $input = $(data).find(target);
             $(target).replaceWith($input);
+
+            if ('#parts_model' === target) {
+                $('#parts_carcase').replaceWith('<select id="parts_carcase" name="brand[carcase]" class="form-control"></select>');
+            }
         })
     }
 }

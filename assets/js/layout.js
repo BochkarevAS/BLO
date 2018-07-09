@@ -12,7 +12,7 @@ $(document).ready(function() {
 });
 
 $('#exampleModal').on('show.bs.modal', function (event) {
-    let button = $(event.relatedTarget); // Кнопка, что спровоцировало модальное окно
+    let button = $(event.relatedTarget);     // Кнопка, что спровоцировало модальное окно
     let recipient = button.data('whatever'); // Извлечение информации из данных-* атрибутов
     let modal = $(this);
     modal.find('.modal-title').text('New message to ' + recipient);

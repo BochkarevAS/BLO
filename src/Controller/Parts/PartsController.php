@@ -25,7 +25,7 @@ class PartsController extends AbstractController
      */
     public function renderPart(Request $request, PaginatorInterface $paginator)
     {
-//        $part = new Part();
+//        $part = new Parts();
 //        $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
 
         $brand = new Brand();

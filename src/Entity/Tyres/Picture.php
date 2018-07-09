@@ -28,10 +28,17 @@ class Picture
     private $path;
 
     /**
+     * Хранится ID модуля например 1 это модуль шин.
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $idModule;
+
+    /**
      * ID шин
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Tyre")
-     * @ORM\JoinColumn(name="tyre_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="App\Entity\Tyres\Tyre")
+     * @ORM\JoinColumn(name="tyres_id", referencedColumnName="id")
      */
     private $tyres;
 
@@ -65,6 +72,16 @@ class Picture
     public function setTyres($tyres)
     {
         $this->tyres = $tyres;
+    }
+
+    public function getIdModule()
+    {
+        return $this->idModule;
+    }
+
+    public function setIdModule($idModule)
+    {
+        $this->idModule = $idModule;
     }
 
     public function getCreatedAt()

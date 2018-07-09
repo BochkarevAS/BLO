@@ -2,7 +2,7 @@
 
 import $ from 'jquery';
 import News from './Components/Administration/News';
-import Model from './Components/Part/Model';
+import Model from './Components/Parts/Model';
 import Tyre from './Components/Tyres/Tyre';
 
 $(document).ready(function() {

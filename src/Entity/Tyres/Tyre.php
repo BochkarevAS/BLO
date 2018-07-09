@@ -93,6 +93,13 @@ class Tyre
     private $vendors;
 
     /**
+     * Хэш уникальный индефекатор шины
+     *
+     * @ORM\Column(type="string")
+     */
+    private $hash;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -221,6 +228,21 @@ class Tyre
     public function getVendors()
     {
         return $this->vendors;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getCreatedAt()

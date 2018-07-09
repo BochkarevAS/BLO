@@ -42,9 +42,9 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-//        $this->addProfileRelation($manager);  // Профиль шин
-//        $this->addTyresRelation($manager);    // Шины
-        $this->addPartsRelation($manager);    // Запчасти
+        $this->addProfileRelation($manager);  // Профиль шин
+        $this->addTyresRelation($manager);    // Шины
+//        $this->addPartsRelation($manager);    // Запчасти
 
 //        $this->addCounty($manager);         // Округ
 //        $this->addRegion($manager);         // Регион
@@ -60,12 +60,10 @@ class LoadFixtures extends Fixture
         $height   = [];
         $diameter = [];
         $status = [
-            0 => 'Любая',
             1 => 'Контрактная (б/у)',
             2 => 'Новая'
         ];
         $availability = [
-            0 => 'Все',
             1 => 'Под заказ',
             2 => 'В наличии'
         ];

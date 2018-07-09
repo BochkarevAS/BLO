@@ -24,13 +24,14 @@ class TyresService
     {
         set_time_limit(300);
 
-//        $file = 'test.csv';
+        $file = 'test.csv';
 //        $file = '795.csv';
 //        $file = '615.csv';
-        $file = '616.csv';
+//        $file = '616.csv';
 
-        $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-        $em   = $this->container->get('doctrine.orm.default_entity_manager');
+        $serializer = $this->container->get('serializer');
+        $path       = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
+        $em         = $this->container->get('doctrine.orm.default_entity_manager');
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         $reader = Reader::createFromPath($path);
@@ -47,13 +48,24 @@ class TyresService
         ];
         $records = $reader->getRecords($header);
         $i = 0;
-        $batchSize = 25;
+        $batchSize = 500;
         $nameVendor = 'ALFACAR';
 
         foreach ($records as $offset => $record) {
-//            dump($record);
+
 //            $q = $this->em->createQuery('update MyProject\Model\Manager m set m.salary = m.salary * 0.9');
 //            $numUpdated = $q->execute();
+
+            $hash = md5(
+                $record['landing_diameter_mm'] .
+                $record['profile_height_proc'] .
+                $record['profile_width_mm'] .
+                $record['model'] .
+                $record['index_of_speed'] .
+                $record['load_index'] .
+                $record['pictures'] .
+                $record['manufacturer']
+            );
 
             $vendor = $em->getRepository(Vendor::class)->findOneBy([
                 'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
@@ -71,24 +83,81 @@ class TyresService
                 'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
             ]);
 
-            $tyre = new Tyre();
-            $tyre->setDiameter((int) $record['landing_diameter_mm']);
-            $tyre->setHeight((int) $record['profile_height_proc']);
-            $tyre->setWidth((int) $record['profile_width_mm']);
-            $tyre->setCount((int) $record['quantity']);
-            $tyre->setStatus(0);
-            $tyre->setAvailability(0);
-            $tyre->addVendors($vendor);
-            $tyre->setManufacturers($manufacturer);
-            $tyre->setSeasonalitys($seasonality);
-            $tyre->setThorns($thorn);
-            $em->persist($tyre);
 
-            $pictures = explode(',', $record['pictures']);
 
-            foreach ($pictures as $item) {
+            if ($record['availability'] = mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251')) {
+                $availability = mb_strtoupper($record['availability']) === '? ???????' ? 1 : 2;
+            } else {
+                $availability = 0;
+            }
+
+            if ($record['status'] = mb_convert_encoding($record['status'], 'UTF-8', 'Windows-1251')) {
+                $status = mb_strtoupper($record['status']) === '??????????? (?/?)' ? 1 : 2;
+            } else {
+                $status = 0;
+            }
+
+            $tyre = $em->getRepository(Tyre::class)->findOneBy([
+                'hash' => $hash
+            ]);
+
+            if ($tyre) {
+                $tyre->setDiameter((int) $record['landing_diameter_mm']);
+                $tyre->setHeight((int) $record['profile_height_proc']);
+                $tyre->setWidth((int) $record['profile_width_mm']);
+                $tyre->setCount((int) $record['quantity']);
+                $tyre->setStatus($status);
+                $tyre->setAvailability($availability);
+                $tyre->setHash($hash);
+                $tyre->addVendors($vendor);
+                $tyre->setManufacturers($manufacturer);
+                $tyre->setSeasonalitys($seasonality);
+                $tyre->setThorns($thorn);
+                $em->persist($tyre);
+
+                $json = [
+                    'idProduct'  => $tyre->getId(),
+                    'idModule'   => 1,
+                    'imgsJson'   => 0,
+                    'imgsResult' => 0,
+                    'imgsLinks'  => $record['pictures']
+                ];
+
+                $json = $serializer->serialize($json, 'json');
+
+                $picture = $em->getRepository(Picture::class)->find($tyre->getId());
+                $picture->setPath($json);
+                $picture->setIdModule(1);
+                $picture->setTyres($tyre);
+                $em->persist($picture);
+            } else {
+                $tyre = new Tyre();
+                $tyre->setDiameter((int) $record['landing_diameter_mm']);
+                $tyre->setHeight((int) $record['profile_height_proc']);
+                $tyre->setWidth((int) $record['profile_width_mm']);
+                $tyre->setCount((int) $record['quantity']);
+                $tyre->setStatus($status);
+                $tyre->setAvailability($availability);
+                $tyre->setHash($hash);
+                $tyre->addVendors($vendor);
+                $tyre->setManufacturers($manufacturer);
+                $tyre->setSeasonalitys($seasonality);
+                $tyre->setThorns($thorn);
+                $em->persist($tyre);
+
+                $json = [
+                    'idProduct'  => $tyre->getId(),
+                    'idModule'   => 1,
+                    'imgsJson'   => 0,
+                    'imgsResult' => 0,
+                    'imgsLinks'  => $record['pictures']
+                ];
+
+                $json = $serializer->serialize($json, 'json');
+
                 $picture = new Picture();
-                $picture->setPath(mb_convert_encoding($item, 'UTF-8', 'Windows-1251'));
+                $picture->setPath($json);
+                $picture->setIdModule(1);
                 $picture->setTyres($tyre);
                 $em->persist($picture);
             }
@@ -103,4 +172,18 @@ class TyresService
         $em->flush();
         $em->clear();
     }
+
+
+//    private function setJson()
+//    {
+//        $json = [
+//            'idProduct'  => $tyre->getId(),
+//            'idModule'   => 1,
+//            'imgsJson'   => 0,
+//            'imgsResult' => 0,
+//            'imgsLinks'  => $record['pictures']
+//        ];
+//
+//        $json = $serializer->serialize($json, 'json');
+//    }
 }
