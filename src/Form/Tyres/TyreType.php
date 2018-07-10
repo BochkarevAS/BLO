@@ -57,31 +57,27 @@ class TyreType extends AbstractType
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
-            ->add('diameter', EntityType::class, [
+            ->add('diameters', EntityType::class, [
                 'class'         => Diameter::class,
                 'label'         => 'Диаметр',
-                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
-            ->add('height', EntityType::class, [
+            ->add('heights', EntityType::class, [
                 'class'         => Height::class,
                 'label'         => 'Высота',
-                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
-            ->add('width', EntityType::class, [
+            ->add('widths', EntityType::class, [
                 'class'         => Width::class,
                 'label'         => 'Ширина',
-                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
-            ->add('count', EntityType::class, [
+            ->add('counts', EntityType::class, [
                 'class'         => Count::class,
                 'label'         => 'Количество',
-                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])

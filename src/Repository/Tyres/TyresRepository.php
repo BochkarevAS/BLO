@@ -26,6 +26,10 @@ class TyresRepository extends EntityRepository
             $qb->andWhere('th.id = :id')->setParameter('id', $tyre->getThorns()->getId());
         }
 
+        dump($tyre);
+
+
+
         /* Фильтр по высота профиля (%) */
         if ($tyre->getHeights()) {
             $qb->join('t.heights', 'h');
