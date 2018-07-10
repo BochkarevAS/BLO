@@ -33,11 +33,6 @@ class Model
      */
     private $carcase;
 
-    public function __construct()
-    {
-        $this->parts = new ArrayCollection();
-    }
-
     public function getName()
     {
         return $this->name;

@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="profile_diameter", schema="tyres")
+ * @ORM\Table(name="diameter", schema="tyres")
  */
-class ProfileDiameter
+class Diameter
 {
     /**
      * @ORM\Id
@@ -22,6 +22,11 @@ class ProfileDiameter
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="diameters")
+     */
+    private $tyres;
+
     public function getName()
     {
         return $this->name;
@@ -30,5 +35,15 @@ class ProfileDiameter
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getTyres()
+    {
+        return $this->tyres;
+    }
+
+    public function setTyres($tyres)
+    {
+        $this->tyres = $tyres;
     }
 }

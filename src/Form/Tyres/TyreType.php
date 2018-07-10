@@ -5,11 +5,11 @@ namespace App\Form\Tyres;
 use App\Entity\Tyres\Manufacturer;
 use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Profile\ProfileAvailability;
-use App\Entity\Tyres\Profile\ProfileCount;
-use App\Entity\Tyres\Profile\ProfileDiameter;
-use App\Entity\Tyres\Profile\ProfileHeight;
+use App\Entity\Tyres\Profile\Count;
+use App\Entity\Tyres\Profile\Diameter;
+use App\Entity\Tyres\Profile\Height;
 use App\Entity\Tyres\Profile\ProfileStatus;
-use App\Entity\Tyres\Profile\ProfileWidth;
+use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
@@ -58,28 +58,28 @@ class TyreType extends AbstractType
                 'choice_label'  => 'name',
             ])
             ->add('diameter', EntityType::class, [
-                'class'         => ProfileDiameter::class,
+                'class'         => Diameter::class,
                 'label'         => 'Диаметр',
                 'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('height', EntityType::class, [
-                'class'         => ProfileHeight::class,
+                'class'         => Height::class,
                 'label'         => 'Высота',
                 'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('width', EntityType::class, [
-                'class'         => ProfileWidth::class,
+                'class'         => Width::class,
                 'label'         => 'Ширина',
                 'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
             ->add('count', EntityType::class, [
-                'class'         => ProfileCount::class,
+                'class'         => Count::class,
                 'label'         => 'Количество',
                 'mapped'        => false,
                 'required'      => false,

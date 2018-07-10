@@ -17,31 +17,32 @@
 
             <table class="table table-hover">
                 <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for picture in pictures %}
-                    <tr>
-                        <td><img src="{{ picture.path }}" width="110" height="110"></td>
-                        <td>
-                            Шина {{ picture.tyres.width }}/{{ picture.tyres.height }} {{ picture.tyres.manufacturers.name }}
-                            {#{{ picture.tyres.diameter }}#}
-                            {#{{ picture.tyres.count }}#}
-                            {#{{ picture.tyres.thorns.name }}#}
-                        </td>
-                        <td>
-                            {% for vandor in picture.tyres.vendors %}
-                                {{ vandor.name }}
-                            {% endfor %}
-                        </td>
-                        <td>{{ picture.tyres.updatedAt|date }}</td>
-                    </tr>
-                {% endfor %}
+                    {% for picture in pictures %}
+                        <tr>
+                            {#<td><img src="{{ picture.path }}" width="110" height="110"></td>#}
+                            <td><img src="" width="110" height="110"></td>
+                            <td>
+                                Шина {{ picture.tyres.widths.name }}/{{ picture.tyres.heights.name }} {{ picture.tyres.manufacturers.name }}
+                                {#{{ picture.tyres.diameter }}#}
+                                {#{{ picture.tyres.count }}#}
+                                {#{{ picture.tyres.thorns.name }}#}
+                            </td>
+                            <td>
+                                {% for vandor in picture.tyres.vendors %}
+                                    {{ vandor.name }}
+                                {% endfor %}
+                            </td>
+                            <td>{{ picture.tyres.updatedAt|date }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
 

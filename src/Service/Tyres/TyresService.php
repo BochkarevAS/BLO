@@ -4,10 +4,15 @@ namespace App\Service\Tyres;
 
 use App\Entity\Tyres\Manufacturer;
 use App\Entity\Tyres\Picture;
+use App\Entity\Tyres\Profile\Count;
+use App\Entity\Tyres\Profile\Diameter;
+use App\Entity\Tyres\Profile\Height;
+use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
 use App\Entity\Tyres\Vendor;
+use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -96,6 +101,12 @@ class TyresService
         $em->clear();
     }
 
+    /**
+     * @param array $record
+     * @param EntityManager $em
+     * @param $nameVendor
+     * @return array
+     */
     private function valid(array $record, $em, $nameVendor)
     {
         $record['vendor'] = $em->getRepository(Vendor::class)->findOneBy([
@@ -108,6 +119,22 @@ class TyresService
 
         $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
             'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
+        ]);
+
+        $record['quantity'] = $em->getRepository(Count::class)->findOneBy([
+            'name' => $record['quantity'] ? $record['quantity'] : 0
+        ]);
+
+        $record['profile_width_mm'] = $em->getRepository(Width::class)->findOneBy([
+            'name' => $record['profile_width_mm'] ? $record['profile_width_mm'] : 0
+        ]);
+
+        $record['profile_height_proc'] = $em->getRepository(Height::class)->findOneBy([
+            'name' => $record['profile_height_proc'] ? $record['profile_height_proc'] : 0
+        ]);
+
+        $record['landing_diameter_mm'] = $em->getRepository(Diameter::class)->findOneBy([
+            'name' => $record['landing_diameter_mm'] ? $record['landing_diameter_mm'] : 0
         ]);
 
         $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
@@ -136,10 +163,10 @@ class TyresService
      */
     private function tyre($tyre, array $record, $hash)
     {
-        $tyre->setDiameter((int) $record['landing_diameter_mm']);
-        $tyre->setHeight((int) $record['profile_height_proc']);
-        $tyre->setWidth((int) $record['profile_width_mm']);
-        $tyre->setCount((int) $record['quantity']);
+        $tyre->setDiameters($record['landing_diameter_mm']);
+        $tyre->setHeights($record['profile_height_proc']);
+        $tyre->setWidths($record['profile_width_mm']);
+        $tyre->setCounts($record['quantity']);
         $tyre->setStatus($record['status']);
         $tyre->setAvailability($record['availability']);
         $tyre->setHash($hash);

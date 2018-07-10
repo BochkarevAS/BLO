@@ -2,6 +2,7 @@
 
 namespace App\Entity\Tyres;
 
+use App\Entity\Tyres\Profile\Height;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -22,30 +23,30 @@ class Tyre
     /**
      * Ширина профиля (мм)
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Width", inversedBy="tyres")
      */
-    private $width;
+    private $widths;
 
     /**
      * Высота профиля (%)
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Height", inversedBy="tyres")
      */
-    private $height;
+    private $heights;
 
     /**
      * Посадочный диаметр (мм)
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Diameter", inversedBy="tyres")
      */
-    private $diameter;
+    private $diameters;
 
     /**
      * Количество
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Count", inversedBy="tyres")
      */
-    private $count;
+    private $counts;
 
     /**
      * Шипы
@@ -123,44 +124,47 @@ class Tyre
         $this->vendors = new ArrayCollection();
     }
 
-    public function getWidth()
+    public function getWidths()
     {
-        return $this->width;
+        return $this->widths;
     }
 
-    public function setWidth($width)
+    public function setWidths($widths)
     {
-        $this->width = $width;
+        $this->widths = $widths;
     }
 
-    public function getHeight()
+    /**
+     * @return Height
+     */
+    public function getHeights()
     {
-        return $this->height;
+        return $this->heights;
     }
 
-    public function setHeight($height)
+    public function setHeights($heights)
     {
-        $this->height = $height;
+        $this->heights = $heights;
     }
 
-    public function getDiameter()
+    public function getDiameters()
     {
-        return $this->diameter;
+        return $this->diameters;
     }
 
-    public function setDiameter($diameter)
+    public function setDiameters($diameters)
     {
-        $this->diameter = $diameter;
+        $this->diameters = $diameters;
     }
 
-    public function getCount()
+    public function getCounts()
     {
-        return $this->count;
+        return $this->counts;
     }
 
-    public function setCount($count)
+    public function setCounts($counts)
     {
-        $this->count = $count;
+        $this->counts = $counts;
     }
 
     public function getSeasonalitys()

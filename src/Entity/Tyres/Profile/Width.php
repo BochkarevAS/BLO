@@ -5,12 +5,12 @@ namespace App\Entity\Tyres\Profile;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Высота профиля
+ * Ширина профиля
  *
  * @ORM\Entity
- * @ORM\Table(name="profile_height", schema="tyres")
+ * @ORM\Table(name="width", schema="tyres")
  */
-class ProfileHeight
+class Width
 {
     /**
      * @ORM\Id
@@ -24,6 +24,11 @@ class ProfileHeight
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="widths")
+     */
+    private $tyres;
+
     public function getName()
     {
         return $this->name;
@@ -32,5 +37,15 @@ class ProfileHeight
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getTyres()
+    {
+        return $this->tyres;
+    }
+
+    public function setTyres($tyres)
+    {
+        $this->tyres = $tyres;
     }
 }

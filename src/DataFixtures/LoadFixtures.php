@@ -17,11 +17,11 @@ use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
 use App\Entity\Tyres\Manufacturer;
 use App\Entity\Tyres\Profile\ProfileAvailability;
-use App\Entity\Tyres\Profile\ProfileCount;
-use App\Entity\Tyres\Profile\ProfileDiameter;
-use App\Entity\Tyres\Profile\ProfileHeight;
+use App\Entity\Tyres\Profile\Count;
+use App\Entity\Tyres\Profile\Diameter;
+use App\Entity\Tyres\Profile\Height;
 use App\Entity\Tyres\Profile\ProfileStatus;
-use App\Entity\Tyres\Profile\ProfileWidth;
+use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -55,11 +55,11 @@ class LoadFixtures extends Fixture
 
     private function addProfileRelation($manager)
     {
-        $count    = [];
-        $width    = [];
-        $height   = [];
-        $diameter = [];
-        $status = [
+        $counts    = [];
+        $widths    = [];
+        $heights   = [];
+        $diameters = [];
+        $status    = [
             1 => 'Контрактная (б/у)',
             2 => 'Новая'
         ];
@@ -69,16 +69,16 @@ class LoadFixtures extends Fixture
         ];
 
         for ($i = 105; $i <= 815; $i = $i + 5) {
-            $width[] = $i;
+            $widths[] = $i;
         }
         for ($i = 25; $i <= 110; $i = $i + 5) {
-            $height[] = $i;
+            $heights[] = $i;
         };
         for ($i = 6; $i <= 57; $i = $i + 0.5) {
-            $diameter[] = $i;
+            $diameters[] = $i;
         }
         for ($i = 1; $i <= 10; $i++) {
-            $count[] = $i;
+            $counts[] = $i;
         }
 
         foreach ($status as $item) {
@@ -93,28 +93,28 @@ class LoadFixtures extends Fixture
             $manager->persist($profileAvailability);
         }
 
-        foreach ($width as $item) {
-            $profileWidth = new ProfileWidth();
-            $profileWidth->setName($item);
-            $manager->persist($profileWidth);
+        foreach ($widths as $item) {
+            $width = new Width();
+            $width->setName($item);
+            $manager->persist($width);
         }
 
-        foreach ($height as $item) {
-            $profileHeight = new ProfileHeight();
-            $profileHeight->setName($item);
-            $manager->persist($profileHeight);
+        foreach ($heights as $item) {
+            $height = new Height();
+            $height->setName($item);
+            $manager->persist($height);
         }
 
-        foreach ($diameter as $item) {
-            $profileDiameter = new ProfileDiameter();
-            $profileDiameter->setName($item);
-            $manager->persist($profileDiameter);
+        foreach ($diameters as $item) {
+            $diameter = new Diameter();
+            $diameter->setName($item);
+            $manager->persist($diameter);
         }
 
-        foreach ($count as $item) {
-            $profileCount = new ProfileCount();
-            $profileCount->setName($item);
-            $manager->persist($profileCount);
+        foreach ($counts as $item) {
+            $count = new Count();
+            $count->setName($item);
+            $manager->persist($count);
         }
 
         $manager->flush();

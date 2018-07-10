@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="profile_count", schema="tyres")
+ * @ORM\Table(name="count", schema="tyres")
  */
-class ProfileCount
+class Count
 {
     /**
      * @ORM\Id
@@ -22,6 +22,11 @@ class ProfileCount
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="counts")
+     */
+    private $tyres;
+
     public function getName()
     {
         return $this->name;
@@ -30,5 +35,15 @@ class ProfileCount
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getTyres()
+    {
+        return $this->tyres;
+    }
+
+    public function setTyres($tyres)
+    {
+        $this->tyres = $tyres;
     }
 }
