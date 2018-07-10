@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Entity\Tyres\Profile;
+namespace App\Entity\Tyres;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ширина профиля
- *
  * @ORM\Entity
- * @ORM\Table(name="width", schema="tyres")
+ * @ORM\Table(name="brand", schema="tyres")
  */
-class Width
+class Brand
 {
     /**
      * @ORM\Id
@@ -20,14 +18,14 @@ class Width
     private $id;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="widths")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Model", mappedBy="brands")
      */
-    private $tyres;
+    private $model;
 
     public function getName()
     {
@@ -39,14 +37,14 @@ class Width
         $this->name = $name;
     }
 
-    public function getTyres()
+    public function getModel()
     {
-        return $this->tyres;
+        return $this->model;
     }
 
-    public function setTyres($tyres)
+    public function setModel($model)
     {
-        $this->tyres = $tyres;
+        $this->model = $model;
     }
 
     public function getId()

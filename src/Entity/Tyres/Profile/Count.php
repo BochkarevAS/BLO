@@ -46,4 +46,9 @@ class Count
     {
         $this->tyres = $tyres;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

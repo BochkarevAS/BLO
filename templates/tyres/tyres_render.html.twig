@@ -27,13 +27,39 @@
                 <tbody>
                     {% for picture in pictures %}
                         <tr>
-                            {#<td><img src="{{ picture.path }}" width="110" height="110"></td>#}
-                            <td><img src="" width="110" height="110"></td>
                             <td>
-                                Шина {{ picture.tyres.widths.name }}/{{ picture.tyres.heights.name }} {{ picture.tyres.manufacturers.name }}
-                                {#{{ picture.tyres.diameter }}#}
-                                {#{{ picture.tyres.count }}#}
+                                <img src="#" width="110" height="110">
+                            </td>
+                            <td>
+                                Шины
+                                {#{% if picture.tyres.brand %}#}
+                                    {#{{ picture.tyres.manufacturers.name }}#}
+                                {#{% endif %}#}
+                                {% if picture.tyres.widths %}
+                                    {{ picture.tyres.widths.name }}
+                                {% endif %}
+                                {% if picture.tyres.heights %}
+                                    / {{ picture.tyres.heights.name }}
+                                {% endif %}
+                                {% if picture.tyres.diameters %}
+                                    / {{ picture.tyres.diameters.name }}
+                                {% endif %}
+                                <br>
+                                {% if picture.tyres.counts %}
+                                    Комплект {{ picture.tyres.counts.name }} шт.
+                                {% endif %}
+                                {#{% if picture.tyres.manufacturers.model %}#}
+                                    {#Комплект {{ picture.tyres.counts.name }} шт.#}
+                                {#{% endif %}#}
+
+                                {#{{ dump(picture.tyres.manufacturers.model) }}#}
+
                                 {#{{ picture.tyres.thorns.name }}#}
+                            </td>
+                            <td>
+                                {% if picture.tyres.price %}
+                                    {{ picture.tyres.price }} руб.
+                                {% endif %}
                             </td>
                             <td>
                                 {% for vandor in picture.tyres.vendors %}
@@ -45,8 +71,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-
-            {#{{ dump(pictures) }}#}
 
             <div class="navigator">
                 {{ knp_pagination_render(pictures) }}

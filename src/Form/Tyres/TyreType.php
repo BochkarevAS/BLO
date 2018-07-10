@@ -2,7 +2,7 @@
 
 namespace App\Form\Tyres;
 
-use App\Entity\Tyres\Manufacturer;
+use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Profile\ProfileAvailability;
 use App\Entity\Tyres\Profile\Count;
@@ -24,17 +24,17 @@ class TyreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('manufacturers', EntityType::class, [
-                'class'         => Manufacturer::class,
+            ->add('brand', EntityType::class, [
+                'class'         => Brand::class,
                 'label'         => 'Производитель',
+                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name'
             ])
-            ->add('model', EntityType::class, [
+            ->add('models', EntityType::class, [
                 'class'         => Model::class,
                 'label'         => 'Модель',
                 'multiple'      => true,
-                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])

@@ -46,4 +46,9 @@ class Diameter
     {
         $this->tyres = $tyres;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

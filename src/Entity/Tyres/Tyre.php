@@ -2,7 +2,10 @@
 
 namespace App\Entity\Tyres;
 
+use App\Entity\Tyres\Profile\Count;
+use App\Entity\Tyres\Profile\Diameter;
 use App\Entity\Tyres\Profile\Height;
+use App\Entity\Tyres\Profile\Width;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -65,9 +68,9 @@ class Tyre
     /**
      * Производитель
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Manufacturer", inversedBy="tyre")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model", inversedBy="tyres")
      */
-    private $manufacturers;
+    private $models;
 
     /**
      * Состояние.
@@ -124,6 +127,9 @@ class Tyre
         $this->vendors = new ArrayCollection();
     }
 
+    /**
+     * @return Width
+     */
     public function getWidths()
     {
         return $this->widths;
@@ -147,6 +153,9 @@ class Tyre
         $this->heights = $heights;
     }
 
+    /**
+     * @return Diameter
+     */
     public function getDiameters()
     {
         return $this->diameters;
@@ -157,6 +166,9 @@ class Tyre
         $this->diameters = $diameters;
     }
 
+    /**
+     * @return Count
+     */
     public function getCounts()
     {
         return $this->counts;
@@ -167,6 +179,9 @@ class Tyre
         $this->counts = $counts;
     }
 
+    /**
+     * @return Seasonality
+     */
     public function getSeasonalitys()
     {
         return $this->seasonalitys;
@@ -191,16 +206,16 @@ class Tyre
     }
 
     /**
-     * @return Manufacturer
+     * @return Model
      */
-    public function getManufacturers()
+    public function getModels()
     {
-        return $this->manufacturers;
+        return $this->models;
     }
 
-    public function setManufacturers($manufacturers)
+    public function setModels($models)
     {
-        $this->manufacturers = $manufacturers;
+        $this->models = $models;
     }
 
     public function getStatus()

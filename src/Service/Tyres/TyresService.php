@@ -2,7 +2,7 @@
 
 namespace App\Service\Tyres;
 
-use App\Entity\Tyres\Manufacturer;
+use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Picture;
 use App\Entity\Tyres\Profile\Count;
 use App\Entity\Tyres\Profile\Diameter;
@@ -113,7 +113,7 @@ class TyresService
             'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
         ]);
 
-        $record['manufacturer'] = $em->getRepository(Manufacturer::class)->findOneBy([
+        $record['manufacturer'] = $em->getRepository(Brand::class)->findOneBy([
             'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1251')
         ]);
 

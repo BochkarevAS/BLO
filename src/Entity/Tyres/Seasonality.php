@@ -46,4 +46,9 @@ class Seasonality
     {
         $this->tyre = $tyre;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

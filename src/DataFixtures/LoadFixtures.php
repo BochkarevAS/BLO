@@ -15,7 +15,6 @@ use App\Entity\Parts\Engine;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
-use App\Entity\Tyres\Manufacturer;
 use App\Entity\Tyres\Profile\ProfileAvailability;
 use App\Entity\Tyres\Profile\Count;
 use App\Entity\Tyres\Profile\Diameter;
@@ -122,7 +121,7 @@ class LoadFixtures extends Fixture
 
     private function addTyresRelation($manager)
     {
-        $manufacturers = [
+        $brands = [
             "Amtel", "BFGoodrich", "Brasa", "Bridgestone", "Continental", "Cordiant",
             "Dmack", "Dunlop", "Firestone", "Formula", "FORWARD", "General Tire", "Gislaved",
             "Goodyear", "Hankook", "Jinyu", "Marshal", "Matador", "Maxxis", "Nankang", "Nexen",
@@ -154,18 +153,18 @@ class LoadFixtures extends Fixture
             $manager->persist($vendor);
         }
 
-        foreach ($manufacturers as $record) {
-            $manufacturer = new Manufacturer();
-            $manufacturer->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
-            $this->setReference('manufacturer_' . $i, $manufacturer);
-            $manager->persist($manufacturer);
+        foreach ($brands as $record) {
+            $brand = new \App\Entity\Tyres\Brand();
+            $brand->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $this->setReference('brand_' . $i, $brand);
+            $manager->persist($brand);
             $i++;
         }
 
         foreach ($models as $record) {
             $model = new \App\Entity\Tyres\Model();
             $model->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
-            $model->setManufacturers($this->getReference('manufacturer_' . $this->faker->numberBetween(1, count($models)-2)));
+            $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, count($models)-2)));
             $manager->persist($model);
         }
 
