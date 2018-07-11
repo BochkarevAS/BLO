@@ -4,11 +4,9 @@ namespace App\Form\Tyres;
 
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
-use App\Entity\Tyres\Profile\ProfileAvailability;
 use App\Entity\Tyres\Profile\Count;
 use App\Entity\Tyres\Profile\Diameter;
 use App\Entity\Tyres\Profile\Height;
-use App\Entity\Tyres\Profile\ProfileStatus;
 use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
@@ -24,10 +22,9 @@ class TyreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('brand', EntityType::class, [
+            ->add('brands', EntityType::class, [
                 'class'         => Brand::class,
                 'label'         => 'Производитель',
-                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name'
             ])
@@ -78,20 +75,6 @@ class TyreType extends AbstractType
             ->add('counts', EntityType::class, [
                 'class'         => Count::class,
                 'label'         => 'Количество',
-                'required'      => false,
-                'choice_label'  => 'name',
-            ])
-            ->add('status', EntityType::class, [
-                'class'         => ProfileStatus::class,
-                'label'         => 'Состояние',
-                'mapped'        => false,
-                'required'      => false,
-                'choice_label'  => 'name',
-            ])
-            ->add('availability', EntityType::class, [
-                'class'         => ProfileAvailability::class,
-                'label'         => 'Наличие',
-                'mapped'        => false,
                 'required'      => false,
                 'choice_label'  => 'name',
             ])

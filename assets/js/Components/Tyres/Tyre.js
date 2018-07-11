@@ -6,13 +6,13 @@ import 'select2/dist/js/select2.min'
 class Tyre {
 
     constructor() {
-        $("#tyres_manufacturers").select2();
+        $("#tyres_brands").select2();
 
-        $("#tyres_model").select2({
+        $("#tyres_models").select2({
             closeOnSelect: false
         });
 
-        $("#tyres_vendor").select2({
+        $("#tyres_vendors").select2({
             closeOnSelect: false
         });
     }

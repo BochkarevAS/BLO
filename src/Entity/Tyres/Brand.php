@@ -27,6 +27,11 @@ class Brand
      */
     private $model;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="brands")
+     */
+    private $tyres;
+
     public function getName()
     {
         return $this->name;
@@ -45,6 +50,16 @@ class Brand
     public function setModel($model)
     {
         $this->model = $model;
+    }
+
+    public function getTyres()
+    {
+        return $this->tyres;
+    }
+
+    public function setTyres($tyres)
+    {
+        $this->tyres = $tyres;
     }
 
     public function getId()

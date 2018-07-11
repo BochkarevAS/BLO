@@ -32,9 +32,9 @@
                             </td>
                             <td>
                                 Шины
-                                {#{% if picture.tyres.brand %}#}
-                                    {#{{ picture.tyres.manufacturers.name }}#}
-                                {#{% endif %}#}
+                                {% if picture.tyres.brands %}
+                                    {{ picture.tyres.brands.name }}
+                                {% endif %}
                                 {% if picture.tyres.widths %}
                                     {{ picture.tyres.widths.name }}
                                 {% endif %}
@@ -44,17 +44,13 @@
                                 {% if picture.tyres.diameters %}
                                     / {{ picture.tyres.diameters.name }}
                                 {% endif %}
+                                {% if picture.tyres.models %}
+                                    {{ picture.tyres.models.name }}
+                                {% endif %}
                                 <br>
                                 {% if picture.tyres.counts %}
                                     Комплект {{ picture.tyres.counts.name }} шт.
                                 {% endif %}
-                                {#{% if picture.tyres.manufacturers.model %}#}
-                                    {#Комплект {{ picture.tyres.counts.name }} шт.#}
-                                {#{% endif %}#}
-
-                                {#{{ dump(picture.tyres.manufacturers.model) }}#}
-
-                                {#{{ picture.tyres.thorns.name }}#}
                             </td>
                             <td>
                                 {% if picture.tyres.price %}

@@ -1,8 +1,8 @@
 {{ form_start(form) }}
     <div class="row">
         <div class="col-4">
-            {{ form_row(form.brand, {'id': 'tyres_brand', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.brand) }}
+            {{ form_row(form.brands, {'id': 'tyres_brands', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.brands) }}
         </div>
         <div class="col-4">
             {{ form_row(form.thorns, {'id': 'tyres_thorns', 'attr': {'class': 'form-control'}}) }}
@@ -19,34 +19,26 @@
             {{ form_errors(form.models) }}
         </div>
         <div class="col-6">
-            {{ form_row(form.vendors, {'id': 'tyres_vendor', 'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.vendors, {'id': 'tyres_vendors', 'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.vendors) }}
         </div>
     </div>
     <div class="row">
         <div class="col-2">
-            {{ form_row(form.diameters, {'id': 'tyres_diameters', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.diameters) }}
+            {{ form_row(form.widths, {'id': 'tyres_widths', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.widths) }}
         </div>
         <div class="col-2">
             {{ form_row(form.heights, {'id': 'tyres_heights', 'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.heights) }}
         </div>
         <div class="col-2">
-            {{ form_row(form.widths, {'id': 'tyres_widths', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.widths) }}
+            {{ form_row(form.diameters, {'id': 'tyres_diameters', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.diameters) }}
         </div>
         <div class="col-2">
             {{ form_row(form.counts, {'id': 'tyres_counts', 'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.counts) }}
-        </div>
-        <div class="col-2">
-            {{ form_row(form.status, {'id': 'tyres_status', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.status) }}
-        </div>
-        <div class="col-2">
-            {{ form_row(form.availability, {'id': 'tyres_availability', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.availability) }}
         </div>
     </div>
     <div class="modal-footer">

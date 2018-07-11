@@ -3,6 +3,7 @@
 namespace App\Service\Tyres;
 
 use App\Entity\Tyres\Brand;
+use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Picture;
 use App\Entity\Tyres\Profile\Count;
 use App\Entity\Tyres\Profile\Diameter;
@@ -44,7 +45,7 @@ class TyresService
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
         $header = [
-            'header', 'tire_type', 'year', 'manufacturer', 'model', 'profile_width_mm',
+            'header', 'tire_type', 'year', 'brand', 'model', 'profile_width_mm',
             'profile_height_proc', 'wheel_width_inc', 'wheel_height_inc', 'landing_diameter_mm',
             'landing_diameter_inc', 'commercial', 'seasonality', 'status',
             'quantity', 'thorns', 'ply_rating', 'index_of_speed', 'load_index',
@@ -66,7 +67,7 @@ class TyresService
                 $record['index_of_speed'] .
                 $record['load_index'] .
                 $record['pictures'] .
-                $record['manufacturer']
+                $record['brand']
             );
             $record = $this->valid($record, $em, $nameVendor);
             $tyre   = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
@@ -113,8 +114,12 @@ class TyresService
             'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
         ]);
 
-        $record['manufacturer'] = $em->getRepository(Brand::class)->findOneBy([
-            'name' => mb_convert_encoding($record['manufacturer'], 'UTF-8', 'Windows-1251')
+        $record['model'] = $em->getRepository(Model::class)->findOneBy([
+            'name' => mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251')
+        ]);
+
+        $record['brand'] = $em->getRepository(Brand::class)->findOneBy([
+            'name' => mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251')
         ]);
 
         $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
@@ -141,18 +146,6 @@ class TyresService
             'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
         ]);
 
-        if ($record['availability'] = mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251')) {
-            $record['availability'] = mb_strtoupper($record['availability']) === '? ???????' ? 1 : 2;
-        } else {
-            $record['availability'] = 0;
-        }
-
-        if ($record['status'] = mb_convert_encoding($record['status'], 'UTF-8', 'Windows-1251')) {
-            $record['status'] = mb_strtoupper($record['status']) === '??????????? (?/?)' ? 1 : 2;
-        } else {
-            $record['status'] = 0;
-        }
-
         return $record;
     }
 
@@ -167,11 +160,10 @@ class TyresService
         $tyre->setHeights($record['profile_height_proc']);
         $tyre->setWidths($record['profile_width_mm']);
         $tyre->setCounts($record['quantity']);
-        $tyre->setStatus($record['status']);
-        $tyre->setAvailability($record['availability']);
         $tyre->setHash($hash);
         $tyre->addVendors($record['vendor']);
-        $tyre->setManufacturers($record['manufacturer']);
+        $tyre->setModels($record['model']);
+        $tyre->setBrands($record['brand']);
         $tyre->setSeasonalitys($record['seasonality']);
         $tyre->setThorns($record['thorn']);
         $tyre->setPrice($record['price']);

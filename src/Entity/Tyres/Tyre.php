@@ -66,27 +66,18 @@ class Tyre
     private $seasonalitys;
 
     /**
-     * Производитель
+     * Модель шины
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model", inversedBy="tyres")
      */
     private $models;
 
     /**
-     * Состояние.
-     * Один из вариантов 0 => Любая, 1 => Контрактная (б/у), 2 => Новая
+     * Производитель
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Brand", inversedBy="tyres")
      */
-    private $status;
-
-    /**
-     * Наличие.
-     * Один из вариантов 0 => Все, 1 => Под заказ, 2 => В наличии
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $availability;
+    private $brands;
 
     /**
      * Производитель
@@ -218,24 +209,17 @@ class Tyre
         $this->models = $models;
     }
 
-    public function getStatus()
+    /**
+     * @return Brand
+     */
+    public function getBrands()
     {
-        return $this->status;
+        return $this->brands;
     }
 
-    public function setStatus($status)
+    public function setBrands($brands)
     {
-        $this->status = $status;
-    }
-
-    public function getAvailability()
-    {
-        return $this->availability;
-    }
-
-    public function setAvailability($availability)
-    {
-        $this->availability = $availability;
+        $this->brands = $brands;
     }
 
     public function addVendors(Vendor $vendor): self

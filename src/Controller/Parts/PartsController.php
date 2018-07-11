@@ -23,7 +23,7 @@ class PartsController extends AbstractController
     /**
      * @Route("/parts", name="parts_render", options={"expose"=true})
      */
-    public function renderPart(Request $request, PaginatorInterface $paginator)
+    public function renderParts(Request $request, PaginatorInterface $paginator)
     {
 //        $part = new Parts();
 //        $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
