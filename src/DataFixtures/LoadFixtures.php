@@ -41,6 +41,9 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
+
+        $test = 1;
+
         $this->addProfileRelation($manager);  // Профиль шин
         $this->addTyresRelation($manager);    // Шины
 //        $this->addPartsRelation($manager);    // Запчасти
