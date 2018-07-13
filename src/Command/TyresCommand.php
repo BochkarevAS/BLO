@@ -55,6 +55,8 @@ class TyresCommand extends Command
     protected function import(InputInterface $input, OutputInterface $output)
     {
         $file = '616.csv';
+//        $file = 'test.csv';
+
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
 
         $serializer = $this->container->get('serializer');
@@ -80,15 +82,13 @@ class TyresCommand extends Command
         $records = $reader->getRecords($header);
 
         $i = 0;
-        $batchSize = 100;
+        $batchSize = 1000;
         $nameVendor = 'ALFACAR';
 
         $progress = new ProgressBar($output, count($reader));
         $progress->start();
 
         foreach ($records as $offset => $record) {
-
-
             $hash = md5(
                 $record['landing_diameter_mm'] .
                 $record['profile_height_proc'] .
@@ -128,7 +128,7 @@ class TyresCommand extends Command
                 $event = $stopwatch->lap('sanitize');
                 $progress->advance($batchSize);
                 $now = new \DateTime();
-                $output->writeln(' of tyres imported ... | ' . $now->format('d-m-Y G:i:s') . ' | memory used : '  . number_format($event->getMemory() / 1048576, 2) . ' MB');
+                $output->writeln(' of tyres imported ... | ' . $now->format('d-m-Y G:i:s') . ' | memory used : ' . number_format($event->getMemory() / 1048576, 2) . ' MB');
             }
 
             $i++;
