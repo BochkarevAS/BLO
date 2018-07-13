@@ -33,6 +33,11 @@ class Model
      */
     private $carcase;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="models")
+     */
+    private $oem;
+
     public function getName()
     {
         return $this->name;
@@ -61,6 +66,16 @@ class Model
     public function setCarcase($carcase)
     {
         $this->carcase = $carcase;
+    }
+
+    public function getOem()
+    {
+        return $this->oem;
+    }
+
+    public function setOem($oem): void
+    {
+        $this->oem = $oem;
     }
 
     public function getId()
