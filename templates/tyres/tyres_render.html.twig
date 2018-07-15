@@ -35,21 +35,21 @@
                                 {% if picture.tyres.brands %}
                                     {{ picture.tyres.brands.name }}
                                 {% endif %}
-                                {% if picture.tyres.widths %}
-                                    {{ picture.tyres.widths.name }}
+                                {% if picture.tyres.width %}
+                                    {{ picture.tyres.width }}
                                 {% endif %}
-                                {% if picture.tyres.heights %}
-                                    / {{ picture.tyres.heights.name }}
+                                {% if picture.tyres.height %}
+                                    / {{ picture.tyres.height }}
                                 {% endif %}
-                                {% if picture.tyres.diameters %}
-                                    / {{ picture.tyres.diameters.name }}
+                                {% if picture.tyres.diameter %}
+                                    / {{ picture.tyres.diameter }}
                                 {% endif %}
                                 {% if picture.tyres.models %}
                                     {{ picture.tyres.models.name }}
                                 {% endif %}
                                 <br>
-                                {% if picture.tyres.counts %}
-                                    Комплект {{ picture.tyres.counts.name }} шт.
+                                {% if picture.tyres.quantity %}
+                                    Комплект {{ picture.tyres.quantity }} шт.
                                 {% endif %}
                             </td>
                             <td>
