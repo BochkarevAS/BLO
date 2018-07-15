@@ -23,9 +23,9 @@ class Engine
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="part")
      */
-    private $oem;
+    private $oems;
 
     public function getName()
     {
@@ -37,14 +37,14 @@ class Engine
         $this->name = $name;
     }
 
-    public function getOem()
+    public function getOems()
     {
-        return $this->oem;
+        return $this->oems;
     }
 
-    public function setOem($oem)
+    public function setOem($oems)
     {
-        $this->oem = $oem;
+        $this->oems = $oems;
     }
 
     public function __toString()

@@ -2,7 +2,6 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,9 +23,9 @@ class Part
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="part")
      */
-    private $oem;
+    private $oems;
 
     public function getName()
     {
@@ -38,14 +37,14 @@ class Part
         $this->name = $name;
     }
 
-    public function getOem()
+    public function getOems()
     {
-        return $this->oem;
+        return $this->oems;
     }
 
-    public function setOem($oem)
+    public function setOems($oems)
     {
-        $this->oem = $oem;
+        $this->oems = $oems;
     }
 
     public function getId()

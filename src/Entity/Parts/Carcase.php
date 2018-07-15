@@ -23,14 +23,14 @@ class Carcase
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="carcase")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="carcases")
      */
-    private $models;
+    private $model;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="carcases")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="carcase")
      */
-    private $oem;
+    private $oems;
 
     public function getName()
     {
@@ -42,24 +42,24 @@ class Carcase
         $this->name = $name;
     }
 
-    public function getModels()
+    public function getModel()
     {
-        return $this->models;
+        return $this->model;
     }
 
-    public function setModels($models)
+    public function setModels($model)
     {
-        $this->models = $models;
+        $this->model = $model;
     }
 
-    public function getOem()
+    public function getOems()
     {
-        return $this->oem;
+        return $this->oems;
     }
 
-    public function setOem($oem)
+    public function setOems($oems)
     {
-        $this->oem = $oem;
+        $this->oems = $oems;
     }
 
     public function getId()

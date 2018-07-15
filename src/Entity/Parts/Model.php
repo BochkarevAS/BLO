@@ -24,19 +24,19 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="model")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="models")
      */
-    private $brands;
+    private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Carcase", mappedBy="models")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Carcase", mappedBy="model")
      */
-    private $carcase;
+    private $carcases;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="models")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="model")
      */
-    private $oem;
+    private $oems;
 
     public function getName()
     {
@@ -48,34 +48,34 @@ class Model
         $this->name = $name;
     }
 
-    public function getBrands()
+    public function getBrand()
     {
-        return $this->brands;
+        return $this->brand;
     }
 
-    public function setBrands($brands)
+    public function setBrands($brand)
     {
-        $this->brands = $brands;
+        $this->brand = $brand;
     }
 
-    public function getCarcase()
+    public function getCarcases()
     {
-        return $this->carcase;
+        return $this->carcases;
     }
 
-    public function setCarcase($carcase)
+    public function setCarcases($carcases)
     {
-        $this->carcase = $carcase;
+        $this->carcases = $carcases;
     }
 
-    public function getOem()
+    public function getOems()
     {
-        return $this->oem;
+        return $this->oems;
     }
 
-    public function setOem($oem)
+    public function setOems($oems)
     {
-        $this->oem = $oem;
+        $this->oems = $oems;
     }
 
     public function getId()

@@ -28,17 +28,16 @@ class PartsController extends AbstractController
     {
 //        $brand = new Brand();
 //        $form = $this->createForm(BrandType::class, $brand, ['method' => 'GET']);
-
         $oem = new Oem();
         $form = $this->createForm(OemType::class, $oem, ['method' => 'GET']);
 
         $form->handleRequest($request);
         $oems = null;
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-
-            dump($entity);
 
 
 //            $entity->setCity($form->get('city')->getData());
