@@ -24,6 +24,9 @@ class TyresController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
+
+            dump($entity);
+
             $query = $this->getDoctrine()->getRepository(Tyre::class)->renderTyres($entity);
 
             if ($query) {

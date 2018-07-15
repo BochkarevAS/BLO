@@ -41,10 +41,7 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-
-        $test = 1;
-
-        $this->addProfileRelation($manager);  // Профиль шин
+//        $this->addProfileRelation($manager);  // Профиль шин
         $this->addTyresRelation($manager);    // Шины
 //        $this->addPartsRelation($manager);    // Запчасти
 
@@ -83,23 +80,23 @@ class LoadFixtures extends Fixture
             $counts[] = $i;
         }
 
-        foreach ($status as $item) {
-            $profileStatus = new ProfileStatus();
-            $profileStatus->setName($item);
-            $manager->persist($profileStatus);
-        }
+//        foreach ($status as $item) {
+//            $profileStatus = new ProfileStatus();
+//            $profileStatus->setName($item);
+//            $manager->persist($profileStatus);
+//        }
+//
+//        foreach ($availability as $item) {
+//            $profileAvailability = new ProfileAvailability();
+//            $profileAvailability->setName($item);
+//            $manager->persist($profileAvailability);
+//        }
 
-        foreach ($availability as $item) {
-            $profileAvailability = new ProfileAvailability();
-            $profileAvailability->setName($item);
-            $manager->persist($profileAvailability);
-        }
-
-        foreach ($widths as $item) {
-            $width = new Width();
-            $width->setName($item);
-            $manager->persist($width);
-        }
+//        foreach ($widths as $item) {
+//            $width = new Width();
+//            $width->setName($item);
+//            $manager->persist($width);
+//        }
 
         foreach ($heights as $item) {
             $height = new Height();

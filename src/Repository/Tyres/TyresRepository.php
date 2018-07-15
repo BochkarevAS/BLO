@@ -33,27 +33,23 @@ class TyresRepository extends EntityRepository
         }
 
         /* Фильтр по количеству шин */
-        if ($tyre->getCounts()) {
-            $qb->leftJoin('t.counts', 'c');
-            $qb->andWhere('c.id = :cid')->setParameter('cid', $tyre->getCounts()->getId());
+        if ($tyre->getQuantity()) {
+            $qb->andWhere('t.quantity = :quantity')->setParameter('quantity', $tyre->getQuantity());
         }
 
         /* Фильтр по посадочный диаметр (мм) */
-        if ($tyre->getDiameters()) {
-            $qb->leftJoin('t.diameters', 'd');
-            $qb->andWhere('d.id = :did')->setParameter('did', $tyre->getDiameters()->getId());
+        if ($tyre->getDiameter()) {
+            $qb->andWhere('t.diameter = :diameter')->setParameter('diameter', $tyre->getDiameter());
         }
 
         /* Фильтр по высота ширина (мм) */
-        if ($tyre->getWidths()) {
-            $qb->leftJoin('t.widths', 'w');
-            $qb->andWhere('w.id = :wid')->setParameter('wid', $tyre->getWidths()->getId());
+        if ($tyre->getWidth()) {
+            $qb->andWhere('t.width = :width')->setParameter('width', $tyre->getWidth());
         }
 
         /* Фильтр по высота профиля (%) */
-        if ($tyre->getHeights()) {
-            $qb->leftJoin('t.heights', 'h');
-            $qb->andWhere('h.id = :hid')->setParameter('hid', $tyre->getHeights()->getId());
+        if ($tyre->getHeight()) {
+            $qb->andWhere('t.height = :height')->setParameter('height', $tyre->getHeight());
         }
 
         /* Фильтр по продавец */
