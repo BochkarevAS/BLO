@@ -4,7 +4,6 @@ namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\PartRepository")
@@ -31,43 +30,14 @@ class Part
     private $engines;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
-     * @ORM\JoinTable(name="parts_carcases", schema="parts")
-     */
-    private $carcases;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
      */
     private $oem;
 
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", name="created_at")
-     */
-    private $createdAt;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", name="updated_at")
-     */
-    private $updatedAt;
-
     public function __construct()
     {
-        $this->models    = new ArrayCollection();
-        $this->carcases  = new ArrayCollection();
-        $this->engines   = new ArrayCollection();
-    }
-
-    public function addCarcase(Carcase $carcase): self
-    {
-        if (!$this->carcase->contains($carcase)) {
-            $this->carcase->add($carcase);
-            $carcase->addPart($this);
-        }
-
-        return $this;
+        $this->models  = new ArrayCollection();
+        $this->engines = new ArrayCollection();
     }
 
     public function addEngine(Engine $engine): self
@@ -104,20 +74,7 @@ class Part
     }
 
     /**
-     * @return ArrayCollection|Carcase[]
-     */
-    public function getCarcases()
-    {
-        return $this->carcases;
-    }
-
-    public function setCarcases($carcases)
-    {
-        $this->carcases = $carcases;
-    }
-
-    /**
-     * @return ArrayCollection|Oem
+     * @return Oem
      */
     public function getOem()
     {
@@ -132,15 +89,5 @@ class Part
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 }

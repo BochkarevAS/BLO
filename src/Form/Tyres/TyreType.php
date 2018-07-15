@@ -18,23 +18,10 @@ class TyreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $widths    = [];
-        $heights   = [];
-        $quantitys = [];
-        $diameters = [];
-
-        for ($i = 105; $i <= 815; $i = $i + 5) {
-            $widths[$i] = $i;
-        }
-        for ($i = 25; $i <= 110; $i = $i + 5) {
-            $heights[$i] = $i;
-        }
-        for ($i = 1; $i <= 10; $i++) {
-            $quantitys[$i] = $i;
-        }
-        for ($i = 6; $i <= 57; $i = $i + 0.5) {
-            $diameters[] = $i;
-        }
+        $widths    = array_combine(range(105, 815, 5), range(105, 815, 5));
+        $heights   = array_combine(range(25, 110, 5), range(25, 110, 5));
+        $quantitys = array_combine(range(1, 10, 1), range(1, 10, 1));
+        $diameters = array_combine(range(6, 57, 0.5), range(6, 57, 0.5));
 
         $builder
             ->add('brands', EntityType::class, [

@@ -24,6 +24,27 @@ class Oem
     private $name;
 
     /**
+     * Производитель
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="oem")
+     */
+    private $brands;
+
+    /**
+     * Модель автомобиля
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="oem")
+     */
+    private $models;
+
+    /**
+     * Модель автомобиля
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Carcase", inversedBy="oem")
+     */
+    private $carcases;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Part", inversedBy="oem")
      */
     private $parts;
@@ -58,6 +79,36 @@ class Oem
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getBrands()
+    {
+        return $this->brands;
+    }
+
+    public function setBrands($brands)
+    {
+        $this->brands = $brands;
+    }
+
+    public function getModels()
+    {
+        return $this->models;
+    }
+
+    public function setModels($models)
+    {
+        $this->models = $models;
+    }
+
+    public function getCarcases()
+    {
+        return $this->carcases;
+    }
+
+    public function setCarcases($carcases)
+    {
+        $this->carcases = $carcases;
     }
 
     public function getParts()

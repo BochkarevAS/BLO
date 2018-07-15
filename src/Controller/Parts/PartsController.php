@@ -28,6 +28,20 @@ class PartsController extends AbstractController
 //        $part = new Parts();
 //        $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
 
+//        foreach (range(6, 0.5, 57) as $number) {
+//            echo $number;// $diameters;
+//        }
+
+//        foreach (range(0, 12) as $number) {
+//            echo $number;
+//        }
+
+//        var_dump(array_combine(range(6, 57, 0.5), range(6, 57, 0.5)));
+
+//var_dump(array_combine(range(0, 12), range(0, 12)));
+//        die;
+
+
         $brand = new Brand();
         $form = $this->createForm(BrandType::class, $brand, ['method' => 'GET']);
 
