@@ -41,7 +41,6 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-//        $this->addProfileRelation($manager);  // Профиль шин
         $this->addTyresRelation($manager);    // Шины
 //        $this->addPartsRelation($manager);    // Запчасти
 
@@ -50,73 +49,6 @@ class LoadFixtures extends Fixture
 //        $this->addCompany($manager);        // Компания
 //        $this->addNews($manager);           // Новость
 //        $this->addNewsCategoeys($manager);  // Категория новостей
-    }
-
-    private function addProfileRelation($manager)
-    {
-        $counts    = [];
-        $widths    = [];
-        $heights   = [];
-        $diameters = [];
-        $status    = [
-            1 => 'Контрактная (б/у)',
-            2 => 'Новая'
-        ];
-        $availability = [
-            1 => 'Под заказ',
-            2 => 'В наличии'
-        ];
-
-        for ($i = 105; $i <= 815; $i = $i + 5) {
-            $widths[] = $i;
-        }
-        for ($i = 25; $i <= 110; $i = $i + 5) {
-            $heights[] = $i;
-        };
-        for ($i = 6; $i <= 57; $i = $i + 0.5) {
-            $diameters[] = $i;
-        }
-        for ($i = 1; $i <= 10; $i++) {
-            $counts[] = $i;
-        }
-
-//        foreach ($status as $item) {
-//            $profileStatus = new ProfileStatus();
-//            $profileStatus->setName($item);
-//            $manager->persist($profileStatus);
-//        }
-//
-//        foreach ($availability as $item) {
-//            $profileAvailability = new ProfileAvailability();
-//            $profileAvailability->setName($item);
-//            $manager->persist($profileAvailability);
-//        }
-
-//        foreach ($widths as $item) {
-//            $width = new Width();
-//            $width->setName($item);
-//            $manager->persist($width);
-//        }
-
-        foreach ($heights as $item) {
-            $height = new Height();
-            $height->setName($item);
-            $manager->persist($height);
-        }
-
-        foreach ($diameters as $item) {
-            $diameter = new Diameter();
-            $diameter->setName($item);
-            $manager->persist($diameter);
-        }
-
-        foreach ($counts as $item) {
-            $count = new Count();
-            $count->setName($item);
-            $manager->persist($count);
-        }
-
-        $manager->flush();
     }
 
     private function addTyresRelation($manager)

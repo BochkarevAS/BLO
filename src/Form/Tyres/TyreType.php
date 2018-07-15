@@ -4,10 +4,6 @@ namespace App\Form\Tyres;
 
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
-use App\Entity\Tyres\Profile\Count;
-use App\Entity\Tyres\Profile\Diameter;
-use App\Entity\Tyres\Profile\Height;
-use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;

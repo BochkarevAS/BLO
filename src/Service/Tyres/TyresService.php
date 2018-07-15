@@ -30,8 +30,8 @@ class TyresService
     {
         set_time_limit(300);
 
-        $file = 'test.csv';
-//        $file = '795.csv';
+//        $file = 'test.csv';
+        $file = '795.csv';
 //        $file = '615.csv';
 //        $file = '616.csv';
 
@@ -45,8 +45,8 @@ class TyresService
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
         $header = [
-            'header', 'tire_type', 'year', 'brand', 'model', 'profile_width_mm',
-            'profile_height_proc', 'wheel_width_inc', 'wheel_height_inc', 'landing_diameter_mm',
+            'header', 'tire_type', 'year', 'brand', 'model', 'width_mm',
+            'height_proc', 'wheel_width_inc', 'wheel_height_inc', 'diameter_mm',
             'landing_diameter_inc', 'commercial', 'seasonality', 'status',
             'quantity', 'thorns', 'ply_rating', 'index_of_speed', 'load_index',
             'mud_at', 'dirt_mt', 'axis', 'presence_of_camera', 'radius', 'moto_class',
@@ -55,19 +55,14 @@ class TyresService
         ];
         $records = $reader->getRecords($header);
         $i = 0;
-        $batchSize = 1000;
+        $batchSize = 100;
         $nameVendor = 'ALFACAR';
 
         foreach ($records as $offset => $record) {
             $hash = md5(
-                $record['landing_diameter_mm'] .
-                $record['profile_height_proc'] .
-                $record['profile_width_mm'] .
-                $record['model'] .
-                $record['index_of_speed'] .
-                $record['load_index'] .
-                $record['pictures'] .
-                $record['brand']
+                $record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] .
+                $record['model'] . $record['index_of_speed'] . $record['load_index'] .
+                $record['pictures'] . $record['brand']
             );
             $record = $this->valid($record, $em, $nameVendor);
             $tyre   = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
@@ -126,22 +121,6 @@ class TyresService
             'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
         ]);
 
-        $record['quantity'] = $em->getRepository(Count::class)->findOneBy([
-            'name' => $record['quantity'] ? $record['quantity'] : 0
-        ]);
-
-//        $record['profile_width_mm'] = $em->getRepository(Width::class)->findOneBy([
-//            'name' => $record['profile_width_mm'] ? $record['profile_width_mm'] : 0
-//        ]);
-
-        $record['profile_height_proc'] = $em->getRepository(Height::class)->findOneBy([
-            'name' => $record['profile_height_proc'] ? $record['profile_height_proc'] : 0
-        ]);
-
-        $record['landing_diameter_mm'] = $em->getRepository(Diameter::class)->findOneBy([
-            'name' => $record['landing_diameter_mm'] ? $record['landing_diameter_mm'] : 0
-        ]);
-
         $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
             'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
         ]);
@@ -156,10 +135,10 @@ class TyresService
      */
     private function tyre($tyre, array $record, $hash)
     {
-        $tyre->setDiameter($record['landing_diameter_mm']);
-        $tyre->setHeight($record['profile_height_proc']);
-        $tyre->setWidth($record['profile_width_mm']);
-        $tyre->setQuantity($record['quantity']);
+        $tyre->setDiameter((int) $record['diameter_mm']);
+        $tyre->setHeight((int) $record['height_proc']);
+        $tyre->setWidth((int) $record['width_mm']);
+        $tyre->setQuantity((int) $record['quantity']);
         $tyre->setHash($hash);
         $tyre->addVendors($record['vendor']);
         $tyre->setModels($record['model']);
