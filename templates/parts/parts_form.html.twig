@@ -1,8 +1,8 @@
 {{ form_start(form, {'action': path('parts_render'), 'method': 'GET', 'attr': {'id': 'form'}}) }}
     <div class="row">
         <div class="col-4">
-            {{ form_row(form.name, {'id': 'parts_brand', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.name) }}
+            {{ form_row(form.brand, {'id': 'parts_brand', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.brand) }}
         </div>
         <div class="col-4">
             {{ form_row(form.model, {'id': 'parts_model', 'attr': {'class': 'form-control'}}) }}

@@ -26,30 +26,30 @@ class Tyre
     /**
      * Ширина профиля (мм)
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Width", inversedBy="tyres")
+     * @ORM\Column(type="integer")
      */
-    private $widths;
+    private $width;
 
     /**
      * Высота профиля (%)
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Height", inversedBy="tyres")
+     * @ORM\Column(type="integer")
      */
-    private $heights;
+    private $height;
 
     /**
      * Посадочный диаметр (мм)
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Diameter", inversedBy="tyres")
+     * @ORM\Column(type="integer")
      */
-    private $diameters;
+    private $diameter;
 
     /**
      * Количество
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Profile\Count", inversedBy="tyres")
+     * @ORM\Column(type="integer")
      */
-    private $counts;
+    private $quantity;
 
     /**
      * Шипы
@@ -118,56 +118,44 @@ class Tyre
         $this->vendors = new ArrayCollection();
     }
 
-    /**
-     * @return Width
-     */
-    public function getWidths()
+    public function getWidth()
     {
-        return $this->widths;
+        return $this->width;
     }
 
-    public function setWidths($widths)
+    public function setWidth($width)
     {
-        $this->widths = $widths;
+        $this->width = $width;
     }
 
-    /**
-     * @return Height
-     */
-    public function getHeights()
+    public function getHeight()
     {
-        return $this->heights;
+        return $this->height;
     }
 
-    public function setHeights($heights)
+    public function setHeight($height)
     {
-        $this->heights = $heights;
+        $this->height = $height;
     }
 
-    /**
-     * @return Diameter
-     */
-    public function getDiameters()
+    public function getDiameter()
     {
-        return $this->diameters;
+        return $this->diameter;
     }
 
-    public function setDiameters($diameters)
+    public function setDiameter($diameter)
     {
-        $this->diameters = $diameters;
+        $this->diameter = $diameter;
     }
 
-    /**
-     * @return Count
-     */
-    public function getCounts()
+    public function getQuantity()
     {
-        return $this->counts;
+        return $this->quantity;
     }
 
-    public function setCounts($counts)
+    public function setQuantity($quantity)
     {
-        $this->counts = $counts;
+        $this->quantity = $quantity;
     }
 
     /**
@@ -258,11 +246,6 @@ class Tyre
     public function setPrice($price)
     {
         $this->price = $price;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getId()

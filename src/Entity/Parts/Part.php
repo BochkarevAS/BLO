@@ -62,8 +62,8 @@ class Part
 
     public function addCarcase(Carcase $carcase): self
     {
-        if (!$this->carcases->contains($carcase)) {
-            $this->carcases->add($carcase);
+        if (!$this->carcase->contains($carcase)) {
+            $this->carcase->add($carcase);
             $carcase->addPart($this);
         }
 

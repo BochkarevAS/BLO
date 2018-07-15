@@ -8,6 +8,7 @@ use App\Entity\Parts\Model;
 use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
 use App\Form\Parts\BrandType;
+use App\Form\Parts\OemType;
 use App\Form\Parts\PartType;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -25,17 +26,18 @@ class PartsController extends AbstractController
      */
     public function renderParts(Request $request, PaginatorInterface $paginator)
     {
-//        $part = new Parts();
-//        $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
-
-        $brand = new Brand();
-        $form = $this->createForm(BrandType::class, $brand, ['method' => 'GET']);
+        $oem = new Oem();
+        $form = $this->createForm(OemType::class, $oem, ['method' => 'GET']);
 
         $form->handleRequest($request);
         $oems = null;
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-//            $entity = $form->getData();
+            $entity = $form->getData();
+
+
 //            $entity->setCity($form->get('city')->getData());
 //            $query = $this->getDoctrine()->getRepository(Oem::class)->search($entity);
 //

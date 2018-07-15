@@ -23,9 +23,14 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brands")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brand")
      */
-    private $model;
+    private $models;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="brand")
+     */
+    private $oems;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="brands")
@@ -42,14 +47,24 @@ class Brand
         $this->name = $name;
     }
 
-    public function getModel()
+    public function getModels()
     {
-        return $this->model;
+        return $this->models;
     }
 
-    public function setModel($model)
+    public function setModels($models)
     {
-        $this->model = $model;
+        $this->models = $models;
+    }
+
+    public function getOems()
+    {
+        return $this->oems;
+    }
+
+    public function setOem($oems)
+    {
+        $this->oems = $oems;
     }
 
     public function getOem()

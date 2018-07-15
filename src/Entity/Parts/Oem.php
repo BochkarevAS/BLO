@@ -29,14 +29,9 @@ class Oem
     private $parts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="oem")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="oem")
      */
-    private $models;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="oem")
-     */
-    private $brands;
+    private $citys;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Vendor", inversedBy="oem")
@@ -75,6 +70,16 @@ class Oem
         $this->parts = $parts;
     }
 
+    public function getCitys()
+    {
+        return $this->citys;
+    }
+
+    public function setCitys($citys)
+    {
+        $this->citys = $citys;
+    }
+
     public function getVendors()
     {
         return $this->vendors;
@@ -83,26 +88,6 @@ class Oem
     public function setVendors($vendors)
     {
         $this->vendors = $vendors;
-    }
-
-    public function getModels()
-    {
-        return $this->models;
-    }
-
-    public function setModels($models): void
-    {
-        $this->models = $models;
-    }
-
-    public function getBrands()
-    {
-        return $this->brands;
-    }
-
-    public function setBrands($brands): void
-    {
-        $this->brands = $brands;
     }
 
     public function getCreatedAt()

@@ -15,9 +15,11 @@ use App\Entity\Parts\Engine;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
+use App\Entity\Tyres\Profile\ProfileAvailability;
 use App\Entity\Tyres\Profile\Count;
 use App\Entity\Tyres\Profile\Diameter;
 use App\Entity\Tyres\Profile\Height;
+use App\Entity\Tyres\Profile\ProfileStatus;
 use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
@@ -39,33 +41,15 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-//        $this->addDrivesRelation($manager);   // Диски
-//        $this->addProfileRelation($manager);  // Профиль шин
-//        $this->addTyresRelation($manager);    // Шины
-        $this->addPartsRelation($manager);    // Запчасти
+        $this->addProfileRelation($manager);  // Профиль шин
+        $this->addTyresRelation($manager);    // Шины
+//        $this->addPartsRelation($manager);    // Запчасти
 
 //        $this->addCounty($manager);         // Округ
 //        $this->addRegion($manager);         // Регион
 //        $this->addCompany($manager);        // Компания
 //        $this->addNews($manager);           // Новость
 //        $this->addNewsCategoeys($manager);  // Категория новостей
-    }
-
-    private function addDrivesRelation($manager)
-    {
-        for ($i = 1; $i <= 10; $i++) {
-            $brand = new \App\Entity\Drives\Brand();
-            $brand->setName('Brand_' . $i);
-            $this->setReference('brand_' . $i, $brand);
-            $manager->persist($brand);
-        }
-
-        for ($i = 1; $i <= 30; $i++) {
-            $model = new \App\Entity\Drives\Model();
-            $model->setName('Model_' . $i);
-            $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
-            $manager->persist($model);
-        }
     }
 
     private function addProfileRelation($manager)
@@ -94,6 +78,18 @@ class LoadFixtures extends Fixture
         }
         for ($i = 1; $i <= 10; $i++) {
             $counts[] = $i;
+        }
+
+        foreach ($status as $item) {
+            $profileStatus = new ProfileStatus();
+            $profileStatus->setName($item);
+            $manager->persist($profileStatus);
+        }
+
+        foreach ($availability as $item) {
+            $profileAvailability = new ProfileAvailability();
+            $profileAvailability->setName($item);
+            $manager->persist($profileAvailability);
         }
 
         foreach ($widths as $item) {

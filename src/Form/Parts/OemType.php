@@ -5,24 +5,25 @@ namespace App\Form\Parts;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Model;
+use App\Entity\Parts\Oem;
 use App\Entity\Region\City;
 use App\Repository\Parts\BrandRepository;
 use App\Repository\Parts\CityRepository;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BrandType extends AbstractType
+class OemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', EntityType::class, [
+            ->add('brand', EntityType::class, [
                 'class'         => Brand::class,
                 'label'         => 'Марка',
                 'choice_label'  => 'name',
@@ -43,7 +44,6 @@ class BrandType extends AbstractType
             ])
             ->add('engine', TextType::class, [
                 'label'    => 'Двигатель',
-                'mapped'   => false,
                 'required' => false
             ])
             ->add('city', EntityType::class, [
@@ -61,9 +61,9 @@ class BrandType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
-                $brand = $event->getData();
+                $oem   = $event->getData();
                 $form  = $event->getForm();
-                $model = $brand->getModel();
+                $model = $oem->getModel();
 
                 if ($model) {
                     $carcase = $model->getCarcase();
@@ -76,7 +76,7 @@ class BrandType extends AbstractType
             }
         );
 
-        $builder->get('name')->addEventListener(
+        $builder->get('brand')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
                 $form = $event->getForm();
@@ -94,10 +94,9 @@ class BrandType extends AbstractType
             [
                 'class'           => Model::class,
                 'label'           => 'Модель',
-                'mapped'          => false,
                 'required'        => false,
                 'auto_initialize' => false,
-                'choices'         => $brand ? $brand->getModel() : [],
+                'choices'         => $brand ? $brand->getModels() : [],
             ]
         );
 
@@ -117,10 +116,9 @@ class BrandType extends AbstractType
         $form->add('carcase', EntityType::class, [
                 'class'           => Carcase::class,
                 'label'           => 'Кузов',
-                'mapped'          => false,
                 'required'        => false,
                 'auto_initialize' => false,
-                'choices'         => $model ? $model->getCarcase() : [],
+                'choices'         => $model ? $model->getCarcases() : [],
             ]
         );
     }
@@ -128,7 +126,7 @@ class BrandType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'      => Brand::class,
+            'data_class'      => Oem::class,
             'csrf_protection' => false,
         ]);
     }

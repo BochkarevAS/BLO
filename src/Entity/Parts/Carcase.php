@@ -2,7 +2,6 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,19 +23,14 @@ class Carcase
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="carcase")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="carcases")
      */
-    private $models;
+    private $model;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="carcase")
      */
-    private $parts;
-
-    public function __construct()
-    {
-        $this->parts = new ArrayCollection();
-    }
+    private $oems;
 
     public function getName()
     {
@@ -48,23 +42,24 @@ class Carcase
         $this->name = $name;
     }
 
-    public function getModels()
+    public function getModel()
     {
-        return $this->models;
+        return $this->model;
     }
 
-    public function setModels($models)
+    public function setModels($model)
     {
-        $this->models = $models;
+        $this->model = $model;
     }
 
-    public function addPart(Part $parts): self
+    public function getOems()
     {
-        if (!$this->parts->contains($parts)) {
-            $this->parts->add($parts);
-        }
+        return $this->oems;
+    }
 
-        return $this;
+    public function setOems($oems)
+    {
+        $this->oems = $oems;
     }
 
     public function getId()

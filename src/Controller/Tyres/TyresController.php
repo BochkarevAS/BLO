@@ -24,7 +24,7 @@ class TyresController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $query = $this->getDoctrine()->getRepository(Tyre::class)->renderTyres($entity);
+            $query  = $this->getDoctrine()->getRepository(Tyre::class)->renderTyres($entity);
 
             if ($query) {
                 $pictures = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
