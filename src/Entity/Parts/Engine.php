@@ -2,9 +2,7 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -25,35 +23,9 @@ class Engine
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="engines")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
      */
-    private $parts;
-
-    /**
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", name="created_at")
-     */
-    private $createdAt;
-
-    /**
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", name="updated_at")
-     */
-    private $updatedAt;
-
-    public function __construct()
-    {
-        $this->parts = new ArrayCollection();
-    }
-
-    public function addPart(Part $parts): self
-    {
-        if (!$this->parts->contains($parts)) {
-            $this->parts->add($parts);
-        }
-
-        return $this;
-    }
+    private $oem;
 
     public function getName()
     {
@@ -65,24 +37,14 @@ class Engine
         $this->name = $name;
     }
 
-    public function getCreatedAt()
+    public function getOem()
     {
-        return $this->createdAt;
+        return $this->oem;
     }
 
-    public function setCreatedAt($createdAt)
+    public function setOem($oem)
     {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
+        $this->oem = $oem;
     }
 
     public function __toString()

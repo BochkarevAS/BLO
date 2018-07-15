@@ -8,6 +8,7 @@ use App\Entity\Parts\Model;
 use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
 use App\Form\Parts\BrandType;
+use App\Form\Parts\OemType;
 use App\Form\Parts\PartType;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -25,31 +26,22 @@ class PartsController extends AbstractController
      */
     public function renderParts(Request $request, PaginatorInterface $paginator)
     {
-//        $part = new Parts();
-//        $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
-
-//        foreach (range(6, 0.5, 57) as $number) {
-//            echo $number;// $diameters;
-//        }
-
-//        foreach (range(0, 12) as $number) {
-//            echo $number;
-//        }
-
-//        var_dump(array_combine(range(6, 57, 0.5), range(6, 57, 0.5)));
-
-//var_dump(array_combine(range(0, 12), range(0, 12)));
-//        die;
-
-
         $brand = new Brand();
         $form = $this->createForm(BrandType::class, $brand, ['method' => 'GET']);
+
+
+//        $oem = new Oem();
+//        $form = $this->createForm(OemType::class, $oem, ['method' => 'GET']);
 
         $form->handleRequest($request);
         $oems = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            $entity = $form->getData();
+            $entity = $form->getData();
+
+            dump($entity);
+
+
 //            $entity->setCity($form->get('city')->getData());
 //            $query = $this->getDoctrine()->getRepository(Oem::class)->search($entity);
 //

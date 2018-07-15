@@ -22,34 +22,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for oem in oems %}
-                        <tr>
-                            <td>
-                                {{ oem.parts.name }}  / {{ oem.name }} на
-                                {% for brand in oem.parts.brands %}
-                                    {{ brand }}
-                                {% endfor %}
-                            </td>
-                            <td>
-                                {% for engine in oem.parts.engines %}
-                                    <span class="text-success"> {{ engine }} </span>
-                                {% endfor %}
-                                /
-                                {% for carcase in oem.parts.carcases %}
-                                    {{ carcase }}
-                                {% endfor %}
-                            </td>
-                            <td>
-                                {{ oem.vendors.name }} / {{ oem.citys.name }}
-                            </td>
-                            <td>
-                                {{ random(1500) }} руб.
-                            </td>
-                            <td>
-                                {{ oem.updatedAt|date }}
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    {#{% for oem in oems %}#}
+                        {#<tr>#}
+                            {#<td>#}
+                                {#{{ oem.parts.name }}  / {{ oem.name }} на#}
+                                {#{% for brand in oem.parts.brands %}#}
+                                    {#{{ brand }}#}
+                                {#{% endfor %}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{% for engine in oem.parts.engines %}#}
+                                    {#<span class="text-success"> {{ engine }} </span>#}
+                                {#{% endfor %}#}
+                                {#/#}
+                                {#{% for carcase in oem.parts.carcases %}#}
+                                    {#{{ carcase }}#}
+                                {#{% endfor %}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{{ oem.vendors.name }} / {{ oem.citys.name }}#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{{ random(1500) }} руб.#}
+                            {#</td>#}
+                            {#<td>#}
+                                {#{{ oem.updatedAt|date }}#}
+                            {#</td>#}
+                        {#</tr>#}
+                    {#{% endfor %}#}
                 </tbody>
             </table>
 

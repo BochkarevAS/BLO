@@ -24,31 +24,9 @@ class Part
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="parts")
-     * @ORM\JoinTable(name="parts_engines", schema="parts")
-     */
-    private $engines;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="parts")
      */
     private $oem;
-
-    public function __construct()
-    {
-        $this->models  = new ArrayCollection();
-        $this->engines = new ArrayCollection();
-    }
-
-    public function addEngine(Engine $engine): self
-    {
-        if (!$this->engines->contains($engine)) {
-            $this->engines->add($engine);
-            $engine->addPart($this);
-        }
-
-        return $this;
-    }
 
     public function getName()
     {
@@ -60,22 +38,6 @@ class Part
         $this->name = $name;
     }
 
-    /**
-     * @return ArrayCollection|Engine[]
-     */
-    public function getEngines()
-    {
-        return $this->engines;
-    }
-
-    public function setEngines($engines)
-    {
-        $this->engines = $engines;
-    }
-
-    /**
-     * @return Oem
-     */
     public function getOem()
     {
         return $this->oem;

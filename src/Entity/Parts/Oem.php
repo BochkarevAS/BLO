@@ -50,6 +50,11 @@ class Oem
     private $parts;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Engine", inversedBy="oem")
+     */
+    private $engines;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="oem")
      */
     private $citys;
@@ -119,6 +124,16 @@ class Oem
     public function setParts($parts)
     {
         $this->parts = $parts;
+    }
+
+    public function getEngines()
+    {
+        return $this->engines;
+    }
+
+    public function setEngines($engines)
+    {
+        $this->engines = $engines;
     }
 
     public function getCitys()

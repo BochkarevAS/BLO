@@ -150,35 +150,35 @@ class LoadFixtures extends Fixture
         }
 
         for ($i = 1; $i <= 50; $i++) {
-            $part = new Part();
-            $part->setName("Фара_$i");
-            $manager->persist($part);
-
             $oem = new Oem();
             $oem->setName('OEM' . $this->faker->cpr);
-            $oem->setParts($part);
             $oem->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
             $oem->setVendors($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
+            $oem->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
             $manager->persist($oem);
+
+            $part = new Part();
+            $part->setName("Part_$i");
+            $oem->setParts($part);
+            $manager->persist($part);
 
             $model = new Model();
             $model->setName('Model_' . $i);
             $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+            $oem->setModels($model);
             $this->setReference('model_' . $i, $model);
             $manager->persist($model);
 
             $carcase = new Carcase();
             $carcase->setName('CAR' . $this->faker->vat);
             $carcase->setModels($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
+            $oem->setCarcases($carcase);
             $manager->persist($carcase);
 
-            for ($j = 1; $j <= 5; $j++) {
-                $engine = new Engine();
-                $engine->setName('EN' . $this->faker->vat);
-                $part->addEngine($engine);
-                $part->addModel($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
-                $manager->persist($engine);
-            }
+            $engine = new Engine();
+            $engine->setName('EN' . $this->faker->vat);
+            $oem->setEngines($engine);
+            $manager->persist($engine);
 
             $manager->flush();
         }
