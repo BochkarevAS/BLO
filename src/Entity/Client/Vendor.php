@@ -23,9 +23,9 @@ class Vendor
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="vendors")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="vendor")
      */
-    private $oem;
+    private $oems;
 
     public function getName()
     {
@@ -37,13 +37,13 @@ class Vendor
         $this->name = $name;
     }
 
-    public function getOem()
+    public function getOems()
     {
-        return $this->oem;
+        return $this->oems;
     }
 
-    public function setOem($oem)
+    public function setOems($oems)
     {
-        $this->oem = $oem;
+        $this->oems = $oems;
     }
 }

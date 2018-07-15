@@ -23,7 +23,7 @@ class OemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('brands', EntityType::class, [
+            ->add('brand', EntityType::class, [
                 'class'         => Brand::class,
                 'label'         => 'Марка',
                 'choice_label'  => 'name',
@@ -32,34 +32,30 @@ class OemType extends AbstractType
                     return $repository->orderBy();
                 }
             ])
-//            ->add('number', TextType::class, [
-//                'label'    => 'Номер, маркировка запчасти',
-//                'mapped'   => false,
-//                'required' => false
-//            ])
-//            ->add('oem', TextType::class, [
-//                'label'    => 'OEM, артикул',
-//                'mapped'   => false,
-//                'required' => false
-//            ])
-//            ->add('engines', TextType::class, [
-//                'label'    => 'Двигатель',
-//                'required' => false
-//            ])
-//            ->add('parts', TextType::class, [
-//                'label'    => 'Parts',
-//                'required' => false
-//            ])
-//            ->add('city', EntityType::class, [
-//                'class'         => City::class,
-//                'label'         => 'Город',
-//                'choice_label'  => 'name',
-//                'mapped'        => false,
-//                'required'      => false,
-//                'query_builder' => function (CityRepository $repository) {
-//                    return $repository->orderBy();
-//                },
-//            ])
+            ->add('number', TextType::class, [
+                'label'    => 'Номер, маркировка запчасти',
+                'mapped'   => false,
+                'required' => false
+            ])
+            ->add('oem', TextType::class, [
+                'label'    => 'OEM, артикул',
+                'mapped'   => false,
+                'required' => false
+            ])
+            ->add('engine', TextType::class, [
+                'label'    => 'Двигатель',
+                'required' => false
+            ])
+            ->add('city', EntityType::class, [
+                'class'         => City::class,
+                'label'         => 'Город',
+                'choice_label'  => 'name',
+                'mapped'        => false,
+                'required'      => false,
+                'query_builder' => function (CityRepository $repository) {
+                    return $repository->orderBy();
+                },
+            ])
         ;
 
         $builder->addEventListener(
@@ -67,7 +63,7 @@ class OemType extends AbstractType
             function (FormEvent $event) {
                 $oem   = $event->getData();
                 $form  = $event->getForm();
-                $model = $oem->getModels();
+                $model = $oem->getModel();
 
                 if ($model) {
                     $carcase = $model->getCarcase();
@@ -80,7 +76,7 @@ class OemType extends AbstractType
             }
         );
 
-        $builder->get('brands')->addEventListener(
+        $builder->get('brand')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
                 $form = $event->getForm();
@@ -92,7 +88,7 @@ class OemType extends AbstractType
     private function formModel(FormInterface $form, ?Brand $brand = null)
     {
         $builder = $form->getConfig()->getFormFactory()->createNamedBuilder(
-            'models',
+            'model',
             EntityType::class,
             null,
             [
@@ -100,7 +96,7 @@ class OemType extends AbstractType
                 'label'           => 'Модель',
                 'required'        => false,
                 'auto_initialize' => false,
-                'choices'         => $brand ? $brand->getModel() : [],
+                'choices'         => $brand ? $brand->getModels() : [],
             ]
         );
 
@@ -117,12 +113,12 @@ class OemType extends AbstractType
 
     private function formCarcase(FormInterface $form, ?Model $model = null)
     {
-        $form->add('carcases', EntityType::class, [
+        $form->add('carcase', EntityType::class, [
                 'class'           => Carcase::class,
                 'label'           => 'Кузов',
                 'required'        => false,
                 'auto_initialize' => false,
-                'choices'         => $model ? $model->getCarcase() : [],
+                'choices'         => $model ? $model->getCarcases() : [],
             ]
         );
     }

@@ -24,9 +24,9 @@ class City
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="citys")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="city")
      */
-    private $oem;
+    private $oems;
 
     public function getName()
     {
@@ -38,14 +38,14 @@ class City
         $this->name = $name;
     }
 
-    public function getOem()
+    public function getOems()
     {
-        return $this->oem;
+        return $this->oems;
     }
 
-    public function setOem($oem)
+    public function setOem($oems)
     {
-        $this->oem = $oem;
+        $this->oems = $oems;
     }
 
     public function getId()

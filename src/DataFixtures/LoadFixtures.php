@@ -15,12 +15,6 @@ use App\Entity\Parts\Engine;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
-use App\Entity\Tyres\Profile\ProfileAvailability;
-use App\Entity\Tyres\Profile\Count;
-use App\Entity\Tyres\Profile\Diameter;
-use App\Entity\Tyres\Profile\Height;
-use App\Entity\Tyres\Profile\ProfileStatus;
-use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -152,32 +146,32 @@ class LoadFixtures extends Fixture
         for ($i = 1; $i <= 50; $i++) {
             $oem = new Oem();
             $oem->setName('OEM' . $this->faker->cpr);
-            $oem->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
-            $oem->setVendors($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
-            $oem->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+            $oem->setCity($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
+            $oem->setVendor($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
+            $oem->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
             $manager->persist($oem);
 
             $part = new Part();
             $part->setName("Part_$i");
-            $oem->setParts($part);
+            $oem->setPart($part);
             $manager->persist($part);
 
             $model = new Model();
             $model->setName('Model_' . $i);
             $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
-            $oem->setModels($model);
+            $oem->setModel($model);
             $this->setReference('model_' . $i, $model);
             $manager->persist($model);
 
             $carcase = new Carcase();
             $carcase->setName('CAR' . $this->faker->vat);
             $carcase->setModels($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
-            $oem->setCarcases($carcase);
+            $oem->setCarcase($carcase);
             $manager->persist($carcase);
 
             $engine = new Engine();
             $engine->setName('EN' . $this->faker->vat);
-            $oem->setEngines($engine);
+            $oem->setEngine($engine);
             $manager->persist($engine);
 
             $manager->flush();

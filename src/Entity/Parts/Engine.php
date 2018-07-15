@@ -23,7 +23,7 @@ class Engine
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="part")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="engine")
      */
     private $oems;
 
