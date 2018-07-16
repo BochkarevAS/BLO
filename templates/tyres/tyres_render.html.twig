@@ -31,7 +31,6 @@
                             <td>
                                 <img src="#" width="110" height="110">
                             </td>
-
                             <td>
                                 Шины
                                 {% if tyre.brand %}
@@ -60,9 +59,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% for vandor in tyre.vendors %}
-                                    {{ vandor.name }}
-                                {% endfor %}
+                                {% if tyre.vendor %}
+                                    {{ tyre.vendor.name }}
+                                {% endif %}
                             </td>
                             <td>{{ tyre.updatedAt|date }}</td>
                         </tr>

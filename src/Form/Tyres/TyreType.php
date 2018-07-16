@@ -35,26 +35,26 @@ class TyreType extends AbstractType
                 'label'         => 'Модель',
                 'multiple'      => true,
                 'required'      => false,
-                'choice_label'  => 'name',
+                'choice_label'  => 'name'
             ])
-            ->add('vendors', EntityType::class, [
+            ->add('vendor', EntityType::class, [
                 'class'         => Vendor::class,
                 'label'         => 'Продавец',
                 'multiple'      => true,
                 'required'      => false,
-                'choice_label'  => 'name',
+                'choice_label'  => 'name'
             ])
             ->add('thorn', EntityType::class, [
                 'class'         => Thorn::class,
                 'label'         => 'Шипы',
                 'required'      => false,
-                'choice_label'  => 'name',
+                'choice_label'  => 'name'
             ])
             ->add('seasonality', EntityType::class, [
                 'class'         => Seasonality::class,
                 'label'         => 'Сезонность',
                 'required'      => false,
-                'choice_label'  => 'name',
+                'choice_label'  => 'name'
             ])
             ->add('diameter', ChoiceType::class, [
                 'choices'  => $diameters,

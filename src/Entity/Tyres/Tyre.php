@@ -2,13 +2,17 @@
 
 namespace App\Entity\Tyres;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Tyres\TyresRepository")
- * @ORM\Table(name="tyre", schema="tyres")
+ * @ORM\Table(name="tyre", schema="tyres", indexes={
+ *     @ORM\Index(name="width_idx", columns={"width"}),
+ *     @ORM\Index(name="height_idx", columns={"height"}),
+ *     @ORM\Index(name="diameter_idx", columns={"diameter"}),
+ *     @ORM\Index(name="quantity_idx", columns={"quantity"})
+ * })
  */
 class Tyre
 {
@@ -78,10 +82,9 @@ class Tyre
     /**
      * Производитель
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tyres\Vendor", inversedBy="tyres")
-     * @ORM\JoinTable(name="tyre_vendor", schema="tyres")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Vendor", inversedBy="tyres")
      */
-    private $vendors;
+    private $vendor;
 
     /**
      * Хэш уникальный индефекатор шины
@@ -108,11 +111,6 @@ class Tyre
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
-
-    public function __construct()
-    {
-        $this->vendors = new ArrayCollection();
-    }
 
     public function getWidth()
     {
@@ -162,7 +160,7 @@ class Tyre
         return $this->seasonality;
     }
 
-    public function setSeasonalitys($seasonality)
+    public function setSeasonality($seasonality)
     {
         $this->seasonality = $seasonality;
     }
@@ -206,22 +204,17 @@ class Tyre
         $this->brand = $brand;
     }
 
-    public function addVendors(Vendor $vendor): self
+    /**
+     * @return Vendor
+     */
+    public function getVendor()
     {
-        if (!$this->vendors->contains($vendor)) {
-            $this->vendors->add($vendor);
-            $vendor->addTyres($this);
-        }
-
-        return $this;
+        return $this->vendor;
     }
 
-    /**
-     * @return ArrayCollection|Vendor[]
-     */
-    public function getVendors()
+    public function setVendor($vendor)
     {
-        return $this->vendors;
+        $this->vendor = $vendor;
     }
 
     public function getHash()

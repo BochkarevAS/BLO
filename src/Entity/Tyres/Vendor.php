@@ -2,7 +2,6 @@
 
 namespace App\Entity\Tyres;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,27 +25,18 @@ class Vendor
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="vendors")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="vendor")
      */
     private $tyres;
-
-    public function __construct()
-    {
-        $this->tyres = new ArrayCollection();
-    }
 
     public function getTyres()
     {
         return $this->tyres;
     }
 
-    public function addTyres(Tyre $tyres): self
+    public function setTyres($tyres)
     {
-        if (!$this->tyres->contains($tyres)) {
-            $this->tyres->add($tyres);
-        }
-
-        return $this;
+        $this->tyres = $tyres;
     }
 
     public function getName()
