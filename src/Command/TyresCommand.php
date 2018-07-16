@@ -205,6 +205,8 @@ class TyresCommand extends Command
         $progress->finish();
     }
 
+
+
     /**
      * @param array $record
      * @param EntityManager $em
