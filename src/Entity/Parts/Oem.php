@@ -66,9 +66,16 @@ class Oem
     /**
      * Продавец
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Vendor", inversedBy="oems")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Vendor", inversedBy="oems")
      */
     private $vendor;
+
+    /**
+     * Хэш уникальный индефекатор шины
+     *
+     * @ORM\Column(type="string")
+     */
+    private $hash;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -160,6 +167,16 @@ class Oem
     public function setVendor($vendor)
     {
         $this->vendor = $vendor;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    public function setHash($hash): void
+    {
+        $this->hash = $hash;
     }
 
     public function getCreatedAt()

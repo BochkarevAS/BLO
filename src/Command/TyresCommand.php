@@ -210,5 +210,4 @@ class TyresCommand extends Command
         $picture->setTyres($tyre);
         $picture->setPath($json);
     }
-
 }

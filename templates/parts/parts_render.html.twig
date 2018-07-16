@@ -22,6 +22,32 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for oem in oems %}
+                        <tr>
+                            <td>
+                                {% if oem.brand and oem.part %}
+                                    {{ oem.part.name }} / {{ oem.name }} на {{ oem.brand.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if oem.engine and oem.carcase %}
+                                    право / {{ oem.engine.name }} / {{ oem.carcase.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if oem.vendor and oem.city %}
+                                    {{ oem.vendor.name }} / {{ oem.city.name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ random(1500) }} руб.
+                            </td>
+                            <td>
+                                {{ oem.updatedAt|date }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+
                     {#{% for oem in oems %}#}
                         {#<tr>#}
                             {#<td>#}
