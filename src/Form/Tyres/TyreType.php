@@ -24,13 +24,13 @@ class TyreType extends AbstractType
         $diameters = array_combine(range(6, 57, 0.5), range(6, 57, 0.5));
 
         $builder
-            ->add('brands', EntityType::class, [
+            ->add('brand', EntityType::class, [
                 'class'         => Brand::class,
                 'label'         => 'Производитель',
                 'required'      => false,
                 'choice_label'  => 'name'
             ])
-            ->add('models', EntityType::class, [
+            ->add('model', EntityType::class, [
                 'class'         => Model::class,
                 'label'         => 'Модель',
                 'multiple'      => true,
@@ -44,13 +44,13 @@ class TyreType extends AbstractType
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
-            ->add('thorns', EntityType::class, [
+            ->add('thorn', EntityType::class, [
                 'class'         => Thorn::class,
                 'label'         => 'Шипы',
                 'required'      => false,
                 'choice_label'  => 'name',
             ])
-            ->add('seasonalitys', EntityType::class, [
+            ->add('seasonality', EntityType::class, [
                 'class'         => Seasonality::class,
                 'label'         => 'Сезонность',
                 'required'      => false,

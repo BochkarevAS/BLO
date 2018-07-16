@@ -23,9 +23,9 @@ class Seasonality
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="seasonalitys")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="seasonality")
      */
-    private $tyre;
+    private $tyres;
 
     public function getName()
     {
@@ -37,14 +37,14 @@ class Seasonality
         $this->name = $name;
     }
 
-    public function getTyre()
+    public function getTyres()
     {
-        return $this->tyre;
+        return $this->tyres;
     }
 
-    public function setTyre($tyre)
+    public function setTyre($tyres)
     {
-        $this->tyre = $tyre;
+        $this->tyres = $tyres;
     }
 
     public function getId()

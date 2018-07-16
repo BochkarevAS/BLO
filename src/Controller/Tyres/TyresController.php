@@ -20,20 +20,20 @@ class TyresController extends AbstractController
         $tyre = new Tyre();
         $form = $this->createForm(TyreType::class, $tyre, ['method' => 'GET']);
         $form->handleRequest($request);
-        $pictures = null;
+        $tyres = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $query  = $this->getDoctrine()->getRepository(Tyre::class)->renderTyres($entity);
 
             if ($query) {
-                $pictures = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
+                $tyres = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
             }
         }
 
         return $this->render('tyres/tyres_render.html.twig', [
-            'pictures' => $pictures,
-            'form'     => $form->createView()
+            'tyres' => $tyres,
+            'form'  => $form->createView()
         ]);
     }
 

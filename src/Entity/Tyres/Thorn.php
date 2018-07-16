@@ -23,9 +23,9 @@ class Thorn
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="thorns")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="thorn")
      */
-    private $tyre;
+    private $tyres;
 
     public function getName()
     {
@@ -37,14 +37,14 @@ class Thorn
         $this->name = $name;
     }
 
-    public function getTyre()
+    public function getTyres()
     {
-        return $this->tyre;
+        return $this->tyres;
     }
 
-    public function setTyre($tyre)
+    public function setTyres($tyres)
     {
-        $this->tyre = $tyre;
+        $this->tyres = $tyres;
     }
 
     public function getId()

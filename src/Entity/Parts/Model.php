@@ -2,7 +2,6 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,11 +36,6 @@ class Model
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="model")
      */
     private $oems;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="models")
-     */
-    private $oem;
 
     public function getName()
     {
@@ -81,16 +75,6 @@ class Model
     public function setOems($oems)
     {
         $this->oems = $oems;
-    }
-
-    public function getOem()
-    {
-        return $this->oem;
-    }
-
-    public function setOem($oem): void
-    {
-        $this->oem = $oem;
     }
 
     public function getId()

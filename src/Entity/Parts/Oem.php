@@ -24,19 +24,51 @@ class Oem
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Part", inversedBy="oem")
+     * Производитель
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="oems")
      */
-    private $parts;
+    private $brand;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="oem")
+     * Модель автомобиля
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="oems")
      */
-    private $citys;
+    private $model;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Vendor", inversedBy="oem")
+     * Модель автомобиля
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Carcase", inversedBy="oems")
      */
-    private $vendors;
+    private $carcase;
+
+    /**
+     * Запчасть
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Part", inversedBy="oems")
+     */
+    private $part;
+
+    /**
+     * Двигатель
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Engine", inversedBy="oems")
+     */
+    private $engine;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="oems")
+     */
+    private $city;
+
+    /**
+     * Продавец
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Vendor", inversedBy="oems")
+     */
+    private $vendor;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -60,34 +92,74 @@ class Oem
         $this->name = $name;
     }
 
-    public function getParts()
+    public function getBrand()
     {
-        return $this->parts;
+        return $this->brand;
     }
 
-    public function setParts($parts)
+    public function setBrand($brand)
     {
-        $this->parts = $parts;
+        $this->brand = $brand;
     }
 
-    public function getCitys()
+    public function getModel()
     {
-        return $this->citys;
+        return $this->model;
     }
 
-    public function setCitys($citys)
+    public function setModel($model)
     {
-        $this->citys = $citys;
+        $this->models = $model;
     }
 
-    public function getVendors()
+    public function getCarcase()
     {
-        return $this->vendors;
+        return $this->carcase;
     }
 
-    public function setVendors($vendors)
+    public function setCarcase($carcase)
     {
-        $this->vendors = $vendors;
+        $this->carcase = $carcase;
+    }
+
+    public function getPart()
+    {
+        return $this->part;
+    }
+
+    public function setPart($part)
+    {
+        $this->part = $part;
+    }
+
+    public function getEngine()
+    {
+        return $this->engine;
+    }
+
+    public function setEngine($engine)
+    {
+        $this->engine = $engine;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
+
+    public function setVendor($vendor)
+    {
+        $this->vendor = $vendor;
     }
 
     public function getCreatedAt()

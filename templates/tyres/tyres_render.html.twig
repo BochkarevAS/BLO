@@ -10,9 +10,9 @@
 
         {{ include('/tyres/tyres_form.html.twig') }}
 
-        {% if pictures %}
+        {% if tyres %}
             <div class="navigator">
-                {{ knp_pagination_render(pictures) }}
+                {{ knp_pagination_render(tyres) }}
             </div>
 
             <table class="table table-hover">
@@ -25,51 +25,53 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for picture in pictures %}
+
+                    {% for tyre in tyres %}
                         <tr>
                             <td>
                                 <img src="#" width="110" height="110">
                             </td>
+
                             <td>
                                 Шины
-                                {% if picture.tyres.brands %}
-                                    {{ picture.tyres.brands.name }}
+                                {% if tyre.brand %}
+                                    {{ tyre.brand.name }}
                                 {% endif %}
-                                {% if picture.tyres.width %}
-                                    {{ picture.tyres.width }}
+                                {% if tyre.width %}
+                                    {{ tyre.width }}
                                 {% endif %}
-                                {% if picture.tyres.height %}
-                                    / {{ picture.tyres.height }}
+                                {% if tyre.height %}
+                                    / {{ tyre.height }}
                                 {% endif %}
-                                {% if picture.tyres.diameter %}
-                                    / {{ picture.tyres.diameter }}
+                                {% if tyre.diameter %}
+                                    / {{ tyre.diameter }}
                                 {% endif %}
-                                {% if picture.tyres.models %}
-                                    {{ picture.tyres.models.name }}
+                                {% if tyre.model %}
+                                    {{ tyre.model.name }}
                                 {% endif %}
                                 <br>
-                                {% if picture.tyres.quantity %}
-                                    Комплект {{ picture.tyres.quantity }} шт.
+                                {% if tyre.quantity %}
+                                    Комплект {{ tyre.quantity }} шт.
                                 {% endif %}
                             </td>
                             <td>
-                                {% if picture.tyres.price %}
-                                    {{ picture.tyres.price }} руб.
+                                {% if tyre.price %}
+                                    {{ tyre.price }} руб.
                                 {% endif %}
                             </td>
                             <td>
-                                {% for vandor in picture.tyres.vendors %}
+                                {% for vandor in tyre.vendors %}
                                     {{ vandor.name }}
                                 {% endfor %}
                             </td>
-                            <td>{{ picture.tyres.updatedAt|date }}</td>
+                            <td>{{ tyre.updatedAt|date }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
 
             <div class="navigator">
-                {{ knp_pagination_render(pictures) }}
+                {{ knp_pagination_render(tyres) }}
             </div>
         {% endif %}
 

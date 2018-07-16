@@ -41,7 +41,6 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-        $this->addProfileRelation($manager);  // Профиль шин
         $this->addTyresRelation($manager);    // Шины
 //        $this->addPartsRelation($manager);    // Запчасти
 
@@ -50,73 +49,6 @@ class LoadFixtures extends Fixture
 //        $this->addCompany($manager);        // Компания
 //        $this->addNews($manager);           // Новость
 //        $this->addNewsCategoeys($manager);  // Категория новостей
-    }
-
-    private function addProfileRelation($manager)
-    {
-        $counts    = [];
-        $widths    = [];
-        $heights   = [];
-        $diameters = [];
-        $status    = [
-            1 => 'Контрактная (б/у)',
-            2 => 'Новая'
-        ];
-        $availability = [
-            1 => 'Под заказ',
-            2 => 'В наличии'
-        ];
-
-        for ($i = 105; $i <= 815; $i = $i + 5) {
-            $widths[] = $i;
-        }
-        for ($i = 25; $i <= 110; $i = $i + 5) {
-            $heights[] = $i;
-        };
-        for ($i = 6; $i <= 57; $i = $i + 0.5) {
-            $diameters[] = $i;
-        }
-        for ($i = 1; $i <= 10; $i++) {
-            $counts[] = $i;
-        }
-
-        foreach ($status as $item) {
-            $profileStatus = new ProfileStatus();
-            $profileStatus->setName($item);
-            $manager->persist($profileStatus);
-        }
-
-        foreach ($availability as $item) {
-            $profileAvailability = new ProfileAvailability();
-            $profileAvailability->setName($item);
-            $manager->persist($profileAvailability);
-        }
-
-        foreach ($widths as $item) {
-            $width = new Width();
-            $width->setName($item);
-            $manager->persist($width);
-        }
-
-        foreach ($heights as $item) {
-            $height = new Height();
-            $height->setName($item);
-            $manager->persist($height);
-        }
-
-        foreach ($diameters as $item) {
-            $diameter = new Diameter();
-            $diameter->setName($item);
-            $manager->persist($diameter);
-        }
-
-        foreach ($counts as $item) {
-            $count = new Count();
-            $count->setName($item);
-            $manager->persist($count);
-        }
-
-        $manager->flush();
     }
 
     private function addTyresRelation($manager)
@@ -145,6 +77,7 @@ class LoadFixtures extends Fixture
             'AGIRA', 'Airbag102', 'AKPP-MARKET', 'AlexAuto', 'ALFACAR', 'Alphagarage', 'AlphaParts',
             'Amotomo', 'AmourMotor', 'Aprice72.ru', 'Arsenal Auto', 'AsiaTrek'
         ];
+
         $i = 1;
 
         foreach ($vendors as $record) {
@@ -164,7 +97,7 @@ class LoadFixtures extends Fixture
         foreach ($models as $record) {
             $model = new \App\Entity\Tyres\Model();
             $model->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
-            $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, count($models)-2)));
+            $model->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, count($models)-2)));
             $manager->persist($model);
         }
 
@@ -189,12 +122,10 @@ class LoadFixtures extends Fixture
             'Toyota', 'Nissan', 'Subaru', 'JIP', 'Audi',
             'Jaguar', 'Ferrari', 'Hammer', 'Lexus', 'Mazda'
         ];
-
         $vendors = [
             'Владмоторс', 'Гугл', 'Яндекс', 'Apple', 'HP',
             'Droom', 'Japancar', 'Coca-cola', 'ВК', 'Бимбило'
         ];
-
         $citys = [
             'Владивосток', 'Хабаровск', 'Москва', 'Находка', 'Иркутск',
             'Новосебирск', 'Пенза', 'Ростов-на-Дону', 'Якутск', 'Уссурийск'
@@ -216,38 +147,36 @@ class LoadFixtures extends Fixture
             $this->setReference('vendor_' . $i, $vendor);
             $manager->persist($vendor);
         }
-
         for ($i = 1; $i <= 50; $i++) {
-            $part = new Part();
-            $part->setName("Фара_$i");
-            $manager->persist($part);
-
             $oem = new Oem();
             $oem->setName('OEM' . $this->faker->cpr);
-            $oem->setParts($part);
-            $oem->setCitys($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
-            $oem->setVendors($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
+            $oem->setCity($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
+            $oem->setVendor($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
+            $oem->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
             $manager->persist($oem);
+
+            $part = new Part();
+            $part->setName("Part_$i");
+            $oem->setPart($part);
+            $manager->persist($part);
 
             $model = new Model();
             $model->setName('Model_' . $i);
             $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+            $oem->setModel($model);
             $this->setReference('model_' . $i, $model);
             $manager->persist($model);
 
             $carcase = new Carcase();
             $carcase->setName('CAR' . $this->faker->vat);
             $carcase->setModels($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
+            $oem->setCarcase($carcase);
             $manager->persist($carcase);
 
-            for ($j = 1; $j <= 5; $j++) {
-                $engine = new Engine();
-                $engine->setName('EN' . $this->faker->vat);
-                $part->addEngine($engine);
-                $part->addModel($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
-                $manager->persist($engine);
-            }
-
+            $engine = new Engine();
+            $engine->setName('EN' . $this->faker->vat);
+            $oem->setEngine($engine);
+            $manager->persist($engine);
             $manager->flush();
         }
     }

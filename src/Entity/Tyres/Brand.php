@@ -23,12 +23,12 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Model", mappedBy="brands")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Model", mappedBy="brand")
      */
-    private $model;
+    private $models;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="brands")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="brand")
      */
     private $tyres;
 
@@ -42,14 +42,14 @@ class Brand
         $this->name = $name;
     }
 
-    public function getModel()
+    public function getModels()
     {
-        return $this->model;
+        return $this->models;
     }
 
-    public function setModel($model)
+    public function setModels($models)
     {
-        $this->model = $model;
+        $this->models = $models;
     }
 
     public function getTyres()

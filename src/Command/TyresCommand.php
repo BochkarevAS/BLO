@@ -5,10 +5,6 @@ namespace App\Command;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Picture;
-use App\Entity\Tyres\Profile\Count;
-use App\Entity\Tyres\Profile\Diameter;
-use App\Entity\Tyres\Profile\Height;
-use App\Entity\Tyres\Profile\Width;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
@@ -71,8 +67,8 @@ class TyresCommand extends Command
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
         $header = [
-            'header', 'tire_type', 'year', 'brand', 'model', 'profile_width_mm',
-            'profile_height_proc', 'wheel_width_inc', 'wheel_height_inc', 'landing_diameter_mm',
+            'header', 'tire_type', 'year', 'brand', 'model', 'width_mm',
+            'height_proc', 'wheel_width_inc', 'wheel_height_inc', 'diameter_mm',
             'landing_diameter_inc', 'commercial', 'seasonality', 'status',
             'quantity', 'thorns', 'ply_rating', 'index_of_speed', 'load_index',
             'mud_at', 'dirt_mt', 'axis', 'presence_of_camera', 'radius', 'moto_class',
@@ -82,7 +78,7 @@ class TyresCommand extends Command
         $records = $reader->getRecords($header);
 
         $i = 0;
-        $batchSize = 1000;
+        $batchSize = 500;
         $nameVendor = 'ALFACAR';
 
         $progress = new ProgressBar($output, count($reader));
@@ -90,26 +86,93 @@ class TyresCommand extends Command
 
         foreach ($records as $offset => $record) {
             $hash = md5(
-                $record['landing_diameter_mm'] .
-                $record['profile_height_proc'] .
-                $record['profile_width_mm'] .
+                $record['diameter_mm'] .
+                $record['height_proc'] .
+                $record['width_mm'] .
                 $record['model'] .
                 $record['index_of_speed'] .
                 $record['load_index'] .
                 $record['pictures'] .
                 $record['brand']
             );
-            $record = $this->valid($record, $em, $nameVendor);
-            $tyre   = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
+//            $record = $this->valid($record, $em, $nameVendor);
+
+
+
+
+
+
+
+            $record['vendor'] = $em->getRepository(Vendor::class)->findOneBy([
+                'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
+            ]);
+
+            $record['model'] = $em->getRepository(Model::class)->findOneBy([
+                'name' => mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251')
+            ]);
+
+            $record['brand'] = $em->getRepository(Brand::class)->findOneBy([
+                'name' => mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251')
+            ]);
+
+            $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
+                'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
+            ]);
+
+            $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
+                'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
+            ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+//            $tyre   = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
 
 //            if ($tyre === null) {
             $tyre = new Tyre();
-            $this->tyre($tyre, $record, $hash);
+//            $this->tyre($tyre, $record, $hash);
+
+
+
+
+
+            $tyre->setDiameter((int) $record['diameter_mm']);
+            $tyre->setHeight((int) $record['height_proc']);
+            $tyre->setWidth((int) $record['width_mm']);
+            $tyre->setQuantity((int) $record['quantity']);
+            $tyre->setHash($hash);
+            $tyre->addVendors($record['vendor']);
+            $tyre->setModel($record['model']);
+            $tyre->setBrand($record['brand']);
+            $tyre->setSeasonalitys($record['seasonality']);
+            $tyre->setThorn($record['thorn']);
+            $tyre->setPrice($record['price']);
+
+
+
+
+
+
+
+
+
+
+
+
             $em->persist($tyre);
 
-            $picture = new Picture();
-            $this->json($tyre, $picture, $record['pictures'], $serializer);
-            $em->persist($picture);
+//            $picture = new Picture();
+//            $this->json($tyre, $picture, $record['pictures'], $serializer);
+//            $em->persist($picture);
 //            } else {
 //                $this->tyre($tyre, $record, $hash);
 //                $em->merge($tyre);
@@ -122,6 +185,7 @@ class TyresCommand extends Command
 //            }
 
             if (($i % $batchSize) === 0) {
+//                $em->detach($tyre);
                 $em->flush();
                 $em->clear();
 
@@ -165,22 +229,6 @@ class TyresCommand extends Command
             'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
         ]);
 
-        $record['quantity'] = $em->getRepository(Count::class)->findOneBy([
-            'name' => $record['quantity'] ? $record['quantity'] : 0
-        ]);
-
-        $record['profile_width_mm'] = $em->getRepository(Width::class)->findOneBy([
-            'name' => $record['profile_width_mm'] ? $record['profile_width_mm'] : 0
-        ]);
-
-        $record['profile_height_proc'] = $em->getRepository(Height::class)->findOneBy([
-            'name' => $record['profile_height_proc'] ? $record['profile_height_proc'] : 0
-        ]);
-
-        $record['landing_diameter_mm'] = $em->getRepository(Diameter::class)->findOneBy([
-            'name' => $record['landing_diameter_mm'] ? $record['landing_diameter_mm'] : 0
-        ]);
-
         $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
             'name' => mb_convert_encoding($record['thorns'], 'UTF-8', 'Windows-1251')
         ]);
@@ -195,16 +243,16 @@ class TyresCommand extends Command
      */
     private function tyre($tyre, array $record, $hash)
     {
-        $tyre->setDiameters($record['landing_diameter_mm']);
-        $tyre->setHeights($record['profile_height_proc']);
-        $tyre->setWidths($record['profile_width_mm']);
-        $tyre->setCounts($record['quantity']);
+        $tyre->setDiameter((int) $record['diameter_mm']);
+        $tyre->setHeight((int) $record['height_proc']);
+        $tyre->setWidth((int) $record['width_mm']);
+        $tyre->setQuantity((int) $record['quantity']);
         $tyre->setHash($hash);
         $tyre->addVendors($record['vendor']);
-        $tyre->setModels($record['model']);
-        $tyre->setBrands($record['brand']);
+        $tyre->setModel($record['model']);
+        $tyre->setBrand($record['brand']);
         $tyre->setSeasonalitys($record['seasonality']);
-        $tyre->setThorns($record['thorn']);
+        $tyre->setThorn($record['thorn']);
         $tyre->setPrice($record['price']);
     }
 

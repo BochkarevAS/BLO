@@ -2,10 +2,6 @@
 
 namespace App\Entity\Tyres;
 
-use App\Entity\Tyres\Profile\Count;
-use App\Entity\Tyres\Profile\Diameter;
-use App\Entity\Tyres\Profile\Height;
-use App\Entity\Tyres\Profile\Width;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -54,30 +50,30 @@ class Tyre
     /**
      * Шипы
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn", inversedBy="tyre"))
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn", inversedBy="tyres"))
      */
-    private $thorns;
+    private $thorn;
 
     /**
      * Сезонность
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality", inversedBy="tyre")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality", inversedBy="tyres")
      */
-    private $seasonalitys;
+    private $seasonality;
 
     /**
      * Модель шины
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model", inversedBy="tyres")
      */
-    private $models;
+    private $model;
 
     /**
      * Производитель
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Brand", inversedBy="tyres")
      */
-    private $brands;
+    private $brand;
 
     /**
      * Производитель
@@ -161,53 +157,53 @@ class Tyre
     /**
      * @return Seasonality
      */
-    public function getSeasonalitys()
+    public function getSeasonality()
     {
-        return $this->seasonalitys;
+        return $this->seasonality;
     }
 
-    public function setSeasonalitys($seasonalitys)
+    public function setSeasonalitys($seasonality)
     {
-        $this->seasonalitys = $seasonalitys;
+        $this->seasonality = $seasonality;
     }
 
     /**
      * @return Thorn
      */
-    public function getThorns()
+    public function getThorn()
     {
-        return $this->thorns;
+        return $this->thorn;
     }
 
-    public function setThorns($thorns)
+    public function setThorn($thorn)
     {
-        $this->thorns = $thorns;
+        $this->thorn = $thorn;
     }
 
     /**
      * @return Model
      */
-    public function getModels()
+    public function getModel()
     {
-        return $this->models;
+        return $this->model;
     }
 
-    public function setModels($models)
+    public function setModel($model)
     {
-        $this->models = $models;
+        $this->model = $model;
     }
 
     /**
      * @return Brand
      */
-    public function getBrands()
+    public function getBrand()
     {
-        return $this->brands;
+        return $this->brand;
     }
 
-    public function setBrands($brands)
+    public function setBrand($brand)
     {
-        $this->brands = $brands;
+        $this->brand = $brand;
     }
 
     public function addVendors(Vendor $vendor): self

@@ -1,22 +1,22 @@
 {{ form_start(form) }}
     <div class="row">
         <div class="col-4">
-            {{ form_row(form.brands, {'id': 'tyres_brands', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.brands) }}
+            {{ form_row(form.brand, {'id': 'tyres_brands', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.brand) }}
         </div>
         <div class="col-4">
-            {{ form_row(form.thorns, {'id': 'tyres_thorns', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.thorns) }}
+            {{ form_row(form.thorn, {'id': 'tyres_thorns', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.thorn) }}
         </div>
         <div class="col-4">
-            {{ form_row(form.seasonalitys, {'id': 'tyres_seasonalitys', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.seasonalitys) }}
+            {{ form_row(form.seasonality, {'id': 'tyres_seasonalitys', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.seasonality) }}
         </div>
     </div>
     <div class="row">
         <div class="col-6">
-            {{ form_row(form.models, {'id': 'tyres_models', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.models) }}
+            {{ form_row(form.model, {'id': 'tyres_models', 'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.model) }}
         </div>
         <div class="col-6">
             {{ form_row(form.vendors, {'id': 'tyres_vendors', 'attr': {'class': 'form-control'}}) }}

@@ -11,25 +11,25 @@ class TyresRepository extends EntityRepository
     public function renderTyres(Tyre $tyre)
     {
         $qb = $this->createQueryBuilder('t')
-            ->select('p')
-            ->leftJoin('t.brands', 'b')
+            ->select('t')
+            ->leftJoin('t.brand', 'b')
             ->leftJoin(Picture::class, 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.tyres = t.id');
 
         /* Фильтр по производителям */
-        if ($tyre->getBrands()) {
-            $qb->andWhere('b.id = :bid')->setParameter('bid', $tyre->getBrands()->getId());
+        if ($tyre->getBrand()) {
+            $qb->andWhere('b.id = :bid')->setParameter('bid', $tyre->getBrand()->getId());
         }
 
         /* Фильтр по шипам */
-        if ($tyre->getThorns()) {
-            $qb->join('t.thorns', 'th');
-            $qb->andWhere('th.id = :thid')->setParameter('thid', $tyre->getThorns()->getId());
+        if ($tyre->getThorn()) {
+            $qb->join('t.thorn', 'th');
+            $qb->andWhere('th.id = :thid')->setParameter('thid', $tyre->getThorn()->getId());
         }
 
         /* Фильтр по сезонам */
-        if ($tyre->getSeasonalitys()) {
-            $qb->leftJoin('t.seasonalitys', 's');
-            $qb->andWhere('s.id = :sid')->setParameter('sid', $tyre->getSeasonalitys()->getId());
+        if ($tyre->getSeasonality()) {
+            $qb->leftJoin('t.seasonality', 's');
+            $qb->andWhere('s.id = :sid')->setParameter('sid', $tyre->getSeasonality()->getId());
         }
 
         /* Фильтр по количеству шин */
@@ -65,10 +65,10 @@ class TyresRepository extends EntityRepository
         }
 
         /* Фильтр по моделям */
-        if (!$tyre->getModels()->isEmpty()) {
+        if (!$tyre->getModel()->isEmpty()) {
             $ids = [];
 
-            foreach ($tyre->getModels() as $model) {
+            foreach ($tyre->getModel() as $model) {
                 $ids[] = $model->getId();
             }
 
