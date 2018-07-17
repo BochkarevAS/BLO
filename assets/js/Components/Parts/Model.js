@@ -11,6 +11,8 @@ class Model {
         this.$wrapper.on('change', '#parts_brand, #parts_model',
             this.setRelation.bind(this)
         );
+
+        $("#parts_brand").select2();
     }
 
     setRelation(e) {

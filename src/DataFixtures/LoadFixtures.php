@@ -4,15 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Administration\News;
 use App\Entity\Administration\NewsCategories;
-use App\Entity\Parts\Part;
-use App\Entity\Region\City;
+use App\Entity\Parts\Oem;
 use App\Entity\Client\Company;
 use App\Entity\Region\County;
 use App\Entity\Region\Region;
 use App\Entity\Parts\Carcase;
-use App\Entity\Parts\Engine;
-use App\Entity\Parts\Brand;
-use App\Entity\Parts\Model;
 use App\Entity\Parts\PartName;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
@@ -34,7 +30,7 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-        $this->addTyresRelation($manager);    // Шины
+//        $this->addTyresRelation($manager);    // Шины
         $this->addPartsRelation($manager);    // Запчасти
 
 //        $this->addCounty($manager);         // Округ
@@ -137,20 +133,23 @@ class LoadFixtures extends Fixture
             'Camry', 'Camry Gracia', 'Camry Gracia Wagon', 'Camry Prominent', 'Carib', 'Carib Rosso', 'Carina', 'Carina E',
             'Carina ED', 'Carina II', 'Carina Surf', 'Cavalier', 'Celica', 'Celsior', 'Century', 'Ceres', 'Chaser', 'Chaser Tourer V',
             'Coaster', 'Comfort', 'Corolla', 'Corolla Axio', 'Corolla Ceres', 'Corolla Fielder', 'Corolla FX', 'Corolla II',
-            'Corolla Levin', 'Corolla Rumion', 'Corolla Runx'
+            'Corolla Levin', 'Corolla Rumion', 'Corolla Runx', 'Wagon r'
         ];
-
         $parts = [
-            'Амортизаторы багажника', 'Амортизатор капота', 'Амортизатор TOYOTA', 'Амортизатор NISSAN'
+            'Амортизатор багажника', 'Амортизатор капота', 'Амортизатор TOYOTA', 'Амортизатор NISSAN'
+        ];
+        $carcases = [
+            'SXV20', 'RX300 MCU15', 'STEP WAGON RF1 94-97', '626GW 1.8/2.0  97-02'
+        ];
+        $oems = [
+            '68960-96012', '53440-33085'
         ];
 
-
-
-//        foreach ($vendors as $record) {
-//            $vendor = new \App\Entity\Parts\Vendor();
-//            $vendor->setName($record);
-//            $manager->persist($vendor);
-//        }
+        foreach ($vendors as $record) {
+            $vendor = new \App\Entity\Parts\Vendor();
+            $vendor->setName($record);
+            $manager->persist($vendor);
+        }
 
         $i = 1;
         foreach ($brands as $record) {
@@ -171,64 +170,26 @@ class LoadFixtures extends Fixture
             $i++;
         }
 
-        for ($i = 1; $i <= 500; $i++) {
+        foreach ($carcases as $record) {
             $carcase = new Carcase();
-            $carcase->setName('Carcase' . $this->faker->vat);
+            $carcase->setName($record);
             $carcase->setModel($this->getReference('model_' . $this->faker->numberBetween(1, count($models)-1)));
             $manager->persist($carcase);
         }
 
+        foreach ($parts as $record) {
+            $part = new PartName();
+            $part->setName($record);
+            $manager->persist($part);
+        }
+
+        foreach ($oems as $record) {
+            $oem = new Oem();
+            $oem->setName($record);
+            $manager->persist($oem);
+        }
+
         $manager->flush();
-
-//        for ($i = 1; $i <= 10; $i++) {
-//            $brand = new Brand();
-//            $brand->setName($brands[$i-1]);
-//            $this->setReference('brand_' . $i, $brand);
-//            $manager->persist($brand);
-//
-//            $city = new City();
-//            $city->setName($citys[$i-1]);
-//            $this->setReference('city_' . $i, $city);
-//            $manager->persist($city);
-//
-//            $vendor = new Vendor();
-//            $vendor->setName($vendors[$i-1]);
-//            $this->setReference('vendor_' . $i, $vendor);
-//            $manager->persist($vendor);
-//        }
-
-//        for ($i = 1; $i <= 50; $i++) {
-////            $oem = new Part();
-////            $oem->setName('OEM' . $this->faker->cpr);
-////            $oem->setCity($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
-////            $oem->setVendor($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
-////            $oem->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
-////            $manager->persist($oem);
-//
-//            $part = new PartName();
-//            $part->setName("Part_$i");
-////            $oem->setPart($part);
-//            $manager->persist($part);
-//
-//            $model = new Model();
-//            $model->setName('Model_' . $i);
-//            $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
-////            $oem->setModel($model);
-//            $this->setReference('model_' . $i, $model);
-//            $manager->persist($model);
-//
-////            $carcase = new Carcase();
-////            $carcase->setName('Carcase' . $this->faker->vat);
-////            $carcase->setModels($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
-//////            $oem->setCarcase($carcase);
-////            $manager->persist($carcase);
-//
-//            $engine = new Engine();
-//            $engine->setName('EN' . $this->faker->vat);
-////            $oem->setEngine($engine);
-//            $manager->persist($engine);
-//            $manager->flush();
-//        }
     }
 
     private function addCounty($manager)

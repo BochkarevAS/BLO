@@ -73,18 +73,18 @@ class Part
     private $vendor;
 
     /**
-     * Хэш уникальный индефекатор шины
-     *
-     * @ORM\Column(type="string")
-     */
-    private $hash;
-
-    /**
      * Стоимость запчасти
      *
      * @ORM\Column(type="decimal")
      */
     private $price;
+
+    /**
+     * Хэш уникальный индефекатор шины
+     *
+     * @ORM\Column(type="string")
+     */
+    private $hash;
 
     /**
      * @Gedmo\Timestampable(on="create")

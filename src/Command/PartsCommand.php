@@ -52,10 +52,8 @@ class PartsCommand extends Command
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-//        $file = 'parts_test.csv';
-        $file = 'big_parts.csv';
-
-
+        $file = 'parts_test.csv';
+//        $file = 'big_parts.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em = $this->container->get('doctrine.orm.default_entity_manager');
@@ -86,16 +84,9 @@ class PartsCommand extends Command
             $hash = md5($record['brand'] . $record['model']);
 
             $record = $this->valid($record, $em, $nameVendor);
-//            $oem    = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
+            $part    = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
-           // if ($oem === null) {
-
-
-
-
-//            dump($record);
-
-
+            if ($part === null) {
                 $part = new Part();
                 $this->part($part, $record, $hash);
                 $em->persist($part);
@@ -103,18 +94,16 @@ class PartsCommand extends Command
 //                $picture = new Picture();
 //                $this->json($tyre, $picture, $record['pictures'], $serializer);
 //                $em->persist($picture);
-//            } else {
-//                $this->tyre($tyre, $record, $hash);
-//                $em->merge($tyre);
+            } else {
+                $this->part($part, $record, $hash);
+                $em->merge($part);
 //                $picture = $em->getRepository(Picture::class)->find($tyre->getId());
 //
 //                if (!$picture) {
 //                    $this->json($tyre, $picture, $record['pictures'], $serializer);
 //                    $em->merge($picture);
 //                }
-//            }
-
-
+            }
 
             if (($i % $batchSize) === 0) {
                 $em->flush();
@@ -179,21 +168,41 @@ class PartsCommand extends Command
                                 ->getQuery()
                                 ->getOneOrNullResult();
 
-        $record['city'] = $em->getRepository(City::class)->findOneBy([
-            'name' => mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251')
-        ]);
+        $record['part'] = $em->createQueryBuilder()
+                                ->select('p')
+                                ->from(PartName::class, 'p')
+                                ->where('upper(p.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
-        $record['engine'] = $em->getRepository(Engine::class)->findOneBy([
-            'name' => mb_convert_encoding($record['engine'], 'UTF-8', 'Windows-1251')
-        ]);
+        $record['city'] = $em->createQueryBuilder()
+                                ->select('c')
+                                ->from(City::class, 'c')
+                                ->where('upper(c.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
-        $record['part'] = $em->getRepository(PartName::class)->findOneBy([
-            'name' => mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251')
-        ]);
+        $record['engine'] = $em->createQueryBuilder()
+                                ->select('e')
+                                ->from(Engine::class, 'e')
+                                ->where('upper(e.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['engine'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
-        $record['oem'] = $em->getRepository(Oem::class)->findOneBy([
-            'name' => mb_convert_encoding($record['oem'], 'UTF-8', 'Windows-1251')
-        ]);
+        $record['oem'] = $em->createQueryBuilder()
+                                ->select('o')
+                                ->from(Oem::class, 'o')
+                                ->where('upper(o.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['oem'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
         return $record;
     }
@@ -214,5 +223,6 @@ class PartsCommand extends Command
         $part->setEngine($record['engine']);
         $part->setVendor($record['vendor']);
         $part->setOem($record['oem']);
+        $part->setPrice($record['price']);
     }
 }

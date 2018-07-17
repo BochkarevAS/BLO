@@ -53,7 +53,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {{ random(1500) }} руб.
+                                {% if part.price %}
+                                    {{ part.price }} руб.
+                                {% endif %}
                             </td>
                             <td>
                                 {{ part.updatedAt|date }}
