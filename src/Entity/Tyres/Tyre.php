@@ -40,7 +40,7 @@ class Tyre
     /**
      * Посадочный диаметр (мм)
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $diameter;
 

@@ -14,6 +14,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>Фото</th>
                         <th>Название / OEM</th>
                         <th>Расп. / Двиг. / Куз.</th>
                         <th>Продавец / Город</th>
@@ -25,6 +26,9 @@
                     {% for part in parts %}
                         <tr>
                             <td>
+                                <img src="#" width="110" height="110">
+                            </td>
+                            <td>
                                 {% if part.part %}
                                     {{ part.part.name }} /
                                 {% endif %}
@@ -33,6 +37,9 @@
                                 {% endif %}
                                 {% if part.brand %}
                                     на {{ part.brand.name }}
+                                {% endif %}
+                                {% if part.model %}
+                                    {{ part.model.name }}
                                 {% endif %}
                             </td>
                             <td>

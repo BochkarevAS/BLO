@@ -23,7 +23,7 @@ class PartsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $query = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
+            $query  = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
 
             if ($query) {
                 $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);

@@ -80,6 +80,13 @@ class Part
     private $hash;
 
     /**
+     * Стоимость запчасти
+     *
+     * @ORM\Column(type="decimal")
+     */
+    private $price;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -180,6 +187,16 @@ class Part
     public function setHash($hash): void
     {
         $this->hash = $hash;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($price): void
+    {
+        $this->price = $price;
     }
 
     public function getId()
