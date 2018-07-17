@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Company1 index{% endblock %}
+{% block title %}Company index{% endblock %}
 
 {% block body %}
-    <h1>Company1 index</h1>
+    <h1>Company index</h1>
 
     <table class="table">
         <thead>
@@ -15,14 +15,14 @@
             </tr>
         </thead>
         <tbody>
-        {% for company1 in company1s %}
+        {% for company in companys %}
             <tr>
-                <td>{{ company1.id }}</td>
-                <td>{{ company1.name }}</td>
-                <td>{{ company1.createdAt ? company1.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ company.id }}</td>
+                <td>{{ company.name }}</td>
+                <td>{{ company.createdAt ? company.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('client_company1_show', {'id': company1.id}) }}">show</a>
-                    <a href="{{ path('client_company1_edit', {'id': company1.id}) }}">edit</a>
+                    <a href="{{ path('client_company_show', {'id': company.id}) }}">show</a>
+                    <a href="{{ path('client_company_edit', {'id': company.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('client_company1_new') }}">Create new</a>
+    <a href="{{ path('client_company_new') }}">Create new</a>
 {% endblock %}

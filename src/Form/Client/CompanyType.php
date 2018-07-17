@@ -15,11 +15,17 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('city', TextType::class, [
+                'label' => 'Город'
+            ])
             ->add('name', TextType::class, [
                 'label' => 'Название компании'
             ])
-            ->add('city', TextType::class, [
+            ->add('syte', TextType::class, [
                 'label' => 'Сайт'
+            ])
+            ->add('office', TextType::class, [
+                'label' => 'Головной офис'
             ])
             ->add('info', TextareaType::class, [
                 'label' => 'Краткая информация о компании',

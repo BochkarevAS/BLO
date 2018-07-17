@@ -20,8 +20,8 @@ class CompanyController extends Controller
      */
     public function index(CompanyRepository $companyRepository): Response
     {
-        return $this->render('client_company/index.html.twig', [
-            'company1s' => $companyRepository->findAll()
+        return $this->render('client/company/index.html.twig', [
+            'companys' => $companyRepository->findAll()
         ]);
     }
 
@@ -53,7 +53,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company): Response
     {
-        return $this->render('client_company/show.html.twig', [
+        return $this->render('client/company/show.html.twig', [
             'company' => $company
         ]);
     }
@@ -74,7 +74,7 @@ class CompanyController extends Controller
             ]);
         }
 
-        return $this->render('client_company/edit.html.twig', [
+        return $this->render('client/company/edit.html.twig', [
             'company' => $company,
             'form'    => $form->createView(),
         ]);

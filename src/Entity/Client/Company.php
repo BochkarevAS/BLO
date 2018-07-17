@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Client\CompanyRepository")
  * @ORM\Table(name="company", schema="client")
  */
 class Company
@@ -54,23 +54,23 @@ class Company
     private $syte;
 
     /**
-     * Активные разделы с прайсами (запчасти) если 0 => отключено, 1 => включено
+     * Активные разделы с прайсами (запчасти)
      *
-     * @ORM\Column(type="integer", name="sections_parts")
+     * @ORM\Column(type="boolean", name="sections_parts")
      */
     private $sectionsParts;
 
     /**
-     * Активные разделы с прайсами (шины) если 0 => отключено, 1 => включено
+     * Активные разделы с прайсами (шины)
      *
-     * @ORM\Column(type="integer", name="sections_tyres")
+     * @ORM\Column(type="boolean", name="sections_tyres")
      */
     private $sectionsTyres;
 
     /**
-     * Активные разделы с прайсами (диски) если 0 => отключено, 1 => включено
+     * Активные разделы с прайсами (диски)
      *
-     * @ORM\Column(type="integer", name="sections_drives")
+     * @ORM\Column(type="boolean", name="sections_drives")
      */
     private $sectionsDrives;
 
@@ -164,6 +164,11 @@ class Company
     public function setSectionsDrives($sectionsDrives): void
     {
         $this->sectionsDrives = $sectionsDrives;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getCreatedAt()
