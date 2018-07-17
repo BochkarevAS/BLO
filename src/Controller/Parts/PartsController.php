@@ -2,8 +2,8 @@
 
 namespace App\Controller\Parts;
 
-use App\Entity\Parts\Oem;
-use App\Form\Parts\OemType;
+use App\Entity\Parts\Part;
+use App\Form\Parts\PartType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,22 +16,22 @@ class PartsController extends AbstractController
      */
     public function renderParts(Request $request, PaginatorInterface $paginator)
     {
-        $oem = new Oem();
-        $form = $this->createForm(OemType::class, $oem, ['method' => 'GET']);
+        $oem = new Part();
+        $form = $this->createForm(PartType::class, $oem, ['method' => 'GET']);
         $form->handleRequest($request);
-        $oems = null;
+        $parts = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $query = $this->getDoctrine()->getRepository(Oem::class)->renderParts($entity);
+            $query = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
 
             if ($query) {
-                $oems = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
+                $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
             }
         }
 
         return $this->render('parts/parts_render.html.twig', [
-            'oems' => $oems,
+            'parts' => $parts,
             'form' => $form->createView()
         ]);
     }

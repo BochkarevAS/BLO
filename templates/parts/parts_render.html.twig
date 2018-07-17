@@ -6,9 +6,9 @@
 
         {{ include('/parts/parts_form.html.twig') }}
 
-        {% if oems %}
+        {% if parts %}
             <div class="navigator">
-                {{ knp_pagination_render(oems) }}
+                {{ knp_pagination_render(parts) }}
             </div>
 
             <table class="table table-hover">
@@ -22,28 +22,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for oem in oems %}
+                    {% for part in parts %}
                         <tr>
                             <td>
-                                {% if oem.brand and oem.part %}
-                                    {{ oem.part.name }} / {{ oem.name }} на {{ oem.brand.name }}
+                                {% if part.part %}
+                                    {{ part.part.name }} /
+                                {% endif %}
+                                {% if part.oem %}
+                                    {{ part.oem.name }}
+                                {% endif %}
+                                {% if part.brand %}
+                                    на {{ part.brand.name }}
                                 {% endif %}
                             </td>
                             <td>
-                                {% if oem.engine and oem.carcase %}
-                                    право / {{ oem.engine.name }} / {{ oem.carcase.name }}
+                                {% if part.engine %}
+                                    право / {{ part.engine.name }} / {{ part.carcase.name }}
                                 {% endif %}
                             </td>
                             <td>
-                                {% if oem.vendor and oem.city %}
-                                    {{ oem.vendor.name }} / {{ oem.city.name }}
+                                {% if part.vendor %}
+                                    {{ part.vendor.name }} / {{ part.city.name }}
                                 {% endif %}
                             </td>
                             <td>
                                 {{ random(1500) }} руб.
                             </td>
                             <td>
-                                {{ oem.updatedAt|date }}
+                                {{ part.updatedAt|date }}
                             </td>
                         </tr>
                     {% endfor %}
@@ -80,7 +86,7 @@
             </table>
 
             <div class="navigator">
-                {{ knp_pagination_render(oems) }}
+                {{ knp_pagination_render(parts) }}
             </div>
         {% endif %}
 

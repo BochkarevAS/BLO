@@ -5,7 +5,7 @@ namespace App\Form\Parts;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Model;
-use App\Entity\Parts\Oem;
+use App\Entity\Parts\Part;
 use App\Entity\Region\City;
 use App\Repository\Parts\BrandRepository;
 use App\Repository\Parts\CityRepository;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OemType extends AbstractType
+class PartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -126,7 +126,7 @@ class OemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'      => Oem::class,
+            'data_class'      => Part::class,
             'csrf_protection' => false,
         ]);
     }

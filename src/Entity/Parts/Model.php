@@ -33,9 +33,9 @@ class Model
     private $carcases;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="model")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="model")
      */
-    private $oems;
+    private $parts;
 
     public function getName()
     {
@@ -52,7 +52,7 @@ class Model
         return $this->brand;
     }
 
-    public function setBrands($brand)
+    public function setBrand($brand)
     {
         $this->brand = $brand;
     }
@@ -67,14 +67,14 @@ class Model
         $this->carcases = $carcases;
     }
 
-    public function getOems()
+    public function getParts()
     {
-        return $this->oems;
+        return $this->parts;
     }
 
-    public function setOems($oems)
+    public function setParts($parts): void
     {
-        $this->oems = $oems;
+        $this->parts = $parts;
     }
 
     public function getId()

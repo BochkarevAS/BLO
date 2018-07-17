@@ -5,10 +5,10 @@ namespace App\Entity\Parts;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Parts\BrandRepository")
- * @ORM\Table(name="brand", schema="parts")
+ * @ORM\Entity(repositoryClass="App\Repository\Parts\PartRepository")
+ * @ORM\Table(name="part_name", schema="parts")
  */
-class Brand
+class PartName
 {
     /**
      * @ORM\Id
@@ -23,12 +23,7 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brand")
-     */
-    private $models;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brand")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="part")
      */
     private $parts;
 
@@ -40,16 +35,6 @@ class Brand
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    public function getModels()
-    {
-        return $this->models;
-    }
-
-    public function setModels($models)
-    {
-        $this->models = $models;
     }
 
     public function getParts()
@@ -65,10 +50,5 @@ class Brand
     public function getId()
     {
         return $this->id;
-    }
-
-    public function __toString()
-    {
-        return (string) $this->getName();
     }
 }

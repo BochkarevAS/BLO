@@ -8,6 +8,7 @@ use App\Entity\Parts\Engine;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
+use App\Entity\Parts\PartName;
 use App\Entity\Parts\Vendor;
 use App\Entity\Region\City;
 use Doctrine\ORM\EntityManager;
@@ -75,25 +76,29 @@ class PartsCommand extends Command
         $records = $reader->getRecords($header);
 
         $i = 0;
-        $batchSize = 1000;
+        $batchSize = 100;
         $nameVendor = 'ALFACAR';
 
         $progress = new ProgressBar($output, count($reader));
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5(
-                $record['brand'] .
-                $record['model']
-            );
+            $hash = md5($record['brand'] . $record['model']);
 
             $record = $this->valid($record, $em, $nameVendor);
-//            $oem    = $em->getRepository(Oem::class)->findOneBy(['hash' => $hash]);
+//            $oem    = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
            // if ($oem === null) {
-                $oem = new Oem();
-                $this->oem($oem, $record, $hash);
-                $em->persist($oem);
+
+
+
+
+//            dump($record);
+
+
+                $part = new Part();
+                $this->part($part, $record, $hash);
+                $em->persist($part);
 
 //                $picture = new Picture();
 //                $this->json($tyre, $picture, $record['pictures'], $serializer);
@@ -138,21 +143,41 @@ class PartsCommand extends Command
      */
     private function valid(array $record, $em, $nameVendor)
     {
-        $record['vendor'] = $em->getRepository(Vendor::class)->findOneBy([
-            'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
-        ]);
+        $record['vendor'] = $em->createQueryBuilder()
+                                ->select('v')
+                                ->from(Vendor::class, 'v')
+                                ->where('upper(v.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['vendor'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
-        $record['model'] = $em->getRepository(Model::class)->findOneBy([
-            'name' => mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251')
-        ]);
+        $record['model'] = $em->createQueryBuilder()
+                                ->select('m')
+                                ->from(Model::class, 'm')
+                                ->where('upper(m.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
-        $record['brand'] = $em->getRepository(Brand::class)->findOneBy([
-            'name' => mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251')
-        ]);
+        $record['brand'] = $em->createQueryBuilder()
+                                ->select('b')
+                                ->from(Brand::class, 'b')
+                                ->where('upper(b.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
-        $record['carcase'] = $em->getRepository(Carcase::class)->findOneBy([
-            'name' => mb_convert_encoding($record['carcase'], 'UTF-8', 'Windows-1251')
-        ]);
+        $record['carcase'] = $em->createQueryBuilder()
+                                ->select('c')
+                                ->from(Carcase::class, 'c')
+                                ->where('upper(c.name) = upper(:name)')
+                                ->setParameter('name', mb_convert_encoding($record['carcase'], 'UTF-8', 'Windows-1251'))
+                                ->setMaxResults(1)
+                                ->getQuery()
+                                ->getOneOrNullResult();
 
         $record['city'] = $em->getRepository(City::class)->findOneBy([
             'name' => mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251')
@@ -162,28 +187,32 @@ class PartsCommand extends Command
             'name' => mb_convert_encoding($record['engine'], 'UTF-8', 'Windows-1251')
         ]);
 
-        $record['part'] = $em->getRepository(Part::class)->findOneBy([
+        $record['part'] = $em->getRepository(PartName::class)->findOneBy([
             'name' => mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251')
+        ]);
+
+        $record['oem'] = $em->getRepository(Oem::class)->findOneBy([
+            'name' => mb_convert_encoding($record['oem'], 'UTF-8', 'Windows-1251')
         ]);
 
         return $record;
     }
 
     /**
-     * @param Oem $oem
+     * @param Part $part
      * @param $record
      * @param $hash
      */
-    private function oem($oem, array $record, $hash)
+    private function part($part, array $record, $hash)
     {
-        $oem->setHash($hash);
-        $oem->setPart($record['part']);
-        $oem->setBrand($record['brand']);
-        $oem->setModel($record['model']);
-        $oem->setCarcase($record['carcase']);
-        $oem->setCity($record['city']);
-        $oem->setEngine($record['engine']);
-        $oem->setVendor($record['vendor']);
-        $oem->setName( mb_convert_encoding($record['oem'], 'UTF-8', 'Windows-1251'));
+        $part->setHash($hash);
+        $part->setPart($record['part']);
+        $part->setBrand($record['brand']);
+        $part->setModel($record['model']);
+        $part->setCarcase($record['carcase']);
+        $part->setCity($record['city']);
+        $part->setEngine($record['engine']);
+        $part->setVendor($record['vendor']);
+        $part->setOem($record['oem']);
     }
 }

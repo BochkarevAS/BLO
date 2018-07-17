@@ -4,17 +4,16 @@ namespace App\DataFixtures;
 
 use App\Entity\Administration\News;
 use App\Entity\Administration\NewsCategories;
-use App\Entity\Parts\Oem;
+use App\Entity\Parts\Part;
 use App\Entity\Region\City;
 use App\Entity\Client\Company;
 use App\Entity\Region\County;
 use App\Entity\Region\Region;
-use App\Entity\Client\Vendor;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Engine;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Model;
-use App\Entity\Parts\Part;
+use App\Entity\Parts\PartName;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -35,7 +34,7 @@ class LoadFixtures extends Fixture
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
 
-        $this->addTyresRelation($manager);    // Шины
+//        $this->addTyresRelation($manager);    // Шины
         $this->addPartsRelation($manager);    // Запчасти
 
 //        $this->addCounty($manager);         // Округ
@@ -113,74 +112,123 @@ class LoadFixtures extends Fixture
     private function addPartsRelation($manager)
     {
         $brands = [
-            'Toyota', 'Nissan', 'Subaru', 'JIP', 'Audi',
-            'Jaguar', 'Ferrari', 'Hammer', 'Lexus', 'Mazda'
+            'Toyota', 'Honda', 'Nissan', 'Isuzu', 'Lexus', 'Mazda', 'Mitsubishi', 'Subaru', 'Suzuki', 'Acura',
+            'Alfa Romeo', 'Alpina', 'Asia Motors', 'Aston Martin', 'Audi', 'BMW', 'BYD', 'Bentley', 'Brilliance',
+            'Bugatti', 'Buick', 'Cadillac', 'Changan (Chana)', 'Chery', 'Chevrolet', 'Chrysler', 'Citroen',
+            'Dacia', 'Daewoo', 'Daihatsu', 'Daimler', 'Datsun', 'DeLorean', 'Derways', 'Dodge', 'Dongfeng', 'Eagle',
+            'FAW', 'Ferrari', 'Fiat', 'Fisker', 'Ford', 'GMC', 'Geely', 'Geo', 'Great Wall', 'Hafei', 'Haima',
+            'Haval', 'Hawtai', 'Hino', 'Honda'
         ];
         $vendors = [
-            'Владмоторс', 'Гугл', 'Яндекс', 'Apple', 'HP',
-            'Droom', 'Japancar', 'Coca-cola', 'ВК', 'Бимбило'
+            '«ЛегионТрейд»', 'АВТОМАРКЕТ', 'ЛЕВОБЕРЕЖНЫЙ', 'Авторесурс-Сервис', 'Стол заказов', 'Контрактавто',
+            'Штутгарт', '1-й Автомаркет Запчастей', '100 процентов', '1000 запчастей', '159AVTO', '25 All Auto',
+            '38РЕГИОН', '4 Такта', '4x4cars', '4 Runner', 'a-ligaPRO', 'Abs-auto', 'Ads54', 'ADX-Motors',
+            'AGIRA', 'Airbag102', 'AKPP-MARKET', 'AlexAuto', 'ALFACAR', 'Alphagarage', 'AlphaParts',
+            'Amotomo', 'AmourMotor', 'Aprice72.ru', 'Arsenal Auto', 'AsiaTrek'
         ];
         $citys = [
             'Владивосток', 'Хабаровск', 'Москва', 'Находка', 'Иркутск',
             'Новосебирск', 'Пенза', 'Ростов-на-Дону', 'Якутск', 'Уссурийск'
         ];
-
-
+        $models = [
+            'Camry', 'Corolla', 'Land Cruiser', 'Mark II', 'Prius', 'RAV4', 'Vitz', 'Allex', 'Allion', 'Alphard',
+            'Altis', 'Aqua', 'Aristo', 'Aurion', 'Auris', 'Avalon', 'Avanza', 'Avensis', 'Avensis Verso', 'Avensis Wagon',
+            'Aygo', 'bB', 'Belta', 'Blade', 'Blizzard', 'Brevis', 'C-HR', 'Caldina', 'Caldina GT', 'Caldina Van', 'Cami',
+            'Camry', 'Camry Gracia', 'Camry Gracia Wagon', 'Camry Prominent', 'Carib', 'Carib Rosso', 'Carina', 'Carina E',
+            'Carina ED', 'Carina II', 'Carina Surf', 'Cavalier', 'Celica', 'Celsior', 'Century', 'Ceres', 'Chaser', 'Chaser Tourer V',
+            'Coaster', 'Comfort', 'Corolla', 'Corolla Axio', 'Corolla Ceres', 'Corolla Fielder', 'Corolla FX', 'Corolla II',
+            'Corolla Levin', 'Corolla Rumion', 'Corolla Runx'
+        ];
 
         $parts = [
-            'Амортизаторы багажника', 'Амортизатор капота', 'Амортизатор TOYOTA'
+            'Амортизаторы багажника', 'Амортизатор капота', 'Амортизатор TOYOTA', 'Амортизатор NISSAN'
         ];
 
 
-        for ($i = 1; $i <= 10; $i++) {
-            $brand = new Brand();
-            $brand->setName($brands[$i-1]);
+
+//        foreach ($vendors as $record) {
+//            $vendor = new \App\Entity\Parts\Vendor();
+//            $vendor->setName($record);
+//            $manager->persist($vendor);
+//        }
+
+        $i = 1;
+        foreach ($brands as $record) {
+            $brand = new \App\Entity\Parts\Brand();
+            $brand->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
             $this->setReference('brand_' . $i, $brand);
             $manager->persist($brand);
-
-            $city = new City();
-            $city->setName($citys[$i-1]);
-            $this->setReference('city_' . $i, $city);
-            $manager->persist($city);
-
-            $vendor = new Vendor();
-            $vendor->setName($vendors[$i-1]);
-            $this->setReference('vendor_' . $i, $vendor);
-            $manager->persist($vendor);
+            $i++;
         }
 
-        for ($i = 1; $i <= 50; $i++) {
-//            $oem = new Oem();
-//            $oem->setName('OEM' . $this->faker->cpr);
-//            $oem->setCity($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
-//            $oem->setVendor($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
-//            $oem->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
-//            $manager->persist($oem);
-
-            $part = new Part();
-            $part->setName("Part_$i");
-//            $oem->setPart($part);
-            $manager->persist($part);
-
-            $model = new Model();
-            $model->setName('Model_' . $i);
-            $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
-//            $oem->setModel($model);
+        $i = 1;
+        foreach ($models as $record) {
+            $model = new \App\Entity\Parts\Model();
+            $model->setName(mb_convert_encoding($record, 'UTF-8', 'Windows-1252'));
+            $model->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, count($brands)-1)));
             $this->setReference('model_' . $i, $model);
             $manager->persist($model);
+            $i++;
+        }
 
+        for ($i = 1; $i <= 500; $i++) {
             $carcase = new Carcase();
             $carcase->setName('Carcase' . $this->faker->vat);
-            $carcase->setModels($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
-//            $oem->setCarcase($carcase);
+            $carcase->setModel($this->getReference('model_' . $this->faker->numberBetween(1, count($models)-1)));
             $manager->persist($carcase);
-
-            $engine = new Engine();
-            $engine->setName('EN' . $this->faker->vat);
-//            $oem->setEngine($engine);
-            $manager->persist($engine);
-            $manager->flush();
         }
+
+        $manager->flush();
+
+//        for ($i = 1; $i <= 10; $i++) {
+//            $brand = new Brand();
+//            $brand->setName($brands[$i-1]);
+//            $this->setReference('brand_' . $i, $brand);
+//            $manager->persist($brand);
+//
+//            $city = new City();
+//            $city->setName($citys[$i-1]);
+//            $this->setReference('city_' . $i, $city);
+//            $manager->persist($city);
+//
+//            $vendor = new Vendor();
+//            $vendor->setName($vendors[$i-1]);
+//            $this->setReference('vendor_' . $i, $vendor);
+//            $manager->persist($vendor);
+//        }
+
+//        for ($i = 1; $i <= 50; $i++) {
+////            $oem = new Part();
+////            $oem->setName('OEM' . $this->faker->cpr);
+////            $oem->setCity($this->getReference('city_' . $this->faker->numberBetween(1, 10)));
+////            $oem->setVendor($this->getReference('vendor_' . $this->faker->numberBetween(1, 10)));
+////            $oem->setBrand($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+////            $manager->persist($oem);
+//
+//            $part = new PartName();
+//            $part->setName("Part_$i");
+////            $oem->setPart($part);
+//            $manager->persist($part);
+//
+//            $model = new Model();
+//            $model->setName('Model_' . $i);
+//            $model->setBrands($this->getReference('brand_' . $this->faker->numberBetween(1, 10)));
+////            $oem->setModel($model);
+//            $this->setReference('model_' . $i, $model);
+//            $manager->persist($model);
+//
+////            $carcase = new Carcase();
+////            $carcase->setName('Carcase' . $this->faker->vat);
+////            $carcase->setModels($this->getReference('model_' . $this->faker->numberBetween(1, $i)));
+//////            $oem->setCarcase($carcase);
+////            $manager->persist($carcase);
+//
+//            $engine = new Engine();
+//            $engine->setName('EN' . $this->faker->vat);
+////            $oem->setEngine($engine);
+//            $manager->persist($engine);
+//            $manager->flush();
+//        }
     }
 
     private function addCounty($manager)
