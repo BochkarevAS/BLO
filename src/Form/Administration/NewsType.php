@@ -3,7 +3,7 @@
 namespace App\Form\Administration;
 
 use App\Entity\Administration\News;
-use App\Entity\Client\Company;
+use App\Entity\Client\Company1;
 use App\Repository\Client\CompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -27,7 +27,7 @@ class NewsType extends AbstractType
                 'attr'          => ['class' => 'form-control'],
                 'label'         => 'компания',
                 'choice_label'  => 'name',
-                'class'         => Company::class,
+                'class'         => Company1::class,
                 'query_builder' => function (CompanyRepository $repository) {
                     return $repository->createCompanyQueryBuilder();
                 },

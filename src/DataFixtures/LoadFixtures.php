@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Administration\News;
 use App\Entity\Administration\NewsCategories;
 use App\Entity\Parts\Oem;
-use App\Entity\Client\Company;
+use App\Entity\Client\Company1;
 use App\Entity\Region\County;
 use App\Entity\Region\Region;
 use App\Entity\Parts\Carcase;
@@ -259,7 +259,7 @@ class LoadFixtures extends Fixture
     private function addCompany($manager)
     {
         for ($i = 1; $i <= 10; $i++) {
-            $company = new Company();
+            $company = new Company1();
             $company->setName($this->faker->creditCardType());
             $this->setReference('company_' . $i, $company);
             $manager->persist($company);

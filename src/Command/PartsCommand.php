@@ -84,7 +84,7 @@ class PartsCommand extends Command
             $hash = md5($record['brand'] . $record['model']);
 
             $record = $this->valid($record, $em, $nameVendor);
-            $part    = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
+            $part   = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
             if ($part === null) {
                 $part = new Part();
