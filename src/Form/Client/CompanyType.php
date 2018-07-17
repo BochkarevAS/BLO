@@ -5,6 +5,8 @@ namespace App\Form\Client;
 use App\Entity\Client\Company;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +15,15 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', TextType::class, [
+                'label' => 'Название компании'
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'Сайт'
+            ])
+            ->add('info', TextareaType::class, [
+                'label' => 'Краткая информация о компании',
+            ])
             ->add('sectionsParts', CheckboxType::class, [
                 'label'    => 'Запчасти',
                 'required' => false,
