@@ -5,6 +5,7 @@
         "php": "^7.2.7",
         "ext-iconv": "*",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
+        "friendsofsymfony/user-bundle": "^2.1",
         "guzzlehttp/guzzle": "^6.3",
         "knplabs/knp-paginator-bundle": "^2.8",
         "league/csv": "^9.1",
