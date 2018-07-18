@@ -11,14 +11,15 @@
 
     <body>
         <header class="header">
-            <ul class="navi">
+
+            <div class="row">
                 {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ path('fos_user_security_logout') }}">Выход</a></li>
+                    <div class="col-md-8"><a href="{{ path('fos_user_security_logout') }}">Выход</a></div>
                 {% else %}
-                    <li><a href="{{ path('fos_user_security_login') }}">Вход</a></li>
-                    <li><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></li>
+                    <div class="col-1"><a href="{{ path('fos_user_security_login') }}">Вход</a></div>
+                    <div class="col-1"><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></div>
                 {% endif %}
-            </ul>
+            </div>
             {#<a href="{{ path('news_render') }}">Новости</a>#}
             {#<a href="{{ path('news_categories_render') }}">Категории новостей</a>#}
             {#<a href="{{ path('price_render') }}">Прайсы компании</a>#}
@@ -26,6 +27,11 @@
             <a href="{{ path('tyres_render') }}">Шины</a>
             <a href="{{ path('drives_render') }}">Диски</a>
             <a href="{{ path('client_company_index') }}">Компании</a>
+
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('client_cabinet_index') }}">Личный кабинет</a>
+            {% endif %}
+
         </header>
 
         <div class="main-content">

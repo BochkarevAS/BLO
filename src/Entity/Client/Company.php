@@ -74,6 +74,13 @@ class Company
      */
     private $sectionsDrives;
 
+//    /**
+//     * ID от App\Entity\Auth\User;
+//     *
+//     * @ORM\Column(type="integer", name="user_id")
+//     */
+//    private $userId;
+
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")

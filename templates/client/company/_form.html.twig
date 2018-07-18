@@ -1,4 +1,38 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <div class="row">
+        <div class="col-2">
+            {{ form_row(form.city, {'id': 'company_city', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.name, {'id': 'company_name', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.syte, {'id': 'company_syte', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.office, {'id': 'company_office', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.info, {'id': 'company_info', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1">
+            {{ form_row(form.sectionsParts, {'id': 'company_sections_parts', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
+        </div>
+        <div class="col-1">
+            {{ form_row(form.sectionsTyres, {'id': 'company_sections_tyres', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
+        </div>
+        <div class="col-1">
+            {{ form_row(form.sectionsDrives, {'id': 'company_sections_drives', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+
 {{ form_end(form) }}
