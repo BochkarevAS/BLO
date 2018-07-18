@@ -22,6 +22,7 @@ class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
 
     public function onRegistrationSuccess(FormEvent $event)
     {
+        // main firewall's key
         $url = $this->getTargetPath($event->getRequest()->getSession(), 'main');
 
         if (!$url) {
