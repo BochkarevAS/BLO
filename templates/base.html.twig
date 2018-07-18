@@ -10,28 +10,27 @@
     </head>
 
     <body>
-        {#<a href="{{ path('news_render') }}">Новости</a>#}
-        {#<a href="{{ path('news_categories_render') }}">Категории новостей</a>#}
-        {#<a href="{{ path('price_render') }}">Прайсы компании</a>#}
-        <a href="{{ path('parts_render') }}">Запчасти</a>
-        <a href="{{ path('tyres_render') }}">Шины</a>
-        <a href="{{ path('drives_render') }}">Диски</a>
-        <a href="{{ path('client_company_index') }}">Компании</a>
-
-        {% block body %}{% endblock %}
-
-
-
-
         <header class="header">
             <ul class="navi">
                 {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}">Выход</a></li>
                 {% else %}
-                    <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
+                    <li><a href="{{ path('fos_user_security_login') }}">Вход</a></li>
                 {% endif %}
             </ul>
+            {#<a href="{{ path('news_render') }}">Новости</a>#}
+            {#<a href="{{ path('news_categories_render') }}">Категории новостей</a>#}
+            {#<a href="{{ path('price_render') }}">Прайсы компании</a>#}
+            <a href="{{ path('parts_render') }}">Запчасти</a>
+            <a href="{{ path('tyres_render') }}">Шины</a>
+            <a href="{{ path('drives_render') }}">Диски</a>
+            <a href="{{ path('client_company_index') }}">Компании</a>
         </header>
+
+
+
+
+        {% block body %}{% endblock %}
 
 
 
