@@ -27,13 +27,15 @@
             <a href="{{ path('client_company_index') }}">Компании</a>
         </header>
 
+        <div class="main-content">
+            {% for msg in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ msg }}
+                </div>
+            {% endfor %}
 
-
-
-        {% block body %}{% endblock %}
-
-
-
+            {% block body %}{% endblock %}
+        </div>
 
         {% block javascripts %}
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>

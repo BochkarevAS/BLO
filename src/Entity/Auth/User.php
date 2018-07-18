@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Security;
+namespace App\Entity\Auth;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -17,6 +17,13 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+    public function setEmail($email)
+    {
+        $this->setUsername($email);
+
+        return parent::setEmail($email);
+    }
 
     public function getId()
     {

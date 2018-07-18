@@ -31,3 +31,8 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%prices_directory%'
+
+    app.form.registration:
+        class: App\Form\Auth\RegistrationFormType
+        tags:
+            - { name: form.type }

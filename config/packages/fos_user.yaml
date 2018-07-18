@@ -1,7 +1,10 @@
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: App\Entity\Security\User
+    user_class: App\Entity\Auth\User
     from_email:
         address: "hello@man.com"
         sender_name: "You"
+    registration:
+        form:
+            type: App\Form\Auth\RegistrationFormType
