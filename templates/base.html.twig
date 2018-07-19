@@ -10,29 +10,58 @@
     </head>
 
     <body>
-        <header class="header">
 
-            <div class="row">
-                {% if is_granted('ROLE_USER') %}
-                    <div class="col-md-8"><a href="{{ path('fos_user_security_logout') }}">Выход</a></div>
-                {% else %}
-                    <div class="col-1"><a href="{{ path('fos_user_security_login') }}">Вход</a></div>
-                    <div class="col-1"><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></div>
-                {% endif %}
-            </div>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
+
+            <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('homepage') }}">Магазин</a>
+
             {#<a href="{{ path('news_render') }}">Новости</a>#}
             {#<a href="{{ path('news_categories_render') }}">Категории новостей</a>#}
             {#<a href="{{ path('price_render') }}">Прайсы компании</a>#}
-            <a href="{{ path('parts_render') }}">Запчасти</a>
-            <a href="{{ path('tyres_render') }}">Шины</a>
-            <a href="{{ path('drives_render') }}">Диски</a>
-            <a href="{{ path('client_company_show_all') }}">Продавцы</a>
+            <a style="margin-left: 75px;" href="{{ path('parts_render') }}">Запчасти</a>
+            <a style="margin-left: 75px;" href="{{ path('tyres_render') }}">Шины</a>
+            <a style="margin-left: 75px;" href="{{ path('drives_render') }}">Диски</a>
+            <a style="margin-left: 75px;" href="{{ path('client_company_show_all') }}">Продавцы</a>
 
             {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('client_company_index') }}">Личный кабинет</a>
+                <a style="margin-left: 75px;" href="{{ path('client_company_index') }}">Личный кабинет</a>
             {% endif %}
 
-        </header>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown" style="margin-right: 75px;">
+                        <div class="navbar-collapse collapse">
+
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="drop-down" data-toggle="tooltip" data-placement="left" title="Добропожаловать ">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <span class="fa fa-user"></span>
+                                                <strong>{{ app.user.username }}</strong>
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ path('fos_user_security_logout') }}" class="dropdown-item">Выход<span class="mini-dumbbell"></span></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            {% else %}
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a href="{{ path('fos_user_security_login') }}" class="dropdown"><span class="fa fa-sign-out"></span>Вход</a>
+                                    </li>
+                                    <li>
+                                        <div class="col-1"><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></div>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
         <div class="main-content">
             {% for msg in app.session.flashBag.get('success') %}
