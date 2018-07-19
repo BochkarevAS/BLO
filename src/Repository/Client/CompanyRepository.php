@@ -2,10 +2,10 @@
 
 namespace App\Repository\Client;
 
+use App\Entity\Auth\User;
 use App\Entity\Client\Company;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityRepository;
 
 class CompanyRepository extends ServiceEntityRepository
 {
@@ -18,5 +18,18 @@ class CompanyRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->orderBy('c.name', 'ASC');
+    }
+
+    public function getCompanyByUserId(User $user)
+    {
+        if (!$user->getId()) {
+            return null;
+        }
+
+        $qb = $this->createQueryBuilder('c')
+            ->join(User::class, 'u', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.userId = u.id AND c.userId = :id')
+            ->setParameter(':id', $user->getId());
+
+        return $qb->getQuery()->execute();
     }
 }

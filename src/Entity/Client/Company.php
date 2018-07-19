@@ -74,12 +74,12 @@ class Company
      */
     private $sectionsDrives;
 
-//    /**
-//     * ID от App\Entity\Auth\User;
-//     *
-//     * @ORM\Column(type="integer", name="user_id")
-//     */
-//    private $userId;
+    /**
+     * ID от App\Entity\Auth\User;
+     *
+     * @ORM\Column(type="integer", name="user_id")
+     */
+    private $userId;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -171,6 +171,16 @@ class Company
     public function setSectionsDrives($sectionsDrives): void
     {
         $this->sectionsDrives = $sectionsDrives;
+    }
+
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    public function setUserId($userId): void
+    {
+        $this->userId = $userId;
     }
 
     public function getId()

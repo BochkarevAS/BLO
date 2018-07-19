@@ -20,7 +20,19 @@ class CompanyController extends Controller
      */
     public function index(CompanyRepository $companyRepository): Response
     {
+        $user = $this->getUser();
+
         return $this->render('client/company/index.html.twig', [
+            'companys' => $companyRepository->getCompanyByUserId($user)
+        ]);
+    }
+
+    /**
+     * @Route("/show", name="client_company_show_all", methods={"GET"})
+     */
+    public function showAll(CompanyRepository $companyRepository)
+    {
+        return $this->render('client/company/show_all.html.twig', [
             'companys' => $companyRepository->findAll()
         ]);
     }
@@ -30,14 +42,12 @@ class CompanyController extends Controller
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
         $company = new Company();
+        $company->setUserId($user->getId());
+
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
-
-
-//        dump( $request->getSession()->get(''));
-//        die;
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

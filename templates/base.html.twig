@@ -26,10 +26,10 @@
             <a href="{{ path('parts_render') }}">Запчасти</a>
             <a href="{{ path('tyres_render') }}">Шины</a>
             <a href="{{ path('drives_render') }}">Диски</a>
-            <a href="{{ path('client_company_index') }}">Компании</a>
+            <a href="{{ path('client_company_show_all') }}">Продавцы</a>
 
             {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('client_cabinet_index') }}">Личный кабинет</a>
+                <a href="{{ path('client_company_index') }}">Личный кабинет</a>
             {% endif %}
 
         </header>
