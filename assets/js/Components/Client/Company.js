@@ -4,52 +4,43 @@ import $ from 'jquery';
 
 class Company {
 
-    constructor() {
+    constructor($wrapper) {
+        this.$wrapper = $wrapper;
 
-        this.$wrapper.on('click', '#company_add_phone',
+        this.$wrapper.on('click', '#company_create_phone',
             this.createPhone.bind(this)
         );
 
-
-        let i = $('input').size() + 1;
-
-        $('#remove').click(function() {
-            if (i > 1) {
-                $('.field:last').remove();
-                i--;
-            }
-        });
-
-        $('.submit').click(function(){
-            let answers = [];
-
-            $.each($('.field'), function() {
-                answers.push($(this).val());
-            });
-
-            if (answers.length === 0) {
-                answers = "none";
-            }
-
-            alert(answers);
-
-            return false;
-        });
+        this.$wrapper.on('click', 'js-company-delete',
+            this.removePhone.bind(this)
+        );
     }
-
 
     createPhone(e) {
-        let $link = $(e.currentTarget);
-        let id = $link.data('id');
+        e.preventDefault();
 
+        let id = $('.field').length ; console.log(111);
+        let html = rowTemplate(id);
 
-        console.log(id);
+        $(html).fadeIn('slow').appendTo('.inputs');
+    }
 
-        $(e).click(function() {
-            $('<div><input type="text" class="field" name="dynamic[]"></div>').fadeIn('slow').appendTo('.inputs');
-            i++;
-        });
+    removePhone(e) {
+        e.preventDefault();
+
+        let i = $('.field').length;
+
+        if (i > 1) {
+            $('.field:last').remove();
+            i--;
+        }
     }
 }
+
+const rowTemplate = (id) => `
+    <div>
+        <input id="field_${id}" type="text" class="field form-control col-3" name="dynamic[]">
+        <a class="btn btn-primary ">Удалить</a>
+    </div>`;
 
 export default Company;
