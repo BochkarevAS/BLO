@@ -52,8 +52,8 @@ class PartsCommand extends Command
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-        $file = 'parts_test.csv';
-//        $file = 'big_parts.csv';
+//        $file = 'parts_test.csv';
+        $file = 'big_parts.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em = $this->container->get('doctrine.orm.default_entity_manager');
