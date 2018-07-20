@@ -37,7 +37,7 @@ class Company {
 
 const rowTemplate = (id) => `
     <div class="row">
-        <input id="field_${id}" type="text" class="field form-control col-3" name="dynamic[]">
+        <input id="field_${id}" type="text" class="field form-control col-3" name="phone[]">
         <a class="btn btn-primary js-phone-delete">Удалить</a>
     </div>`;
 
