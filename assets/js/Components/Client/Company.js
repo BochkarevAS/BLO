@@ -7,11 +7,11 @@ class Company {
     constructor($wrapper) {
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on('click', '#company_create_phone',
+        this.$wrapper.on('click', '.js-phone-new',
             this.createPhone.bind(this)
         );
 
-        this.$wrapper.on('click', 'js-company-delete',
+        this.$wrapper.on('click', '.js-phone-delete',
             this.removePhone.bind(this)
         );
     }
@@ -19,7 +19,7 @@ class Company {
     createPhone(e) {
         e.preventDefault();
 
-        let id = $('.field').length ; console.log(111);
+        let id = $('.field').length + 1;
         let html = rowTemplate(id);
 
         $(html).fadeIn('slow').appendTo('.inputs');
@@ -28,19 +28,17 @@ class Company {
     removePhone(e) {
         e.preventDefault();
 
-        let i = $('.field').length;
+        let $link = $(e.currentTarget);
+        let $row = $link.closest('div');
 
-        if (i > 1) {
-            $('.field:last').remove();
-            i--;
-        }
+        $row.remove();
     }
 }
 
 const rowTemplate = (id) => `
-    <div>
+    <div class="row">
         <input id="field_${id}" type="text" class="field form-control col-3" name="dynamic[]">
-        <a class="btn btn-primary ">Удалить</a>
+        <a data-id="${id}" class="btn btn-primary js-phone-delete">Удалить</a>
     </div>`;
 
 export default Company;
