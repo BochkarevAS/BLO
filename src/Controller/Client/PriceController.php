@@ -45,12 +45,12 @@ class PriceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $files = $price->getPrice();
+            $files = $price->getPath();
 
             foreach ($files as $file) {
-                $fileName =  $this->getParameter('prices_directory').'/'.$fileUploader->upload($file);
-                $price->setPrice($fileName);
-                $price->setIdCompany(1);
+                $fileName = $this->getParameter('prices_directory').'/'.$fileUploader->upload($file);
+                $price->setPath($fileName);
+                $price->setCompanyId(1);
                 $em->persist($price);
             }
 
