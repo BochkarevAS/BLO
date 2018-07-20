@@ -9,9 +9,10 @@
         <h1>Редактировать компанию</h1>
 
         {{ include('client/company/_form.html.twig') }}
-
         {{ include('client/company/_delete_form.html.twig') }}
 
+        <a href="{{ path('client_price_index') }}">Загрузить прайс</a>
+        <br>
         <a href="{{ path('client_company_index') }}">Назад</a>
 
     </div>

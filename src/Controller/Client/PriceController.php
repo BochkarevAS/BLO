@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/client/price")
+ */
 class PriceController extends AbstractController
 {
     private $priceService;
@@ -20,31 +23,28 @@ class PriceController extends AbstractController
     }
 
     /**
-     * @Route("/price", name="price_render")
+     * @Route("/", name="client_price_index", methods={"GET"})
      */
-    public function priceRender()
+    public function index()
     {
         $form = $this->createForm(PriceType::class);
 
-        return $this->render('client/price_load.html.twig', [
+        return $this->render('client/price/load.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/price/load", name="price_load")
+     * @Route("/load", name="client_price_load")
      */
-    public function priceLoad(Request $request, FileUploader $fileUploader)
+    public function load(Request $request, FileUploader $fileUploader)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $price = new Price();
         $form = $this->createForm(PriceType::class, $price);
         $form->handleRequest($request);
 
-        $this->priceService->redirectToAPI();
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
             $files = $price->getPrice();
 
             foreach ($files as $file) {
@@ -56,9 +56,11 @@ class PriceController extends AbstractController
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('price_render'));
+            return $this->redirectToRoute('client_price_index');
         }
 
-        return $this->render('client/price_load.html.twig');
+        return $this->render('client/price/load.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

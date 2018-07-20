@@ -49,14 +49,12 @@ class CompanyController extends Controller
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
-        dump($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($company);
             $em->flush();
 
-//            return $this->redirectToRoute('client_company_index');
+            return $this->redirectToRoute('client_company_index');
         }
 
         return $this->render('client/company/new.html.twig', [

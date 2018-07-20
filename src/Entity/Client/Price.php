@@ -3,10 +3,10 @@
 namespace App\Entity\Client;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="price", schema="client")
  */
 class Price
@@ -19,45 +19,63 @@ class Price
     private $id;
 
     /**
+     * Путь куда был загружен прайс
+     *
      * @ORM\Column(type="string")
      */
-    private $price;
+    private $path;
 
     /**
-     * @ORM\Column(type="integer", name="id_company")
+     * ID Компании которой пренадлежит прайс
+     *
+     * @ORM\Column(type="integer", name="company_id")
      */
-    private $idCompany;
+    private $companyId;
 
     /**
-     * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", name="created_at")
      */
     private $createdAt;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", name="updated_at")
+     */
+    private $updatedAt;
+
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public function setPath($path): void
+    {
+        $this->path = $path;
+    }
+
+    public function getCompanyId()
+    {
+        return $this->companyId;
+    }
+
+    public function setCompanyId($companyId): void
+    {
+        $this->companyId = $companyId;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    /**
-     *  @ORM\PrePersist
-     */
-    public function setCreatedAt()
+    public function getUpdatedAt()
     {
-        $this->createdAt = new \DateTime('now');
-    }
-
-    public function setIdCompany($idCompany)
-    {
-        $this->idCompany = $idCompany;
-    }
-
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setPrice($price)
-    {
-        $this->price = $price;
+        return $this->updatedAt;
     }
 }

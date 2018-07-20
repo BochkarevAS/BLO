@@ -5,6 +5,7 @@ namespace App\Form\Client;
 use App\Entity\Client\Company;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,6 +43,14 @@ class CompanyType extends AbstractType
                 'label'    => 'Диски',
                 'required' => false,
             ])
+//            ->add('phone', CollectionType::class, [
+//                'type'           => ,
+//                'allow_add'      => true,
+//                'allow_delete'   => true,
+//                'prototype_name' => '__prototype__',
+//                'by_reference'   => false,
+//                'error_bubbling' => false
+//            ]);
         ;
     }
 
