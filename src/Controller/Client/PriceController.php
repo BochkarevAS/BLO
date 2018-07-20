@@ -2,6 +2,7 @@
 
 namespace App\Controller\Client;
 
+use App\Entity\Client\Company;
 use App\Entity\Client\Price;
 use App\Form\Client\PriceType;
 use App\Service\Client\PriceService;
@@ -15,29 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PriceController extends AbstractController
 {
-    private $priceService;
-
-    public function __construct(PriceService $priceService)
-    {
-        $this->priceService = $priceService;
-    }
-
     /**
-     * @Route("/", name="client_price_index", methods={"GET"})
+     * @Route("/{id}", name="client_price_load")
      */
-    public function index()
-    {
-        $form = $this->createForm(PriceType::class);
-
-        return $this->render('client/price/load.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/load", name="client_price_load")
-     */
-    public function load(Request $request, FileUploader $fileUploader)
+    public function load(Request $request, Company $company, FileUploader $fileUploader, PriceService $priceService)
     {
         $price = new Price();
         $form = $this->createForm(PriceType::class, $price);
@@ -50,17 +32,18 @@ class PriceController extends AbstractController
             foreach ($files as $file) {
                 $fileName = $this->getParameter('prices_directory').'/'.$fileUploader->upload($file);
                 $price->setPath($fileName);
-                $price->setCompanyId(1);
+                $price->setCompanyId($company->getId());
                 $em->persist($price);
             }
 
             $em->flush();
 
-            return $this->redirectToRoute('client_price_index');
+            return $this->redirectToRoute('client_price_load', ['id' => $company->getId()]);
         }
 
         return $this->render('client/price/load.html.twig', [
-            'form' => $form->createView()
+            'company' => $company,
+            'form'    => $form->createView()
         ]);
     }
 }

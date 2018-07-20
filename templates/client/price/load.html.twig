@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        {{ form_start(form, {'action': path('client_price_load'), 'method': 'POST'}) }}
+        {{ form_start(form, {'action': path('client_price_load', {'id': company.id}), 'method': 'POST'}) }}
 
             {{ form_row(form.path) }}
 
