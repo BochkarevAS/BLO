@@ -18,6 +18,16 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="user")
+     */
+    protected $phones;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Client\Company", mappedBy="company")
+     */
+    protected $companys;
+
     public function setEmail($email)
     {
         $this->setUsername($email);

@@ -75,11 +75,15 @@ class Company
     private $sectionsDrives;
 
     /**
-     * ID от App\Entity\Auth\User;
-     *
-     * @ORM\Column(type="integer", name="user_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User", inversedBy="companys")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $userId;
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company")
+     */
+    protected $phones;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -173,14 +177,24 @@ class Company
         $this->sectionsDrives = $sectionsDrives;
     }
 
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId($userId): void
+    public function setUser($user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
+    }
+
+    public function getPhones()
+    {
+        return $this->phones;
+    }
+
+    public function setPhones($phones)
+    {
+        $this->phones = $phones;
     }
 
     public function getId()

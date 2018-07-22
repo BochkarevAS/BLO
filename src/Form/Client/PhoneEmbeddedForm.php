@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Form\Client;
+
+use App\Entity\Client\Phone;
+use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class PhoneEmbeddedForm extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('phone', TextType::class, [
+                'label' => 'Номер'
+            ])
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Phone::class
+        ]);
+    }
+}

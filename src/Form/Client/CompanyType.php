@@ -3,6 +3,7 @@
 namespace App\Form\Client;
 
 use App\Entity\Client\Company;
+use App\Entity\Client\Phone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -43,21 +44,17 @@ class CompanyType extends AbstractType
                 'label'    => 'Диски',
                 'required' => false,
             ])
-//            ->add('phone', CollectionType::class, [
-//                'type'           => ,
-//                'allow_add'      => true,
-//                'allow_delete'   => true,
-//                'prototype_name' => '__prototype__',
-//                'by_reference'   => false,
-//                'error_bubbling' => false
-//            ]);
+            ->add('phones', CollectionType::class, [
+                'label'      => 'Телефон',
+                'entry_type' => Phone::class
+            ]);
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Company::class,
+            'data_class' => Company::class
         ]);
     }
 }

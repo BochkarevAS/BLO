@@ -42,9 +42,8 @@ class CompanyController extends Controller
      */
     public function new(Request $request): Response
     {
-        $user = $this->getUser();
         $company = new Company();
-        $company->setUserId($user->getId());
+        $company->setUser($this->getUser());
 
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);

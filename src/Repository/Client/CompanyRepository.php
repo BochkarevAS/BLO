@@ -27,7 +27,8 @@ class CompanyRepository extends ServiceEntityRepository
         }
 
         $qb = $this->createQueryBuilder('c')
-            ->join(User::class, 'u', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.userId = u.id AND c.userId = :id')
+            ->join('c.user', 'u')
+            ->andWhere('c.user = :id')
             ->setParameter(':id', $user->getId());
 
         return $qb->getQuery()->execute();
