@@ -2,6 +2,7 @@
 
 namespace App\Entity\Client;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -81,7 +82,7 @@ class Company
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company")
+     * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company", orphanRemoval=true)
      */
     protected $phones;
 
@@ -96,6 +97,11 @@ class Company
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
+
+    public function __construct()
+    {
+        $this->phones = new ArrayCollection();
+    }
 
     public function getName()
     {
@@ -187,14 +193,34 @@ class Company
         $this->user = $user;
     }
 
+    /**
+    * @return ArrayCollection|Phone[]
+    */
     public function getPhones()
     {
         return $this->phones;
     }
 
-    public function setPhones($phones)
+    public function addPhone(Phone $phones)
     {
+        if ($this->phones->contains($phones)) {
+            return;
+        }
+
+        $this->phones[] = $phones;
+        $phones->setCompany($this);
+
         $this->phones = $phones;
+    }
+
+    public function removePhone(Phone $phones)
+    {
+        if (!$this->phones->contains($phones)) {
+            return;
+        }
+
+        $this->phones->removeElement($phones);
+        $phones->setCompany(null);
     }
 
     public function getId()

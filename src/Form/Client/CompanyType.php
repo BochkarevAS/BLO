@@ -3,7 +3,6 @@
 namespace App\Form\Client;
 
 use App\Entity\Client\Company;
-use App\Entity\Client\Phone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -45,8 +44,10 @@ class CompanyType extends AbstractType
                 'required' => false,
             ])
             ->add('phones', CollectionType::class, [
-                'label'      => 'Телефон',
-                'entry_type' => Phone::class
+                'label'        => 'Телефон',
+                'entry_type'   => PhoneEmbeddedForm::class,
+                'allow_delete' => true,
+                'by_reference' => false
             ]);
         ;
     }

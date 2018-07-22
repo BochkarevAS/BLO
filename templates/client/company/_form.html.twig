@@ -30,17 +30,24 @@
             {{ form_row(form.sectionsDrives, {'id': 'company_sections_drives', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
         </div>
     </div>
-
-    <div>
-        <a class="btn btn-primary js-phone-new">Добавить</a>
-
-        <div class="inputs">
-            <div class="row">
-                <input id="field_1" type="text" class="field form-control col-3" name="phone[]">
-                <a class="btn btn-primary js-phone-delete">Удалить</a>
-            </div>
+    <div class="row">
+        <div class="col-xs-4 ">
+            {% for phone in form.phones %}
+                <div>
+                    <a href="#" class="js-phone-delete pull-right">
+                        <span class="fa fa-close"></span>
+                    </a>
+                    {{ form_errors(phone) }}
+                    {{ form_row(phone.number) }}
+                </div>
+            {% endfor %}
         </div>
     </div>
+
+
+    {#<div>#}
+        {#<a class="btn btn-primary js-phone-new">Добавить</a>#}
+    {#</div>#}
 
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Сохранить</button>

@@ -20,21 +20,21 @@ class Phone
     /**
      * @ORM\Column(type="string")
      */
-    private $phone;
+    private $number;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company", inversedBy="phones")
      */
     private $company;
 
-    public function getPhone()
+    public function getNumber()
     {
-        return $this->phone;
+        return $this->number;
     }
 
-    public function setPhone($phone)
+    public function setNumber($number)
     {
-        $this->phone = $phone;
+        $this->number = $number;
     }
 
     public function getCompany()

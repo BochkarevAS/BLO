@@ -29,9 +29,7 @@ class Company {
         e.preventDefault();
 
         let $link = $(e.currentTarget);
-        let $row = $link.closest('div');
-
-        $row.remove();
+        let $row = $link.closest('div').fadeOut().remove();
     }
 }
 
