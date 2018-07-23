@@ -47,6 +47,7 @@ class CompanyType extends AbstractType
                 'label'        => 'Телефон',
                 'entry_type'   => PhoneEmbeddedForm::class,
                 'allow_delete' => true,
+                'allow_add'    => true,
                 'by_reference' => false
             ]);
         ;

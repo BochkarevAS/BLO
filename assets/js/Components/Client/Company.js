@@ -19,24 +19,21 @@ class Company {
     createPhone(e) {
         e.preventDefault();
 
-        let id = $('.field').length + 1;
-        let html = rowTemplate(id);
+        let $link = $(e.currentTarget);
+        let prototype = this.$wrapper.data('prototype');
+        let index = this.$wrapper.data('index');
+        let newForm = prototype.replace(/__name__/g, index);
 
-        $(html).fadeIn('slow').appendTo('.inputs');
+        this.$wrapper.data('index', index + 1);
+        $link.before(newForm);
     }
 
     removePhone(e) {
         e.preventDefault();
 
         let $link = $(e.currentTarget);
-        let $row = $link.closest('div').fadeOut().remove();
+        $link.closest('.js-phone-item').remove();
     }
 }
-
-const rowTemplate = (id) => `
-    <div class="row">
-        <input id="field_${id}" type="text" class="field form-control col-3" name="phone[]">
-        <a class="btn btn-primary js-phone-delete">Удалить</a>
-    </div>`;
 
 export default Company;
