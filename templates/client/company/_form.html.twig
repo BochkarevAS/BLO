@@ -1,6 +1,6 @@
 {% import _self as formMacros %}
 
-{% macro printItem(item) %}
+{% macro print(item) %}
     <div class="js-holder-item">
         <a href="#" class="js-item-remove pull-right">
             <span class="fa fa-close"></span>
@@ -50,19 +50,18 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-4 js-collection-holder" data-prototype="{{ form_widget(form.phones.vars.prototype)|e('html_attr') }}" data-index="{{ form.phones|length }}">
+        <div class="col-xs-4 js-collection-holder" data-prototype="{{ formMacros.print(form.phones.vars.prototype)|e('html_attr') }}" data-index="{{ form.phones|length }}">
             {% for phone in form.phones %}
-                {{ formMacros.printItem(phone) }}
+                {{ formMacros.print(phone) }}
             {% endfor %}
                 <a href="#" class="js-item-new">
                     <span class="fa fa-plus-circle"></span>
                     Добавить телефон
                 </a>
         </div>
-        {{ form_widget(form.phones) }}
-        <div class="col-xs-4 js-collection-holder" data-prototype="{{ form_widget(form.emails.vars.prototype)|e('html_attr') }}" data-index="{{ form.emails|length }}">
+        <div class="col-xs-4 js-collection-holder" data-prototype="{{ formMacros.print(form.emails.vars.prototype)|e('html_attr') }}" data-index="{{ form.emails|length }}">
             {% for email in form.emails %}
-                {{ formMacros.printItem(email) }}
+                {{ formMacros.print(email) }}
             {% endfor %}
                 <a href="#" class="js-item-new">
                     <span class="fa fa-plus-circle"></span>
