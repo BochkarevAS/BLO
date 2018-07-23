@@ -7,32 +7,33 @@ class Company {
     constructor($wrapper) {
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on('click', '.js-phone-new',
-            this.createPhone.bind(this)
+        this.$wrapper.on('click', '.js-phone-new, .js-email-new',
+            this.create.bind(this)
         );
 
-        this.$wrapper.on('click', '.js-phone-delete',
-            this.removePhone.bind(this)
+        this.$wrapper.on('click', '.js-phone-delete, .js-email-delete',
+            this.remove.bind(this)
         );
     }
 
-    createPhone(e) {
+    create(e) {
         e.preventDefault();
 
         let $link = $(e.currentTarget);
-        let prototype = this.$wrapper.data('prototype');
-        let index = this.$wrapper.data('index');
+        let holder = $link.closest('.js-collection-holder');
+        let prototype = holder.data('prototype');
+        let index = holder.data('index');
         let newForm = prototype.replace(/__name__/g, index);
 
-        this.$wrapper.data('index', index + 1);
+        holder.data('index', index + 1);
         $link.before(newForm);
     }
 
-    removePhone(e) {
+    remove(e) {
         e.preventDefault();
 
         let $link = $(e.currentTarget);
-        $link.closest('.js-phone-item').remove();
+        $link.closest('.js-holder-item').remove();
     }
 }
 

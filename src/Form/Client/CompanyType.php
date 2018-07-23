@@ -49,6 +49,13 @@ class CompanyType extends AbstractType
                 'allow_delete' => true,
                 'allow_add'    => true,
                 'by_reference' => false
+            ])
+            ->add('emails', CollectionType::class, [
+                'label'        => 'Email',
+                'entry_type'   => EmailEmbeddedForm::class,
+                'allow_delete' => true,
+                'allow_add'    => true,
+                'by_reference' => false
             ]);
         ;
     }

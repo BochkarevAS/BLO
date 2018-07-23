@@ -87,6 +87,11 @@ class Company
     protected $phones;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Client\Email", mappedBy="company", orphanRemoval=true,  cascade={"persist"})
+     */
+    protected $emails;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -101,6 +106,7 @@ class Company
     public function __construct()
     {
         $this->phones = new ArrayCollection();
+        $this->emails = new ArrayCollection();
     }
 
     public function getName()
@@ -219,6 +225,34 @@ class Company
 
         $this->phones->removeElement($phones);
         $phones->setCompany(null);
+    }
+
+    /**
+     * @return ArrayCollection|Email[]
+     */
+    public function getEmails()
+    {
+        return $this->emails;
+    }
+
+    public function addEmail(Email $emails)
+    {
+        if ($this->emails->contains($emails)) {
+            return;
+        }
+
+        $this->emails[] = $emails;
+        $emails->setCompany($this);
+    }
+
+    public function removeEmail(Email $emails)
+    {
+        if (!$this->emails->contains($emails)) {
+            return;
+        }
+
+        $this->emails->removeElement($emails);
+        $emails->setCompany(null);
     }
 
     public function getId()
