@@ -1,4 +1,22 @@
+{% import _self as formMacros %}
+
+{% macro printItem(item) %}
+    <div class="js-holder-item">
+        <a href="#" class="js-item-remove pull-right">
+            <span class="fa fa-close"></span>
+        </a>
+        {{ form_errors(item) }}
+
+        {% if item.number is defined %}
+            {{ form_row(item.number) }}
+        {% else %}
+            {{ form_row(item.address) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
 {{ form_start(form, {'attr': {'class': 'js-company-module'}}) }}
+    {{ form_errors(form) }}
 
     <div class="row">
         <div class="col-2">
@@ -30,36 +48,26 @@
             {{ form_row(form.sectionsDrives, {'id': 'company_sections_drives', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
         </div>
     </div>
+
     <div class="row">
         <div class="col-xs-4 js-collection-holder" data-prototype="{{ form_widget(form.phones.vars.prototype)|e('html_attr') }}" data-index="{{ form.phones|length }}">
             {% for phone in form.phones %}
-                <div class="js-holder-item">
-                    <a href="#" class="js-phone-delete pull-right">
-                        <span class="fa fa-close"></span>
-                    </a>
-                    {{ form_errors(phone) }}
-                    {{ form_row(phone.number) }}
-                </div>
+                {{ formMacros.printItem(phone) }}
             {% endfor %}
-                <a href="#" class="js-phone-new">
+                <a href="#" class="js-item-new">
                     <span class="fa fa-plus-circle"></span>
                     Добавить телефон
                 </a>
         </div>
+        {{ form_widget(form.phones) }}
         <div class="col-xs-4 js-collection-holder" data-prototype="{{ form_widget(form.emails.vars.prototype)|e('html_attr') }}" data-index="{{ form.emails|length }}">
             {% for email in form.emails %}
-                <div class="js-holder-item">
-                    <a href="#" class="js-email-delete pull-right">
-                        <span class="fa fa-close"></span>
-                    </a>
-                    {{ form_errors(email) }}
-                    {{ form_row(email.address) }}
-                </div>
+                {{ formMacros.printItem(email) }}
             {% endfor %}
-            <a href="#" class="js-email-new">
-                <span class="fa fa-plus-circle"></span>
-                Добавить email
-            </a>
+                <a href="#" class="js-item-new">
+                    <span class="fa fa-plus-circle"></span>
+                    Добавить email
+                </a>
         </div>
     </div>
 

@@ -5,6 +5,7 @@ namespace App\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Client\CompanyRepository")
@@ -83,11 +84,13 @@ class Company
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company", orphanRemoval=true,  cascade={"persist"})
+     * @Assert\Valid()
      */
     protected $phones;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Client\Email", mappedBy="company", orphanRemoval=true,  cascade={"persist"})
+     * @Assert\Valid()
      */
     protected $emails;
 

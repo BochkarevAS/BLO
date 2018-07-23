@@ -7,11 +7,11 @@ class Company {
     constructor($wrapper) {
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on('click', '.js-phone-new, .js-email-new',
+        this.$wrapper.on('click', '.js-item-new',
             this.create.bind(this)
         );
 
-        this.$wrapper.on('click', '.js-phone-delete, .js-email-delete',
+        this.$wrapper.on('click', '.js-item-remove',
             this.remove.bind(this)
         );
     }

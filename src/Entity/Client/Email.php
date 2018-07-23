@@ -3,10 +3,17 @@
 namespace App\Entity\Client;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="email", schema="client")
+ * @UniqueEntity(
+ *     fields={"address"},
+ *     message="Такой адрес уже существует !!!",
+ *     errorPath="address"
+ * )
  */
 class Email
 {
@@ -19,6 +26,7 @@ class Email
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $address;
 

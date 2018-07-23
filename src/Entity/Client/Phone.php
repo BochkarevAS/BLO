@@ -3,10 +3,17 @@
 namespace App\Entity\Client;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="phone", schema="client")
+ * @UniqueEntity(
+ *     fields={"number"},
+ *     message="Такой номер уже существует !!!",
+ *     errorPath="number"
+ * )
  */
 class Phone
 {
@@ -19,6 +26,7 @@ class Phone
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $number;
 
