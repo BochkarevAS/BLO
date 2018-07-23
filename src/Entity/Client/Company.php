@@ -82,7 +82,7 @@ class Company
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company", orphanRemoval=true,  cascade={"persist"})
      */
     protected $phones;
 
@@ -209,8 +209,6 @@ class Company
 
         $this->phones[] = $phones;
         $phones->setCompany($this);
-
-        $this->phones = $phones;
     }
 
     public function removePhone(Phone $phones)
