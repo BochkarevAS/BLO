@@ -3,6 +3,7 @@
 namespace App\Entity\Parts;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\CarcaseRepository")
@@ -23,9 +24,10 @@ class Carcase
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="carcases")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="carcases")
+     * @JoinTable(name="models_carcases", schema="parts")
      */
-    private $model;
+    private $models;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcase")
@@ -42,14 +44,14 @@ class Carcase
         $this->name = $name;
     }
 
-    public function getModel()
+    public function getModels()
     {
-        return $this->model;
+        return $this->models;
     }
 
-    public function setModel($model)
+    public function setModels($models)
     {
-        $this->model = $model;
+        $this->models = $models;
     }
 
     public function getParts()

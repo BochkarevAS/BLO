@@ -8,7 +8,8 @@ class BrandRepository extends EntityRepository
 {
     public function orderBy()
     {
-        return $this->createQueryBuilder('m')
-            ->orderBy('m.name', 'ASC');
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.display!=0')
+            ->orderBy('b.name', 'ASC');
     }
 }

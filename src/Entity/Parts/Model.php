@@ -2,7 +2,9 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\ModelRepository")
@@ -18,6 +20,16 @@ class Model
     private $id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $display;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rank;
+
+    /**
      * @ORM\Column(type="string")
      */
     private $name;
@@ -28,7 +40,8 @@ class Model
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Carcase", mappedBy="model")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", mappedBy="models")
+     * @JoinTable(name="models_carcases", schema="parts")
      */
     private $carcases;
 
@@ -36,6 +49,37 @@ class Model
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="model")
      */
     private $parts;
+
+    public function __construct()
+    {
+        $this->carcases = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
+     * @param mixed $display
+     */
+    public function setDisplay($display): void
+    {
+        $this->display = $display;
+    }
+
+    public function getRank()
+    {
+        return $this->rank;
+    }
+
+    public function setRank($rank): void
+    {
+        $this->rank = $rank;
+    }
 
     public function getName()
     {
@@ -57,14 +101,32 @@ class Model
         $this->brand = $brand;
     }
 
+    /**
+     * @return ArrayCollection|Carcase[]
+     */
     public function getCarcases()
     {
         return $this->carcases;
     }
 
-    public function setCarcases($carcases)
+    public function addCarcase(Carcase $carcase)
     {
-        $this->carcases = $carcases;
+        if ($this->carcases->contains($carcase)) {
+            return;
+        }
+
+        $this->carcases[] = $carcase;
+        $carcase->setModels($this);
+    }
+
+    public function removeCarcase(Carcase $carcase)
+    {
+        if (!$this->carcases->contains($carcase)) {
+            return;
+        }
+
+        $this->carcases->removeElement($carcase);
+        $carcase->setModels(null);
     }
 
     public function getParts()
