@@ -25,7 +25,7 @@ class Model {
         data[$field.attr('name')] = $field.val();
 
         $.ajax({
-            url: Routing.generate('parts_render'),
+            url: Routing.generate('parts_index'),
             data: data
         }).then((data) => {
             let $input = $(data).find(target);

@@ -61,7 +61,7 @@ class PartType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
-                $part   = $event->getData();
+                $part  = $event->getData();
                 $form  = $event->getForm();
                 $model = $part->getModel();
 
