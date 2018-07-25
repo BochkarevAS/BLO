@@ -19,16 +19,15 @@ class PartsController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
-        $oem = new Part();
-
-
-
-        $form = $this->createForm(PartType::class, $oem, ['method' => 'GET']);
+        $part = new Part();
+        $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
         $form->handleRequest($request);
         $parts = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
+            $entity->setParts($request->query->get('part'));
+
             $query  = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
 
             if ($query) {

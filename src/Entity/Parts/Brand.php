@@ -3,6 +3,7 @@
 namespace App\Entity\Parts;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\BrandRepository")
@@ -34,6 +35,7 @@ class Brand
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brands")
+     * @JoinTable(name="parts_brands", schema="parts")
      */
     private $parts;
 

@@ -29,33 +29,35 @@
                                 <img src="#" width="110" height="110">
                             </td>
                             <td>
-                                {% if part.part %}
-                                    {{ part.part.name }} /
+                                {% if part.name %}
+                                    {{ part.name }} /
                                 {% endif %}
-                                {% if part.oem %}
-                                    {{ part.oem.name }}
-                                {% endif %}
-                                {% if part.brand %}
-                                    на {{ part.brand.name }}
-                                {% endif %}
-                                {% if part.model %}
-                                    {{ part.model.name }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if part.engine %}
-                                    право / {{ part.engine.name }} / {{ part.carcase.name }}
+                                {#{% if part.oem %}#}
+                                    {#{{ part.oem.name }}#}
+                                {#{% endif %}#}
+                                {#{% if part.brand %}#}
+                                    {#на {{ part.brand.name }}#}
+                                {#{% endif %}#}
+                                {% if part.models %}
+                                    {% for model in part.models %}
+                                        {{ model.name }}
+                                    {% endfor %}
                                 {% endif %}
                             </td>
                             <td>
-                                {% if part.vendor %}
-                                    {{ part.vendor.name }} / {{ part.city.name }}
-                                {% endif %}
+                                {#{% if part.engine %}#}
+                                    {#право / {{ part.engine.name }} / {{ part.carcase.name }}#}
+                                {#{% endif %}#}
                             </td>
                             <td>
-                                {% if part.price %}
-                                    {{ part.price }} руб.
-                                {% endif %}
+                                {#{% if part.vendor %}#}
+                                    {#{{ part.vendor.name }} / {{ part.city.name }}#}
+                                {#{% endif %}#}
+                            </td>
+                            <td>
+                                {#{% if part.price %}#}
+                                    {#{{ part.price }} руб.#}
+                                {#{% endif %}#}
                             </td>
                             <td>
                                 {{ part.updatedAt|date }}

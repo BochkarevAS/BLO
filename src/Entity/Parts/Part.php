@@ -4,6 +4,7 @@ namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -43,18 +44,26 @@ class Part
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Brand", inversedBy="parts")
+     * @JoinTable(name="parts_brands", schema="parts")
      */
     private $brands;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
+     * @JoinTable(name="parts_models", schema="parts")
      */
     private $models;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
+     * @JoinTable(name="parts_carcases", schema="parts")
      */
     private $carcases;
+
+    /**
+     * Здесь будут данные с фильтра
+     */
+    private $parts;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -178,6 +187,16 @@ class Part
     public function setPrice($price): void
     {
         $this->price = $price;
+    }
+
+    public function getParts()
+    {
+        return $this->parts;
+    }
+
+    public function setParts($parts): void
+    {
+        $this->parts = $parts;
     }
 
     public function getId()

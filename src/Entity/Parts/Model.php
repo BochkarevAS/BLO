@@ -47,12 +47,14 @@ class Model
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="models")
+     * @JoinTable(name="parts_models", schema="parts")
      */
     private $parts;
 
     public function __construct()
     {
         $this->carcases = new ArrayCollection();
+        $this->parts    = new ArrayCollection();
     }
 
     /**
@@ -136,7 +138,7 @@ class Model
 
     public function setParts($parts): void
     {
-        $this->parts = $parts;
+        $this->parts[] = $parts;
     }
 
     public function getId()
