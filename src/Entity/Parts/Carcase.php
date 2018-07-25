@@ -30,7 +30,7 @@ class Carcase
     private $models;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcase")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases")
      */
     private $parts;
 

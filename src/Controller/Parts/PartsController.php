@@ -20,6 +20,9 @@ class PartsController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator)
     {
         $oem = new Part();
+
+
+
         $form = $this->createForm(PartType::class, $oem, ['method' => 'GET']);
         $form->handleRequest($request);
         $parts = null;

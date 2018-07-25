@@ -9,15 +9,15 @@ class PartRepository extends EntityRepository
 {
     public function renderParts(Part $part)
     {
-        $qb = $this->createQueryBuilder('o')
-            ->select('o')
-            ->leftJoin('o.brand', 'b');
+        $qb = $this->createQueryBuilder('o');
+//            ->select('o')
+//            ->leftJoin('o.brand', 'b');
 
 
-        /* Фильтр по производителям */
-        if ($part->getBrand()) {
-            $qb->andWhere('b.id = :bid')->setParameter('bid', $part->getBrand()->getId());
-        }
+//        /* Фильтр по производителям */
+//        if ($part->getBrand()) {
+//            $qb->andWhere('b.id = :bid')->setParameter('bid', $part->getBrand()->getId());
+//        }
 
         return $qb->getQuery();
     }

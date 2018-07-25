@@ -27,52 +27,44 @@ class PartType extends AbstractType
                 'class'         => Brand::class,
                 'label'         => 'Марка',
                 'choice_label'  => 'name',
+                'mapped'        => false,
                 'required'      => false,
                 'query_builder' => function (BrandRepository $repository) {
                     return $repository->orderBy();
                 }
             ])
-            ->add('number', TextType::class, [
-                'label'    => 'Номер, маркировка запчасти',
-                'mapped'   => false,
-                'required' => false
-            ])
-            ->add('oem', TextType::class, [
-                'label'    => 'OEM, артикул',
-                'mapped'   => false,
-                'required' => false
-            ])
-            ->add('engine', TextType::class, [
-                'label'    => 'Двигатель',
-                'required' => false
-            ])
-            ->add('city', EntityType::class, [
-                'class'         => City::class,
-                'label'         => 'Город',
-                'choice_label'  => 'name',
-                'mapped'        => false,
-                'required'      => false,
-                'query_builder' => function (CityRepository $repository) {
-                    return $repository->orderBy();
-                },
-            ])
+//            ->add('number', TextType::class, [
+//                'label'    => 'Номер, маркировка запчасти',
+//                'mapped'   => false,
+//                'required' => false
+//            ])
+//            ->add('oem', TextType::class, [
+//                'label'    => 'OEM, артикул',
+//                'mapped'   => false,
+//                'required' => false
+//            ])
+//            ->add('engine', TextType::class, [
+//                'label'    => 'Двигатель',
+//                'required' => false
+//            ])
+//            ->add('city', EntityType::class, [
+//                'class'         => City::class,
+//                'label'         => 'Город',
+//                'choice_label'  => 'name',
+//                'mapped'        => false,
+//                'required'      => false,
+//                'query_builder' => function (CityRepository $repository) {
+//                    return $repository->orderBy();
+//                },
+//            ])
         ;
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
-                $part  = $event->getData();
                 $form  = $event->getForm();
-                $model = $part->getModel();
-
-                if ($model) {
-                    $carcase = $model->getCarcases();
-                    $this->formModel($form, $model);
-                    $this->formCarcase($form, $carcase);
-                } else {
-                    $this->formModel($form, null);
-                    $this->formCarcase($form, null);
-                }
+                $this->formModel($form, null);
+                $this->formCarcase($form, null);
             }
         );
 
@@ -94,6 +86,7 @@ class PartType extends AbstractType
             [
                 'class'           => Model::class,
                 'label'           => 'Модель',
+                'mapped'          => false,
                 'required'        => false,
                 'auto_initialize' => false,
                 'choices'         => $brand ? $brand->getModels() : [],
@@ -116,6 +109,7 @@ class PartType extends AbstractType
         $form->add('carcase', EntityType::class, [
                 'class'           => Carcase::class,
                 'label'           => 'Кузов',
+                'mapped'          => false,
                 'required'        => false,
                 'auto_initialize' => false,
                 'choices'         => $model ? $model->getCarcases() : [],

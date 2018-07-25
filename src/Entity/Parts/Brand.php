@@ -33,7 +33,7 @@ class Brand
     private $models;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brand")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brands")
      */
     private $parts;
 

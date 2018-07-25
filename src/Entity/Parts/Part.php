@@ -2,6 +2,7 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -19,58 +20,19 @@ class Part
     private $id;
 
     /**
-     * Производитель
+     * Название запчасти
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="parts")
+     * @ORM\Column(type="string")
      */
-    private $brand;
+    private $name;
+
 
     /**
-     * Модель автомобиля
+     * Хэш уникальный индефекатор шины
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
+     * @ORM\Column(type="string")
      */
-    private $model;
-
-    /**
-     * Модель автомобиля
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
-     */
-    private $carcase;
-
-    /**
-     * Запчасть
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\PartName", inversedBy="parts")
-     */
-    private $part;
-
-    /**
-     * Двигатель
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Engine", inversedBy="parts")
-     */
-    private $engine;
-
-    /**
-     * OEM, артикул
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Oem", inversedBy="parts")
-     */
-    private $oem;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City", inversedBy="parts")
-     */
-    private $city;
-
-    /**
-     * Продавец
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Vendor", inversedBy="parts")
-     */
-    private $vendor;
+    private $hash;
 
     /**
      * Стоимость запчасти
@@ -80,11 +42,19 @@ class Part
     private $price;
 
     /**
-     * Хэш уникальный индефекатор шины
-     *
-     * @ORM\Column(type="string")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Brand", inversedBy="parts")
      */
-    private $hash;
+    private $brands;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
+     */
+    private $models;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
+     */
+    private $carcases;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -98,85 +68,96 @@ class Part
      */
     private $updatedAt;
 
-
-    public function getBrand()
+    public function __construct()
     {
-        return $this->brand;
+        $this->brands   = new ArrayCollection();
+        $this->models   = new ArrayCollection();
+        $this->carcases = new ArrayCollection();
     }
 
-    public function setBrand($brand)
+    public function getBrands()
     {
-        $this->brand = $brand;
+        return $this->brands;
     }
 
-    public function getModel()
+    public function addBrand(Brand $brand)
     {
-        return $this->model;
+        if ($this->brands->contains($brand)) {
+            return;
+        }
+
+        $this->brands[] = $brand;
+        $brand->setParts($this);
     }
 
-    public function setModel($model)
+    public function removeBrand(Brand $brand)
     {
-        $this->model = $model;
+        if (!$this->brands->contains($brand)) {
+            return;
+        }
+
+        $this->brands->removeElement($brand);
+        $brand->setParts(null);
     }
 
-    public function getCarcase()
+    public function getModels()
     {
-        return $this->carcase;
+        return $this->models;
     }
 
-    public function setCarcase($carcase)
+    public function addModel(Model $model)
     {
-        $this->carcase = $carcase;
+        if ($this->models->contains($model)) {
+            return;
+        }
+
+        $this->models[] = $model;
+        $model->setParts($this);
     }
 
-    public function getPart()
+    public function removeModel(Model $model)
     {
-        return $this->part;
+        if (!$this->models->contains($model)) {
+            return;
+        }
+
+        $this->models->removeElement($model);
+        $model->setParts(null);
     }
 
-    public function setPart($part)
+    public function getCarcases()
     {
-        $this->part = $part;
+        return $this->carcases;
     }
 
-    public function getEngine()
+    public function addCarcase(Carcase $carcase)
     {
-        return $this->engine;
+        if ($this->carcases->contains($carcase)) {
+            return;
+        }
+
+        $this->carcases[] = $carcase;
+        $carcase->setParts($this);
     }
 
-    public function setEngine($engine)
+    public function removeCarcase(Carcase $carcase)
     {
-        $this->engine = $engine;
+        if (!$this->carcases->contains($carcase)) {
+            return;
+        }
+
+        $this->carcases->removeElement($carcase);
+        $carcase->setParts(null);
     }
 
-    public function getOem()
+    public function getName()
     {
-        return $this->oem;
+        return $this->name;
     }
 
-    public function setOem($oem): void
+    public function setName($name): void
     {
-        $this->oem = $oem;
-    }
-
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
-
-    public function getVendor()
-    {
-        return $this->vendor;
-    }
-
-    public function setVendor($vendor)
-    {
-        $this->vendor = $vendor;
+        $this->name = $name;
     }
 
     public function getHash()
