@@ -34,21 +34,9 @@ class PartsController extends AbstractController
         $form->handleRequest($request);
         $parts = null;
 
-
-
         $searchQuery = $request->get('query');
 
-
-        if (!empty($searchQuery)) {
-//            $finder = $this->container->get('fos_elastica.finder.app.part');
-            $query = $this->finder->createPaginatorAdapter($searchQuery);
-
-            dump($query);
-
-            if ($query) {
-                $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
-            }
-        }
+        dump($request->get('query'));
 
 
 
@@ -57,7 +45,18 @@ class PartsController extends AbstractController
             $entity = $form->getData();
             $entity->setParts($request->query->get('part'));
 
-            $query  = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
+            $query = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
+
+            if (!empty($searchQuery)) {
+                $query = $this->finder->createPaginatorAdapter($searchQuery);
+
+
+                if ($query) {
+                    $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
+                }
+            }
+
+
 
             if ($query) {
                 $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
