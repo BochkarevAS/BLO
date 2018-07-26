@@ -4,6 +4,7 @@
     "require": {
         "php": "^7.2.7",
         "ext-iconv": "*",
+        "friendsofsymfony/elastica-bundle": "^5.0",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "friendsofsymfony/user-bundle": "^2.1",
         "guzzlehttp/guzzle": "^6.3",

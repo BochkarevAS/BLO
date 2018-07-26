@@ -23,7 +23,7 @@ class Part
     /**
      * Название запчасти
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     private $name;
 
@@ -61,6 +61,12 @@ class Part
     private $carcases;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="parts")
+     * @JoinTable(name="parts_engines", schema="parts")
+     */
+    private $engines;
+
+    /**
      * Здесь будут данные с фильтра
      */
     private $parts;
@@ -82,6 +88,7 @@ class Part
         $this->brands   = new ArrayCollection();
         $this->models   = new ArrayCollection();
         $this->carcases = new ArrayCollection();
+        $this->engines  = new ArrayCollection();
     }
 
     public function getBrands()
@@ -157,6 +164,31 @@ class Part
 
         $this->carcases->removeElement($carcase);
         $carcase->setParts(null);
+    }
+
+    public function getEngines()
+    {
+        return $this->engines;
+    }
+
+    public function addEngine(Engine $engine)
+    {
+        if ($this->engines->contains($engine)) {
+            return;
+        }
+
+        $this->engines[] = $engine;
+        $engine->setParts($this);
+    }
+
+    public function removeEnginee(Engine $engine)
+    {
+        if (!$this->engines->contains($engine)) {
+            return;
+        }
+
+        $this->engines->removeElement($engine);
+        $engine->setParts(null);
     }
 
     public function getName()

@@ -33,11 +33,11 @@ class PartType extends AbstractType
                     return $repository->orderBy();
                 }
             ])
-//            ->add('number', TextType::class, [
-//                'label'    => 'Номер, маркировка запчасти',
-//                'mapped'   => false,
-//                'required' => false
-//            ])
+            ->add('name', TextType::class, [
+                'label'    => 'Номер, маркировка запчасти',
+                'mapped'   => false,
+                'required' => false
+            ])
 //            ->add('oem', TextType::class, [
 //                'label'    => 'OEM, артикул',
 //                'mapped'   => false,

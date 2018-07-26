@@ -2,6 +2,7 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 
@@ -39,12 +40,17 @@ class Brand
      */
     private $parts;
 
+    public function __construct()
+    {
+        $this->parts = new ArrayCollection();
+    }
+
     public function getDisplay()
     {
         return $this->display;
     }
 
-    public function setDisplay($display): void
+    public function setDisplay($display)
     {
         $this->display = $display;
     }
@@ -74,9 +80,9 @@ class Brand
         return $this->parts;
     }
 
-    public function setParts($parts): void
+    public function setParts($parts)
     {
-        $this->parts = $parts;
+        $this->parts[] = $parts;
     }
 
     public function getId()

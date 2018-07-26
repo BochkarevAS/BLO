@@ -13,11 +13,25 @@ class PartRepository extends EntityRepository
 //            ->select('o')
 //            ->leftJoin('o.brand', 'b');
 
+        /* Фильтр по производителям */
+        if (array_key_exists('brand', $part->getParts()) && $id = $part->getParts()['brand']) {
+            $qb->join('p.brands', 'b')
+                ->andWhere('b.id = :bid')
+                ->setParameter('bid', $id);
+        }
+
         /* Фильтр по моделям */
         if (array_key_exists('model', $part->getParts()) && $id = $part->getParts()['model']) {
             $qb->join('p.models', 'm')
                 ->andWhere('m.id = :mid')
                 ->setParameter('mid', $id);
+        }
+
+        /* Фильтр по кузовам */
+        if (array_key_exists('carcase', $part->getParts()) && $id = $part->getParts()['carcase']) {
+            $qb->join('p.carcases', 'c')
+                ->andWhere('c.id = :cid')
+                ->setParameter('cid', $id);
         }
 
 

@@ -2,7 +2,9 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity
@@ -23,9 +25,15 @@ class Engine
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="engine")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="engines")
+     * @JoinTable(name="parts_engines", schema="parts")
      */
     private $parts;
+
+    public function __construct()
+    {
+        $this->parts = new ArrayCollection();
+    }
 
     public function getName()
     {
@@ -44,7 +52,7 @@ class Engine
 
     public function setParts($parts): void
     {
-        $this->parts = $parts;
+        $this->parts[] = $parts;
     }
 
     public function __toString()

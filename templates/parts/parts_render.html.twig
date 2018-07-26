@@ -4,7 +4,7 @@
 
     <div class="container js-parts-module">
 
-        {{ include('/parts/parts_form.html.twig') }}
+        {{ include('/parts/_form.html.twig') }}
 
         {% if parts %}
             <div class="navigator">
@@ -30,14 +30,13 @@
                             </td>
                             <td>
                                 {% if part.name %}
-                                    {{ part.name }} /
+                                    {{ part.name }}
                                 {% endif %}
-                                {#{% if part.oem %}#}
-                                    {#{{ part.oem.name }}#}
-                                {#{% endif %}#}
-                                {#{% if part.brand %}#}
-                                    {#на {{ part.brand.name }}#}
-                                {#{% endif %}#}
+                                {% if part.brands %}
+                                    {% for brand in part.brands %}
+                                        {{ brand.name }}
+                                    {% endfor %}
+                                {% endif %}
                                 {% if part.models %}
                                     {% for model in part.models %}
                                         {{ model.name }}
@@ -45,9 +44,16 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {#{% if part.engine %}#}
-                                    {#право / {{ part.engine.name }} / {{ part.carcase.name }}#}
-                                {#{% endif %}#}
+                                {% if part.engines %}
+                                    {% for engine in part.engines %}
+                                        {{ engine.name }} {% if part.engines|last != engine %} , {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% if part.carcases %}
+                                    {% for carcase in part.carcases %}
+                                        {{ carcase.name }} {% if part.carcases|last != carcase %} , {% endif %}
+                                    {% endfor %}
+                                {% endif %}
                             </td>
                             <td>
                                 {#{% if part.vendor %}#}

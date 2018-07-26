@@ -2,6 +2,7 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 
@@ -35,6 +36,11 @@ class Carcase
      */
     private $parts;
 
+    public function __construct()
+    {
+        $this->parts = new ArrayCollection();
+    }
+
     public function getName()
     {
         return $this->name;
@@ -62,7 +68,7 @@ class Carcase
 
     public function setParts($parts): void
     {
-        $this->parts = $parts;
+        $this->parts[] = $parts;
     }
 
     public function getId()

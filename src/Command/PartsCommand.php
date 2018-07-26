@@ -11,6 +11,7 @@ use App\Entity\Parts\Part;
 use App\Entity\Parts\PartName;
 use App\Entity\Parts\Vendor;
 use App\Entity\Region\City;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
@@ -52,8 +53,9 @@ class PartsCommand extends Command
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-        $file = 'parts_test.csv';
+//        $file = 'parts_test.csv';
 //        $file = 'big_parts.csv';
+        $file = 'parts_1.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em = $this->container->get('doctrine.orm.default_entity_manager');
@@ -74,11 +76,12 @@ class PartsCommand extends Command
         $records = $reader->getRecords($header);
 
         $i = 0;
-        $batchSize = 100;
+        $batchSize = 1000;
         $nameVendor = 'ALFACAR';
 
         $progress = new ProgressBar($output, count($reader));
         $progress->start();
+
 
         foreach ($records as $offset => $record) {
             $hash = md5($record['brand'] . $record['model'] . $record['carcase']);
@@ -93,28 +96,71 @@ class PartsCommand extends Command
             $part = new Part();
             $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
             $part->setHash($hash);
-            $part->setPrice($record['price']);
+            $part->setPrice((int) $record['price']);
 
-            $models = explode(",", $record['model']);
+            $brands = preg_split("/[\s,#\/]+/", $record['brand']);
+            foreach ($brands as $brand) {
+                $brand = $em->createQueryBuilder()
+                    ->select('b')
+                    ->from(Brand::class, 'b')
+                    ->where('upper(b.name) = upper(:name)')
+                    ->setParameter('name', mb_convert_encoding($brand, 'UTF-8', 'Windows-1251'))
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult();
 
+                if ($brand) {
+                    $part->addBrand($brand);
+                }
+            }
+
+            $models = preg_split("/[\s,#\/]+/", $record['model']);
             foreach ($models as $model) {
                 $model = $em->createQueryBuilder()
-                        ->select('m')
-                        ->from(Model::class, 'm')
-                        ->where('upper(m.name) = upper(:name)')
-                        ->setParameter('name', mb_convert_encoding($model, 'UTF-8', 'Windows-1251'))
-                        ->setMaxResults(1)
-                        ->getQuery()
-                        ->getOneOrNullResult();
+                    ->select('m')
+                    ->from(Model::class, 'm')
+                    ->where('upper(m.name) = upper(:name)')
+                    ->setParameter('name', mb_convert_encoding($model, 'UTF-8', 'Windows-1251'))
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult();
 
                 if ($model) {
                     $part->addModel($model);
                 }
             }
 
+            $carcases = preg_split("/[\s,#\/]+/", $record['carcase']);
+            foreach ($carcases as $carcase) {
+                $carcase = $em->createQueryBuilder()
+                    ->select('c')
+                    ->from(Carcase::class, 'c')
+                    ->where('upper(c.name) = upper(:name)')
+                    ->setParameter('name', mb_convert_encoding($carcase, 'UTF-8', 'Windows-1251'))
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult();
 
+                if ($carcase) {
+                    $part->addCarcase($carcase);
+                }
+            }
 
+            $engines = preg_split("/[\s,#\/]+/", $record['engine']);
+            foreach ($engines as $engine) {
+                $engine = $em->createQueryBuilder()
+                    ->select('e')
+                    ->from(Engine::class, 'e')
+                    ->where('upper(e.name) = upper(:name)')
+                    ->setParameter('name', mb_convert_encoding($engine, 'UTF-8', 'Windows-1251'))
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult();
 
+                if ($engine) {
+                    $part->addEngine($engine);
+                }
+            }
 
             $em->persist($part);
 
