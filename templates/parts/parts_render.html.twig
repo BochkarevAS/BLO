@@ -4,6 +4,20 @@
 
     <div class="container js-parts-module">
 
+
+
+
+
+        <form method="get" action="" class="form-inline" role="search">
+            <div class="form-group">
+                <input type="text" name="query" value="{{ app.request.get('query') }}" class="form-control" placeholder="{{'Search user'|trans}}" required />
+            </div>
+            <input type="submit" value="{{ 'Search'|trans }}" class="btn btn-default">
+        </form>
+
+
+
+
         {{ include('/parts/_form.html.twig') }}
 
         {% if parts %}
@@ -66,7 +80,7 @@
                                 {#{% endif %}#}
                             </td>
                             <td>
-                                {{ part.updatedAt|date }}
+                                {{ part.updatedAt|date('d-m-Y H:i') }}
                             </td>
                         </tr>
                     {% endfor %}
