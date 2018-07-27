@@ -79,7 +79,7 @@ class PartsController extends AbstractController
         foreach ($results as $result) {
             $source = $result;
             $data[] = [
-                'suggest'   => $source->getName()
+                'suggest' => $source->getName()
             ];
         }
 
