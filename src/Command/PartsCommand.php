@@ -53,9 +53,9 @@ class PartsCommand extends Command
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-//        $file = 'parts_test.csv';
+        $file = 'parts_test.csv';
 //        $file = 'big_parts.csv';
-        $file = 'parts_1.csv';
+//        $file = 'parts_1.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em = $this->container->get('doctrine.orm.default_entity_manager');
@@ -97,6 +97,7 @@ class PartsCommand extends Command
             $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
             $part->setHash($hash);
             $part->setPrice((int) $record['price']);
+            $part->setStyles(mb_convert_encoding(preg_split("/[\s,#\/]+/", $record['part']), 'UTF-8', 'Windows-1251'));
 
             $brands = preg_split("/[\s,#\/]+/", $record['brand']);
             foreach ($brands as $brand) {

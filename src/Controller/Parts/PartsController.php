@@ -7,8 +7,12 @@ use App\Form\Parts\PartType;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Elastica\Query;
+use Elastica\Suggest;
 
 /**
  * @Route("/parts")
@@ -38,9 +42,6 @@ class PartsController extends AbstractController
 
         dump($request->get('query'));
 
-
-
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $entity->setParts($request->query->get('part'));
@@ -56,8 +57,6 @@ class PartsController extends AbstractController
                 }
             }
 
-
-
             if ($query) {
                 $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
             }
@@ -67,5 +66,34 @@ class PartsController extends AbstractController
             'parts' => $parts,
             'form'  => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/suggest", name="parts_suggest", options={"expose"=true})
+     */
+    public function getPartsName(Request $request)
+    {
+        if (!($text = $request->get('q'))) {
+            throw new BadRequestHttpException('Missing "q" parameter.');
+        }
+
+        $completion = new Suggest\Completion('search', 'name_suggest');
+        $completion->setText($text);
+        $completion->setFuzzy(['fuzziness' => 2]);
+        $result = $this->finder->search(Query::create($completion));
+        $suggestions = [];
+
+        foreach ($result->getSuggests() as $suggests) {
+            foreach ($suggests as $suggest) {
+                foreach ($suggest['options'] as $option) {
+                    $suggestions[] = [
+                        'id'   => $option['_source']['id'],
+                        'text' => $option['_source']['name']
+                    ];
+                }
+            }
+        }
+
+        return new JsonResponse(['suggestions' => $suggestions]);
     }
 }

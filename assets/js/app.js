@@ -5,6 +5,7 @@ import News from './Components/Administration/News';
 import Model from './Components/Parts/Model';
 import Tyre from './Components/Tyres/Tyre';
 import Company from "./Components/Client/Company";
+import Part from "./Components/Parts/Part";
 
 $(document).ready(function() {
     let $wrapper = $('.js-news-module');
@@ -17,4 +18,6 @@ $(document).ready(function() {
 
     $wrapper = $('.js-company-module');
     let company = new Company($wrapper);
+
+    let part = new Part();
 });
