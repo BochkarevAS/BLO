@@ -4,19 +4,23 @@
 
     <div class="container js-parts-module">
 
-
-
-
+        <form>
+            <input type="text" id="city" size="20" data-suggest="{{ path('parts_suggest') }}" placeholder="saisissez une ville" />
+            <input type="text" id="zipcode" size="5" readonly="readonly" />
+        </form>
 
         <form method="get" action="" class="form-inline" role="search">
             <div class="form-group">
                 <input type="text" name="query" value="{{ app.request.get('query') }}" class="form-control" placeholder="{{'Search user'|trans}}" required />
             </div>
             <input type="submit" value="{{ 'Search'|trans }}" class="btn btn-default">
+
+            <select type="text" name="query" value="{{ app.request.get('query') }}" class="form-control search" placeholder="{{'Search user'|trans}}" required></select>
+
+            <select class="form-control search"></select>
         </form>
 
-
-
+        <select class="form-control search"></select>
 
         {{ include('/parts/_form.html.twig') }}
 

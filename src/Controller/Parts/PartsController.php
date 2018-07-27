@@ -9,10 +9,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Elastica\Query;
-use Elastica\Suggest;
 
 /**
  * @Route("/parts")
@@ -21,12 +18,10 @@ class PartsController extends AbstractController
 {
     private $finder;
 
-
     public function __construct(PaginatedFinderInterface $finder)
     {
         $this->finder = $finder;
     }
-
 
     /**
      * @Route("/", name="parts_index", options={"expose"=true})
@@ -39,8 +34,6 @@ class PartsController extends AbstractController
         $parts = null;
 
         $searchQuery = $request->get('query');
-
-        dump($request->get('query'));
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
@@ -73,27 +66,23 @@ class PartsController extends AbstractController
      */
     public function getPartsName(Request $request)
     {
-        if (!($text = $request->get('q'))) {
-            throw new BadRequestHttpException('Missing "q" parameter.');
+        $query = $request->get('q', null);
+        $data = [];
+
+        $searchQuery = new \Elastica\Query\QueryString();
+        $searchQuery->setParam('q', $query);
+        $searchQuery->setDefaultOperator('AND');
+        $searchQuery->setParam('fields', ['name']);
+
+        $results = $this->finder->find($query, 10);
+
+        foreach ($results as $result) {
+            $source = $result;
+            $data[] = [
+                'suggest'   => $source->getName()
+            ];
         }
 
-        $completion = new Suggest\Completion('search', 'name_suggest');
-        $completion->setText($text);
-        $completion->setFuzzy(['fuzziness' => 2]);
-        $result = $this->finder->search(Query::create($completion));
-        $suggestions = [];
-
-        foreach ($result->getSuggests() as $suggests) {
-            foreach ($suggests as $suggest) {
-                foreach ($suggest['options'] as $option) {
-                    $suggestions[] = [
-                        'id'   => $option['_source']['id'],
-                        'text' => $option['_source']['name']
-                    ];
-                }
-            }
-        }
-
-        return new JsonResponse(['suggestions' => $suggestions]);
+        return new JsonResponse($data, 200);
     }
 }

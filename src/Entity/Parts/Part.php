@@ -112,10 +112,29 @@ class Part
 
     public function getNameSuggest()
     {
-        return [
-            'input'  => array_merge([$this->getName()], $this->getStyles()),
-            'weight' => $this->calculateWeight(),
-        ];
+
+        return array(
+            'input'  => $this->getName(),
+//            'output' => $this->getName(),
+//            'payload' => array(
+//                'id' => $this->getId(),
+//            ),
+        );
+
+//        return [
+//            'input' => array_merge([$this->getName()], $this->getStyles()),
+////            'output' => $this->getName(),
+////            'weight' => $this->calculateWeight(),
+////            'payload' => [
+////                'id' => $this->getId(),
+////            ],
+//        ];
+
+
+//        return [
+//            'input'  => array_merge([$this->getName()], $this->getStyles()),
+//            'weight' => $this->calculateWeight(),
+//        ];
     }
 
     public function calculateWeight()
