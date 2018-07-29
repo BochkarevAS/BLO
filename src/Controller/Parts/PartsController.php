@@ -64,7 +64,7 @@ class PartsController extends AbstractController
     /**
      * @Route("/suggest", name="parts_suggest", options={"expose"=true})
      */
-    public function getPartsName(Request $request)
+    public function autocomplete(Request $request)
     {
         $query = $request->get('q', null);
         $data = [];
@@ -77,10 +77,7 @@ class PartsController extends AbstractController
         $results = $this->finder->find($query, 10);
 
         foreach ($results as $result) {
-            $source = $result;
-            $data[] = [
-                'suggest' => $source->getName()
-            ];
+            $data[] = $result->getName();
         }
 
         return new JsonResponse($data, 200);
