@@ -57,7 +57,14 @@ class PartsController extends AbstractController
         $query = $request->get('query', null);
         $data = [];
 
-        $results = $this->finder->find($query, 10);
+        $boolQuery  = new \Elastica\Query\BoolQuery();
+        $multiMatch = new \Elastica\Query\MultiMatch();
+        $multiMatch->setFields(['name']);
+        $multiMatch->setType('phrase_prefix');
+        $multiMatch->setQuery($query);
+        $boolQuery ->addMust($multiMatch);
+
+        $results = $this->finder->find($boolQuery, 10);
 
         foreach ($results as $result) {
             $data[] = $result->getName();

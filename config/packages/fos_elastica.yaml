@@ -26,7 +26,6 @@ fos_elastica:
             types:
                 part:
                     properties:
-#                        name: { search_analyzer: custom_search_analyzer, index_analyzer: custom_index_analyzer, type: text }
                         name: { search_analyzer: custom_search_analyzer, analyzer: custom_index_analyzer, type: text }
                     persistence:
                         driver: orm
