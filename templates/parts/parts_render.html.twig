@@ -7,14 +7,9 @@
         {{ include('/parts/_form.html.twig') }}
 
         <div class="row">
-            <form class="col-md-6 py-2">
+            <form class="col-md-10 py-2">
                 <div class="input-group">
-                    <input type="text" class="form-control typeahead border-primary" name="query" id="query" placeholder="Start typing something to search..." data-provide="typeahead" >
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-outline-primary">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
+                    <input type="text" class="form-control typeahead border-primary" name="query" id="query" data-provide="typeahead" >
                 </div>
             </form>
         </div>

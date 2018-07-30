@@ -33,22 +33,10 @@ class PartsController extends AbstractController
         $form->handleRequest($request);
         $parts = null;
 
-        $searchQuery = $request->get('query');
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $entity->setParts($request->query->get('part'));
-
             $query = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
-
-            if (!empty($searchQuery)) {
-                $query = $this->finder->createPaginatorAdapter($searchQuery);
-
-
-                if ($query) {
-                    $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
-                }
-            }
 
             if ($query) {
                 $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
@@ -66,13 +54,8 @@ class PartsController extends AbstractController
      */
     public function autocomplete(Request $request)
     {
-        $query = $request->get('q', null);
+        $query = $request->get('query', null);
         $data = [];
-
-        $searchQuery = new \Elastica\Query\QueryString();
-        $searchQuery->setParam('q', $query);
-        $searchQuery->setDefaultOperator('AND');
-        $searchQuery->setParam('fields', ['name']);
 
         $results = $this->finder->find($query, 10);
 
