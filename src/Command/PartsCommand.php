@@ -6,12 +6,7 @@ use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Engine;
 use App\Entity\Parts\Model;
-use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
-use App\Entity\Parts\PartName;
-use App\Entity\Parts\Vendor;
-use App\Entity\Region\City;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
@@ -84,7 +79,7 @@ class PartsCommand extends Command
 
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['brand'] . $record['model'] . $record['carcase']);
+            $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine']);
 
 //            $record = $this->valid($record, $em, $nameVendor);
 //            $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
@@ -97,7 +92,6 @@ class PartsCommand extends Command
             $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
             $part->setHash($hash);
             $part->setPrice((int) $record['price']);
-            $part->setStyles(mb_convert_encoding(preg_split("/[\s,#\/]+/", $record['part']), 'UTF-8', 'Windows-1251'));
 
             $brands = preg_split("/[\s,#\/]+/", $record['brand']);
             foreach ($brands as $brand) {

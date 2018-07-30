@@ -72,20 +72,6 @@ class Part
     private $slug;
 
     /**
-     * Для fos_elastica.yaml
-     *
-     * @ORM\Column(name="styles", type="simple_array", nullable=false)
-     */
-    private $styles;
-
-    /**
-     * Для fos_elastica.yaml
-     *
-     * @ORM\Column(name="promoted", type="boolean")
-     */
-    private $promoted = false;
-
-    /**
      * Здесь будут данные с фильтра
      */
     private $parts;
@@ -108,67 +94,6 @@ class Part
         $this->models   = new ArrayCollection();
         $this->carcases = new ArrayCollection();
         $this->engines  = new ArrayCollection();
-    }
-
-    public function getNameSuggest()
-    {
-
-        return array(
-            'input'  => $this->getName(),
-//            'output' => $this->getName(),
-//            'payload' => array(
-//                'id' => $this->getId(),
-//            ),
-        );
-
-//        return [
-//            'input' => array_merge([$this->getName()], $this->getStyles()),
-////            'output' => $this->getName(),
-////            'weight' => $this->calculateWeight(),
-////            'payload' => [
-////                'id' => $this->getId(),
-////            ],
-//        ];
-
-
-//        return [
-//            'input'  => array_merge([$this->getName()], $this->getStyles()),
-//            'weight' => $this->calculateWeight(),
-//        ];
-    }
-
-    public function calculateWeight()
-    {
-        $weight = 0;
-        if ($this->isPromoted()) {
-            $weight += 5;
-        }
-
-        return $weight;
-    }
-
-    public function setStyles(array $styles = [])
-    {
-        $this->styles = $styles;
-
-        return $this;
-    }
-
-    public function getStyles()
-    {
-        return $this->styles;
-    }
-
-    public function setPromoted($promoted)
-    {
-        $this->promoted = filter_var($promoted, FILTER_VALIDATE_BOOLEAN);
-
-        return $this;
-    }
-
-    public function isPromoted()
-    {
-        return $this->promoted;
     }
 
     public function getSlug()

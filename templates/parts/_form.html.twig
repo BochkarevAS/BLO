@@ -23,12 +23,8 @@
             {#{{ form_errors(form.engine) }}#}
         {#</div>#}
         <div class="col-4">
-            {#{{ form_row(form.name, {'id': 'parts_number', 'attr': {'class': 'form-control'}}) }}#}
-            {#{{ form_errors(form.name) }}#}
-
-
-            {#<input type="text" name="query" value="{{ app.request.get('query') }}" class="form-control" placeholder="{{'Search user'|trans}}" required />#}
-
+            {{ form_row(form.name, {'id': 'parts_name', 'attr': {'class': 'form-control border-primary typeahead'}}) }}
+            {{ form_errors(form.name) }}
         </div>
     </div>
     {#<div class="row">#}

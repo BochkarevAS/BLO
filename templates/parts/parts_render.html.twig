@@ -6,14 +6,6 @@
 
         {{ include('/parts/_form.html.twig') }}
 
-        <div class="row">
-            <form class="col-md-10 py-2">
-                <div class="input-group">
-                    <input type="text" class="form-control typeahead border-primary" name="query" id="query" data-provide="typeahead" >
-                </div>
-            </form>
-        </div>
-
         {% if parts %}
             <div class="navigator">
                 {{ knp_pagination_render(parts) }}
