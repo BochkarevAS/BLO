@@ -35,11 +35,11 @@ class Company
     private $info;
 
     /**
-     * Головной офис
+     * Банковские реквизиты
      *
      * @ORM\Column(type="string")
      */
-    private $office;
+    private $bank;
 
     /**
      * Город
@@ -127,19 +127,19 @@ class Company
         return $this->info;
     }
 
-    public function setInfo($info): void
+    public function setInfo($info)
     {
         $this->info = $info;
     }
 
-    public function getOffice()
+    public function getBank()
     {
-        return $this->office;
+        return $this->bank;
     }
 
-    public function setOffice($office): void
+    public function setBank($bank)
     {
-        $this->office = $office;
+        $this->bank = $bank;
     }
 
     public function getCity()
@@ -147,7 +147,7 @@ class Company
         return $this->city;
     }
 
-    public function setCity($city): void
+    public function setCity($city)
     {
         $this->city = $city;
     }
@@ -157,7 +157,7 @@ class Company
         return $this->syte;
     }
 
-    public function setSyte($syte): void
+    public function setSyte($syte)
     {
         $this->syte = $syte;
     }
@@ -167,7 +167,7 @@ class Company
         return $this->sectionsParts;
     }
 
-    public function setSectionsParts($sectionsParts): void
+    public function setSectionsParts($sectionsParts)
     {
         $this->sectionsParts = $sectionsParts;
     }
@@ -177,7 +177,7 @@ class Company
         return $this->sectionsTyres;
     }
 
-    public function setSectionsTyres($sectionsTyres): void
+    public function setSectionsTyres($sectionsTyres)
     {
         $this->sectionsTyres = $sectionsTyres;
     }
@@ -187,7 +187,7 @@ class Company
         return $this->sectionsDrives;
     }
 
-    public function setSectionsDrives($sectionsDrives): void
+    public function setSectionsDrives($sectionsDrives)
     {
         $this->sectionsDrives = $sectionsDrives;
     }

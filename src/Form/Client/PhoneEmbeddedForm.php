@@ -14,7 +14,7 @@ class PhoneEmbeddedForm extends AbstractType
     {
         $builder
             ->add('number', TextType::class, [
-                'label' => 'Номер'
+                'label' => 'Телефон'
             ])
         ;
     }

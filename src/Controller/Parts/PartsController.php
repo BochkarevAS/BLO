@@ -33,6 +33,9 @@ class PartsController extends AbstractController
         $form->handleRequest($request);
         $parts = null;
 
+
+        dump($form);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $entity->setParts($request->query->get('part'));
@@ -62,13 +65,19 @@ class PartsController extends AbstractController
         $multiMatch->setFields(['name']);
         $multiMatch->setType('phrase_prefix');
         $multiMatch->setQuery($query);
-        $boolQuery ->addMust($multiMatch);
+        $boolQuery->addMust($multiMatch);
+
+//        $categoryQuery = new \Elastica\Query\Terms();
+//        $categoryQuery->setTerms('name', [1, 2, 3]);
+//        $boolQuery->addMust($categoryQuery);
 
         $results = $this->finder->find($boolQuery, 10);
 
         foreach ($results as $result) {
             $data[] = $result->getName();
         }
+
+//        $data = array_unique($data);
 
         return new JsonResponse($data, 200);
     }

@@ -25,8 +25,8 @@ class CompanyType extends AbstractType
             ->add('syte', TextType::class, [
                 'label' => 'Сайт'
             ])
-            ->add('office', TextType::class, [
-                'label' => 'Головной офис'
+            ->add('bank', TextareaType::class, [
+                'label' => 'Банковские реквизиты'
             ])
             ->add('info', TextareaType::class, [
                 'label' => 'Краткая информация о компании',

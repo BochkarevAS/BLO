@@ -35,7 +35,6 @@ class PartType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'label'    => 'Номер, маркировка запчасти',
-                'mapped'   => false,
                 'required' => false
             ])
 //            ->add('oem', TextType::class, [

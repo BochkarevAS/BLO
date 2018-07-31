@@ -78,6 +78,9 @@ class PartsCommand extends Command
         $progress->start();
 
 
+
+
+
         foreach ($records as $offset => $record) {
             $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine']);
 
