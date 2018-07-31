@@ -20,7 +20,7 @@ class CarcaseRepository extends EntityRepository
     public function findAllByNames($names)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.name IN (:names)')
+            ->andWhere('upper(c.name) IN (:names)')
             ->setParameter('names', $names)
             ->getQuery()
             ->execute();

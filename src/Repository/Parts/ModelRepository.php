@@ -20,7 +20,7 @@ class ModelRepository extends EntityRepository
     public function findAllByNames($names)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.name IN (:names)')
+            ->andWhere('upper(m.name) IN (:names)')
             ->setParameter('names', $names)
             ->getQuery()
             ->execute();

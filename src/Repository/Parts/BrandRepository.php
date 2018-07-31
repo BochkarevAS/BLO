@@ -16,7 +16,7 @@ class BrandRepository extends EntityRepository
     public function findAllByNames(array $names = [])
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.name IN (:names)')
+            ->andWhere('upper(b.name) IN (:names)')
             ->setParameter('names', $names)
             ->getQuery()
             ->execute();

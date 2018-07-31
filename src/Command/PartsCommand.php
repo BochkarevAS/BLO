@@ -49,6 +49,7 @@ class PartsCommand extends Command
     protected function import(InputInterface $input, OutputInterface $output)
     {
 //        $file = 'parts_test.csv';
+//        $file = 'parts_new.csv';
         $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
@@ -78,72 +79,28 @@ class PartsCommand extends Command
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine']);
+            $hash = md5($record['price'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine']);
 
-//            $record = $this->valid($record, $em, $nameVendor);
-//            $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
+            $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
-//            if ($part === null) {
-
-
-
-            $part = new Part();
-            $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
-            $part->setHash($hash);
-            $part->setPrice((int) $record['price']);
-
-            if ($patterns = preg_split("/[\s,#\/]+/", $record['brand'])) {
-                $brands = $em->getRepository(Brand::class)->findAllByNames($patterns);
-                foreach ($brands as $brand) {
-                    $part->addBrand($brand);
-                }
-            }
-
-            if ($patterns = preg_split("/[\s,#\/]+/", $record['model'])) {
-                $models = $em->getRepository(Model::class)->findAllByNames($patterns);
-                foreach ($models as $model) {
-                    $part->addModel($model);
-                }
-            }
-
-            if ($patterns = preg_split("/[\s,#\/]+/", $record['carcase'])) {
-                $carcases = $em->getRepository(Carcase::class)->findAllByNames($patterns);
-                foreach ($carcases as $carcase) {
-                    $part->addCarcase($carcase);
-                }
-            }
-
-            if ($patterns = preg_split("/[\s,#\/]+/", $record['engine'])) {
-                $engines = $em->getRepository(Engine::class)->findAllByNames($patterns);
-                foreach ($engines as $engine) {
-                    $part->addEngine($engine);
-                }
-            }
-
-            $em->persist($part);
-
-
-
-
-
-//                $this->part($part, $record, $hash);
-
-
-
+            if ($part === null) {
+                $part = new Part();
+                $this->validation($part, $hash, $record, $em, $nameVendor);
 
 //                $picture = new Picture();
 //                $this->json($tyre, $picture, $record['pictures'], $serializer);
 //                $em->persist($picture);
-//            } else {
-//                $this->part($part, $record, $hash);
-//                $em->merge($part);
+            } else {
+                $this->validation($part, $hash, $record, $em, $nameVendor);
+                $em->merge($part);
+
 //                $picture = $em->getRepository(Picture::class)->find($tyre->getId());
 //
 //                if (!$picture) {
 //                    $this->json($tyre, $picture, $record['pictures'], $serializer);
 //                    $em->merge($picture);
 //                }
-//            }
+            }
 
             if (($i % $batchSize) === 0) {
                 $em->flush();
@@ -165,34 +122,55 @@ class PartsCommand extends Command
     }
 
     /**
+     * @param Part $part
+     * @param $hash
      * @param array $record
-     * @param EntityManager $em
+     * @param $em
      * @param $nameVendor
-     * @return array
      */
-    private function valid(array $record, $em, $nameVendor)
+    private function validation(Part $part, $hash, array $record, EntityManager $em, $nameVendor)
     {
+        $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
+        $part->setHash($hash);
+        $part->setPrice((int) $record['price']);
 
+        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['brand']));
 
-        return $record;
+        if ($patterns) {
+            $brands = $em->getRepository(Brand::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
+            foreach ($brands as $brand) {
+                $part->addBrand($brand);
+            }
+        }
+
+        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['model']));
+
+        if ($patterns) {
+            $models = $em->getRepository(Model::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
+            foreach ($models as $model) {
+                $part->addModel($model);
+            }
+        }
+
+        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['carcase']));
+
+        if ($patterns) {
+            $carcases = $em->getRepository(Carcase::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
+            foreach ($carcases as $carcase) {
+                $part->addCarcase($carcase);
+            }
+        }
+
+        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['engine']));
+
+        if ($patterns) {
+            $engines = $em->getRepository(Engine::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
+            foreach ($engines as $engine) {
+                $part->addEngine($engine);
+            }
+        }
+
+        $em->persist($part);
     }
 
-    /**
-     * @param Part $part
-     * @param $record
-     * @param $hash
-     */
-//    private function part($part, array $record, $hash)
-//    {
-//        $part->setHash($hash);
-//        $part->setPart($record['part']);
-//        $part->setBrand($record['brand']);
-//        $part->setModel($record['model']);
-//        $part->setCarcase($record['carcase']);
-//        $part->setCity($record['city']);
-//        $part->setEngine($record['engine']);
-//        $part->setVendor($record['vendor']);
-//        $part->setOem($record['oem']);
-//        $part->setPrice($record['price']);
-//    }
 }
