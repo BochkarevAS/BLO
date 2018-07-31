@@ -13,11 +13,13 @@ class BrandRepository extends EntityRepository
             ->orderBy('b.name', 'ASC');
     }
 
-    public function findAllBrands()
+    public function findAllByNames(array $names = [])
     {
         return $this->createQueryBuilder('b')
+            ->select('b')
+            ->andWhere('b.name IN (:names)')
+            ->setParameter('names', $names)
             ->getQuery()
-            ->getResult();
-
+            ->execute();
     }
 }

@@ -35,9 +35,12 @@ class PartsController extends AbstractController
         $parts = null;
 
 
-        $result = $this->getDoctrine()->getRepository(Brand::class)->findAllBrands();
+        $record = 'toyota, ac, acura';
+        $names = preg_split("/[\s,#\/]+/", $record);
 
+//        dump($names);
 
+        $result = $this->getDoctrine()->getRepository(Brand::class)->findAllByNames($names);
         dump($result);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -71,17 +74,11 @@ class PartsController extends AbstractController
         $multiMatch->setQuery($query);
         $boolQuery->addMust($multiMatch);
 
-//        $categoryQuery = new \Elastica\Query\Terms();
-//        $categoryQuery->setTerms('name', [1, 2, 3]);
-//        $boolQuery->addMust($categoryQuery);
-
         $results = $this->finder->find($boolQuery, 10);
 
         foreach ($results as $result) {
             $data[] = $result->getName();
         }
-
-//        $data = array_unique($data);
 
         return new JsonResponse($data, 200);
     }

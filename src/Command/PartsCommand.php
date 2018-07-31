@@ -53,7 +53,7 @@ class PartsCommand extends Command
 //        $file = 'parts_1.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-        $em = $this->container->get('doctrine.orm.default_entity_manager');
+        $em   = $this->container->get('doctrine.orm.default_entity_manager');
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
@@ -78,7 +78,7 @@ class PartsCommand extends Command
         $progress->start();
 
 
-        $brands = $em->getRepository(Brand::class)->findAllBrands();
+        $brands = $em->getRepository(Brand::class)->findAllByNames();
 
 
         foreach ($records as $offset => $record) {
@@ -96,21 +96,31 @@ class PartsCommand extends Command
             $part->setHash($hash);
             $part->setPrice((int) $record['price']);
 
-            $brands = preg_split("/[\s,#\/]+/", $record['brand']);
-            foreach ($brands as $brand) {
-                $brand = $em->createQueryBuilder()
-                    ->select('b')
-                    ->from(Brand::class, 'b')
-                    ->where('upper(b.name) = upper(:name)')
-                    ->setParameter('name', mb_convert_encoding($brand, 'UTF-8', 'Windows-1251'))
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getOneOrNullResult();
+            $patterns = preg_split("/[\s,#\/]+/", $record['brand']);
 
-                if ($brand) {
-                    $part->addBrand($brand);
-                }
+            dump($patterns);
+
+            if ($patterns) {
+                $brands = $em->getRepository(Brand::class)->findAllByNames($patterns);
+                $part->addBrand($brands);
             }
+
+
+
+//            foreach ($brands as $brand) {
+//                $brand = $em->createQueryBuilder()
+//                    ->select('b')
+//                    ->from(Brand::class, 'b')
+//                    ->where('upper(b.name) = upper(:name)')
+//                    ->setParameter('name', mb_convert_encoding($brand, 'UTF-8', 'Windows-1251'))
+//                    ->setMaxResults(1)
+//                    ->getQuery()
+//                    ->getOneOrNullResult();
+//
+//                if ($brand) {
+//                    $part->addBrand($brand);
+//                }
+//            }
 
             $models = preg_split("/[\s,#\/]+/", $record['model']);
             foreach ($models as $model) {
