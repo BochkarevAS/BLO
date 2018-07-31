@@ -172,5 +172,4 @@ class PartsCommand extends Command
 
         $em->persist($part);
     }
-
 }
