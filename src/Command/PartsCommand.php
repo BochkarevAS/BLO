@@ -48,8 +48,8 @@ class PartsCommand extends Command
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-        $file = 'parts_test.csv';
-//        $file = 'big_parts.csv';
+//        $file = 'parts_test.csv';
+        $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
@@ -77,10 +77,6 @@ class PartsCommand extends Command
         $progress = new ProgressBar($output, count($reader));
         $progress->start();
 
-
-        $brands = $em->getRepository(Brand::class)->findAllByNames();
-
-
         foreach ($records as $offset => $record) {
             $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine']);
 
@@ -96,76 +92,30 @@ class PartsCommand extends Command
             $part->setHash($hash);
             $part->setPrice((int) $record['price']);
 
-            $patterns = preg_split("/[\s,#\/]+/", $record['brand']);
-
-            dump($patterns);
-
-            if ($patterns) {
+            if ($patterns = preg_split("/[\s,#\/]+/", $record['brand'])) {
                 $brands = $em->getRepository(Brand::class)->findAllByNames($patterns);
-                $part->addBrand($brands);
+                foreach ($brands as $brand) {
+                    $part->addBrand($brand);
+                }
             }
 
-
-
-//            foreach ($brands as $brand) {
-//                $brand = $em->createQueryBuilder()
-//                    ->select('b')
-//                    ->from(Brand::class, 'b')
-//                    ->where('upper(b.name) = upper(:name)')
-//                    ->setParameter('name', mb_convert_encoding($brand, 'UTF-8', 'Windows-1251'))
-//                    ->setMaxResults(1)
-//                    ->getQuery()
-//                    ->getOneOrNullResult();
-//
-//                if ($brand) {
-//                    $part->addBrand($brand);
-//                }
-//            }
-
-            $models = preg_split("/[\s,#\/]+/", $record['model']);
-            foreach ($models as $model) {
-                $model = $em->createQueryBuilder()
-                    ->select('m')
-                    ->from(Model::class, 'm')
-                    ->where('upper(m.name) = upper(:name)')
-                    ->setParameter('name', mb_convert_encoding($model, 'UTF-8', 'Windows-1251'))
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getOneOrNullResult();
-
-                if ($model) {
+            if ($patterns = preg_split("/[\s,#\/]+/", $record['model'])) {
+                $models = $em->getRepository(Model::class)->findAllByNames($patterns);
+                foreach ($models as $model) {
                     $part->addModel($model);
                 }
             }
 
-            $carcases = preg_split("/[\s,#\/]+/", $record['carcase']);
-            foreach ($carcases as $carcase) {
-                $carcase = $em->createQueryBuilder()
-                    ->select('c')
-                    ->from(Carcase::class, 'c')
-                    ->where('upper(c.name) = upper(:name)')
-                    ->setParameter('name', mb_convert_encoding($carcase, 'UTF-8', 'Windows-1251'))
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getOneOrNullResult();
-
-                if ($carcase) {
+            if ($patterns = preg_split("/[\s,#\/]+/", $record['carcase'])) {
+                $carcases = $em->getRepository(Carcase::class)->findAllByNames($patterns);
+                foreach ($carcases as $carcase) {
                     $part->addCarcase($carcase);
                 }
             }
 
-            $engines = preg_split("/[\s,#\/]+/", $record['engine']);
-            foreach ($engines as $engine) {
-                $engine = $em->createQueryBuilder()
-                    ->select('e')
-                    ->from(Engine::class, 'e')
-                    ->where('upper(e.name) = upper(:name)')
-                    ->setParameter('name', mb_convert_encoding($engine, 'UTF-8', 'Windows-1251'))
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getOneOrNullResult();
-
-                if ($engine) {
+            if ($patterns = preg_split("/[\s,#\/]+/", $record['engine'])) {
+                $engines = $em->getRepository(Engine::class)->findAllByNames($patterns);
+                foreach ($engines as $engine) {
                     $part->addEngine($engine);
                 }
             }
@@ -223,80 +173,6 @@ class PartsCommand extends Command
     private function valid(array $record, $em, $nameVendor)
     {
 
-
-
-
-//        $record['vendor'] = $em->createQueryBuilder()
-//                                ->select('v')
-//                                ->from(Vendor::class, 'v')
-//                                ->where('upper(v.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['vendor'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
-//
-//        $record['model'] = $em->createQueryBuilder()
-//                                ->select('m')
-//                                ->from(Model::class, 'm')
-//                                ->where('upper(m.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
-//
-//        $record['brand'] = $em->createQueryBuilder()
-//                                ->select('b')
-//                                ->from(Brand::class, 'b')
-//                                ->where('upper(b.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
-//
-//        $record['carcase'] = $em->createQueryBuilder()
-//                                ->select('c')
-//                                ->from(Carcase::class, 'c')
-//                                ->where('upper(c.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['carcase'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
-//
-//        $record['part'] = $em->createQueryBuilder()
-//                                ->select('p')
-//                                ->from(PartName::class, 'p')
-//                                ->where('upper(p.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
-//
-//        $record['city'] = $em->createQueryBuilder()
-//                                ->select('c')
-//                                ->from(City::class, 'c')
-//                                ->where('upper(c.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
-//
-//        $record['engine'] = $em->createQueryBuilder()
-//                                ->select('e')
-//                                ->from(Engine::class, 'e')
-//                                ->where('upper(e.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['engine'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
-//
-//        $record['oem'] = $em->createQueryBuilder()
-//                                ->select('o')
-//                                ->from(Oem::class, 'o')
-//                                ->where('upper(o.name) = upper(:name)')
-//                                ->setParameter('name', mb_convert_encoding($record['oem'], 'UTF-8', 'Windows-1251'))
-//                                ->setMaxResults(1)
-//                                ->getQuery()
-//                                ->getOneOrNullResult();
 
         return $record;
     }
