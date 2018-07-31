@@ -3,6 +3,7 @@
 namespace App\Entity\Parts;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity
@@ -24,7 +25,8 @@ class Oem
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="oem")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="oems")
+     * @JoinTable(name="parts_oems", schema="parts")
      */
     private $parts;
 
@@ -45,6 +47,11 @@ class Oem
 
     public function setParts($parts): void
     {
-        $this->parts = $parts;
+        $this->parts[] = $parts;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }

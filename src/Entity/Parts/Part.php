@@ -66,6 +66,12 @@ class Part
     private $engines;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Oem", inversedBy="parts")
+     * @JoinTable(name="parts_oems", schema="parts")
+     */
+    private $oems;
+
+    /**
      * @ORM\Column(name="slug", type="string", length=255)
      * @Gedmo\Slug(fields={"name"}, unique=false)
      */
@@ -94,6 +100,7 @@ class Part
         $this->models   = new ArrayCollection();
         $this->carcases = new ArrayCollection();
         $this->engines  = new ArrayCollection();
+        $this->oems     = new ArrayCollection();
     }
 
     public function getSlug()
@@ -204,6 +211,31 @@ class Part
 
         $this->engines->removeElement($engine);
         $engine->setParts(null);
+    }
+
+    public function getOems()
+    {
+        return $this->oems;
+    }
+
+    public function addOem(Oem $oem)
+    {
+        if ($this->oems->contains($oem)) {
+            return;
+        }
+
+        $this->oems[] = $oem;
+        $oem->setParts($this);
+    }
+
+    public function removeOem(Oem $oem)
+    {
+        if (!$this->engines->contains($oem)) {
+            return;
+        }
+
+        $this->oems->removeElement($oem);
+        $oem->setParts(null);
     }
 
     public function getName()
