@@ -2,7 +2,6 @@
 
 namespace App\Controller\Parts;
 
-use App\Entity\Parts\Brand;
 use App\Entity\Parts\Part;
 use App\Form\Parts\PartType;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -33,15 +32,6 @@ class PartsController extends AbstractController
         $form = $this->createForm(PartType::class, $part, ['method' => 'GET']);
         $form->handleRequest($request);
         $parts = null;
-
-
-        $record = 'toyota, ac, acura';
-        $names = preg_split("/[\s,#\/]+/", $record);
-
-//        dump($names);
-
-        $result = $this->getDoctrine()->getRepository(Brand::class)->findAllByNames($names);
-        dump($result);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
