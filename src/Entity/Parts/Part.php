@@ -196,7 +196,7 @@ class Part
         $engine->setParts($this);
     }
 
-    public function removeEnginee(Engine $engine)
+    public function removeEngine(Engine $engine)
     {
         if (!$this->engines->contains($engine)) {
             return;
