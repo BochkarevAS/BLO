@@ -3,7 +3,6 @@
 import $ from 'jquery';
 import Routing from '../Routing';
 import Bloodhound from 'bloodhound-js';
-import Handlebars from 'handlebars/dist/handlebars.min';
 
 class Part {
 

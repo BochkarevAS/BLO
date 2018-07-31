@@ -2,6 +2,7 @@
 
 namespace App\Controller\Parts;
 
+use App\Entity\Parts\Brand;
 use App\Entity\Parts\Part;
 use App\Form\Parts\PartType;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -34,7 +35,10 @@ class PartsController extends AbstractController
         $parts = null;
 
 
-        dump($form);
+        $result = $this->getDoctrine()->getRepository(Brand::class)->findAllBrands();
+
+
+        dump($result);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();

@@ -78,7 +78,7 @@ class PartsCommand extends Command
         $progress->start();
 
 
-
+        $brands = $em->getRepository(Brand::class)->findAllBrands();
 
 
         foreach ($records as $offset => $record) {

@@ -12,4 +12,12 @@ class BrandRepository extends EntityRepository
             ->andWhere('b.display!=0')
             ->orderBy('b.name', 'ASC');
     }
+
+    public function findAllBrands()
+    {
+        return $this->createQueryBuilder('b')
+            ->getQuery()
+            ->getResult();
+
+    }
 }
