@@ -2,9 +2,7 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\BrandRepository")
@@ -35,15 +33,9 @@ class Brand
     private $models;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brands")
-     * @JoinTable(name="parts_brands", schema="parts")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brand")
      */
     private $parts;
-
-    public function __construct()
-    {
-        $this->parts = new ArrayCollection();
-    }
 
     public function getDisplay()
     {
@@ -80,9 +72,9 @@ class Brand
         return $this->parts;
     }
 
-    public function setParts($parts)
+    public function setParts($parts): void
     {
-        $this->parts[] = $parts;
+        $this->parts = $parts;
     }
 
     public function getId()

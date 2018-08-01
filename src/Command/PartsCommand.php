@@ -134,13 +134,9 @@ class PartsCommand extends Command
         $part->setHash($hash);
         $part->setPrice((int) $record['price']);
 
-        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['brand']));
-
-        if ($patterns) {
-            $brands = $em->getRepository(Brand::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
-            foreach ($brands as $brand) {
-                $part->addBrand($brand);
-            }
+        if ($record['brand']) {
+            $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
+            $part->setBrand($brand);
         }
 
         $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['model']));

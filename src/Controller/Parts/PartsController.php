@@ -2,6 +2,7 @@
 
 namespace App\Controller\Parts;
 
+use App\Dto\Parts\SearchDTO;
 use App\Entity\Parts\Part;
 use App\Form\Parts\PartType;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
@@ -35,8 +36,19 @@ class PartsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
-            $entity->setParts($request->query->get('part'));
-            $query = $this->getDoctrine()->getRepository(Part::class)->renderParts($entity);
+            $search = $request->query->get('part');
+
+            $searchDTO = new SearchDTO();
+
+            if (array_key_exists('model', $search)) {
+                $searchDTO->setModel($search['model']);
+            }
+
+            if (array_key_exists('carcase', $search)) {
+                $searchDTO->setModel($search['carcase']);
+            }
+
+            $query = $this->getDoctrine()->getRepository(Part::class)-> search($entity, $searchDTO);
 
             if ($query) {
                 $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);

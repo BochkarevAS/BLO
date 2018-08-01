@@ -42,10 +42,9 @@ class Part
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Brand", inversedBy="parts")
-     * @JoinTable(name="parts_brands", schema="parts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="part")
      */
-    private $brands;
+    private $brand;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
@@ -78,11 +77,6 @@ class Part
     private $slug;
 
     /**
-     * Здесь будут данные с фильтра
-     */
-    private $parts;
-
-    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -96,7 +90,6 @@ class Part
 
     public function __construct()
     {
-        $this->brands   = new ArrayCollection();
         $this->models   = new ArrayCollection();
         $this->carcases = new ArrayCollection();
         $this->engines  = new ArrayCollection();
@@ -113,29 +106,14 @@ class Part
         $this->slug = $slug;
     }
 
-    public function getBrands()
+    public function getBrand()
     {
-        return $this->brands;
+        return $this->brand;
     }
 
-    public function addBrand(Brand $brand)
+    public function setBrand($brand): void
     {
-        if ($this->brands->contains($brand)) {
-            return;
-        }
-
-        $this->brands[] = $brand;
-        $brand->setParts($this);
-    }
-
-    public function removeBrand(Brand $brand)
-    {
-        if (!$this->brands->contains($brand)) {
-            return;
-        }
-
-        $this->brands->removeElement($brand);
-        $brand->setParts(null);
+        $this->brand = $brand;
     }
 
     public function getModels()
@@ -266,16 +244,6 @@ class Part
     public function setPrice($price): void
     {
         $this->price = $price;
-    }
-
-    public function getParts()
-    {
-        return $this->parts;
-    }
-
-    public function setParts($parts): void
-    {
-        $this->parts = $parts;
     }
 
     public function getId()

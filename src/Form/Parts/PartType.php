@@ -27,7 +27,6 @@ class PartType extends AbstractType
                 'class'         => Brand::class,
                 'label'         => 'Марка',
                 'choice_label'  => 'name',
-                'mapped'        => false,
                 'required'      => false,
                 'query_builder' => function (BrandRepository $repository) {
                     return $repository->orderBy();
