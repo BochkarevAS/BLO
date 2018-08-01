@@ -40,6 +40,11 @@
                                         {{ model.name }}
                                     {% endfor %}
                                 {% endif %}
+                                {% if part.oems %}
+                                    {% for oem in part.oems %}
+                                        {{ oem.name }} {% if part.oems|last != oem %} , {% endif %}
+                                    {% endfor %}
+                                {% endif %}
                             </td>
                             <td>
                                 {% if part.engines %}
