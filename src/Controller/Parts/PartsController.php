@@ -40,12 +40,12 @@ class PartsController extends AbstractController
 
             $searchDTO = new SearchDTO();
 
-            if (array_key_exists('model', $search)) {
+            if (isset($search['model'])) {
                 $searchDTO->setModel($search['model']);
             }
 
-            if (array_key_exists('carcase', $search)) {
-                $searchDTO->setModel($search['carcase']);
+            if (isset($search['carcase'])) {
+                $searchDTO->setCarcase($search['carcase']);
             }
 
             $query = $this->getDoctrine()->getRepository(Part::class)-> search($entity, $searchDTO);

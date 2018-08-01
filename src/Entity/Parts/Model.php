@@ -22,11 +22,6 @@ class Model
     /**
      * @ORM\Column(type="integer")
      */
-    private $display;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $rank;
 
     /**
@@ -55,22 +50,6 @@ class Model
     {
         $this->carcases = new ArrayCollection();
         $this->parts    = new ArrayCollection();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDisplay()
-    {
-        return $this->display;
-    }
-
-    /**
-     * @param mixed $display
-     */
-    public function setDisplay($display): void
-    {
-        $this->display = $display;
     }
 
     public function getRank()

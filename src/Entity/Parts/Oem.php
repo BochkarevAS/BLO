@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping\JoinTable;
  */
 class Oem
 {
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,7 +24,7 @@ class Oem
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Oem", mappedBy="oems")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="oems")
      * @JoinTable(name="parts_oems", schema="parts")
      */
     private $parts;

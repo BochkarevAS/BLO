@@ -18,11 +18,6 @@ class Brand
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $display;
-
-    /**
      * @ORM\Column(type="string")
      */
     private $name;
@@ -36,16 +31,6 @@ class Brand
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brand")
      */
     private $parts;
-
-    public function getDisplay()
-    {
-        return $this->display;
-    }
-
-    public function setDisplay($display)
-    {
-        $this->display = $display;
-    }
 
     public function getName()
     {

@@ -79,7 +79,7 @@ class PartsCommand extends Command
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['price'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine']);
+            $hash = md5($record['price'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem']);
 
             $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
@@ -163,6 +163,15 @@ class PartsCommand extends Command
             $engines = $em->getRepository(Engine::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
             foreach ($engines as $engine) {
                 $part->addEngine($engine);
+            }
+        }
+
+        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['oem']));
+
+        if ($patterns) {
+            $oems = $em->getRepository(Engine::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
+            foreach ($oems as $oem) {
+                $part->addEngine($oem);
             }
         }
 

@@ -42,7 +42,7 @@ class Part
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="part")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="parts")
      */
     private $brand;
 
