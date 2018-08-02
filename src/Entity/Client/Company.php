@@ -86,13 +86,20 @@ class Company
      * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company", orphanRemoval=true,  cascade={"persist"})
      * @Assert\Valid()
      */
-    protected $phones;
+    private $phones;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Client\Email", mappedBy="company", orphanRemoval=true,  cascade={"persist"})
      * @Assert\Valid()
      */
-    protected $emails;
+    private $emails;
+
+    /**
+     * Адрес компании
+     *
+     * @ORM\Column(type="text")
+     */
+    private $address;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -256,6 +263,16 @@ class Company
 
         $this->emails->removeElement($emails);
         $emails->setCompany(null);
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address): void
+    {
+        $this->address = $address;
     }
 
     public function getId()

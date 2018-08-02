@@ -49,7 +49,7 @@ class CompanyCommand extends Command
          * Перебераю старую таблицу. А то кое-кому нужно порукам дать ...
          */
         $connection = $em->getConnection();
-        $statement = $connection->prepare("SELECT id, emails, name, previev, site, bank_details, phones_new FROM client.user_company1");
+        $statement = $connection->prepare("SELECT id, emails, name, previev, site, bank_details, phones_new, address FROM client.user_company1");
         $statement->execute();
         $results = $statement->fetchAll();
 
@@ -60,6 +60,7 @@ class CompanyCommand extends Command
             $company->setBank($userCompany['bank_details']);
             $company->setCity('city');
             $company->setSyte($userCompany['site']);
+            $company->setAddress($userCompany['address']);
             $company->setSectionsDrives(1);
             $company->setSectionsParts(1);
             $company->setSectionsTyres(1);

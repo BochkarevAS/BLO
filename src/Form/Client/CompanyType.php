@@ -31,6 +31,9 @@ class CompanyType extends AbstractType
             ->add('preview', TextareaType::class, [
                 'label' => 'Краткая информация о компании',
             ])
+            ->add('address', TextareaType::class, [
+                'label' => 'Адрес компании',
+            ])
             ->add('sectionsParts', CheckboxType::class, [
                 'label'    => 'Запчасти',
                 'required' => false,
