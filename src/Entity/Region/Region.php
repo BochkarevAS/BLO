@@ -22,6 +22,11 @@ class Region
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Region\City", mappedBy="region")
+     */
+    private $citys;
+
     public function getName()
     {
         return $this->name;
@@ -30,5 +35,15 @@ class Region
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getCitys()
+    {
+        return $this->citys;
+    }
+
+    public function setCitys($citys): void
+    {
+        $this->citys = $citys;
     }
 }

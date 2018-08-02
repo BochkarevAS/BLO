@@ -33,4 +33,10 @@ class CompanyRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function orderBy()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.name', 'ASC');
+    }
 }

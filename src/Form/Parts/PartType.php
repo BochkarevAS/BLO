@@ -2,11 +2,13 @@
 
 namespace App\Form\Parts;
 
+use App\Entity\Client\Company;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
 use App\Entity\Region\City;
+use App\Repository\Client\CompanyRepository;
 use App\Repository\Parts\BrandRepository;
 use App\Repository\Parts\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -32,6 +34,16 @@ class PartType extends AbstractType
                     return $repository->orderBy();
                 }
             ])
+            ->add('company', EntityType::class, [
+                'class'         => Company::class,
+                'label'         => 'Продавец',
+                'choice_label'  => 'name',
+                'mapped'        => false,
+                'required'      => false,
+                'query_builder' => function (CompanyRepository $repository) {
+                    return $repository->orderBy();
+                }
+            ])
             ->add('name', TextType::class, [
                 'label'    => 'Номер, маркировка запчасти',
                 'required' => false
@@ -46,16 +58,16 @@ class PartType extends AbstractType
                 'mapped'   => false,
                 'required' => false
             ])
-//            ->add('city', EntityType::class, [
-//                'class'         => City::class,
-//                'label'         => 'Город',
-//                'choice_label'  => 'name',
-//                'mapped'        => false,
-//                'required'      => false,
-//                'query_builder' => function (CityRepository $repository) {
-//                    return $repository->orderBy();
-//                },
-//            ])
+            ->add('city', EntityType::class, [
+                'class'         => City::class,
+                'label'         => 'Город',
+                'choice_label'  => 'name',
+                'mapped'        => false,
+                'required'      => false,
+                'query_builder' => function (CityRepository $repository) {
+                    return $repository->orderBy();
+                },
+            ])
         ;
 
         $builder->addEventListener(

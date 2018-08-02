@@ -2,6 +2,7 @@
 
 namespace App\Entity\Region;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,9 +25,19 @@ class City
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="city")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\Region", inversedBy="citys")
      */
-    private $parts;
+    private $region;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $coordinate;
+
+    public function __construct()
+    {
+        $this->region = new ArrayCollection();
+    }
 
     public function getName()
     {
@@ -38,14 +49,24 @@ class City
         $this->name = $name;
     }
 
-    public function getParts()
+    public function getRegion()
     {
-        return $this->parts;
+        return $this->region;
     }
 
-    public function setParts($parts): void
+    public function setRegion($region): void
     {
-        $this->parts = $parts;
+        $this->region[] = $region;
+    }
+
+    public function getCoordinate()
+    {
+        return $this->coordinate;
+    }
+
+    public function setCoordinate($coordinate): void
+    {
+        $this->coordinate = $coordinate;
     }
 
     public function getId()
