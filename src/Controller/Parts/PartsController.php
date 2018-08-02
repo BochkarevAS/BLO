@@ -34,6 +34,48 @@ class PartsController extends AbstractController
         $form->handleRequest($request);
         $parts = null;
 
+
+
+        $connection = $this->getDoctrine()->getConnection();
+        $statement = $connection->prepare("SELECT id, emails FROM client.user_company1 LIMIT 5");
+//        $statement->bindValue('id', 123);
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+
+
+        foreach ($results as $email) {
+
+            $pattern = "/[-a-z0-9!#$%&'*_`{|}~]+[-a-z0-9!#$%&'*_`{|}~\.=?]*@[a-zA-Z0-9_-]+[a-zA-Z0-9\._-]+/i";
+            preg_match_all($pattern, $email['emails'], $result);
+
+            $r = array_unique(array_map(function ($i) { return $i; }, [$email['id'] => $result]));
+//            dump($r);
+
+            foreach ($r as $id => $emails) {
+                array_walk_recursive($emails, function ($item, $key) use ($id) {
+
+                    dump($id);
+                    dump($item);
+                });
+            }
+
+
+//            array_walk_recursive($r, function ($item, $key) {
+//
+//                dump($key);
+//                dump($item);
+////                echo $item."\n";
+//            });
+
+//            $array = explode('\\', $email['emails']);
+//
+//            dump($array);
+        }
+
+
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $search = $request->query->get('part');
