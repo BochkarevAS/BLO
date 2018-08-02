@@ -79,17 +79,19 @@ class CompanyCommand extends Command
 //            });
 
 
-            $pattern = "%^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$%";
-            preg_match_all($pattern, $userCompany['phones_new'], $result);
+            $result = explode('\\', $userCompany['phones_new']);
             $r = array_unique(array_map(function ($i) { return $i; }, $result));
 
-            array_walk_recursive($r, function ($number, $key) use ($company, $em) {
-                $phone = new Phone();
-                $phone->setCompany($company);
-                $phone->setNumber($number);
-                $em->persist($phone);
-            });
+            array_walk_recursive($r, function ($number, $key) use ($company, $em){
+                $pattern = "/^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$/";
 
+                if (preg_match_all($pattern, trim($number, "\'\"\;\t\n\r\0\x0B"), $result)) {
+                    $phone = new Phone();
+                    $phone->setNumber($result[0][0]);
+                    $phone->setCompany($company);
+                    $em->persist($phone);
+                }
+            });
         }
 
         $em->flush();
