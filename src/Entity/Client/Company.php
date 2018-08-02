@@ -32,7 +32,7 @@ class Company
      *
      * @ORM\Column(type="string")
      */
-    private $info;
+    private $preview;
 
     /**
      * Банковские реквизиты
@@ -122,14 +122,14 @@ class Company
         $this->name = $name;
     }
 
-    public function getInfo()
+    public function getPreview()
     {
-        return $this->info;
+        return $this->preview;
     }
 
-    public function setInfo($info)
+    public function setPreview($preview)
     {
-        $this->info = $info;
+        $this->preview = $preview;
     }
 
     public function getBank()

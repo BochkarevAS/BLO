@@ -28,7 +28,7 @@ class CompanyType extends AbstractType
             ->add('bank', TextareaType::class, [
                 'label' => 'Банковские реквизиты'
             ])
-            ->add('info', TextareaType::class, [
+            ->add('preview', TextareaType::class, [
                 'label' => 'Краткая информация о компании',
             ])
             ->add('sectionsParts', CheckboxType::class, [
