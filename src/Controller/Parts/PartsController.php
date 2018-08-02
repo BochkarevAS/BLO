@@ -34,20 +34,6 @@ class PartsController extends AbstractController
         $form->handleRequest($request);
         $parts = null;
 
-
-//        $userCompany = 'a:2:{i:1;a:3:{s:4:\"name\";s:17:\"8 (423) 259-53-53\";s:8:\"whatsapp\";s:1:\"0\";s:5:\"viber\";s:1:\"0\";}i:2;a:3:{s:4:\"name\";s:17:\"8 (423) 244-21-68\";s:8:\"whatsapp\";s:1:\"0\";s:5:\"viber\";s:1:\"0\";}}';
-//
-//        $result = explode('\\', $userCompany);
-//        $r = array_unique(array_map(function ($i) { return $i; }, $result));
-//
-//        array_walk_recursive($r, function ($number, $key) {
-//            $pattern = "/^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$/";
-//
-//            if (preg_match_all($pattern, trim($number, "\'\"\;\t\n\r\0\x0B"), $result)) {
-//                dump($result[0][0]);
-//            }
-//        });
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();
             $search = $request->query->get('part');

@@ -67,17 +67,16 @@ class CompanyCommand extends Command
             $em->persist($company);
             $em->flush();
 
-//            $pattern = "/[-a-z0-9!#$%&'*_`{|}~]+[-a-z0-9!#$%&'*_`{|}~\.=?]*@[a-zA-Z0-9_-]+[a-zA-Z0-9\._-]+/i";
-//            preg_match_all($pattern, $userCompany['emails'], $result);
-//            $r = array_unique(array_map(function ($i) { return $i; }, $result));
-//
-//            array_walk_recursive($r, function ($address, $key) use ($company, $em) {
-//                $email = new Email();
-//                $email->setCompany($company);
-//                $email->setAddress($address);
-//                $em->persist($email);
-//            });
+            $pattern = "/[-a-z0-9!#$%&'*_`{|}~]+[-a-z0-9!#$%&'*_`{|}~\.=?]*@[a-zA-Z0-9_-]+[a-zA-Z0-9\._-]+/i";
+            preg_match_all($pattern, $userCompany['emails'], $result);
+            $r = array_unique(array_map(function ($i) { return $i; }, $result));
 
+            array_walk_recursive($r, function ($address, $key) use ($company, $em) {
+                $email = new Email();
+                $email->setCompany($company);
+                $email->setAddress($address);
+                $em->persist($email);
+            });
 
             $result = explode('\\', $userCompany['phones_new']);
             $r = array_unique(array_map(function ($i) { return $i; }, $result));
