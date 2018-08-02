@@ -30,14 +30,14 @@ class Company
     /**
      * Краткая информация о компании
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     private $preview;
 
     /**
      * Банковские реквизиты
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     private $bank;
 

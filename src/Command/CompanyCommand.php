@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Auth\User;
 use App\Entity\Client\Company;
 use App\Entity\Client\Email;
+use App\Entity\Client\Phone;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -48,18 +49,17 @@ class CompanyCommand extends Command
          * Перебераю старую таблицу. А то кое-кому нужно порукам дать ...
          */
         $connection = $em->getConnection();
-        $statement = $connection->prepare("SELECT id, emails, name, previev FROM client.user_company1");
+        $statement = $connection->prepare("SELECT id, emails, name, previev, site, bank_details, phones_new FROM client.user_company1");
         $statement->execute();
         $results = $statement->fetchAll();
 
         foreach ($results as $userCompany) {
             $company = new Company();
             $company->setName($userCompany['name']);
-            $company->setPreview('previev');
-//            $company->setPreview($userCompany['previev']);
-            $company->setBank('bank');
+            $company->setPreview($userCompany['previev']);
+            $company->setBank($userCompany['bank_details']);
             $company->setCity('city');
-            $company->setSyte('syte');
+            $company->setSyte($userCompany['site']);
             $company->setSectionsDrives(1);
             $company->setSectionsParts(1);
             $company->setSectionsTyres(1);
@@ -67,16 +67,29 @@ class CompanyCommand extends Command
             $em->persist($company);
             $em->flush();
 
-            $pattern = "/[-a-z0-9!#$%&'*_`{|}~]+[-a-z0-9!#$%&'*_`{|}~\.=?]*@[a-zA-Z0-9_-]+[a-zA-Z0-9\._-]+/i";
-            preg_match_all($pattern, $userCompany['emails'], $result);
+//            $pattern = "/[-a-z0-9!#$%&'*_`{|}~]+[-a-z0-9!#$%&'*_`{|}~\.=?]*@[a-zA-Z0-9_-]+[a-zA-Z0-9\._-]+/i";
+//            preg_match_all($pattern, $userCompany['emails'], $result);
+//            $r = array_unique(array_map(function ($i) { return $i; }, $result));
+//
+//            array_walk_recursive($r, function ($address, $key) use ($company, $em) {
+//                $email = new Email();
+//                $email->setCompany($company);
+//                $email->setAddress($address);
+//                $em->persist($email);
+//            });
+
+
+            $pattern = "%^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$%";
+            preg_match_all($pattern, $userCompany['phones_new'], $result);
             $r = array_unique(array_map(function ($i) { return $i; }, $result));
 
-            array_walk_recursive($r, function ($address, $key) use ($company, $em) {
-                $email = new Email();
-                $email->setCompany($company);
-                $email->setAddress($address);
-                $em->persist($email);
+            array_walk_recursive($r, function ($number, $key) use ($company, $em) {
+                $phone = new Phone();
+                $phone->setCompany($company);
+                $phone->setNumber($number);
+                $em->persist($phone);
             });
+
         }
 
         $em->flush();
