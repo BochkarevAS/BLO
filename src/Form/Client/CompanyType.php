@@ -3,6 +3,9 @@
 namespace App\Form\Client;
 
 use App\Entity\Client\Company;
+use App\Entity\Region\City;
+use App\Repository\Region\CityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -45,6 +48,15 @@ class CompanyType extends AbstractType
             ->add('sectionsDrives', CheckboxType::class, [
                 'label'    => 'Диски',
                 'required' => false,
+            ])
+            ->add('city', EntityType::class, [
+                'class'         => City::class,
+                'label'         => 'Город',
+                'choice_label'  => 'name',
+                'required'      => false,
+                'query_builder' => function (CityRepository $repository) {
+                    return $repository->orderBy();
+                },
             ])
             ->add('phones', CollectionType::class, [
                 'label'        => 'Телефон',

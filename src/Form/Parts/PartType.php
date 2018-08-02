@@ -10,7 +10,7 @@ use App\Entity\Parts\Part;
 use App\Entity\Region\City;
 use App\Repository\Client\CompanyRepository;
 use App\Repository\Parts\BrandRepository;
-use App\Repository\Parts\CityRepository;
+use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

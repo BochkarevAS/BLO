@@ -44,7 +44,8 @@ class Company
     /**
      * Город
      *
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $city;
 
