@@ -80,7 +80,7 @@ class PartsCommand extends Command
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['price'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['photo']);
+            $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['photo']);
 
             $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
