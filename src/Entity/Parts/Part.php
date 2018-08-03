@@ -77,6 +77,29 @@ class Part
     private $slug;
 
     /**
+     * Город
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    private $city;
+
+    /**
+     * Город
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    private $company;
+
+    /**
+     * Фотографии
+     *
+     * @ORM\Column(type="json")
+     */
+    private $picture;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -244,6 +267,36 @@ class Part
     public function setPrice($price): void
     {
         $this->price = $price;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    public function setCompany($company): void
+    {
+        $this->company = $company;
+    }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture($picture): void
+    {
+        $this->picture = $picture;
     }
 
     public function getId()

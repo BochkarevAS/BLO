@@ -2,11 +2,13 @@
 
 namespace App\Command;
 
+use App\Entity\Client\Company;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Engine;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
+use App\Entity\Region\City;
 use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
@@ -49,7 +51,6 @@ class PartsCommand extends Command
     protected function import(InputInterface $input, OutputInterface $output)
     {
 //        $file = 'parts_test.csv';
-//        $file = 'parts_new.csv';
         $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
@@ -79,27 +80,23 @@ class PartsCommand extends Command
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['price'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem']);
+            $hash = md5($record['price'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['photo']);
 
             $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
             if ($part === null) {
                 $part = new Part();
-                $this->validation($part, $hash, $record, $em, $nameVendor);
+                $this->insert($part, $hash, $record, $em, $nameVendor);
+                $json = $this->json($part->getId(), $record['photo']);
+                $part->setPicture($json);
 
-//                $picture = new Picture();
-//                $this->json($tyre, $picture, $record['pictures'], $serializer);
-//                $em->persist($picture);
+                $em->persist($part);
             } else {
-                $this->validation($part, $hash, $record, $em, $nameVendor);
-                $em->merge($part);
+                $this->insert($part, $hash, $record, $em, $nameVendor);
+                $json = $this->json($part->getId(), $record['photo']);
+                $part->setPicture($json);
 
-//                $picture = $em->getRepository(Picture::class)->find($tyre->getId());
-//
-//                if (!$picture) {
-//                    $this->json($tyre, $picture, $record['pictures'], $serializer);
-//                    $em->merge($picture);
-//                }
+                $em->merge($part);
             }
 
             if (($i % $batchSize) === 0) {
@@ -128,7 +125,7 @@ class PartsCommand extends Command
      * @param $em
      * @param $nameVendor
      */
-    private function validation(Part $part, $hash, array $record, EntityManager $em, $nameVendor)
+    private function insert(Part $part, $hash, array $record, EntityManager $em, $nameVendor)
     {
         $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
         $part->setHash($hash);
@@ -175,6 +172,30 @@ class PartsCommand extends Command
             }
         }
 
+        $city = $em->getRepository(City::class)->findByName(mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'));
+
+        if ($city) {
+            $part->setCity($city);
+        }
+
+        $company = $em->getRepository(Company::class)->findByName('Vladmotors');
+
+        if ($company) {
+            $part->setCompany($company);
+        }
+
         $em->persist($part);
+    }
+
+    private function json($id, $link)
+    {
+        $serializer = $this->container->get('serializer');
+
+        $json = [
+            'idProduct'  => $id,
+            'links'      => mb_convert_encoding($link, 'UTF-8', 'Windows-1251')
+        ];
+
+        return $serializer->serialize($json, 'json');
     }
 }
