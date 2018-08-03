@@ -24,8 +24,7 @@ class User extends BaseUser
     protected $firstName;
 
     /**
-     * @ORM\Column(type="string")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $phone;
 
