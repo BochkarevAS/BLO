@@ -7,7 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="users", schema="security")
+ * @ORM\Table(name="users")
  */
 class User extends BaseUser
 {
@@ -19,15 +19,62 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Client\Company", mappedBy="user")
+     * @ORM\Column(name="first_name", type="string")
      */
-    protected $companys;
+    protected $firstName;
+
+    /**
+     * @ORM\Column(type="string")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    protected $city;
+
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName($firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function setPhone($phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
 
     public function setEmail($email)
     {
         $this->setUsername($email);
 
         return parent::setEmail($email);
+    }
+
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     public function getId()

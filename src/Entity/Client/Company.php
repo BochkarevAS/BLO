@@ -78,8 +78,8 @@ class Company
     private $sectionsDrives;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User", inversedBy="companys")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
     private $user;
 
