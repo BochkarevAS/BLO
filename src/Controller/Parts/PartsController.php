@@ -56,7 +56,7 @@ class PartsController extends AbstractController
                 $searchDTO->setEngine($search['engine']);
             }
 
-            $query = $this->getDoctrine()->getRepository(Part::class)-> search($entity, $searchDTO);
+            $query = $this->getDoctrine()->getRepository(Part::class)->search($entity, $searchDTO);
 
             if ($query) {
                 $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
