@@ -57,25 +57,12 @@ class Company
     private $syte;
 
     /**
-     * Активные разделы с прайсами (запчасти)
+     * Активные разделы в личном кобинете
      *
-     * @ORM\Column(type="boolean", name="sections_parts")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Client\Section", inversedBy="company")
+     * @ORM\JoinTable(name="company_sections", schema="client")
      */
-    private $sectionsParts;
-
-    /**
-     * Активные разделы с прайсами (шины)
-     *
-     * @ORM\Column(type="boolean", name="sections_tyres")
-     */
-    private $sectionsTyres;
-
-    /**
-     * Активные разделы с прайсами (диски)
-     *
-     * @ORM\Column(type="boolean", name="sections_drives")
-     */
-    private $sectionsDrives;
+    private $sections;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
@@ -116,8 +103,9 @@ class Company
 
     public function __construct()
     {
-        $this->phones = new ArrayCollection();
-        $this->emails = new ArrayCollection();
+        $this->phones   = new ArrayCollection();
+        $this->emails   = new ArrayCollection();
+        $this->sections = new ArrayCollection();
     }
 
     public function getName()
@@ -168,36 +156,6 @@ class Company
     public function setSyte($syte)
     {
         $this->syte = $syte;
-    }
-
-    public function getSectionsParts()
-    {
-        return $this->sectionsParts;
-    }
-
-    public function setSectionsParts($sectionsParts)
-    {
-        $this->sectionsParts = $sectionsParts;
-    }
-
-    public function getSectionsTyres()
-    {
-        return $this->sectionsTyres;
-    }
-
-    public function setSectionsTyres($sectionsTyres)
-    {
-        $this->sectionsTyres = $sectionsTyres;
-    }
-
-    public function getSectionsDrives()
-    {
-        return $this->sectionsDrives;
-    }
-
-    public function setSectionsDrives($sectionsDrives)
-    {
-        $this->sectionsDrives = $sectionsDrives;
     }
 
     public function getUser()
@@ -264,6 +222,34 @@ class Company
 
         $this->emails->removeElement($emails);
         $emails->setCompany(null);
+    }
+
+    /**
+     * @return ArrayCollection|Section[]
+     */
+    public function getSections()
+    {
+        return $this->sections;
+    }
+
+    public function addSection(Section $section)
+    {
+        if ($this->sections->contains($section)) {
+            return;
+        }
+
+        $this->sections[] = $section;
+        $section->setCompany($this);
+    }
+
+    public function removeSection(Section $section)
+    {
+        if (!$this->sections->contains($section)) {
+            return;
+        }
+
+        $this->sections->removeElement($section);
+        $section->setCompany(null);
     }
 
     public function getAddress()

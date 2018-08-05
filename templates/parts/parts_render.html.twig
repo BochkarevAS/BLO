@@ -59,9 +59,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {#{% if part.vendor %}#}
-                                    {#{{ part.vendor.name }} / {{ part.city.name }}#}
-                                {#{% endif %}#}
+                                {% if part.company %}
+                                    {{ part.company.name }} {% if part.city %} / {{ part.city.name }} {% endif %}
+                                {% endif %}
                             </td>
                             <td>
                                 {% if part.price %}

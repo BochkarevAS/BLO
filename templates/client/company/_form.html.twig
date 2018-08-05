@@ -40,15 +40,10 @@
             {{ form_row(form.address, {'id': 'company_address', 'attr': {'class': 'form-control'}}) }}
         </div>
     </div>
+
     <div class="row">
-        <div class="col-1">
-            {{ form_row(form.sectionsParts, {'id': 'company_sections_parts', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
-        </div>
-        <div class="col-1">
-            {{ form_row(form.sectionsTyres, {'id': 'company_sections_tyres', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
-        </div>
-        <div class="col-1">
-            {{ form_row(form.sectionsDrives, {'id': 'company_sections_drives', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
+        <div class="col-10">
+            {{ form_row(form.sections, {'id': 'company_sections', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
         </div>
     </div>
 

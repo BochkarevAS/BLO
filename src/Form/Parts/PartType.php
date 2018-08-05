@@ -38,7 +38,6 @@ class PartType extends AbstractType
                 'class'         => Company::class,
                 'label'         => 'Продавец',
                 'choice_label'  => 'name',
-                'mapped'        => false,
                 'required'      => false,
                 'query_builder' => function (CompanyRepository $repository) {
                     return $repository->orderBy();
@@ -62,7 +61,6 @@ class PartType extends AbstractType
                 'class'         => City::class,
                 'label'         => 'Город',
                 'choice_label'  => 'name',
-                'mapped'        => false,
                 'required'      => false,
                 'query_builder' => function (CityRepository $repository) {
                     return $repository->orderBy();

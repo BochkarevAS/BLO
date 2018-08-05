@@ -31,7 +31,7 @@ class Carcase
     private $models;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases", fetch="EXTRA_LAZY")
      * @JoinTable(name="parts_carcases", schema="parts")
      */
     private $parts;

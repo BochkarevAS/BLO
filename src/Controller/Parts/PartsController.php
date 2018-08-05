@@ -48,6 +48,14 @@ class PartsController extends AbstractController
                 $searchDTO->setCarcase($search['carcase']);
             }
 
+            if (isset($search['oem'])) {
+                $searchDTO->setOem($search['oem']);
+            }
+
+            if (isset($search['engine'])) {
+                $searchDTO->setEngine($search['engine']);
+            }
+
             $query = $this->getDoctrine()->getRepository(Part::class)-> search($entity, $searchDTO);
 
             if ($query) {

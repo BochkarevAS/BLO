@@ -84,9 +84,6 @@ class CompanyCommand extends Command
             $company->setCity($em->getReference(City::class, $userCompany['city']));
             $company->setSyte($userCompany['site']);
             $company->setAddress($userCompany['address']);
-            $company->setSectionsDrives(1);
-            $company->setSectionsParts(1);
-            $company->setSectionsTyres(1);
             $company->setUser($em->getReference(User::class, $userCompany['usert']));
             $em->persist($company);
             $em->flush();

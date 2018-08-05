@@ -3,6 +3,7 @@
 namespace App\Form\Client;
 
 use App\Entity\Client\Company;
+use App\Entity\Client\Section;
 use App\Entity\Region\City;
 use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -37,18 +38,6 @@ class CompanyType extends AbstractType
             ->add('address', TextareaType::class, [
                 'label' => 'Адрес компании',
             ])
-            ->add('sectionsParts', CheckboxType::class, [
-                'label'    => 'Запчасти',
-                'required' => false,
-            ])
-            ->add('sectionsTyres', CheckboxType::class, [
-                'label'    => 'Шины',
-                'required' => false,
-            ])
-            ->add('sectionsDrives', CheckboxType::class, [
-                'label'    => 'Диски',
-                'required' => false,
-            ])
             ->add('city', EntityType::class, [
                 'class'         => City::class,
                 'label'         => 'Город',
@@ -57,6 +46,13 @@ class CompanyType extends AbstractType
                 'query_builder' => function (CityRepository $repository) {
                     return $repository->orderBy();
                 },
+            ])
+            ->add('sections', EntityType::class, [
+                'class'        => Section::class,
+                'multiple'     => true,
+                'expanded'     => true,
+                'label'        => 'Активные разделы с прайсами',
+                'choice_label' => 'name'
             ])
             ->add('phones', CollectionType::class, [
                 'label'        => 'Телефон',

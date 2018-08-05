@@ -10,6 +10,10 @@ class SearchDTO
 
     private $company;
 
+    private $oem;
+
+    private $engine;
+
     public function getModel()
     {
         return $this->model;
@@ -30,16 +34,6 @@ class SearchDTO
         $this->carcase = $carcase;
     }
 
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    public function setCity($city): void
-    {
-        $this->city = $city;
-    }
-
     public function getCompany()
     {
         return $this->company;
@@ -48,5 +42,25 @@ class SearchDTO
     public function setCompany($company): void
     {
         $this->company = $company;
+    }
+
+    public function getOem()
+    {
+        return $this->oem;
+    }
+
+    public function setOem($oem): void
+    {
+        $this->oem = $oem;
+    }
+
+    public function getEngine()
+    {
+        return $this->engine;
+    }
+
+    public function setEngine($engine): void
+    {
+        $this->engine = $engine;
     }
 }
