@@ -21,9 +21,11 @@ class TyresRepository extends EntityRepository
         $company     = $tyre->getCompany();
 
         $qb = $this->createQueryBuilder('t')
-            ->addSelect('b, m')
+            ->addSelect('b, m, s, thorn')
             ->leftJoin('t.brand', 'b')
             ->leftJoin('t.models', 'm')
+            ->leftJoin('t.seasonality', 's')
+            ->leftJoin('t.thorn', 'thorn')
             ->leftJoin('t.city', 'city')
             ->leftJoin('t.company', 'company');
 
@@ -45,13 +47,11 @@ class TyresRepository extends EntityRepository
 
         /* Фильтр по шипам */
         if ($thorn) {
-            $qb->join('t.thorn', 'thorn');
             $qb->andWhere('th.id = :thornId')->setParameter('thornId', $thorn->getId());
         }
 
         /* Фильтр по сезонам */
         if ($seasonality) {
-            $qb->leftJoin('t.seasonality', 's');
             $qb->andWhere('s.id = :seasonalityId')->setParameter('seasonalityId', $seasonality->getId());
         }
 

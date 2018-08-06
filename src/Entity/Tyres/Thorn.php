@@ -22,11 +22,6 @@ class Thorn
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="thorn")
-     */
-    private $tyres;
-
     public function getName()
     {
         return $this->name;
@@ -35,16 +30,6 @@ class Thorn
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    public function getTyres()
-    {
-        return $this->tyres;
-    }
-
-    public function setTyres($tyres)
-    {
-        $this->tyres = $tyres;
     }
 
     public function getId()

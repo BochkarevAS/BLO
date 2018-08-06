@@ -56,14 +56,16 @@ class Tyre
     /**
      * Шипы
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn", inversedBy="tyres"))
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $thorn;
 
     /**
      * Сезонность
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality", inversedBy="tyres")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $seasonality;
 
