@@ -6,6 +6,12 @@ use Doctrine\ORM\EntityRepository;
 
 class ModelRepository extends EntityRepository
 {
+    public function orderBy()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.name', 'ASC');
+    }
+
     public function getModelById($id)
     {
         return $this->createQueryBuilder('m')

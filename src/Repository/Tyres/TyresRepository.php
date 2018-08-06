@@ -51,28 +51,28 @@ class TyresRepository extends EntityRepository
         }
 
         /* Фильтр по продавец */
-        if (!$tyre->getVendor()->isEmpty()) {
-            $ids = [];
-
-            foreach ($tyre->getVendor() as $vendor) {
-                $ids[] = $vendor->getId();
-            }
-
-            $qb->leftJoin('t.vendor', 'v');
-            $qb->andWhere('v.id IN (:vids)')->setParameter('vids', $ids, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
-        }
+//        if (!$tyre->getVendor()->isEmpty()) {
+//            $ids = [];
+//
+//            foreach ($tyre->getVendor() as $vendor) {
+//                $ids[] = $vendor->getId();
+//            }
+//
+//            $qb->leftJoin('t.vendor', 'v');
+//            $qb->andWhere('v.id IN (:vids)')->setParameter('vids', $ids, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+//        }
 
         /* Фильтр по моделям */
-        if (!$tyre->getModel()->isEmpty()) {
-            $ids = [];
-
-            foreach ($tyre->getModel() as $model) {
-                $ids[] = $model->getId();
-            }
-
-            $qb->leftJoin('t.model', 'm');
-            $qb->andWhere('m.id IN (:mids)')->setParameter('mids', $ids, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
-        }
+//        if (!$tyre->getModel()->isEmpty()) {
+//            $ids = [];
+//
+//            foreach ($tyre->getModel() as $model) {
+//                $ids[] = $model->getId();
+//            }
+//
+//            $qb->leftJoin('t.model', 'm');
+//            $qb->andWhere('m.id IN (:mids)')->setParameter('mids', $ids, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+//        }
 
         return $qb->getQuery();
     }

@@ -112,13 +112,6 @@ class PartsCommand extends Command
         $progress->finish();
     }
 
-    /**
-     * @param Part $part
-     * @param $hash
-     * @param array $record
-     * @param $em
-     * @param $nameVendor
-     */
     private function insert(Part $part, $hash, array $record, EntityManager $em, $company)
     {
         $serializer = $this->container->get('serializer');
@@ -179,6 +172,8 @@ class PartsCommand extends Command
         if ($company) {
             $part->setCompany($company);
         }
+
+        $em->persist($part);
 
         $json = ['id' => $part->getId(), 'links' => mb_convert_encoding($record['photo'], 'UTF-8', 'Windows-1251')];
         $part->setPicture($serializer->serialize($json, 'json'));

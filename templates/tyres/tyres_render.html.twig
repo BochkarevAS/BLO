@@ -41,9 +41,9 @@
                                 {% if tyre.diameter %}
                                     / {{ tyre.diameter }}
                                 {% endif %}
-                                {% if tyre.model %}
-                                    {{ tyre.model.name }}
-                                {% endif %}
+                                {#{% if tyre.model %}#}
+                                    {#{{ tyre.model.name }}#}
+                                {#{% endif %}#}
                                 <br>
                                 {% if tyre.quantity %}
                                     Комплект {{ tyre.quantity }} шт.
@@ -55,11 +55,11 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if tyre.vendor %}
-                                    {{ tyre.vendor.name }}
+                                {% if tyre.company %}
+                                    {{ tyre.company.name }}
                                 {% endif %}
                             </td>
-                            <td>{{ tyre.updatedAt|date }}</td>
+                            <td>{{ tyre.updatedAt|date('d-m-Y H:i') }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

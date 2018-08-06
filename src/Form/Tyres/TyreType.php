@@ -9,6 +9,7 @@ use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
 use App\Repository\Client\CompanyRepository;
+use App\Repository\Tyres\ModelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -33,10 +34,14 @@ class TyreType extends AbstractType
             ])
             ->add('model', EntityType::class, [
                 'class'         => Model::class,
-                'label'         => 'Модель',
+                'label'         => 'Моeдель',
                 'multiple'      => true,
+                'mapped'        => false,
                 'required'      => false,
-                'choice_label'  => 'name'
+                'choice_label'  => 'name',
+                'query_builder' => function (ModelRepository $repository) {
+                    return $repository->orderBy();
+                }
             ])
             ->add('company', EntityType::class, [
                 'class'         => Company::class,

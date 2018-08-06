@@ -83,7 +83,7 @@ class TyresCommand extends Command
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] . $record['model'] . $record['index_of_speed'] . $record['load_index'] . $record['brand'] . $record['pictures']);
+            $hash = md5($record['quantity'] . $record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] . $record['model'] . $record['index_of_speed'] . $record['load_index'] . $record['brand'] . $record['pictures']);
 
             $tyre = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
 
@@ -122,6 +122,11 @@ class TyresCommand extends Command
 
         $tyre->setHash($hash);
         $tyre->setPrice((int) $record['price']);
+        $tyre->setWidth((int) $record['width_mm']);
+        $tyre->setDiameter((int) $record['diameter_mm']);
+        $tyre->setQuantity((int) $record['quantity']);
+        $tyre->setHeight((int) $record['height_proc']);
+        $tyre->setPrice((int) $record['price']);
 
         if ($record['brand']) {
             $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
@@ -148,6 +153,8 @@ class TyresCommand extends Command
         if ($company) {
             $tyre->setCompany($company);
         }
+
+        $em->persist($tyre);
 
         $json = ['id' => $tyre->getId(), 'links' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')];
         $tyre->setPicture($serializer->serialize($json, 'json'));
