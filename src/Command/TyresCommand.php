@@ -83,22 +83,16 @@ class TyresCommand extends Command
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] . $record['model'] . $record['index_of_speed'] . $record['load_index'] . $record['brand']);
+            $hash = md5($record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] . $record['model'] . $record['index_of_speed'] . $record['load_index'] . $record['brand'] . $record['pictures']);
 
             $tyre = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
 
             if ($tyre === null) {
                 $tyre = new Tyre();
                 $this->insert($tyre, $hash, $record, $em, $company);
-                $json = $this->json($tyre->getId(), $record['photo']);
-                $tyre->setPicture($json);
-
                 $em->persist($tyre);
             } else {
                 $this->insert($tyre, $hash, $record, $em, $company);
-                $json = $this->json($tyre->getId(), $record['photo']);
-                $tyre->setPicture($json);
-
                 $em->merge($tyre);
             }
 
@@ -124,7 +118,8 @@ class TyresCommand extends Command
 
     private function insert(Tyre $tyre, $hash, array $record, EntityManager $em, $company)
     {
-        $tyre->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
+        $serializer = $this->container->get('serializer');
+
         $tyre->setHash($hash);
         $tyre->setPrice((int) $record['price']);
 
@@ -154,6 +149,10 @@ class TyresCommand extends Command
             $tyre->setCompany($company);
         }
 
+        $json = ['id' => $tyre->getId(), 'links' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')];
+        $tyre->setPicture($serializer->serialize($json, 'json'));
+
+
 //        $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
 //            'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
 //        ]);
@@ -163,17 +162,5 @@ class TyresCommand extends Command
 //        ]);
 
         $em->persist($tyre);
-    }
-
-    private function json($id, $link)
-    {
-        $serializer = $this->container->get('serializer');
-
-        $json = [
-            'id'    => $id,
-            'links' => mb_convert_encoding($link, 'UTF-8', 'Windows-1251')
-        ];
-
-        return $serializer->serialize($json, 'json');
     }
 }

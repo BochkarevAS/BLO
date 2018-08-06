@@ -26,13 +26,6 @@ class Tyre
     private $id;
 
     /**
-     * Название запчасти
-     *
-     * @ORM\Column(type="text")
-     */
-    private $name;
-
-    /**
      * Ширина профиля (мм)
      *
      * @ORM\Column(type="integer")
@@ -118,12 +111,6 @@ class Tyre
     private $price;
 
     /**
-     * @ORM\Column(name="slug", type="string", length=255)
-     * @Gedmo\Slug(fields={"name"}, unique=false)
-     */
-    private $slug;
-
-    /**
      * Фотографии
      *
      * @ORM\Column(type="json")
@@ -145,16 +132,6 @@ class Tyre
     public function __construct()
     {
         $this->models = new ArrayCollection();
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name): void
-    {
-        $this->name = $name;
     }
 
     public function getWidth()
@@ -299,16 +276,6 @@ class Tyre
     public function setCompany($company): void
     {
         $this->company = $company;
-    }
-
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    public function setSlug($slug): void
-    {
-        $this->slug = $slug;
     }
 
     public function getPicture()

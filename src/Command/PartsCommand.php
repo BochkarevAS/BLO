@@ -87,15 +87,9 @@ class PartsCommand extends Command
             if ($part === null) {
                 $part = new Part();
                 $this->insert($part, $hash, $record, $em, $company);
-                $json = $this->json($part->getId(), $record['photo']);
-                $part->setPicture($json);
-
                 $em->persist($part);
             } else {
                 $this->insert($part, $hash, $record, $em, $company);
-                $json = $this->json($part->getId(), $record['photo']);
-                $part->setPicture($json);
-
                 $em->merge($part);
             }
 
@@ -127,6 +121,8 @@ class PartsCommand extends Command
      */
     private function insert(Part $part, $hash, array $record, EntityManager $em, $company)
     {
+        $serializer = $this->container->get('serializer');
+
         $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
         $part->setHash($hash);
         $part->setPrice((int) $record['price']);
@@ -184,18 +180,9 @@ class PartsCommand extends Command
             $part->setCompany($company);
         }
 
+        $json = ['id' => $part->getId(), 'links' => mb_convert_encoding($record['photo'], 'UTF-8', 'Windows-1251')];
+        $part->setPicture($serializer->serialize($json, 'json'));
+
         $em->persist($part);
-    }
-
-    private function json($id, $link)
-    {
-        $serializer = $this->container->get('serializer');
-
-        $json = [
-            'id'    => $id,
-            'links' => mb_convert_encoding($link, 'UTF-8', 'Windows-1251')
-        ];
-
-        return $serializer->serialize($json, 'json');
     }
 }
