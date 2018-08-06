@@ -60,12 +60,10 @@ class PriceController extends AbstractController
             $output = new BufferedOutput(OutputInterface::VERBOSITY_NORMAL, true);
             $application->run($input, $output);
 
+            $converter = new AnsiToHtmlConverter();
+            $content = $output->fetch();
 
-            return new Response();
-//            $converter = new AnsiToHtmlConverter();
-//            $content = $output->fetch();
-//
-//            return new Response($converter->convert($content));
+            return new Response($converter->convert($content));
 
 //            return $this->redirectToRoute('client_price_load', ['id' => $company->getId()]);
         }
