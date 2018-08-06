@@ -80,11 +80,20 @@ class Tyre
     private $brand;
 
     /**
-     * Производитель
+     * Город
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Vendor", inversedBy="tyres")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    private $vendor;
+    private $city;
+
+    /**
+     * Компания продавец
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    private $company;
 
     /**
      * Хэш уникальный индефекатор шины
@@ -204,19 +213,6 @@ class Tyre
         $this->brand = $brand;
     }
 
-    /**
-     * @return Vendor
-     */
-    public function getVendor()
-    {
-        return $this->vendor;
-    }
-
-    public function setVendor($vendor)
-    {
-        $this->vendor = $vendor;
-    }
-
     public function getHash()
     {
         return $this->hash;
@@ -235,6 +231,26 @@ class Tyre
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    public function setCompany($company): void
+    {
+        $this->company = $company;
     }
 
     public function getId()

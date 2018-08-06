@@ -2,12 +2,14 @@
 
 namespace App\Form\Tyres;
 
+use App\Entity\Client\Company;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
 use App\Entity\Tyres\Vendor;
+use App\Repository\Client\CompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -37,12 +39,14 @@ class TyreType extends AbstractType
                 'required'      => false,
                 'choice_label'  => 'name'
             ])
-            ->add('vendor', EntityType::class, [
-                'class'         => Vendor::class,
+            ->add('company', EntityType::class, [
+                'class'         => Company::class,
                 'label'         => 'Продавец',
-                'multiple'      => true,
+                'choice_label'  => 'name',
                 'required'      => false,
-                'choice_label'  => 'name'
+                'query_builder' => function (CompanyRepository $repository) {
+                    return $repository->orderBy();
+                }
             ])
             ->add('thorn', EntityType::class, [
                 'class'         => Thorn::class,

@@ -4,7 +4,6 @@ namespace App\Command;
 
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
-use App\Entity\Tyres\Picture;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;

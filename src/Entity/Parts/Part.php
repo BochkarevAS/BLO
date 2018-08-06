@@ -85,7 +85,7 @@ class Part
     private $city;
 
     /**
-     * Город
+     * Компания продавец
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
      * @ORM\JoinColumn(referencedColumnName="id")
