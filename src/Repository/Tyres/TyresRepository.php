@@ -2,18 +2,16 @@
 
 namespace App\Repository\Tyres;
 
-use App\Entity\Tyres\Picture;
 use App\Entity\Tyres\Tyre;
 use Doctrine\ORM\EntityRepository;
 
 class TyresRepository extends EntityRepository
 {
-    public function renderTyres(Tyre $tyre)
+    public function search(Tyre $tyre)
     {
         $qb = $this->createQueryBuilder('t')
             ->select('t')
-            ->leftJoin('t.brand', 'b')
-            ->leftJoin(Picture::class, 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.tyres = t.id');
+            ->leftJoin('t.brand', 'b');
 
         /* Фильтр по производителям */
         if ($tyre->getBrand()) {

@@ -2,7 +2,9 @@
 
 namespace App\Entity\Tyres;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -22,6 +24,13 @@ class Tyre
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * Название запчасти
+     *
+     * @ORM\Column(type="text")
+     */
+    private $name;
 
     /**
      * Ширина профиля (мм)
@@ -66,18 +75,17 @@ class Tyre
     private $seasonality;
 
     /**
-     * Модель шины
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model", inversedBy="tyres")
-     */
-    private $model;
-
-    /**
      * Производитель
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Brand", inversedBy="tyres")
      */
     private $brand;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tyres\Model", inversedBy="tyres")
+     * @JoinTable(name="tyres_models", schema="tyres")
+     */
+    private $models;
 
     /**
      * Город
@@ -110,6 +118,19 @@ class Tyre
     private $price;
 
     /**
+     * @ORM\Column(name="slug", type="string", length=255)
+     * @Gedmo\Slug(fields={"name"}, unique=false)
+     */
+    private $slug;
+
+    /**
+     * Фотографии
+     *
+     * @ORM\Column(type="json")
+     */
+    private $picture;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -120,6 +141,21 @@ class Tyre
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
+
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
 
     public function getWidth()
     {
@@ -187,17 +223,29 @@ class Tyre
         $this->thorn = $thorn;
     }
 
-    /**
-     * @return Model
-     */
-    public function getModel()
+    public function getModels()
     {
-        return $this->model;
+        return $this->models;
     }
 
-    public function setModel($model)
+    public function addModel(Model $model)
     {
-        $this->model = $model;
+        if ($this->models->contains($model)) {
+            return;
+        }
+
+        $this->models[] = $model;
+        $model->setTyres($this);
+    }
+
+    public function removeModel(Model $model)
+    {
+        if (!$this->models->contains($model)) {
+            return;
+        }
+
+        $this->models->removeElement($model);
+        $model->setTyres(null);
     }
 
     /**
@@ -251,6 +299,26 @@ class Tyre
     public function setCompany($company): void
     {
         $this->company = $company;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture($picture): void
+    {
+        $this->picture = $picture;
     }
 
     public function getId()

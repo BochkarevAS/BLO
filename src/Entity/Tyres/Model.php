@@ -28,7 +28,7 @@ class Model
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="model")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="models")
      */
     private $tyres;
 

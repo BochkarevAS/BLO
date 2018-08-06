@@ -74,7 +74,7 @@ class PartsCommand extends Command
 
         $i = 0;
         $batchSize = 1000;
-        $nameVendor = 'ALFACAR';
+        $company = 'Vladmotors';
 
         $progress = new ProgressBar($output, count($reader));
         $progress->start();
@@ -86,13 +86,13 @@ class PartsCommand extends Command
 
             if ($part === null) {
                 $part = new Part();
-                $this->insert($part, $hash, $record, $em, $nameVendor);
+                $this->insert($part, $hash, $record, $em, $company);
                 $json = $this->json($part->getId(), $record['photo']);
                 $part->setPicture($json);
 
                 $em->persist($part);
             } else {
-                $this->insert($part, $hash, $record, $em, $nameVendor);
+                $this->insert($part, $hash, $record, $em, $company);
                 $json = $this->json($part->getId(), $record['photo']);
                 $part->setPicture($json);
 
@@ -125,7 +125,7 @@ class PartsCommand extends Command
      * @param $em
      * @param $nameVendor
      */
-    private function insert(Part $part, $hash, array $record, EntityManager $em, $nameVendor)
+    private function insert(Part $part, $hash, array $record, EntityManager $em, $company)
     {
         $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
         $part->setHash($hash);
@@ -178,7 +178,7 @@ class PartsCommand extends Command
             $part->setCity($city);
         }
 
-        $company = $em->getRepository(Company::class)->findByName('Vladmotors');
+        $company = $em->getRepository(Company::class)->findByName($company);
 
         if ($company) {
             $part->setCompany($company);

@@ -2,12 +2,13 @@
 
 namespace App\Command;
 
+use App\Entity\Client\Company;
+use App\Entity\Region\City;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
-use App\Entity\Tyres\Vendor;
 use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
@@ -53,9 +54,7 @@ class TyresCommand extends Command
 //        $file = 'test.csv';
 
         $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-
-        $serializer = $this->container->get('serializer');
-        $em = $this->container->get('doctrine.orm.default_entity_manager');
+        $em   = $this->container->get('doctrine.orm.default_entity_manager');
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
@@ -78,43 +77,29 @@ class TyresCommand extends Command
 
         $i = 0;
         $batchSize = 1000;
-        $nameVendor = 'ALFACAR';
+        $company = 'Vladmotors';
 
         $progress = new ProgressBar($output, count($reader));
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5(
-                $record['diameter_mm'] .
-                $record['height_proc'] .
-                $record['width_mm'] .
-                $record['model'] .
-                $record['index_of_speed'] .
-                $record['load_index'] .
-                $record['pictures'] .
-                $record['brand']
-            );
+            $hash = md5($record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] . $record['model'] . $record['index_of_speed'] . $record['load_index'] . $record['brand']);
 
-            $record = $this->valid($record, $em, $nameVendor);
-            $tyre   = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
+            $tyre = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
 
             if ($tyre === null) {
                 $tyre = new Tyre();
-                $this->tyre($tyre, $record, $hash);
+                $this->insert($tyre, $hash, $record, $em, $company);
+                $json = $this->json($tyre->getId(), $record['photo']);
+                $tyre->setPicture($json);
+
                 $em->persist($tyre);
-
-                $picture = new Picture();
-                $this->json($tyre, $picture, $record['pictures'], $serializer);
-                $em->persist($picture);
             } else {
-                $this->tyre($tyre, $record, $hash);
-                $em->merge($tyre);
-                $picture = $em->getRepository(Picture::class)->find($tyre->getId());
+                $this->insert($tyre, $hash, $record, $em, $company);
+                $json = $this->json($tyre->getId(), $record['photo']);
+                $tyre->setPicture($json);
 
-                if (!$picture) {
-                    $this->json($tyre, $picture, $record['pictures'], $serializer);
-                    $em->merge($picture);
-                }
+                $em->merge($tyre);
             }
 
             if (($i % $batchSize) === 0) {
@@ -137,76 +122,58 @@ class TyresCommand extends Command
         $progress->finish();
     }
 
-    /**
-     * @param array $record
-     * @param EntityManager $em
-     * @param $nameVendor
-     * @return array
-     */
-    private function valid(array $record, $em, $nameVendor)
+    private function insert(Tyre $tyre, $hash, array $record, EntityManager $em, $company)
     {
-        $record['vendor'] = $em->getRepository(Vendor::class)->findOneBy([
-            'name' => mb_convert_encoding($nameVendor, 'UTF-8', 'Windows-1251')
-        ]);
-
-        $record['model'] = $em->getRepository(Model::class)->findOneBy([
-            'name' => mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251')
-        ]);
-
-        $record['brand'] = $em->getRepository(Brand::class)->findOneBy([
-            'name' => mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251')
-        ]);
-
-        $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
-            'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
-        ]);
-
-        $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
-            'name' => mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251')
-        ]);
-
-        return $record;
-    }
-
-    /**
-     * @param Tyre $tyre
-     * @param $record
-     * @param $hash
-     */
-    private function tyre($tyre, array $record, $hash)
-    {
-        $tyre->setDiameter((int) $record['diameter_mm']);
-        $tyre->setHeight((int) $record['height_proc']);
-        $tyre->setWidth((int) $record['width_mm']);
-        $tyre->setQuantity((int) $record['quantity']);
+        $tyre->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
         $tyre->setHash($hash);
-        $tyre->setVendor($record['vendor']);
-        $tyre->setModel($record['model']);
-        $tyre->setBrand($record['brand']);
-        $tyre->setSeasonality($record['seasonality']);
-        $tyre->setThorn($record['thorn']);
-        $tyre->setPrice($record['price']);
+        $tyre->setPrice((int) $record['price']);
+
+        if ($record['brand']) {
+            $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
+            $tyre->setBrand($brand);
+        }
+
+        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['model']));
+
+        if ($patterns) {
+            $models = $em->getRepository(Model::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
+            foreach ($models as $model) {
+                $tyre->addModel($model);
+            }
+        }
+
+        $city = $em->getRepository(City::class)->findByName(mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'));
+
+        if ($city) {
+            $tyre->setCity($city);
+        }
+
+        $company = $em->getRepository(Company::class)->findByName($company);
+
+        if ($company) {
+            $tyre->setCompany($company);
+        }
+
+//        $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
+//            'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
+//        ]);
+//
+//        $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
+//            'name' => mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251')
+//        ]);
+
+        $em->persist($tyre);
     }
 
-    /**
-     * @param Tyre $tyreId
-     * @param Picture $picture
-     * @param $serializer
-     */
-    private function json($tyre, $picture, $linkPicture, $serializer)
+    private function json($id, $link)
     {
+        $serializer = $this->container->get('serializer');
+
         $json = [
-            'idProduct'  => $tyre->getId(),
-            'idModule'   => 1,
-            'imgsJson'   => 0,
-            'imgsResult' => 0,
-            'imgsLinks'  => mb_convert_encoding($linkPicture, 'UTF-8', 'Windows-1251')
+            'id'    => $id,
+            'links' => mb_convert_encoding($link, 'UTF-8', 'Windows-1251')
         ];
 
-        $json = $serializer->serialize($json, 'json');
-
-        $picture->setIdModule(1);
-        $picture->setTyres($tyre);
-        $picture->setPath($json);
+        return $serializer->serialize($json, 'json');
     }
 }

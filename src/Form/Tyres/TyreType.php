@@ -8,7 +8,6 @@ use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
-use App\Entity\Tyres\Vendor;
 use App\Repository\Client\CompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
