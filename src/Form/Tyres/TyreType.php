@@ -3,12 +3,14 @@
 namespace App\Form\Tyres;
 
 use App\Entity\Client\Company;
+use App\Entity\Region\City;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
 use App\Repository\Client\CompanyRepository;
+use App\Repository\Region\CityRepository;
 use App\Repository\Tyres\ModelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -51,6 +53,15 @@ class TyreType extends AbstractType
                 'query_builder' => function (CompanyRepository $repository) {
                     return $repository->orderBy();
                 }
+            ])
+            ->add('city', EntityType::class, [
+                'class'         => City::class,
+                'label'         => 'Город',
+                'choice_label'  => 'name',
+                'required'      => false,
+                'query_builder' => function (CityRepository $repository) {
+                    return $repository->orderBy();
+                },
             ])
             ->add('thorn', EntityType::class, [
                 'class'         => Thorn::class,

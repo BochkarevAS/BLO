@@ -27,9 +27,6 @@ class TyresRepository extends EntityRepository
             ->leftJoin('t.city', 'city')
             ->leftJoin('t.company', 'company');
 
-
-        dump($tyre);
-
         /* Фильтр по производителям */
         if ($brand) {
             $qb->andWhere('b.id = :bid')->setParameter('bid', $brand->getId());
