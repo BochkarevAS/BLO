@@ -71,6 +71,13 @@ class Company
     private $user;
 
     /**
+     * Логотип компании
+     *
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $logotype;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Client\Phone", mappedBy="company", orphanRemoval=true,  cascade={"persist"})
      * @Assert\Valid()
      */
@@ -260,6 +267,16 @@ class Company
     public function setAddress($address): void
     {
         $this->address = $address;
+    }
+
+    public function getLogotype()
+    {
+        return $this->logotype;
+    }
+
+    public function setLogotype($logotype): void
+    {
+        $this->logotype = $logotype;
     }
 
     public function getId()

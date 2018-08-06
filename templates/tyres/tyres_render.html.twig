@@ -12,14 +12,6 @@
             </div>
 
             <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
                 <tbody>
 
                     {% for tyre in tyres %}
@@ -41,9 +33,11 @@
                                 {% if tyre.diameter %}
                                     / {{ tyre.diameter }}
                                 {% endif %}
-                                {#{% if tyre.model %}#}
-                                    {#{{ tyre.model.name }}#}
-                                {#{% endif %}#}
+                                {% if tyre.models %}
+                                    {% for model in tyre.models %}
+                                        {{ model.name }}
+                                    {% endfor %}
+                                {% endif %}
                                 <br>
                                 {% if tyre.quantity %}
                                     Комплект {{ tyre.quantity }} шт.
@@ -56,7 +50,7 @@
                             </td>
                             <td>
                                 {% if tyre.company %}
-                                    {{ tyre.company.name }}
+                                    {{ tyre.company.name }} {% if tyre.city %} / {{ tyre.city.name }} {% endif %}
                                 {% endif %}
                             </td>
                             <td>{{ tyre.updatedAt|date('d-m-Y H:i') }}</td>

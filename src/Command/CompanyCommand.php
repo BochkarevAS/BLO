@@ -78,7 +78,7 @@ class CompanyCommand extends Command
 
         foreach ($results as $userCompany) {
             $company = new Company();
-            $company->setName($userCompany['name']);
+            $company->setName(htmlspecialchars_decode($userCompany['name']));
             $company->setPreview($userCompany['previev']);
             $company->setBank($userCompany['bank_details']);
             $company->setCity($em->getReference(City::class, $userCompany['city']));
