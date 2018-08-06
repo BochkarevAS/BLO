@@ -192,8 +192,8 @@ class PartsCommand extends Command
         $serializer = $this->container->get('serializer');
 
         $json = [
-            'idProduct'  => $id,
-            'links'      => mb_convert_encoding($link, 'UTF-8', 'Windows-1251')
+            'id'    => $id,
+            'links' => mb_convert_encoding($link, 'UTF-8', 'Windows-1251')
         ];
 
         return $serializer->serialize($json, 'json');

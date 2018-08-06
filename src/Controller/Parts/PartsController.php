@@ -17,12 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PartsController extends AbstractController
 {
-    private $finder;
-
-    public function __construct(PaginatedFinderInterface $finder)
-    {
-        $this->finder = $finder;
-    }
+//    private $finder;
+//
+//    public function __construct(PaginatedFinderInterface $finder)
+//    {
+//        $this->finder = $finder;
+//    }
 
     /**
      * @Route("/", name="parts_index", options={"expose"=true})
@@ -72,24 +72,24 @@ class PartsController extends AbstractController
     /**
      * @Route("/suggest", name="parts_suggest", options={"expose"=true})
      */
-    public function autocomplete(Request $request)
-    {
-        $query = $request->get('query', null);
-        $data = [];
-
-        $boolQuery  = new \Elastica\Query\BoolQuery();
-        $multiMatch = new \Elastica\Query\MultiMatch();
-        $multiMatch->setFields(['name']);
-        $multiMatch->setType('phrase_prefix');
-        $multiMatch->setQuery($query);
-        $boolQuery->addMust($multiMatch);
-
-        $results = $this->finder->find($boolQuery, 10);
-
-        foreach ($results as $result) {
-            $data[] = $result->getName();
-        }
-
-        return new JsonResponse($data, 200);
-    }
+//    public function autocomplete(Request $request)
+//    {
+//        $query = $request->get('query', null);
+//        $data = [];
+//
+//        $boolQuery  = new \Elastica\Query\BoolQuery();
+//        $multiMatch = new \Elastica\Query\MultiMatch();
+//        $multiMatch->setFields(['name']);
+//        $multiMatch->setType('phrase_prefix');
+//        $multiMatch->setQuery($query);
+//        $boolQuery->addMust($multiMatch);
+//
+//        $results = $this->finder->find($boolQuery, 10);
+//
+//        foreach ($results as $result) {
+//            $data[] = $result->getName();
+//        }
+//
+//        return new JsonResponse($data, 200);
+//    }
 }

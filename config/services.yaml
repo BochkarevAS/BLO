@@ -43,6 +43,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    App\Controller\Parts\PartsController:
-        arguments:
-            $finder: '@fos_elastica.finder.app.part'
+#    App\Controller\Parts\PartsController:
+#        arguments:
+#            $finder: '@fos_elastica.finder.app.part'
