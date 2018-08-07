@@ -12,15 +12,14 @@ class ModelRepository extends EntityRepository
             ->orderBy('m.name', 'ASC');
     }
 
-    public function getModelById($id)
+    public function findByName($name)
     {
         return $this->createQueryBuilder('m')
-            ->Join('m.parts', 'p')
-            ->Join('p.brands', 'b')
-            ->andWhere('b.id = :id')
-            ->setParameter('id', $id)
+            ->andWhere('upper(m.name) = upper(:name)')
+            ->setParameter('name', $name)
+            ->setMaxResults(1)
             ->getQuery()
-            ->execute();
+            ->getOneOrNullResult();
     }
 
     public function findAllByNames($names)

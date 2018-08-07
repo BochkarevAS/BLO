@@ -1944,8 +1944,8 @@ INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10589, 536, 
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10590, 536, 1, 1, 'Wagon R Plus');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10591, 536, 1, 1, 'Wagon R Solio');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10592, 536, 1, 1, 'X-90');
-INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10770, 550, 1, 1, 'Model S');
-INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10771, 550, 1, 1, 'Model X');
+INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10770, 550, 1, 1, 'Tyre S');
+INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10771, 550, 1, 1, 'Tyre X');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10772, 550, 1, 1, 'Roadster');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10802, 557, 1, 1, 'Innova');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (10803, 557, 1, 1, '1000');
@@ -2117,7 +2117,7 @@ INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11113, 557, 
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11114, 557, 1, 1, 'Matrix');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11116, 557, 1, 1, 'Mega Cruiser');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11117, 557, 1, 1, 'Mirai');
-INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11118, 557, 1, 1, 'Model-F');
+INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11118, 557, 1, 1, 'Tyre-F');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11119, 557, 1, 1, 'Many');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11120, 557, 1, 1, 'MR2');
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (11121, 557, 1, 1, 'MR-S');

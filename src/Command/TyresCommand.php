@@ -133,13 +133,9 @@ class TyresCommand extends Command
             $tyre->setBrand($brand);
         }
 
-        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['model']));
-
-        if ($patterns) {
-            $models = $em->getRepository(Model::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
-            foreach ($models as $model) {
-                $tyre->addModel($model);
-            }
+        if ($record['model']) {
+            $model = $em->getRepository(Model::class)->findByName(mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'));
+            $tyre->setModel($model);
         }
 
         $city = $em->getRepository(City::class)->findByName(mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'));

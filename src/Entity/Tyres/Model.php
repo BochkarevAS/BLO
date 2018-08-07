@@ -27,11 +27,6 @@ class Model
      */
     private $brand;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="models")
-     */
-    private $tyres;
-
     public function getName()
     {
         return $this->name;
@@ -50,16 +45,6 @@ class Model
     public function setBrand($brand)
     {
         $this->brand = $brand;
-    }
-
-    public function getTyres()
-    {
-        return $this->tyres;
-    }
-
-    public function setTyres($tyres)
-    {
-        $this->tyres = $tyres;
     }
 
     public function getId()

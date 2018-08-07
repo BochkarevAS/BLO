@@ -7633,9 +7633,9 @@ INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7550, 1, 100
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7551, 0, 1, 'C-CLASS (W203)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7552, 0, 1, 'C-CLASS (W204)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7553, 0, 1, 'C-CLASS (W205)', 387);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7554, 0, 1, 'C-CLASS T-Model (S203)', 387);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7555, 0, 1, 'C-CLASS T-Model (S204)', 387);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7556, 0, 1, 'C-CLASS T-Model (S205)', 387);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7554, 0, 1, 'C-CLASS T-Tyre (S203)', 387);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7555, 0, 1, 'C-CLASS T-Tyre (S204)', 387);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7556, 0, 1, 'C-CLASS T-Tyre (S205)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7557, 0, 1, 'C-CLASS купе (C204)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7558, 0, 1, 'C-CLASS купе (CL203)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7559, 0, 1, 'C-CLASS универсал (S202)', 387);
@@ -7668,8 +7668,8 @@ INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7585, 1, 100
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7586, 0, 1, 'E-CLASS (W210)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7587, 0, 1, 'E-CLASS (W211)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7588, 0, 1, 'E-CLASS (W212)', 387);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7589, 0, 1, 'E-CLASS T-Model (S211)', 387);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7590, 0, 1, 'E-CLASS T-Model (S212)', 387);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7589, 0, 1, 'E-CLASS T-Tyre (S211)', 387);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7590, 0, 1, 'E-CLASS T-Tyre (S212)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7591, 0, 1, 'E-CLASS кабрио (A124)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7592, 0, 1, 'E-CLASS кабрио (A207)', 387);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (7593, 0, 1, 'E-CLASS купе (C124)', 387);
@@ -10869,8 +10869,8 @@ INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10766, 0, 1,
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10767, 0, 1, 'TT', 549);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10768, 0, 1, 'URBIN', 549);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10769, 0, 1, 'YT', 549);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10770, 1, 1, 'Model S', 550);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10771, 1, 1, 'Model X', 550);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10770, 1, 1, 'Tyre S', 550);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10771, 1, 1, 'Tyre X', 550);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10772, 1, 1, 'Roadster', 550);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10773, 0, 1, 'City', 551);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (10774, 0, 1, 'Chenglong', 552);
@@ -11241,7 +11241,7 @@ INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11114, 1, 1,
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11115, 0, 1, 'MR-2', 557);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11116, 1, 1, 'Mega Cruiser', 557);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11117, 1, 1, 'Mirai', 557);
-INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11118, 1, 1, 'Model-F', 557);
+INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11118, 1, 1, 'Tyre-F', 557);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11119, 1, 1, 'Many', 557);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11120, 1, 1, 'MR2', 557);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (11121, 1, 1, 'MR-S', 557);

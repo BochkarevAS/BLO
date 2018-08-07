@@ -2,7 +2,6 @@
 
 namespace App\Entity\Tyres;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -77,10 +76,10 @@ class Tyre
     private $brand;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tyres\Model", inversedBy="tyres")
-     * @JoinTable(name="tyres_models", schema="tyres")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    private $models;
+    private $model;
 
     /**
      * Город
@@ -131,10 +130,10 @@ class Tyre
      */
     private $updatedAt;
 
-    public function __construct()
-    {
-        $this->models = new ArrayCollection();
-    }
+//    public function __construct()
+//    {
+//        $this->models = new ArrayCollection();
+//    }
 
     public function getWidth()
     {
@@ -202,29 +201,14 @@ class Tyre
         $this->thorn = $thorn;
     }
 
-    public function getModels()
+    public function getModel()
     {
-        return $this->models;
+        return $this->model;
     }
 
-    public function addModel(Model $model)
+    public function setModel($model): void
     {
-        if ($this->models->contains($model)) {
-            return;
-        }
-
-        $this->models[] = $model;
-        $model->setTyres($this);
-    }
-
-    public function removeModel(Model $model)
-    {
-        if (!$this->models->contains($model)) {
-            return;
-        }
-
-        $this->models->removeElement($model);
-        $model->setTyres(null);
+        $this->model = $model;
     }
 
     /**

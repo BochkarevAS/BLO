@@ -33,10 +33,8 @@
                                 {% if tyre.diameter %}
                                     / {{ tyre.diameter }}
                                 {% endif %}
-                                {% if tyre.models %}
-                                    {% for model in tyre.models %}
-                                        {{ model.name }}
-                                    {% endfor %}
+                                {% if tyre.model %}
+                                    {{ tyre.model.name }}
                                 {% endif %}
                                 <br>
                                 {% if tyre.quantity %}
