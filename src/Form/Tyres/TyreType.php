@@ -112,7 +112,6 @@ class TyreType extends AbstractType
             'class'           => Model::class,
             'label'           => 'Модель',
             'multiple'        => true,
-            'mapped'          => false,
             'required'        => false,
             'auto_initialize' => false,
             'choices'         => $brand ? $brand->getModels() : [],

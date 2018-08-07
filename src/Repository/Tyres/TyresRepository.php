@@ -10,7 +10,7 @@ class TyresRepository extends EntityRepository
     public function search(Tyre $tyre)
     {
         $brand       = $tyre->getBrand();
-//        $models      = $tyre->getModels();
+        $models      = $tyre->getModel();
         $thorn       = $tyre->getThorn();
         $seasonality = $tyre->getSeasonality();
         $quantity    = $tyre->getQuantity();
@@ -35,15 +35,9 @@ class TyresRepository extends EntityRepository
         }
 
         /* Фильтр по моделям */
-//        if (!$models->isEmpty()) {
-//            $ids = [];
-//
-//            foreach ($models as $model) {
-//                $ids[] = $model->getId();
-//            }
-//
-//            $qb->andWhere('m.id IN (:models)')->setParameter('models', $ids);
-//        }
+        if (!$models->isEmpty()) {
+            $qb->andWhere('m.id IN (:models)')->setParameter('models', $models);
+        }
 
         /* Фильтр по шипам */
         if ($thorn) {
