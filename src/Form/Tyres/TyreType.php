@@ -37,17 +37,6 @@ class TyreType extends AbstractType
                 'required'      => false,
                 'choice_label'  => 'name'
             ])
-//            ->add('model', EntityType::class, [
-//                'class'         => Model::class,
-//                'label'         => 'Моeдель',
-//                'multiple'      => true,
-//                'mapped'        => false,
-//                'required'      => false,
-//                'choice_label'  => 'name',
-//                'query_builder' => function (ModelRepository $repository) {
-//                    return $repository->orderBy();
-//                }
-//            ])
             ->add('company', EntityType::class, [
                 'class'         => Company::class,
                 'label'         => 'Продавец',
@@ -122,6 +111,7 @@ class TyreType extends AbstractType
         $form->add('model', EntityType::class, [
             'class'           => Model::class,
             'label'           => 'Модель',
+            'multiple'        => true,
             'mapped'          => false,
             'required'        => false,
             'auto_initialize' => false,

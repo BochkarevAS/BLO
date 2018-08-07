@@ -10,12 +10,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/tyres")
+ */
 class TyresController extends AbstractController
 {
     /**
-     * @Route("/tyres", name="tyres_render")
+     * @Route("/", name="tyres_index", options={"expose"=true})
      */
-    public function renderTyres(Request $request, PaginatorInterface $paginator)
+    public function index(Request $request, PaginatorInterface $paginator)
     {
         $tyre = new Tyre();
         $form = $this->createForm(TyreType::class, $tyre, ['method' => 'GET']);
@@ -31,19 +34,19 @@ class TyresController extends AbstractController
             }
         }
 
-        return $this->render('tyres/tyres_render.html.twig', [
+        return $this->render('tyres/index.html.twig', [
             'tyres' => $tyres,
             'form'  => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/tyres/parse", name="tyres_parse")
+     * @Route("/parse", name="tyres_parse")
      */
     public function parseTyre(TyresService $tyresService)
     {
         $tyresService->parse();
 
-        return $this->redirectToRoute('tyres_render');
+        return $this->redirectToRoute('tyres_index');
     }
 }

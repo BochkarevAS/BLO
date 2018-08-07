@@ -2,6 +2,7 @@
 
 import $ from 'jquery';
 import Routing from '../Routing';
+import 'select2/dist/js/select2.min'
 
 class Model {
 
