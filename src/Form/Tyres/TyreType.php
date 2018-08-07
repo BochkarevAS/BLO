@@ -16,6 +16,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TyreType extends AbstractType
@@ -34,17 +37,17 @@ class TyreType extends AbstractType
                 'required'      => false,
                 'choice_label'  => 'name'
             ])
-            ->add('model', EntityType::class, [
-                'class'         => Model::class,
-                'label'         => 'Моeдель',
-                'multiple'      => true,
-                'mapped'        => false,
-                'required'      => false,
-                'choice_label'  => 'name',
-                'query_builder' => function (ModelRepository $repository) {
-                    return $repository->orderBy();
-                }
-            ])
+//            ->add('model', EntityType::class, [
+//                'class'         => Model::class,
+//                'label'         => 'Моeдель',
+//                'multiple'      => true,
+//                'mapped'        => false,
+//                'required'      => false,
+//                'choice_label'  => 'name',
+//                'query_builder' => function (ModelRepository $repository) {
+//                    return $repository->orderBy();
+//                }
+//            ])
             ->add('company', EntityType::class, [
                 'class'         => Company::class,
                 'label'         => 'Продавец',
@@ -96,6 +99,37 @@ class TyreType extends AbstractType
                 'required' => false
             ])
         ;
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $this->formModel($form, null);
+            }
+        );
+
+        $builder->get('brand')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $this->formModel($form->getParent(), $form->getData());
+            }
+        );
+    }
+
+    private function formModel(FormInterface $form, ?Brand $brand = null)
+    {
+        $form->add('model', EntityType::class, [
+            'class'           => Model::class,
+            'label'           => 'Модель',
+            'mapped'          => false,
+            'required'        => false,
+            'auto_initialize' => false,
+            'choices'         => $brand ? $brand->getModels() : [],
+            'query_builder'   => function (ModelRepository $repository) {
+                return $repository->orderBy();
+            }
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
