@@ -150,6 +150,20 @@ class TyresCommand extends ContainerAwareCommand
             $tyre->setModel($model);
         }
 
+        if ($record['seasonality']) {
+            $seasonality = $em->getRepository(Seasonality::class)->findByName(mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251'));
+            $tyre->setSeasonality($seasonality);
+        }
+
+        if ($record['thorn']) {
+            $thorn = $em->getRepository(Seasonality::class)->findByName(mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251'));
+            $tyre->setSeasonality($thorn);
+        }
+//
+//        $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
+//            'name' => mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251')
+//        ]);
+
         $city = $em->getRepository(City::class)->findByName(mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'));
 
         if ($city) {
@@ -162,18 +176,7 @@ class TyresCommand extends ContainerAwareCommand
             $tyre->setCompany($company);
         }
 
-        $em->persist($tyre);
-
-        $json = ['id' => $tyre->getId(), 'links' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')];
+        $json = ['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')];
         $tyre->setPicture($serializer->serialize($json, 'json'));
-
-
-//        $record['seasonality'] = $em->getRepository(Seasonality::class)->findOneBy([
-//            'name' => mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251')
-//        ]);
-//
-//        $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
-//            'name' => mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251')
-//        ]);
     }
 }

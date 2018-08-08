@@ -164,9 +164,7 @@ class PartsCommand extends ContainerAwareCommand
             $part->setCompany($company);
         }
 
-        $em->persist($part);
-
-        $json = ['id' => $part->getId(), 'links' => mb_convert_encoding($record['photo'], 'UTF-8', 'Windows-1251')];
+        $json = ['link' => mb_convert_encoding($record['photo'], 'UTF-8', 'Windows-1251')];
         $part->setPicture($serializer->serialize($json, 'json'));
     }
 }

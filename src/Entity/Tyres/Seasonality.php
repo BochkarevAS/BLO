@@ -5,7 +5,7 @@ namespace App\Entity\Tyres;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Tyres\SeasonalityRepository")
  * @ORM\Table(name="seasonality", schema="tyres")
  */
 class Seasonality
