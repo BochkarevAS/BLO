@@ -23,7 +23,7 @@ class PartRepository extends EntityRepository
         $oem       = $searchDTO->getOem();
 
         $qb = $this->createQueryBuilder('p')
-            ->addSelect('b, m, c, o')
+            ->addSelect('b, m, c, o, e')
             ->leftJoin('p.brand', 'b')
             ->leftJoin('p.models', 'm')
             ->leftJoin('p.carcases', 'c')
