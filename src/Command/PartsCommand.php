@@ -45,7 +45,7 @@ class PartsCommand extends ContainerAwareCommand
 //        $file = 'parts_1.csv';
 
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-        $em   = $this->getContainer()->get('doctrine.orm.default_entity_manager');
+        $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
