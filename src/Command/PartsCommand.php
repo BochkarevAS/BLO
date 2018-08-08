@@ -7,6 +7,7 @@ use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Engine;
 use App\Entity\Parts\Model;
+use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
 use App\Entity\Region\City;
 use Doctrine\ORM\EntityManager;
@@ -145,7 +146,7 @@ class PartsCommand extends ContainerAwareCommand
         $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['oem']));
 
         if ($patterns) {
-            $oems = $em->getRepository(Engine::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
+            $oems = $em->getRepository(Oem::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
             foreach ($oems as $oem) {
                 $part->addEngine($oem);
             }
