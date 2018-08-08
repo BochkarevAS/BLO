@@ -11,24 +11,14 @@ use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
 use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class TyresCommand extends Command
+class TyresCommand extends ContainerAwareCommand
 {
-    private $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        parent::__construct();
-
-        $this->container = $container;
-    }
-
     protected function configure()
     {
         $this
@@ -53,8 +43,8 @@ class TyresCommand extends Command
         $file = '616.csv';
 //        $file = 'test.csv';
 
-        $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-        $em   = $this->container->get('doctrine.orm.default_entity_manager');
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
+        $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
@@ -118,7 +108,7 @@ class TyresCommand extends Command
 
     private function insert(Tyre $tyre, $hash, array $record, EntityManager $em, $company)
     {
-        $serializer = $this->container->get('serializer');
+        $serializer = $this->getContainer()->get('serializer');
 
         $tyre->setHash($hash);
         $tyre->setPrice((int) $record['price']);

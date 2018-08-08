@@ -11,24 +11,14 @@ use App\Entity\Parts\Part;
 use App\Entity\Region\City;
 use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class PartsCommand extends Command
+class PartsCommand extends ContainerAwareCommand
 {
-    private $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        parent::__construct();
-
-        $this->container = $container;
-    }
-
     protected function configure()
     {
         $this
@@ -54,8 +44,8 @@ class PartsCommand extends Command
         $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
-        $path = $this->container->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-        $em   = $this->container->get('doctrine.orm.default_entity_manager');
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
+        $em   = $this->getContainer()->get('doctrine.orm.default_entity_manager');
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
@@ -114,7 +104,7 @@ class PartsCommand extends Command
 
     private function insert(Part $part, $hash, array $record, EntityManager $em, $company)
     {
-        $serializer = $this->container->get('serializer');
+        $serializer = $this->getContainer()->get('serializer');
 
         $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
         $part->setHash($hash);
