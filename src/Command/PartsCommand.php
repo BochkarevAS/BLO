@@ -59,7 +59,7 @@ class PartsCommand extends ContainerAwareCommand
         $header = [
             'part', 'brand', 'model', 'availability', 'carcase', 'engine', 'number', 'oem',
             'year', 'colour', 'horizontally', 'vertically', 'order', 'price', 'type', 'tuning',
-            'proporty', 'photo', 'opt', 'vendor', 'condition', 'region', 'city', 'youtube'
+            'proporty', 'pictures', 'opt', 'vendor', 'condition', 'region', 'city', 'youtube'
         ];
         $records = $reader->getRecords($header);
 
@@ -164,7 +164,7 @@ class PartsCommand extends ContainerAwareCommand
             $part->setCompany($company);
         }
 
-        $json = ['link' => mb_convert_encoding($record['photo'], 'UTF-8', 'Windows-1251')];
-        $part->setPicture($serializer->serialize($json, 'json'));
+        $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
+        $part->setPicture($json);
     }
 }

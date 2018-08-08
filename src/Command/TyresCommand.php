@@ -172,7 +172,7 @@ class TyresCommand extends ContainerAwareCommand
             $tyre->setCompany($company);
         }
 
-        $json = ['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')];
-        $tyre->setPicture($serializer->serialize($json, 'json'));
+        $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
+        $tyre->setPicture($json);
     }
 }
