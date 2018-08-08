@@ -40,10 +40,6 @@ class PartsController extends AbstractController
 
             $searchDTO = new SearchDTO();
 
-            if (isset($search['model'])) {
-                $searchDTO->setModel($search['model']);
-            }
-
             if (isset($search['carcase'])) {
                 $searchDTO->setCarcase($search['carcase']);
             }

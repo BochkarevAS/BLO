@@ -35,10 +35,8 @@
                                 {% if part.brand %}
                                     {{ part.brand }}
                                 {% endif %}
-                                {% if part.models %}
-                                    {% for model in part.models %}
-                                        {{ model.name }}
-                                    {% endfor %}
+                                {% if part.model %}
+                                    {{ part.model }}
                                 {% endif %}
                                 {% if part.oems %}
                                     {% for oem in part.oems %}

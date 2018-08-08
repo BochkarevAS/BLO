@@ -4,8 +4,6 @@ namespace App\Dto\Parts;
 
 class SearchDTO
 {
-    private $model;
-
     private $carcase;
 
     private $company;
@@ -13,16 +11,6 @@ class SearchDTO
     private $oem;
 
     private $engine;
-
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    public function setModel($model): void
-    {
-        $this->model = $model;
-    }
 
     public function getCarcase()
     {

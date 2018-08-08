@@ -46,11 +46,17 @@ class Part
      */
     private $brand;
 
+//    /**
+// * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
+// * @JoinTable(name="parts_models", schema="parts")
+// */
+//    private $models;
+
+
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
-     * @JoinTable(name="parts_models", schema="parts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
      */
-    private $models;
+    private $model;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
@@ -113,7 +119,6 @@ class Part
 
     public function __construct()
     {
-        $this->models   = new ArrayCollection();
         $this->carcases = new ArrayCollection();
         $this->engines  = new ArrayCollection();
         $this->oems     = new ArrayCollection();
@@ -139,29 +144,14 @@ class Part
         $this->brand = $brand;
     }
 
-    public function getModels()
+    public function getModel()
     {
-        return $this->models;
+        return $this->model;
     }
 
-    public function addModel(Model $model)
+    public function setModel($model): void
     {
-        if ($this->models->contains($model)) {
-            return;
-        }
-
-        $this->models[] = $model;
-        $model->setParts($this);
-    }
-
-    public function removeModel(Model $model)
-    {
-        if (!$this->models->contains($model)) {
-            return;
-        }
-
-        $this->models->removeElement($model);
-        $model->setParts(null);
+        $this->model = $model;
     }
 
     public function getCarcases()

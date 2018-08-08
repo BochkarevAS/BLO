@@ -6,23 +6,13 @@ use Doctrine\ORM\EntityRepository;
 
 class ModelRepository extends EntityRepository
 {
-    public function getModelById($id)
+    public function findByName($name)
     {
         return $this->createQueryBuilder('m')
-            ->Join('m.parts', 'p')
-            ->Join('p.brands', 'b')
-            ->andWhere('b.id = :id')
-            ->setParameter('id', $id)
+            ->andWhere('upper(m.name) = upper(:name)')
+            ->setParameter('name', $name)
+            ->setMaxResults(1)
             ->getQuery()
-            ->execute();
-    }
-
-    public function findAllByNames($names)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('upper(m.name) IN (:names)')
-            ->setParameter('names', $names)
-            ->getQuery()
-            ->execute();
+            ->getOneOrNullResult();
     }
 }

@@ -14,10 +14,10 @@ class PartRepository extends EntityRepository
     public function  search(Part $part, SearchDTO $searchDTO)
     {
         $brand     = $part->getBrand();
+        $model     = $part->getModel();
         $partName  = $part->getName();
         $city      = $part->getCity();
         $company   = $part->getCompany();
-        $modelId   = $searchDTO->getModel();
         $carcaseId = $searchDTO->getCarcase();
         $engine    = $searchDTO->getEngine();
         $oem       = $searchDTO->getOem();
@@ -25,7 +25,7 @@ class PartRepository extends EntityRepository
         $qb = $this->createQueryBuilder('p')
             ->addSelect('b, m, c, o, e')
             ->leftJoin('p.brand', 'b')
-            ->leftJoin('p.models', 'm')
+            ->leftJoin('p.model', 'm')
             ->leftJoin('p.carcases', 'c')
             ->leftJoin('p.oems', 'o')
             ->leftJoin('p.engines', 'e')
@@ -38,8 +38,8 @@ class PartRepository extends EntityRepository
         }
 
         /* Фильтр по моделям */
-        if ($modelId) {
-            $qb->andWhere('m.id = :mid')->setParameter('mid', $modelId);
+        if ($model) {
+            $qb->andWhere('m.id = :mid')->setParameter('mid', $model->getId());
         }
 
         /* Фильтр по кузовам */

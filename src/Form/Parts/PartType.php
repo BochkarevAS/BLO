@@ -95,7 +95,6 @@ class PartType extends AbstractType
             [
                 'class'           => Model::class,
                 'label'           => 'Модель',
-                'mapped'          => false,
                 'required'        => false,
                 'auto_initialize' => false,
                 'choices'         => $brand ? $brand->getModels() : [],

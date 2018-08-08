@@ -41,15 +41,13 @@ class Model
     private $carcases;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="models")
-     * @JoinTable(name="parts_models", schema="parts")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="model")
      */
     private $parts;
 
     public function __construct()
     {
         $this->carcases = new ArrayCollection();
-        $this->parts    = new ArrayCollection();
     }
 
     public function getRank()
@@ -117,7 +115,7 @@ class Model
 
     public function setParts($parts): void
     {
-        $this->parts[] = $parts;
+        $this->parts = $parts;
     }
 
     public function getId()

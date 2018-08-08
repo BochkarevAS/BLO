@@ -71,7 +71,7 @@ class PartsCommand extends ContainerAwareCommand
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['photo']);
+            $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['pictures']);
 
             $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
@@ -116,13 +116,9 @@ class PartsCommand extends ContainerAwareCommand
             $part->setBrand($brand);
         }
 
-        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['model']));
-
-        if ($patterns) {
-            $models = $em->getRepository(Model::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
-            foreach ($models as $model) {
-                $part->addModel($model);
-            }
+        if ($record['model']) {
+            $model= $em->getRepository(Model::class)->findByName(mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'));
+            $part->setModel($model);
         }
 
         $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['carcase']));
