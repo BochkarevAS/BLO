@@ -48,12 +48,7 @@ class TyresCommand extends ContainerAwareCommand
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
-        $em->getConnection()->getConfiguration()->setSQLLogger(null);
-
-
-        $em->getRepository(Price::class);
-
-
+        $prices = $em->getRepository(Price::class)->findAllPriceByCompany(new \DateTime());
 
         $client = new Client([
             'base_uri' => 'http://parser.bimbilo.ru/',
@@ -65,13 +60,15 @@ class TyresCommand extends ContainerAwareCommand
                 'auth'   => 'bimbilo_13062018',
                 'module' => 'PricesBimbilo',
                 'action' => 'setPrice',
-                'args'   => [1, 1, 1]
+                'args'   => [1, 1, $prices]
             ]
         ]);
 
         $contents = $response->getBody()->getContents();
 
-
+        if (!$contents) {
+            return;
+        }
 
         $stopwatch = new Stopwatch();
         $stopwatch->start('sanitize');
