@@ -156,7 +156,7 @@ class TyresCommand extends ContainerAwareCommand
         }
 
         if ($record['thorn']) {
-            $thorn = $em->getRepository(Seasonality::class)->findByName(mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251'));
+            $thorn = $em->getRepository(Thorn::class)->findByName(mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251'));
             $tyre->setSeasonality($thorn);
         }
 
