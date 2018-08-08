@@ -175,7 +175,5 @@ class TyresCommand extends ContainerAwareCommand
 //        $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
 //            'name' => mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251')
 //        ]);
-
-        $em->persist($tyre);
     }
 }
