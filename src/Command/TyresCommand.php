@@ -159,10 +159,6 @@ class TyresCommand extends ContainerAwareCommand
             $thorn = $em->getRepository(Seasonality::class)->findByName(mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251'));
             $tyre->setSeasonality($thorn);
         }
-//
-//        $record['thorn'] = $em->getRepository(Thorn::class)->findOneBy([
-//            'name' => mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251')
-//        ]);
 
         $city = $em->getRepository(City::class)->findByName(mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'));
 
