@@ -43,6 +43,12 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    password_encoder:
+        class: App\Security\Encoder\PasswordEncoder
+
+    login_success_handler:
+        class: App\Service\LoginSuccessHandler
+
 #    App\Controller\Parts\PartsController:
 #        arguments:
 #            $finder: '@fos_elastica.finder.app.part'
