@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Client\Company;
+use App\Entity\Client\Price;
 use App\Entity\Region\City;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
@@ -10,6 +11,7 @@ use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
 use Doctrine\ORM\EntityManager;
+use GuzzleHttp\Client;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -47,6 +49,29 @@ class TyresCommand extends ContainerAwareCommand
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
+
+
+        $em->getRepository(Price::class);
+
+
+
+        $client = new Client([
+            'base_uri' => 'http://parser.bimbilo.ru/',
+            'timeout'  => 10
+        ]);
+
+        $response = $client->request('POST', '/api', [
+            'form_params' => [
+                'auth'   => 'bimbilo_13062018',
+                'module' => 'PricesBimbilo',
+                'action' => 'setPrice',
+                'args'   => [1, 1, 1]
+            ]
+        ]);
+
+        $contents = $response->getBody()->getContents();
+
+
 
         $stopwatch = new Stopwatch();
         $stopwatch->start('sanitize');

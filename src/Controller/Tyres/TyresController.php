@@ -4,7 +4,6 @@ namespace App\Controller\Tyres;
 
 use App\Entity\Tyres\Tyre;
 use App\Form\Tyres\TyreType;
-use App\Service\Tyres\TyresService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,15 +37,5 @@ class TyresController extends AbstractController
             'tyres' => $tyres,
             'form'  => $form->createView()
         ]);
-    }
-
-    /**
-     * @Route("/parse", name="tyres_parse")
-     */
-    public function parseTyre(TyresService $tyresService)
-    {
-        $tyresService->parse();
-
-        return $this->redirectToRoute('tyres_index');
     }
 }

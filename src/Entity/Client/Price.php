@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Client\PriceRepository")
  * @ORM\Table(name="price", schema="client")
  */
 class Price
@@ -28,9 +28,10 @@ class Price
     /**
      * ID Компании которой пренадлежит прайс
      *
-     * @ORM\Column(type="integer", name="company_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
-    private $companyId;
+    private $company;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -54,14 +55,14 @@ class Price
         $this->path = $path;
     }
 
-    public function getCompanyId()
+    public function getCompany()
     {
-        return $this->companyId;
+        return $this->company;
     }
 
-    public function setCompanyId($companyId): void
+    public function setCompany($company): void
     {
-        $this->companyId = $companyId;
+        $this->company = $company;
     }
 
     public function getId()

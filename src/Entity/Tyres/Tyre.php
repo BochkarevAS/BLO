@@ -3,7 +3,6 @@
 namespace App\Entity\Tyres;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -129,11 +128,6 @@ class Tyre
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
-
-//    public function __construct()
-//    {
-//        $this->models = new ArrayCollection();
-//    }
 
     public function getWidth()
     {
