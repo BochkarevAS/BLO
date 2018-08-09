@@ -46,13 +46,6 @@ class Part
      */
     private $brand;
 
-//    /**
-// * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
-// * @JoinTable(name="parts_models", schema="parts")
-// */
-//    private $models;
-
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
      */
