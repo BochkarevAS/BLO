@@ -45,7 +45,6 @@ class Company
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $city;
 
@@ -66,7 +65,6 @@ class Company
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
-     * @ORM\JoinColumn(referencedColumnName="id", nullable=false)
      */
     private $user;
 

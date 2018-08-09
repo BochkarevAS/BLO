@@ -29,7 +29,6 @@ class Price
      * ID Компании которой пренадлежит прайс
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $company;
 
