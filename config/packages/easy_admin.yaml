@@ -1,0 +1,30 @@
+easy_admin:
+    site_name: 'Bimbilo'
+    design:
+            brand_color: '#81b9ba'
+    list:
+        title: '%%entity_label%%'
+        actions: ['show']
+    entities:
+        Company:
+            class: App\Entity\Client\Company
+            list:
+                actions:
+                    - { name: 'edit', icon: 'pencil', label: '' }
+                    - { name: 'show', icon: 'info-circle', label: '' }
+            label: Компании
+        User:
+            class: App\Entity\Auth\User
+            list:
+                actions:
+                    - { name: 'edit', icon: 'pencil', label: '' }
+                    - { name: 'show', icon: 'info-circle', label: '' }
+                fields:
+                    - 'id'
+                    - { property: 'firstName', label: 'Имя' }
+                    - 'email'
+                    - { property: 'lastLogin', label: 'Дата последнего входа' }
+            label: Пользователи
+            search:
+                help: null
+                fields: ['id', 'firstName']
