@@ -38,7 +38,7 @@ easy_admin:
                     - 'id'
                     - { property: 'name', label: 'Название компании' }
                     - { property: 'user', label: 'Имя пользователя' }
-                    - { property: 'preview', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'preview', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Краткая информация о компании'}
                     - { type: 'section', label: 'Контактная информация', icon: 'phone', help: 'Phone number is preferred', css_class: 'danger' }
                     - { property: 'syte', label: 'Сайт' }
                     - { property: 'city', label: 'Город' }

@@ -1,0 +1,40 @@
+fos_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+            extraPlugins: "templates"
+            stylesSet: "my_styles"
+            toolbar: "editor"
+    styles:
+        my_styles:
+            - { name: "Ordered List", element: "div", attributes: { class: "ordered-list" }}
+            - { name: "Highlight", element: "p", attributes: { class: "highlight" }}
+            - { name: "Small Text", element: "p", attributes: { class: "small-text" }}
+            - { name: "Color Red", element: "span", attributes: { class: "color1" }}
+            - { name: "Color Yellow", element: "span", attributes: { class: "color2" }}
+            - { name: "Light Italic", element: "p", attributes: { class: "light italic" }}
+            - { name: "Reset Italic", element: "span", attributes: { class: "reset-italic" }}
+    toolbars:
+        configs:
+            editor:
+                -
+                  - Bold
+                  - Italic
+                  - Underline
+                  - Strike
+                  - RemoveFormat
+                  - NumberedList
+                  - BulletedList
+                  - Outdent
+                  - Indent
+                  - Blockquote
+                  - CreateDiv
+                  - JustifyLeft
+                  - JustifyCenter
+                  - JustifyRight
+                  - JustifyBlock
+                  - Link
+                  - Unlink
+                  - Image
+                  - Table
+                  - HorizontalRule
