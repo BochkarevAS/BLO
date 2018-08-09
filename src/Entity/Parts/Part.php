@@ -42,12 +42,12 @@ class Part
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="parts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand")
      */
     private $brand;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model", inversedBy="parts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Model")
      */
     private $model;
 
@@ -79,7 +79,6 @@ class Part
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $city;
 
@@ -87,7 +86,6 @@ class Part
      * Компания продавец
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $company;
 

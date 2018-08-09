@@ -30,7 +30,7 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="models")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand")
      */
     private $brand;
 
@@ -39,11 +39,6 @@ class Model
      * @JoinTable(name="models_carcases", schema="parts")
      */
     private $carcases;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="model")
-     */
-    private $parts;
 
     public function __construct()
     {
@@ -106,16 +101,6 @@ class Model
 
         $this->carcases->removeElement($carcase);
         $carcase->setModels(null);
-    }
-
-    public function getParts()
-    {
-        return $this->parts;
-    }
-
-    public function setParts($parts): void
-    {
-        $this->parts = $parts;
     }
 
     public function getId()

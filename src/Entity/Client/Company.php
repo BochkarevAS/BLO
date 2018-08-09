@@ -73,7 +73,7 @@ class Company
     /**
      * Логотип компании
      *
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $logotype;
 

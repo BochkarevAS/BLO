@@ -1,30 +1,51 @@
 easy_admin:
     site_name: 'Bimbilo'
     design:
-            brand_color: '#81b9ba'
+#            brand_color: '#81b9ba'
     list:
         title: '%%entity_label%%'
         actions: ['show']
     entities:
+        News:
+            class: App\Entity\Client\News
+            list:
+                actions:
+                    - { name: 'edit', icon: 'pencil', label: '' }
+                    - { name: 'show', icon: 'info-circle', label: '' }
+                    - { name: 'delete', icon: 'trash', label: '' }
+            label: Новости
         Company:
             class: App\Entity\Client\Company
             list:
                 actions:
                     - { name: 'edit', icon: 'pencil', label: '' }
                     - { name: 'show', icon: 'info-circle', label: '' }
+                    - { name: 'delete', icon: 'trash', label: '' }
+                fields:
+                    - 'id'
+                    - { property: 'logotype', label: 'Логотип компании', type: 'image', base_path: '/images/', sortable: false }
+                    - { property: 'name', label: 'Название компании' }
+                    - { property: 'user', label: 'Имя пользователя' }
+                    - { property: 'syte', label: 'Сайт' }
+                    - { property: 'createdAt', label: 'Дата создания компании' }
             label: Компании
+            fields: ['id', 'name']
         User:
             class: App\Entity\Auth\User
             list:
                 actions:
                     - { name: 'edit', icon: 'pencil', label: '' }
                     - { name: 'show', icon: 'info-circle', label: '' }
+                    - { name: 'delete', icon: 'trash', label: '' }
                 fields:
                     - 'id'
                     - { property: 'firstName', label: 'Имя' }
-                    - 'email'
+                    - { property: 'email', type: 'email' }
+                    - { property: 'roles', label: 'Роль' }
+                    - { property: 'city', label: 'Город' }
+                    - { property: 'enabled', label: 'Доступ' }
                     - { property: 'lastLogin', label: 'Дата последнего входа' }
-            label: Пользователи
+            label: Пользователи 😱
             search:
                 help: null
                 fields: ['id', 'firstName']

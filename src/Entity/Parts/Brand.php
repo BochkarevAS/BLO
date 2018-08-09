@@ -22,16 +22,6 @@ class Brand
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brand")
-     */
-    private $models;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Part", mappedBy="brand")
-     */
-    private $parts;
-
     public function getName()
     {
         return $this->name;
@@ -40,26 +30,6 @@ class Brand
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    public function getModels()
-    {
-        return $this->models;
-    }
-
-    public function setModels($models)
-    {
-        $this->models = $models;
-    }
-
-    public function getParts()
-    {
-        return $this->parts;
-    }
-
-    public function setParts($parts): void
-    {
-        $this->parts = $parts;
     }
 
     public function getId()
