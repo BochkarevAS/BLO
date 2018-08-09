@@ -71,7 +71,7 @@ class PartsCommand extends ContainerAwareCommand
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['pictures']);
+            $hash = md5($record['part'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['pictures']);
 
             $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
@@ -144,7 +144,7 @@ class PartsCommand extends ContainerAwareCommand
         if ($patterns) {
             $oems = $em->getRepository(Oem::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
             foreach ($oems as $oem) {
-                $part->addEngine($oem);
+                $part->addOem($oem);
             }
         }
 

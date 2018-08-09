@@ -59,4 +59,9 @@ class Email
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return (string) $this->getAddress();
+    }
 }

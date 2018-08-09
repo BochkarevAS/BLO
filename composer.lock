@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4c314382b5c28038481b04c511e41ea",
+    "content-hash": "1dc1cf70fa862ca3f9824cec20aa6e0b",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -49,100 +49,6 @@
                 "transliterator"
             ],
             "time": "2017-04-04T11:38:05+00:00"
-        },
-        {
-            "name": "cron/cron",
-            "version": "1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Cron/Cron.git",
-                "reference": "3440f7f5a041b022936f4b47192ddd9aa0a5150e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Cron/Cron/zipball/3440f7f5a041b022936f4b47192ddd9aa0a5150e",
-                "reference": "3440f7f5a041b022936f4b47192ddd9aa0a5150e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1",
-                "symfony/process": "^2.4|^3.0|^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cron\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dries De Peuter",
-                    "email": "dries@nousefreak.be"
-                }
-            ],
-            "description": "Cronjobs",
-            "time": "2018-05-02T22:06:57+00:00"
-        },
-        {
-            "name": "cron/cron-bundle",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Cron/Symfony-Bundle.git",
-                "reference": "5864c3706755611fd1eb2860cb1901c6d5a93b26"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Cron/Symfony-Bundle/zipball/5864c3706755611fd1eb2860cb1901c6d5a93b26",
-                "reference": "5864c3706755611fd1eb2860cb1901c6d5a93b26",
-                "shasum": ""
-            },
-            "require": {
-                "cron/cron": "^1.0.1",
-                "doctrine/doctrine-bundle": "^1.3",
-                "doctrine/orm": "^2.4",
-                "php": ">=5.5.0",
-                "symfony/framework-bundle": "^3.4|^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0",
-                "symfony/symfony": "^2.4|^3.0|^4.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cron\\CronBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dries De Peuter",
-                    "email": "dries@nousefreak.be"
-                }
-            ],
-            "description": "Symfony cron",
-            "time": "2018-06-30T10:35:03+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2060,6 +1966,95 @@
             "time": "2014-10-12T19:18:40+00:00"
         },
         {
+            "name": "javiereguiluz/easyadmin-bundle",
+            "version": "v1.17.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/javiereguiluz/EasyAdminBundle.git",
+                "reference": "f9114922faf5be8a4d5e70a774e672a67250baec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/javiereguiluz/EasyAdminBundle/zipball/f9114922faf5be8a4d5e70a774e672a67250baec",
+                "reference": "f9114922faf5be8a4d5e70a774e672a67250baec",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "~1.5",
+                "doctrine/common": "^2.4.0",
+                "doctrine/doctrine-bundle": "~1.2",
+                "doctrine/orm": "~2.3",
+                "pagerfanta/pagerfanta": "~1.0,>=1.0.1",
+                "php": ">=5.3.0",
+                "sensio/framework-extra-bundle": "~2.3|~3.0,>=3.0.2|4.0.x|~5.0",
+                "symfony/asset": "~2.3|~3.0|^4.0",
+                "symfony/config": "~2.3|~3.0|^4.0",
+                "symfony/dependency-injection": "~2.3|~3.0|^4.0",
+                "symfony/doctrine-bridge": "~2.3|~3.0|^4.0",
+                "symfony/event-dispatcher": "~2.3|~3.0|^4.0",
+                "symfony/form": "~2.3|~3.0|^4.0",
+                "symfony/framework-bundle": "~2.3|~3.0|^4.0",
+                "symfony/http-foundation": "~2.3|~3.0|^4.0",
+                "symfony/http-kernel": "~2.3|~3.0|^4.0",
+                "symfony/polyfill-mbstring": "^1.0",
+                "symfony/property-access": "~2.3|~3.0|^4.0",
+                "symfony/security-bundle": "~2.3|~3.0|^4.0",
+                "symfony/translation": "~2.3|~3.0|^4.0",
+                "symfony/twig-bridge": "^2.3.4|~3.0|^4.0",
+                "symfony/twig-bundle": "~2.3|~3.0|^4.0",
+                "symfony/validator": "~2.3|~3.0|^4.0",
+                "twig/extensions": "~1.0",
+                "twig/twig": "~1.26|~2.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "~2.2",
+                "psr/log": "~1.0",
+                "symfony/browser-kit": "~2.3|~3.0|^4.0",
+                "symfony/console": "~2.3|~3.0|^4.0",
+                "symfony/css-selector": "~2.3|~3.0|^4.0",
+                "symfony/dom-crawler": "~2.3|~3.0|^4.0",
+                "symfony/finder": "~2.3|~3.0|^4.0",
+                "symfony/phpunit-bridge": "^3.2|^4.0",
+                "symfony/var-dumper": "~2.3|~3.0|^4.0",
+                "symfony/yaml": "~2.3|~3.0|^4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.17.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EasyCorp\\Bundle\\EasyAdminBundle\\": "src/",
+                    "JavierEguiluz\\Bundle\\EasyAdminBundle\\": "legacy/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Javier Eguiluz",
+                    "email": "javiereguiluz@gmail.com"
+                },
+                {
+                    "name": "Project Contributors",
+                    "homepage": "http://github.com/javiereguiluz/easyadmin/blob/master/CONTRIBUTORS.md"
+                }
+            ],
+            "description": "Admin generator for Symfony applications",
+            "homepage": "https://github.com/javiereguiluz/EasyAdminBundle",
+            "keywords": [
+                "admin",
+                "backend",
+                "generator"
+            ],
+            "abandoned": "easycorp/easyadmin-bundle",
+            "time": "2018-02-24T09:24:55+00:00"
+        },
+        {
             "name": "jdorn/sql-formatter",
             "version": "v1.2.17",
             "source": {
@@ -3241,50 +3236,6 @@
                 "controllers"
             ],
             "time": "2018-05-12T09:37:42+00:00"
-        },
-        {
-            "name": "sensiolabs/ansi-to-html",
-            "version": "v1.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sensiolabs/ansi-to-html.git",
-                "reference": "8b5d787dca714bd98dd770c078d76528320a8286"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/ansi-to-html/zipball/8b5d787dca714bd98dd770c078d76528320a8286",
-                "reference": "8b5d787dca714bd98dd770c078d76528320a8286",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "suggest": {
-                "twig/twig": "Provides nice templating features"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "SensioLabs\\AnsiConverter": "."
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "A library to convert a text with ANSI codes to HTML",
-            "time": "2017-05-02T00:53:29+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -6214,6 +6165,61 @@
             "time": "2018-05-30T07:26:09+00:00"
         },
         {
+            "name": "twig/extensions",
+            "version": "v1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig-extensions.git",
+                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/2c1a86526d0044065220d1b51ac08348bea5ca82",
+                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "^1.27|^2.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.4",
+                "symfony/translation": "^2.7|^3.4"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_Extensions_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\Extensions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Common additional features for Twig that do not directly belong in core",
+            "keywords": [
+                "i18n",
+                "text"
+            ],
+            "time": "2018-05-22T13:26:07+00:00"
+        },
+        {
             "name": "twig/twig",
             "version": "v2.5.0",
             "source": {
@@ -6479,6 +6485,100 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "cron/cron",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Cron/Cron.git",
+                "reference": "3440f7f5a041b022936f4b47192ddd9aa0a5150e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Cron/Cron/zipball/3440f7f5a041b022936f4b47192ddd9aa0a5150e",
+                "reference": "3440f7f5a041b022936f4b47192ddd9aa0a5150e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "symfony/process": "^2.4|^3.0|^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dries De Peuter",
+                    "email": "dries@nousefreak.be"
+                }
+            ],
+            "description": "Cronjobs",
+            "time": "2018-05-02T22:06:57+00:00"
+        },
+        {
+            "name": "cron/cron-bundle",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Cron/Symfony-Bundle.git",
+                "reference": "5864c3706755611fd1eb2860cb1901c6d5a93b26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Cron/Symfony-Bundle/zipball/5864c3706755611fd1eb2860cb1901c6d5a93b26",
+                "reference": "5864c3706755611fd1eb2860cb1901c6d5a93b26",
+                "shasum": ""
+            },
+            "require": {
+                "cron/cron": "^1.0.1",
+                "doctrine/doctrine-bundle": "^1.3",
+                "doctrine/orm": "^2.4",
+                "php": ">=5.5.0",
+                "symfony/framework-bundle": "^3.4|^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0",
+                "symfony/symfony": "^2.4|^3.0|^4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cron\\CronBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dries De Peuter",
+                    "email": "dries@nousefreak.be"
+                }
+            ],
+            "description": "Symfony cron",
+            "time": "2018-06-30T10:35:03+00:00"
+        },
         {
             "name": "doctrine/data-fixtures",
             "version": "v1.3.1",
@@ -6750,6 +6850,50 @@
                 "php"
             ],
             "time": "2018-07-15T17:25:16+00:00"
+        },
+        {
+            "name": "sensiolabs/ansi-to-html",
+            "version": "v1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs/ansi-to-html.git",
+                "reference": "8b5d787dca714bd98dd770c078d76528320a8286"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs/ansi-to-html/zipball/8b5d787dca714bd98dd770c078d76528320a8286",
+                "reference": "8b5d787dca714bd98dd770c078d76528320a8286",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "twig/twig": "Provides nice templating features"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "SensioLabs\\AnsiConverter": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "A library to convert a text with ANSI codes to HTML",
+            "time": "2017-05-02T00:53:29+00:00"
         },
         {
             "name": "symfony/browser-kit",

@@ -73,4 +73,9 @@ class City
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
+    }
 }

@@ -24,10 +24,23 @@ class PasswordEncoder extends BasePasswordEncoder
             throw new BadCredentialsException('Invalid password.');
         }
 
-        if ($this->user && $this->user->getSalt()) {
+        /**
+         * Регестрируется новый пользователь
+         */
+        if (!$this->user) {
             return hash('sha1', $raw);
         }
 
+        /**
+         * Авторизируется старых пользователь по новому алгоритму
+         */
+        if ($this->user->getSalt()) {
+            return hash('sha1', $raw);
+        }
+
+        /**
+         * Авторизируется старые пользователи
+         */
         return md5($this->user->getEmail() . md5($raw));
     }
 

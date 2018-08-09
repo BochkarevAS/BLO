@@ -13,10 +13,6 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
 
-            {#<a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('homepage') }}">Магазин</a>#}
-
-            {#<a href="{{ path('news_render') }}">Новости</a>#}
-            {#<a href="{{ path('news_categories_render') }}">Категории новостей</a>#}
             <a style="margin-left: 75px;" href="{{ path('parts_index') }}">Запчасти</a>
             <a style="margin-left: 75px;" href="{{ path('tyres_index') }}">Шины</a>
             <a style="margin-left: 75px;" href="{{ path('drives_render') }}">Диски</a>
@@ -24,6 +20,10 @@
 
             {% if is_granted('ROLE_USER') %}
                 <a style="margin-left: 75px;" href="{{ path('client_company_index') }}">Личный кабинет</a>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a style="margin-left: 75px;" href="{{ path('admin') }}">Админка</a>
             {% endif %}
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">

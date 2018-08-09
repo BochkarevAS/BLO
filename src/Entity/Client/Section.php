@@ -47,4 +47,9 @@ class Section
     {
         $this->company = $company;
     }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
+    }
 }
