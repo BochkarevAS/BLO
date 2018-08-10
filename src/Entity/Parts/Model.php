@@ -30,7 +30,7 @@ class Model
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Brand", inversedBy="models")
      */
     private $brand;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,16 @@ class Brand
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brand")
+     */
+    private $models;
+
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
+
     public function getName()
     {
         return $this->name;
@@ -30,6 +41,16 @@ class Brand
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    public function getModels()
+    {
+        return $this->models;
+    }
+
+    public function setModels($models): void
+    {
+        $this->models[] = $models;
     }
 
     public function getId()

@@ -39,9 +39,11 @@ easy_admin:
                     - { property: 'name', label: 'Название компании' }
                     - { property: 'user', label: 'Имя пользователя' }
                     - { property: 'preview', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Краткая информация о компании'}
-                    - { type: 'section', label: 'Контактная информация', icon: 'phone', help: 'Phone number is preferred', css_class: 'danger' }
-                    - { property: 'syte', label: 'Сайт' }
+                    - { property: 'bank', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Банковские реквизиты'}
+                    - { type: 'section', label: 'Контактная информация', icon: 'phone', css_class: 'danger' }
+                    - { property: 'syte', label: 'Сайт', css_class: 'col-sm-2' }
                     - { property: 'city', label: 'Город', css_class: 'col-sm-2', type_options: {required: false}  }
+                    - { property: 'phones', label: 'Телефон', css_class: 'col-sm-2' }
             fields: ['id', 'name']
         User:
             class: App\Entity\Auth\User
@@ -56,6 +58,7 @@ easy_admin:
                     - 'id'
                     - { property: 'firstName', label: 'Имя', template: '_field_admin_name.html.twig' }
                     - { property: 'email' }
+                    - { property: 'phone', label: 'Телефон' }
                     - { property: 'roles', label: 'Роль' }
                     - { property: 'city', label: 'Город' }
                     - { property: 'enabled', label: 'Доступ', type: 'toggle' }
@@ -64,12 +67,13 @@ easy_admin:
             form:
                 title: 'Редактировать пользователя'
                 fields:
-                    - { property: 'id', help: 'Уникальное автогенерируемое значение', type_options: {disabled: true} }
-                    - { property: 'firstName', label: 'Имя', template: '_field_admin_name.html.twig' }
+                    - { property: 'id', css_class: 'col-sm-2', help: 'Уникальное автогенерируемое значение', type_options: {disabled: true} }
+                    - { property: 'firstName', css_class: 'col-sm-2', label: 'Имя', template: '_field_admin_name.html.twig' }
                     - { property: 'enabled', label: 'Доступ' }
-                    - { property: 'roles', label: 'Роль' }
+                    - { property: 'roles', css_class: 'col-sm-2', label: 'Роль' }
                     - { type: 'section', label: 'Контактная информация', icon: 'phone', css_class: 'danger' }
                     - { property: 'email', css_class: 'col-sm-2', type: 'email' }
+                    - { property: 'phone', css_class: 'col-sm-2', label: 'Телефон' }
                     - { property: 'city', css_class: 'col-sm-2', label: 'Город', type_options: {required: false} }
             new:
                 fields:
