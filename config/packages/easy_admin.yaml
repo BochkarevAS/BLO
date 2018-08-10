@@ -35,9 +35,9 @@ easy_admin:
             form:
                 title: 'Редактировать компанию'
                 fields:
-                    - 'id'
-                    - { property: 'name', label: 'Название компании' }
-                    - { property: 'user', label: 'Имя пользователя' }
+                    - { property: 'id', css_class: 'col-sm-2', help: 'Уникальное автогенерируемое значение', type_options: {disabled: true} }
+                    - { property: 'name', css_class: 'col-sm-3', label: 'Название компании' }
+                    - { property: 'user', css_class: 'col-sm-3', label: 'Имя пользователя' }
                     - { property: 'preview', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Краткая информация о компании'}
                     - { property: 'bank', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Банковские реквизиты'}
                     - { type: 'section', label: 'Контактная информация', icon: 'phone', css_class: 'danger' }
