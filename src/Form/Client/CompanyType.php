@@ -6,6 +6,7 @@ use App\Entity\Client\Company;
 use App\Entity\Client\Section;
 use App\Entity\Region\City;
 use App\Repository\Region\CityRepository;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -19,6 +20,7 @@ class CompanyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('city', TextType::class, [
                 'label' => 'Город'
@@ -29,14 +31,23 @@ class CompanyType extends AbstractType
             ->add('syte', TextType::class, [
                 'label' => 'Сайт'
             ])
-            ->add('bank', TextareaType::class, [
-                'label' => 'Банковские реквизиты'
+            ->add('bank', CKEditorType::class, [
+                'label' => 'Банковские реквизиты',
+                'config' => [
+                    'uiColor' => '#ffff111'
+                ]
             ])
-            ->add('preview', TextareaType::class, [
+            ->add('preview', CKEditorType::class, [
                 'label' => 'Краткая информация о компании',
+                'config' => [
+                    'uiColor' => '#ffff111'
+                ]
             ])
-            ->add('address', TextareaType::class, [
+            ->add('address', CKEditorType::class, [
                 'label' => 'Адрес компании',
+                'config' => [
+                    'uiColor' => '#ffff111'
+                ]
             ])
             ->add('city', EntityType::class, [
                 'class'         => City::class,
