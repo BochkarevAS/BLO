@@ -41,10 +41,12 @@ easy_admin:
                     - { property: 'preview', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Краткая информация о компании'}
                     - { type: 'section', label: 'Контактная информация', icon: 'phone', help: 'Phone number is preferred', css_class: 'danger' }
                     - { property: 'syte', label: 'Сайт' }
-                    - { property: 'city', label: 'Город' }
+                    - { property: 'city', label: 'Город', css_class: 'col-sm-2', type_options: {required: false}  }
             fields: ['id', 'name']
         User:
             class: App\Entity\Auth\User
+            show:
+                max_results: 5
             list:
                 actions:
                     - { name: 'edit', icon: 'pencil', label: '' }
@@ -62,13 +64,19 @@ easy_admin:
             form:
                 title: 'Редактировать пользователя'
                 fields:
-                    - 'id'
+                    - { property: 'id', help: 'Уникальное автогенерируемое значение', type_options: {disabled: true} }
                     - { property: 'firstName', label: 'Имя', template: '_field_admin_name.html.twig' }
                     - { property: 'enabled', label: 'Доступ' }
                     - { property: 'roles', label: 'Роль' }
-                    - { type: 'section', label: 'Контактная информация', icon: 'phone', help: 'Phone number is preferred', css_class: 'danger' }
-                    - { property: 'email' }
-                    - { property: 'city', label: 'Город' }
+                    - { type: 'section', label: 'Контактная информация', icon: 'phone', css_class: 'danger' }
+                    - { property: 'email', css_class: 'col-sm-2', type: 'email' }
+                    - { property: 'city', css_class: 'col-sm-2', label: 'Город', type_options: {required: false} }
+            new:
+                fields:
+                    - '-id'
+#            edit:
+#                fields:
+#                    - slug
             search:
                 help: null
                 fields: ['id', 'firstName']
