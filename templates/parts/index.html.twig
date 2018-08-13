@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container js-parts-module">
+
+        {{ include('/parts/_form.html.twig') }}
+
+        {% if parts %}
+            <div class="navigator">
+                {{ knp_pagination_render(parts) }}
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Фото</th>
+                        <th>Название / OEM</th>
+                        <th>Расп. / Двиг. / Куз.</th>
+                        <th>Продавец / Город</th>
+                        <th>Цена</th>
+                        <th>Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for part in parts %}
+                        <tr>
+                            <td>
+                                <img src="#" width="110" height="110">
+                            </td>
+                            <td>
+                                {% if part.name %}
+                                    {{ part.name }}
+                                {% endif %}
+                                {% if part.brand %}
+                                    {{ part.brand }}
+                                {% endif %}
+                                {% if part.model %}
+                                    {{ part.model }}
+                                {% endif %}
+                                {% if part.oems %}
+                                    {% for oem in part.oems %}
+                                        {{ oem.name }} {% if part.oems|last != oem %} , {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if part.engines %}
+                                    {% for engine in part.engines %}
+                                        {{ engine.name }} {% if part.engines|last != engine %} , {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% if part.carcases %}
+                                    {% for carcase in part.carcases %}
+                                        {{ carcase.name }} {% if part.carcases|last != carcase %} , {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if part.company %}
+                                    {{ part.company.name }} {% if part.city %} / {{ part.city.name }} {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if part.price %}
+                                    {{ part.price }} руб.
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ part.updatedAt|date('d-m-Y H:i') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigator">
+                {{ knp_pagination_render(parts) }}
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('build/app.js') }}"></script>
+
+{% endblock %}

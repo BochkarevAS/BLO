@@ -1,0 +1,89 @@
+easy_admin:
+    site_name: 'Bimbilo'
+    design:
+        form_theme: 'vertical'
+        templates:
+            field_id: 'admin/fields/_id.html.twig'
+    list:
+        title: '%%entity_label%%'
+        actions: ['show']
+    entities:
+        News:
+            class: App\Entity\Client\News
+            list:
+                actions:
+                    - { name: 'edit', icon: 'pencil', label: '' }
+                    - { name: 'show', icon: 'info-circle', label: '' }
+                    - { name: 'delete', icon: 'trash', label: '' }
+            label: Новости
+        Company:
+            class: App\Entity\Client\Company
+            list:
+                actions:
+                    - { name: 'edit', icon: 'pencil', label: '' }
+                    - { name: 'show', icon: 'info-circle', label: '' }
+                    - { name: 'delete', icon: 'trash', label: '' }
+                fields:
+                    - 'id'
+                    - { property: 'logotype', label: 'Логотип компании', type: 'image', base_path: '/images/', sortable: false }
+                    - { property: 'name', label: 'Название компании' }
+                    - { property: 'user', label: 'Имя пользователя' }
+                    - { property: 'city', label: 'Город' }
+                    - { property: 'syte', label: 'Сайт' }
+                    - { property: 'createdAt', label: 'Дата создания компании' }
+            label: Компании
+            form:
+                title: 'Редактировать компанию'
+                fields:
+                    - { property: 'id', css_class: 'col-sm-2', help: 'Уникальное автогенерируемое значение', type_options: {disabled: true} }
+                    - { property: 'city', label: 'Город', css_class: 'col-sm-2', type_options: {required: false}  }
+                    - { property: 'name', css_class: 'col-sm-3', label: 'Название компании' }
+                    - { property: 'user', css_class: 'col-sm-3', label: 'Имя пользователя' }
+                    - { property: 'preview', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Краткая информация о компании'}
+                    - { property: 'bank', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType', label: 'Банковские реквизиты'}
+                    - { type: 'section', label: 'Контактная информация', icon: 'phone', css_class: 'danger' }
+                    - { property: 'syte', label: 'Сайт', css_class: 'col-sm-2' }
+                    - { property: 'phones', css_class: 'col-sm-2', label: 'Телефоны', type: 'collection', type_options: {entry_type: App\Form\Client\PhoneEmbeddedForm, allow_delete: true, allow_add: true, by_reference: false} }
+                    - { property: 'emails', css_class: 'col-sm-2', label: 'Email адреса', type: 'collection', type_options: {entry_type: App\Form\Client\EmailEmbeddedForm, allow_delete: true, allow_add: true, by_reference: false} }
+
+
+            fields: ['id', 'name']
+        User:
+            class: App\Entity\Auth\User
+            show:
+                max_results: 5
+            list:
+                actions:
+                    - { name: 'edit', icon: 'pencil', label: '' }
+                    - { name: 'show', icon: 'info-circle', label: '' }
+                    - { name: 'delete', icon: 'trash', label: '' }
+                fields:
+                    - 'id'
+                    - { property: 'firstName', label: 'Имя', template: '_field_admin_name.html.twig' }
+                    - { property: 'email' }
+                    - { property: 'phone', label: 'Телефон' }
+                    - { property: 'roles', label: 'Роль' }
+                    - { property: 'city', label: 'Город' }
+                    - { property: 'enabled', label: 'Доступ', type: 'toggle' }
+                    - { property: 'lastLogin', label: 'Дата последнего входа' }
+            label: Пользователи 😱
+            form:
+                title: 'Редактировать пользователя'
+                fields:
+                    - { property: 'id', css_class: 'col-sm-2', help: 'Уникальное автогенерируемое значение', type_options: {disabled: true} }
+                    - { property: 'city', css_class: 'col-sm-2', label: 'Город', type_options: {required: false} }
+                    - { property: 'firstName', css_class: 'col-sm-2', label: 'Имя', template: '_field_admin_name.html.twig' }
+                    - { property: 'enabled', label: 'Доступ' }
+                    - { property: 'roles', css_class: 'col-sm-2', label: 'Роль' }
+                    - { type: 'section', label: 'Контактная информация', icon: 'phone', css_class: 'danger' }
+                    - { property: 'phone', css_class: 'col-sm-2', label: 'Телефон' }
+                    - { property: 'email', css_class: 'col-sm-2', type: 'email' }
+            new:
+                fields:
+                    - '-id'
+#            edit:
+#                fields:
+#                    - slug
+            search:
+                help: null
+                fields: ['id', 'firstName']

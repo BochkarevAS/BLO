@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактировать компанию{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Редактировать компанию</h1>
+
+        {{ include('client/company/_form.html.twig') }}
+        {{ include('client/company/_delete_form.html.twig') }}
+
+        <a href="{{ path('client_price_load', {'id': company.id}) }}">Загрузить прайс</a>
+
+        <br>
+
+        <a href="{{ path('client_company_index') }}">Назад</a>
+
+    </div>
+
+{% endblock %}

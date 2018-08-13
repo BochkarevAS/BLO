@@ -1,0 +1,75 @@
+{% import _self as formMacros %}
+
+{% macro print(item) %}
+    <div class="js-holder-item">
+        <a href="#" class="js-item-remove pull-right">
+            <span class="fa fa-close"></span>
+        </a>
+        {{ form_errors(item) }}
+
+        {% if item.number is defined %}
+            {{ form_row(item.number) }}
+        {% else %}
+            {{ form_row(item.address) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{{ form_start(form, {'attr': {'class': 'js-company-module'}}) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.city, {'id': 'company_city', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.name, {'id': 'company_name', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.syte, {'id': 'company_syte', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            {{ form_row(form.preview, {'id': 'company_info', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.bank, {'id': 'company_bank', 'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.address, {'id': 'company_address', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-10">
+            {{ form_row(form.sections, {'id': 'company_sections', 'attr': {'class': 'custom-control custom-checkbox'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 js-collection-holder" data-prototype="{{ formMacros.print(form.phones.vars.prototype)|e('html_attr') }}" data-index="{{ form.phones|length }}">
+            {% for phone in form.phones %}
+                {{ formMacros.print(phone) }}
+            {% endfor %}
+                <a href="#" class="js-item-new">
+                    <span class="fa fa-plus-circle"></span>
+                    Добавить телефон
+                </a>
+        </div>
+        <div class="col-xs-4 js-collection-holder" data-prototype="{{ formMacros.print(form.emails.vars.prototype)|e('html_attr') }}" data-index="{{ form.emails|length }}">
+            {% for email in form.emails %}
+                {{ formMacros.print(email) }}
+            {% endfor %}
+                <a href="#" class="js-item-new">
+                    <span class="fa fa-plus-circle"></span>
+                    Добавить email
+                </a>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+
+{{ form_end(form) }}
