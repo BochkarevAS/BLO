@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Client;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -48,7 +49,7 @@ class TyresCommand extends ContainerAwareCommand
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
-        $prices = $em->getRepository(Price::class)->findAllPriceByCompany(new \DateTime());
+        $prices = $em->getRepository(Price::class)->findAllPricesByCompany(new \DateTime());
 
         $client = new Client([
             'base_uri' => 'http://parser.bimbilo.ru/',
@@ -67,7 +68,7 @@ class TyresCommand extends ContainerAwareCommand
         $contents = $response->getBody()->getContents();
 
         if (!$contents) {
-            return;
+            throw new Exception('Error');
         }
 
         $stopwatch = new Stopwatch();
