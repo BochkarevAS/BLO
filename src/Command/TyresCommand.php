@@ -44,9 +44,10 @@ class TyresCommand extends ContainerAwareCommand
     protected function import(InputInterface $input, OutputInterface $output)
     {
         $file = '616.csv';
+        $file = '795.csv';
 //        $file = 'test.csv';
 
-        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $prices = $em->getRepository(Price::class)->findAllPricesByCompany(new \DateTime());
@@ -66,6 +67,8 @@ class TyresCommand extends ContainerAwareCommand
         ]);
 
         $contents = $response->getBody()->getContents();
+
+        dump($contents);
 
         if (!$contents) {
             throw new Exception('Error');
