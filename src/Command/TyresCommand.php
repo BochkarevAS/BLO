@@ -46,6 +46,9 @@ class TyresCommand extends ContainerAwareCommand
         $file = '616.csv';
 //        $file = 'test.csv';
 
+
+
+
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
