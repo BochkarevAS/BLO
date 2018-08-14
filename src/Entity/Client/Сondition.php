@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Состояние товара
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Client\СonditionRepository")
  * @ORM\Table(name="сondition", schema="client")
  */
 class Сondition

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Наличие товара
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Client\AvailabilityRepository")
  * @ORM\Table(name="availability", schema="client")
  */
 class Availability

@@ -2,8 +2,10 @@
 
 namespace App\Command;
 
+use App\Entity\Client\Availability;
 use App\Entity\Client\Company;
 use App\Entity\Client\Price;
+use App\Entity\Client\Сondition;
 use App\Entity\Region\City;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
@@ -84,7 +86,7 @@ class TyresCommand extends ContainerAwareCommand
         $header = [
             'header', 'tire_type', 'year', 'brand', 'model', 'width_mm',
             'height_proc', 'wheel_width_inc', 'wheel_height_inc', 'diameter_mm',
-            'landing_diameter_inc', 'commercial', 'seasonality', 'status',
+            'landing_diameter_inc', 'commercial', 'seasonality', 'condition',
             'quantity', 'thorn', 'ply_rating', 'index_of_speed', 'load_index',
             'mud_at', 'dirt_mt', 'axis', 'presence_of_camera', 'radius', 'moto_class',
             'in_order', 'tra_code', 'lt_tire_function', 'price', 'availability',
@@ -144,7 +146,6 @@ class TyresCommand extends ContainerAwareCommand
         $tyre->setQuantity((int) $record['quantity']);
         $tyre->setHeight((int) $record['height_proc']);
         $tyre->setPrice((int) $record['price']);
-        $tyre->setAvailability(mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251'));
 
         if ($record['brand']) {
             $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
@@ -164,6 +165,16 @@ class TyresCommand extends ContainerAwareCommand
         if ($record['thorn']) {
             $thorn = $em->getRepository(Thorn::class)->findByName(mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251'));
             $tyre->setSeasonality($thorn);
+        }
+
+        if ($record['availability']) {
+            $availability = $em->getRepository(Availability::class)->findByName(mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251'));
+            $tyre->setAvailability($availability);
+        }
+
+        if ($record['condition']) {
+            $condition = $em->getRepository(Сondition::class)->findByName(mb_convert_encoding($record['condition'], 'UTF-8', 'Windows-1251'));
+            $tyre->setCondition($condition);
         }
 
         $city = $em->getRepository(City::class)->findByName(mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'));

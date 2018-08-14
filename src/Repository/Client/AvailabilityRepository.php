@@ -9,7 +9,7 @@ class AvailabilityRepository extends EntityRepository
     public function findByName($name)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('upper(b.name) = upper(:name)')
+            ->andWhere('upper(a.name) = upper(:name)')
             ->setParameter('name', $name)
             ->setMaxResults(1)
             ->getQuery()
