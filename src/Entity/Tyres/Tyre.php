@@ -111,8 +111,6 @@ class Tyre
     private $price;
 
     /**
-     * Наличие
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $availability;

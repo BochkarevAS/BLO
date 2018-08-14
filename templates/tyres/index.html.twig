@@ -21,7 +21,7 @@
                                 <img src="{{ pictures[0] }}" width="110" height="110">
                             </td>
                             <td>
-                                <a href="#">
+                                <a href="{{ path('tyres_show', {'id': tyre.id}) }}" target="_blank">
                                     Шины
                                     {% if tyre.brand %}
                                         {{ tyre.brand.name }}

@@ -7,6 +7,7 @@ use App\Form\Tyres\TyreType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -36,6 +37,16 @@ class TyresController extends AbstractController
         return $this->render('tyres/index.html.twig', [
             'tyres' => $tyres,
             'form'  => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/show/{id}", name="tyres_show", methods="GET")
+     */
+    public function show(Tyre $tyre): Response
+    {
+        return $this->render('tyres/show.html.twig', [
+            'tyre' => $tyre
         ]);
     }
 }
