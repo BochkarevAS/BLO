@@ -2,6 +2,7 @@
 
 namespace App\Controller\Tyres;
 
+use App\Entity\Client\Company;
 use App\Entity\Tyres\Tyre;
 use App\Form\Tyres\TyreType;
 use Knp\Component\Pager\PaginatorInterface;
@@ -45,8 +46,11 @@ class TyresController extends AbstractController
      */
     public function show(Tyre $tyre): Response
     {
+        $company = $this->getDoctrine()->getRepository(Company::class)->find($tyre->getCompany());
+
         return $this->render('tyres/show.html.twig', [
-            'tyre' => $tyre
+            'company' => $company,
+            'tyre'    => $tyre
         ]);
     }
 }

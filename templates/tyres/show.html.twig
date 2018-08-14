@@ -22,6 +22,12 @@
                 {{ tyre.model.name }}
             {% endif %}
         </div>
+        <div>
+            {% if tyre.seasonality %}
+                Сезонность
+                {{ tyre.seasonality.name }}
+            {% endif %}
+        </div>
         <div class="row">
             {% if tyre.width %}
                 Ширина
@@ -46,8 +52,20 @@
                 {{ tyre.price }} руб. за 1 шт.
             {% endif %}
         </div>
+        <div class="row">
+            {{ tyre.availability }}
+        </div>
 
 
+        <hr>
+
+        <h1>Карточка продовца</h1>
+        <br>
+
+        {{ company.address }}
+
+
+        {{ dump(company) }}
 
 
     </div>
