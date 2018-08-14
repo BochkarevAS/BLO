@@ -55,7 +55,6 @@ class Tyre
      * Шипы
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $thorn;
 
@@ -63,7 +62,6 @@ class Tyre
      * Сезонность
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $seasonality;
 
@@ -76,7 +74,6 @@ class Tyre
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $model;
 
@@ -84,7 +81,6 @@ class Tyre
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $city;
 
@@ -92,7 +88,6 @@ class Tyre
      * Компания продавец
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $company;
 
@@ -111,9 +106,18 @@ class Tyre
     private $price;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * Состояние
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Availability")
      */
     private $availability;
+
+    /**
+     * Наличие
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Сondition")
+     */
+    private $condition;
 
     /**
      * Фотографии
@@ -174,9 +178,6 @@ class Tyre
         $this->quantity = $quantity;
     }
 
-    /**
-     * @return Seasonality
-     */
     public function getSeasonality()
     {
         return $this->seasonality;
@@ -187,9 +188,6 @@ class Tyre
         $this->seasonality = $seasonality;
     }
 
-    /**
-     * @return Thorn
-     */
     public function getThorn()
     {
         return $this->thorn;
@@ -251,6 +249,16 @@ class Tyre
     public function setAvailability($availability)
     {
         $this->availability = $availability;
+    }
+
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
     }
 
     public function getCity()
