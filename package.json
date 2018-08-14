@@ -17,6 +17,11 @@
         "jquery": "^3.3.1",
         "popper.js": "^1.14.3",
         "select2": "^4.0.6-rc.1",
+<<<<<<< HEAD
         "typeahead.js": "^0.11.1"
+=======
+        "typeahead.js": "^0.11.1",
+        "yarn-install": "^1.0.0"
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
     }
 }

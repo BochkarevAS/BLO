@@ -2,7 +2,11 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+<<<<<<< HEAD
     prices_directory: '%kernel.project_dir%/public/uploads/prices'
+=======
+    prices_directory: '%kernel.project_dir%/public/prices'
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
 
 services:
     # default configuration for services in *this* file

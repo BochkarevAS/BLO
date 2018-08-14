@@ -14,6 +14,10 @@ use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Client;
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+<<<<<<< HEAD
+=======
+use Symfony\Component\Config\Definition\Exception\Exception;
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,6 +47,7 @@ class TyresCommand extends ContainerAwareCommand
     protected function import(InputInterface $input, OutputInterface $output)
     {
         $file = '616.csv';
+<<<<<<< HEAD
 //        $file = 'test.csv';
 
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
@@ -52,6 +57,19 @@ class TyresCommand extends ContainerAwareCommand
 
         $client = new Client([
             'base_uri' => 'http://parser.bimbilo.ru/',
+=======
+        $file = '795.csv';
+        $file = 'tyres_min.csv';
+//        $file = 'test.csv';
+
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
+        $em   = $this->getContainer()->get('doctrine')->getManager();
+
+        $prices = $em->getRepository(Price::class)->findAllPricesByCompany(new \DateTime());
+
+        $client = new Client([
+            'base_uri' => 'http://p.bimbilo.ru/',
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
             'timeout'  => 10
         ]);
 
@@ -66,8 +84,15 @@ class TyresCommand extends ContainerAwareCommand
 
         $contents = $response->getBody()->getContents();
 
+<<<<<<< HEAD
         if (!$contents) {
             return;
+=======
+        dump($contents);
+
+        if (!$contents) {
+            throw new Exception('Error');
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
         }
 
         $stopwatch = new Stopwatch();
@@ -139,6 +164,10 @@ class TyresCommand extends ContainerAwareCommand
         $tyre->setQuantity((int) $record['quantity']);
         $tyre->setHeight((int) $record['height_proc']);
         $tyre->setPrice((int) $record['price']);
+<<<<<<< HEAD
+=======
+        $tyre->setAvailability(mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251'));
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
 
         if ($record['brand']) {
             $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
@@ -172,7 +201,12 @@ class TyresCommand extends ContainerAwareCommand
             $tyre->setCompany($company);
         }
 
+<<<<<<< HEAD
         $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
+=======
+        $pictures = explode(',', $record['pictures']);
+        $json = $serializer->serialize($pictures, 'json');
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
         $tyre->setPicture($json);
     }
 }

@@ -111,6 +111,14 @@ class Tyre
     private $price;
 
     /**
+<<<<<<< HEAD
+=======
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $availability;
+
+    /**
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
      * Фотографии
      *
      * @ORM\Column(type="json")
@@ -238,6 +246,19 @@ class Tyre
         $this->price = $price;
     }
 
+<<<<<<< HEAD
+=======
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability($availability)
+    {
+        $this->availability = $availability;
+    }
+
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
     public function getCity()
     {
         return $this->city;

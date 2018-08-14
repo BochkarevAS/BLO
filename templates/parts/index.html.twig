@@ -26,7 +26,12 @@
                     {% for part in parts %}
                         <tr>
                             <td>
+<<<<<<< HEAD
                                 <img src="#" width="110" height="110">
+=======
+                                {% set pictures = part.picture|json_decode %}
+                                <img src="{{ pictures[0] }}" width="110" height="110">
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
                             </td>
                             <td>
                                 {% if part.name %}

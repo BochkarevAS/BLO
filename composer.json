@@ -2,7 +2,11 @@
     "type": "project",
     "license": "proprietary",
     "require": {
+<<<<<<< HEAD
         "php": "^7.2.7",
+=======
+        "php": "^7.2.8",
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
         "ext-iconv": "*",
         "friendsofsymfony/ckeditor-bundle": "^1.1",
         "friendsofsymfony/elastica-bundle": "^5.0",
@@ -31,7 +35,12 @@
         "symfony/validator": "^4.1",
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "*",
+<<<<<<< HEAD
         "symfony/yaml": "^4.1"
+=======
+        "symfony/yaml": "^4.1",
+        "twig/extensions": "^1.5"
+>>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

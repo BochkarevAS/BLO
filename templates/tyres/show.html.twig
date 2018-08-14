@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        {% set pictures = tyre.picture|json_decode %}
+
+        {% for picture in pictures %}
+            <img src="{{ picture }}" width="110" height="110">
+        {% endfor %}
+
+        <div class="row">
+            {% if tyre.brand %}
+                Производитель
+                {{ tyre.brand.name }}
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if tyre.model %}
+                Модель
+                {{ tyre.model.name }}
+            {% endif %}
+        </div>
+        <div>
+            {% if tyre.seasonality %}
+                Сезонность
+                {{ tyre.seasonality.name }}
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if tyre.width %}
+                Ширина
+                {{ tyre.width }}
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if tyre.height %}
+                Высота
+                {{ tyre.height }}
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if tyre.diameter %}
+                Диаметор
+                {{ tyre.diameter }}
+            {% endif %}
+        </div>
+        <div class="row">
+            {% if tyre.price %}
+                Цена
+                {{ tyre.price }} руб. за 1 шт.
+            {% endif %}
+        </div>
+        <div class="row">
+            {{ tyre.availability }}
+        </div>
+
+        <hr>
+
+        <h3>Карточка продовца</h3>
+
+        <div class="row">
+            г. {{ company.city }}, {{ company.address }}
+        </div>
+        <h5>Телефон</h5>
+        <ul>
+            {% for phone in company.phones %}
+                <li>{{ phone }}</li>
+            {% endfor %}
+        </ul>
+        <h5>Email адреса</h5>
+        <ul>
+            {% for email in company.emails %}
+                <li>{{ email }}</li>
+            {% endfor %}
+        </ul>
+        <h5>Информация от продавца</h5>
+        <div class="row">
+            {{ company.preview }}
+        </div>
+
+    </div>
+
+{% endblock %}
