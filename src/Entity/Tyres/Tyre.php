@@ -111,6 +111,13 @@ class Tyre
     private $price;
 
     /**
+     * Наличие
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $availability;
+
+    /**
      * Фотографии
      *
      * @ORM\Column(type="json")
@@ -236,6 +243,16 @@ class Tyre
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability($availability)
+    {
+        $this->availability = $availability;
     }
 
     public function getCity()

@@ -45,6 +45,7 @@ class TyresCommand extends ContainerAwareCommand
     {
         $file = '616.csv';
         $file = '795.csv';
+        $file = 'tyres_min.csv';
 //        $file = 'test.csv';
 
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
@@ -143,6 +144,7 @@ class TyresCommand extends ContainerAwareCommand
         $tyre->setQuantity((int) $record['quantity']);
         $tyre->setHeight((int) $record['height_proc']);
         $tyre->setPrice((int) $record['price']);
+        $tyre->setAvailability(mb_convert_encoding($record['availability'], 'UTF-8', 'Windows-1251'));
 
         if ($record['brand']) {
             $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
@@ -176,7 +178,8 @@ class TyresCommand extends ContainerAwareCommand
             $tyre->setCompany($company);
         }
 
-        $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
+        $pictures = explode(',', $record['pictures']);
+        $json = $serializer->serialize($pictures, 'json');
         $tyre->setPicture($json);
     }
 }

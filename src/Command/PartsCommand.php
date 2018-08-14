@@ -160,7 +160,8 @@ class PartsCommand extends ContainerAwareCommand
             $part->setCompany($company);
         }
 
-        $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
+        $pictures = explode(',', $record['pictures']);
+        $json = $serializer->serialize($pictures, 'json');
         $part->setPicture($json);
     }
 }
