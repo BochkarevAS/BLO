@@ -21,26 +21,28 @@
                                 <img src="{{ pictures[0] }}" width="110" height="110">
                             </td>
                             <td>
-                                Шины
-                                {% if tyre.brand %}
-                                    {{ tyre.brand.name }}
-                                {% endif %}
-                                {% if tyre.width %}
-                                    {{ tyre.width }}
-                                {% endif %}
-                                {% if tyre.height %}
-                                    / {{ tyre.height }}
-                                {% endif %}
-                                {% if tyre.diameter %}
-                                    / {{ tyre.diameter }}
-                                {% endif %}
-                                {% if tyre.model %}
-                                    {{ tyre.model.name }}
-                                {% endif %}
-                                <br>
-                                {% if tyre.quantity %}
-                                    Комплект {{ tyre.quantity }} шт.
-                                {% endif %}
+                                <a href="#">
+                                    Шины
+                                    {% if tyre.brand %}
+                                        {{ tyre.brand.name }}
+                                    {% endif %}
+                                    {% if tyre.width %}
+                                        {{ tyre.width }}
+                                    {% endif %}
+                                    {% if tyre.height %}
+                                        / {{ tyre.height }}
+                                    {% endif %}
+                                    {% if tyre.diameter %}
+                                        / {{ tyre.diameter }}
+                                    {% endif %}
+                                    {% if tyre.model %}
+                                        {{ tyre.model.name }}
+                                    {% endif %}
+                                    <br>
+                                    {% if tyre.quantity %}
+                                        Комплект {{ tyre.quantity }} шт.
+                                    {% endif %}
+                                </a>
                             </td>
                             <td>
                                 {% if tyre.price %}
@@ -52,7 +54,11 @@
                                     {{ tyre.company.name }} {% if tyre.city %} / {{ tyre.city.name }} {% endif %}
                                 {% endif %}
                             </td>
-                            <td>{{ tyre.updatedAt|date('d-m-Y H:i') }}</td>
+                            <td>
+                                {{ tyre.updatedAt|date('d-m-Y H:i') }}
+                                <br>
+                                {{ tyre.availability }}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

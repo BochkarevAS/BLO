@@ -41,11 +41,11 @@ class PartsCommand extends ContainerAwareCommand
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-//        $file = 'parts_test.csv';
-        $file = 'big_parts.csv';
+        $file = 'parts_test.csv';
+//        $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
-        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);

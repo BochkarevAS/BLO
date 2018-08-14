@@ -54,7 +54,7 @@ class TyresCommand extends ContainerAwareCommand
         $prices = $em->getRepository(Price::class)->findAllPricesByCompany(new \DateTime());
 
         $client = new Client([
-            'base_uri' => 'http://parser.bimbilo.ru/',
+            'base_uri' => 'http://p.bimbilo.ru/',
             'timeout'  => 10
         ]);
 
