@@ -56,16 +56,23 @@
             {{ tyre.availability }}
         </div>
 
-
         <hr>
 
-        <h1>Карточка продовца</h1>
-        <br>
+        <h3>Карточка продовца</h3>
 
-        {{ company.address }}
+        <div class="row">
+            {{ company.address }}
+        </div>
+        <div class="row">
+            {% for phone in company.phones %}
+                {{ phone }}
+                <br>
+            {% endfor %}
+        </div>
 
 
-        {{ dump(company) }}
+
+        {{ dump(company.phones) }}
 
 
     </div>
