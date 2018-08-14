@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <div class="container">
+    <ul class="container">
 
         {% set pictures = tyre.picture|json_decode %}
 
@@ -61,15 +61,24 @@
         <h3>Карточка продовца</h3>
 
         <div class="row">
-            {{ company.address }}
+            г. {{ company.city }}, {{ company.address }}
         </div>
-        <div class="row">
+        <h5>Телефон</h5>
+        <ul>
             {% for phone in company.phones %}
-                {{ phone }}
-                <br>
+                <li>{{ phone }}</li>
             {% endfor %}
-        </div>
+        </ul>
+        <h5>Email адреса</h5>
+        <ul>
+            {% for email in company.emails %}
+                <li>{{ email }}</li>
+            {% endfor %}
+        </ul>
+        <h5>О нас</h5>
+        <div class="row">
 
+        </div>
 
 
         {{ dump(company.phones) }}
