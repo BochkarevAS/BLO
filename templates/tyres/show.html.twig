@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <ul class="container">
+    <div class="container">
 
         {% set pictures = tyre.picture|json_decode %}
 
@@ -75,7 +75,7 @@
                 <li>{{ email }}</li>
             {% endfor %}
         </ul>
-        <h5>О нас</h5>
+        <h5>Информация от продавца</h5>
         <div class="row">
             {{ company.preview }}
         </div>
