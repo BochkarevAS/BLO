@@ -10,6 +10,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -75,7 +76,13 @@ class CompanyType extends AbstractType
                 'allow_delete' => true,
                 'allow_add'    => true,
                 'by_reference' => false
-            ]);
+            ])
+            ->add('logotype', FileType::class, [
+                'label'    => 'Логотип',
+                'attr'     => [
+                    'accept' => 'image/*',
+                ]
+            ])
         ;
     }
 

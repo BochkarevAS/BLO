@@ -4,8 +4,8 @@ namespace App\Command;
 
 use App\Entity\Client\Availability;
 use App\Entity\Client\Company;
+use App\Entity\Client\Condition;
 use App\Entity\Client\Price;
-use App\Entity\Client\Сondition;
 use App\Entity\Region\City;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
@@ -173,7 +173,7 @@ class TyresCommand extends ContainerAwareCommand
         }
 
         if ($record['condition']) {
-            $condition = $em->getRepository(Сondition::class)->findByName(mb_convert_encoding($record['condition'], 'UTF-8', 'Windows-1251'));
+            $condition = $em->getRepository(Condition::class)->findByName(mb_convert_encoding($record['condition'], 'UTF-8', 'Windows-1251'));
             $tyre->setCondition($condition);
         }
 

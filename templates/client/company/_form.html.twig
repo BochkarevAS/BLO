@@ -48,6 +48,12 @@
     </div>
 
     <div class="row">
+        <div class="col-10">
+            {{ form_row(form.logotype, {'id': 'company_logotype', 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-xs-4 js-collection-holder" data-prototype="{{ formMacros.print(form.phones.vars.prototype)|e('html_attr') }}" data-index="{{ form.phones|length }}">
             {% for phone in form.phones %}
                 {{ formMacros.print(phone) }}
