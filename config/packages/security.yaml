@@ -1,9 +1,4 @@
 security:
-#    encoders:
-#        FOS\UserBundle\Model\UserInterface:
-#            algorithm: bcrypt
-#            cost:      10
-
     encoders:
         FOS\UserBundle\Model\UserInterface:
             id: password_encoder

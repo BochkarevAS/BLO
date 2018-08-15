@@ -5,6 +5,7 @@ namespace App\Controller\Client;
 use App\Entity\Client\Company;
 use App\Form\Client\CompanyType;
 use App\Repository\Client\CompanyRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ class CompanyController extends Controller
     /**
      * @Route("/new", name="client_company_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $company = new Company();
         $company->setUser($this->getUser());
@@ -50,6 +51,10 @@ class CompanyController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $logotype = $company->getLogotype();
+            $fileName = $this->getParameter('logotype_directory').'/'.$fileUploader->upload($logotype);
+            $company->setLogotype($fileName);
+
             $em->persist($company);
             $em->flush();
 

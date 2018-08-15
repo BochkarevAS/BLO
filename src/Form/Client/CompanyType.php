@@ -78,8 +78,8 @@ class CompanyType extends AbstractType
                 'by_reference' => false
             ])
             ->add('logotype', FileType::class, [
-                'label'    => 'Логотип',
-                'attr'     => [
+                'label' => 'Логотип',
+                'attr'  => [
                     'accept' => 'image/*',
                 ]
             ])
