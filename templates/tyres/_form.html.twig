@@ -1,48 +1,48 @@
 {{ form_start(form) }}
+    {{ form_errors(form) }}
+
     <div class="row">
         <div class="col-3">
             {{ form_row(form.brand, {'id': 'tyres_brand', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.brand) }}
         </div>
         <div class="col-3">
             {{ form_row(form.model, {'id': 'tyres_model', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.model) }}
         </div>
         <div class="col-2">
             {{ form_row(form.thorn, {'id': 'tyres_thorn', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.thorn) }}
         </div>
         <div class="col-2">
             {{ form_row(form.seasonality, {'id': 'tyres_seasonality', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.seasonality) }}
         </div>
     </div>
     <div class="row">
         <div class="col-1">
             {{ form_row(form.width, {'id': 'tyres_width', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.width) }}
         </div>
         <div class="col-1">
             {{ form_row(form.height, {'id': 'tyres_height', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.height) }}
         </div>
         <div class="col-1">
             {{ form_row(form.diameter, {'id': 'tyres_diameter', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.diameter) }}
         </div>
         <div class="col-1">
             {{ form_row(form.quantity, {'id': 'tyres_quantity', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.quantity) }}
         </div>
         <div class="col-3">
             {{ form_row(form.company, {'id': 'tyres_company', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.company) }}
         </div>
         <div class="col-3">
             {{ form_row(form.city, {'id': 'city', 'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.city) }}
         </div>
     </div>
+    <div class="btn-group btn-group-toggle">
+        {{ form_row(form.availability, {'id': 'tyres_availability'}) }}
+    </div>
+    <div class="btn-group btn-group-toggle">
+        {{ form_row(form.condition, {'id': 'tyres_condition'}) }}
+    </div>
+
+
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Найти</button>
     </div>

@@ -96,7 +96,7 @@ class TyreType extends AbstractType
                 'placeholder'  => 'Все',
                 'multiple'     => false,
                 'required'     => false,
-                'expanded'     => true
+                'expanded'     => true,
             ])
             ->add('condition', EntityType::class, [
                 'class'        => Condition::class,
