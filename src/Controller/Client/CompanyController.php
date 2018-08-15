@@ -51,8 +51,8 @@ class CompanyController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $logotype = $company->getLogotype();
-            $fileName = $this->getParameter('logotype_directory').'/'.$fileUploader->upload($logotype);
+            $targetDirectory = $this->getParameter('logotype_directory');
+            $fileName = $fileUploader->upload($company->getLogotype(), $targetDirectory);
             $company->setLogotype($fileName);
 
             $em->persist($company);
