@@ -2,7 +2,9 @@
 
 namespace App\Form\Tyres;
 
+use App\Entity\Client\Availability;
 use App\Entity\Client\Company;
+use App\Entity\Client\Condition;
 use App\Entity\Region\City;
 use App\Entity\Tyres\Brand;
 use App\Entity\Tyres\Model;
@@ -85,7 +87,25 @@ class TyreType extends AbstractType
             ->add('quantity', ChoiceType::class, [
                 'choices'  => $quantitys,
                 'label'    => 'Количество',
-                'required' => false
+                'required' => false,
+            ])
+            ->add('availability',EntityType::class, [
+                'class'        => Availability::class,
+                'choice_label' => 'name',
+                'label'        => 'Наличие',
+                'placeholder'  => 'Все',
+                'multiple'     => false,
+                'required'     => false,
+                'expanded'     => true
+            ])
+            ->add('condition', EntityType::class, [
+                'class'        => Condition::class,
+                'choice_label' => 'name',
+                'label'        => 'Состояние',
+                'placeholder'  => 'Все',
+                'multiple'     => false,
+                'required'     => false,
+                'expanded'     => true
             ])
         ;
 

@@ -53,7 +53,9 @@
             {% endif %}
         </div>
         <div class="row">
-            {{ tyre.availability }}
+            {% if tyre.availability %}
+                {{ tyre.availability.name }}
+            {% endif %}
         </div>
 
         <hr>

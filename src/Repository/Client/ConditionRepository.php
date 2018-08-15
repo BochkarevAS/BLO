@@ -4,7 +4,7 @@ namespace App\Repository\Client;
 
 use Doctrine\ORM\EntityRepository;
 
-class СonditionRepository extends EntityRepository
+class ConditionRepository extends EntityRepository
 {
     public function findByName($name)
     {

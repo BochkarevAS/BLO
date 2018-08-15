@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Состояние товара
  *
- * @ORM\Entity(repositoryClass="App\Repository\Client\СonditionRepository")
- * @ORM\Table(name="сondition", schema="client")
+ * @ORM\Entity(repositoryClass="App\Repository\Client\ConditionRepository")
+ * @ORM\Table(name="condition", schema="client")
  */
-class Сondition
+class Condition
 {
     /**
      * @ORM\Id
@@ -37,5 +37,10 @@ class Сondition
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 }

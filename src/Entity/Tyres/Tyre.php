@@ -115,7 +115,7 @@ class Tyre
     /**
      * Наличие
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Сondition")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Condition")
      */
     private $condition;
 
@@ -208,9 +208,6 @@ class Tyre
         $this->model = $model;
     }
 
-    /**
-     * @return Brand
-     */
     public function getBrand()
     {
         return $this->brand;
