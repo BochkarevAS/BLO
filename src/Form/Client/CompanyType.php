@@ -64,14 +64,14 @@ class CompanyType extends AbstractType
                 'choice_label' => 'name'
             ])
             ->add('phones', CollectionType::class, [
-                'label'        => 'Телефон',
+                'label'        => false,
                 'entry_type'   => PhoneEmbeddedForm::class,
                 'allow_delete' => true,
                 'allow_add'    => true,
                 'by_reference' => false
             ])
             ->add('emails', CollectionType::class, [
-                'label'        => 'Email',
+                'label'        => false,
                 'entry_type'   => EmailEmbeddedForm::class,
                 'allow_delete' => true,
                 'allow_add'    => true,

@@ -53,7 +53,7 @@
         </div>
 
         <div class="form-row">
-            <div class="col-xs-4 js-collection-holder" data-prototype="{{ formMacros.print(form.phones.vars.prototype)|e('html_attr') }}" data-index="{{ form.phones|length }}">
+            <div class="col-2 js-collection-holder" data-prototype="{{ formMacros.print(form.phones.vars.prototype)|e('html_attr') }}" data-index="{{ form.phones|length }}">
                 {% for phone in form.phones %}
                     {{ formMacros.print(phone) }}
                 {% endfor %}
@@ -62,7 +62,7 @@
                         Добавить телефон
                     </a>
             </div>
-            <div class="col-xs-4 js-collection-holder" data-prototype="{{ formMacros.print(form.emails.vars.prototype)|e('html_attr') }}" data-index="{{ form.emails|length }}">
+            <div class="col-3 js-collection-holder" data-prototype="{{ formMacros.print(form.emails.vars.prototype)|e('html_attr') }}" data-index="{{ form.emails|length }}">
                 {% for email in form.emails %}
                     {{ formMacros.print(email) }}
                 {% endfor %}
