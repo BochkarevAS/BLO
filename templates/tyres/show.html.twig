@@ -64,7 +64,7 @@
 
         <img src="/images/{{ company.logotype }}" width="110" height="110">
 
-        <div class="row" data-address="{{ company.address|e('html_attr') }}" data-coordinate="{{ company.coordinate|e('html_attr') }}">
+        <div class="row" id="company_address_coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
             г. {{ company.city }}, {{ company.address }}
         </div>
         <h5>Телефон</h5>

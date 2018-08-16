@@ -1,16 +1,27 @@
 'use strict';
 
+import $ from 'jquery';
+
 class Maps {
 
-    constructor($wrapper) {
-        this.wrapper = $wrapper;
-        this.address = $wrapper.find('[data-address]').text();
+    constructor() {
+        let $wrapper    = $('#company_address_coordinate');
+        this.coordinate = $wrapper.data('coordinate').slice(1).slice(0, -1).split(',');
+        this.address    = $wrapper.data('address');
     }
 
     initMap() {
+        let lat = 0;
+        let lng = 0;
+
+        if (this.coordinate) {
+            lat = parseFloat(this.coordinate[0]);
+            lng = parseFloat(this.coordinate[1]);
+        }
+
         let map = new google.maps.Map(document.getElementById('company_map'), {
             zoom: 8,
-            center: {lat: -34.397, lng: 150.644}
+            center: {lat: lat, lng: lng}
         });
         let geocoder = new google.maps.Geocoder();
         this.codeAddress(geocoder, map);
