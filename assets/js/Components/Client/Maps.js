@@ -20,7 +20,7 @@ class Maps {
         }
 
         let map = new google.maps.Map(document.getElementById('company_map'), {
-            zoom: 8,
+            zoom: 17,
             center: {lat: lat, lng: lng}
         });
         let geocoder = new google.maps.Geocoder();
