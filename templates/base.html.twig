@@ -10,13 +10,58 @@
     </head>
 
     <body>
-
         <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
 
             <a style="margin-left: 75px;" href="{{ path('parts_index') }}">Запчасти</a>
             <a style="margin-left: 75px;" href="{{ path('tyres_index') }}">Шины</a>
             <a style="margin-left: 75px;" href="{{ path('drives_render') }}">Диски</a>
             <a style="margin-left: 75px;" href="{{ path('client_company_show_all') }}">Продавцы</a>
+
+            {#<style>#}
+                {#/* Always set the map height explicitly to define the size of the div#}
+                 {#* element that contains the map. */#}
+                {##map {#}
+                    {#height: 100%;#}
+                {#}#}
+                {#/* Optional: Makes the sample page fill the window. */#}
+                {#html, body {#}
+                    {#height: 100%;#}
+                    {#margin: 0;#}
+                    {#padding: 0;#}
+                {#}#}
+            {#</style>#}
+
+            {#<script async defer src="http://maps.google.com/maps/api/js?sensor=false"></script>#}
+
+
+            {#<script>#}
+                {#let geocoder;#}
+                {#let map;#}
+                {#let address = "new york city";#}
+                {#function initMap() {#}
+                    {#let map = new google.maps.Map(document.getElementById('map'), {#}
+                        {#zoom: 8,#}
+                        {#center: {lat: -34.397, lng: 150.644}#}
+                    {#});#}
+                    {#geocoder = new google.maps.Geocoder();#}
+                    {#codeAddress(geocoder, map);#}
+                {#}#}
+
+                {#function codeAddress(geocoder, map) {#}
+                    {#geocoder.geocode({'address': address}, function(results, status) {#}
+                        {#if (status === 'OK') {#}
+                            {#map.setCenter(results[0].geometry.location);#}
+                            {#let marker = new google.maps.Marker({#}
+                                {#map: map,#}
+                                {#position: results[0].geometry.location#}
+                            {#}); console.log(marker);#}
+                        {#} else {#}
+                            {#alert('Geocode was not successful for the following reason: ' + status);#}
+                        {#}#}
+                    {#});#}
+                {#}#}
+            {#</script>#}
+
 
             {% if is_granted('ROLE_USER') %}
                 <a style="margin-left: 75px;" href="{{ path('client_company_index') }}">Личный кабинет</a>
@@ -78,6 +123,8 @@
         </footer>
 
         {% block javascripts %}
+            {#<script src="http://maps.google.com/maps/api/js?sensor=false"></script>#}
+
             <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
             <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
             <script src="{{ asset('build/manifest.js') }}"></script>

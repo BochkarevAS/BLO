@@ -14,6 +14,7 @@ Encore
     // uncomment to define the assets of the project
     .createSharedEntry('layout', './assets/js/layout.js')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('appMaps', './assets/js/appMaps.js')
 
     .cleanupOutputBeforeBuild()
     // .addStyleEntry('css/app', './assets/css/app.scss')
