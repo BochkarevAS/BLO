@@ -18,7 +18,7 @@ class Maps {
     codeAddress(geocoder, map) {
         geocoder.geocode({'address': this.address}, function(results, status) {
             if (status === 'OK') {
-                this.map.setCenter(results[0].geometry.location);
+                map.setCenter(results[0].geometry.location);
                 let marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location
