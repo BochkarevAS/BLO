@@ -2,12 +2,13 @@
 
 class Maps {
 
-    constructor(address) {
-        this.address  = address;
+    constructor($wrapper) {
+        this.wrapper = $wrapper;
+        this.address = $wrapper.find('[data-address]').text();
     }
 
     initMap() {
-        let map = new google.maps.Map(document.getElementById('map'), {
+        let map = new google.maps.Map(document.getElementById('company_map'), {
             zoom: 8,
             center: {lat: -34.397, lng: 150.644}
         });

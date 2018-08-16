@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Maps from './Components/Client/Maps'
 
 $(document).ready(function() {
-    let map = new Maps("new york city");
+    let $wrapper = $('.js-tyres-show-module');
+    let map = new Maps($wrapper);
     map.initMap();
 });

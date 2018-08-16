@@ -5,7 +5,7 @@ import Model from './Components/Parts/Model';
 import Tyre from './Components/Tyres/Tyre';
 import Company from './Components/Client/Company';
 
-// import Part    from "./Components/Parts/Part";
+// import Part from "./Components/Parts/Part";
 
 $(document).ready(function() {
     let $wrapper = $('.js-parts-module');
