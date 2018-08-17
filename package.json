@@ -13,6 +13,7 @@
         "build": "encore production"
     },
     "dependencies": {
+        "@fancyapps/fancybox": "^3.3.5",
         "@google/maps": "^0.5.5",
         "bloodhound-js": "^1.2.3",
         "bootstrap": "^4.1.1",

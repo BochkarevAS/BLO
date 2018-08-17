@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@fancyapps/fancybox@^3.3.5":
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/@fancyapps/fancybox/-/fancybox-3.3.5.tgz#e0bead520450ff0af51d353a17ac6bf864ba0f49"
+
 "@google/maps@^0.5.5":
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/@google/maps/-/maps-0.5.5.tgz#478a5791e3b8d444be966462daec3ee43eb331e0"
