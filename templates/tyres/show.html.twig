@@ -4,22 +4,45 @@
     {{ parent() }}
 
     <link href="{{ asset('build/css/tyres/show_tyres.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/appMaps.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
 
     <div class="container js-tyres-show-module">
 
+        <p class="imglist" style="max-width: 520px;">
+            <a data-trigger="preview" href="javascript:;">
+                <img src="https://source.unsplash.com/LuK-MuZ-yf0/510x340" />
+            </a>
+
+            <a href="https://source.unsplash.com/LuK-MuZ-yf0/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/LuK-MuZ-yf0/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/Oaqk7qqNh_c/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/Oaqk7qqNh_c/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/X9GHkHbJIaU/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/X9GHkHbJIaU/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/9c_djeQTDyY/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/9c_djeQTDyY/120x80" />
+            </a>
+        </p>
+
         {% set pictures = tyre.picture|json_decode %}
 
         <div class="row">
-            <div class="col-5">
-                {% for picture in pictures %}
-                    <div class="col-2">
-                        <img id="tyres_img" src="{{ picture }}">
-                    </div>
-                {% endfor %}
-            </div>
+            {#<div class="col-5">#}
+                {#{% for picture in pictures %}#}
+                    {#<div class="col-2">#}
+                        {#<img id="tyres_img" src="{{ picture }}">#}
+                    {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
 
             <div class="col-4">
                 <div class="row">
@@ -114,4 +137,3 @@
     <script async defer src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script src="{{ asset('build/appMaps.js') }}"></script>
 {% endblock %}
-

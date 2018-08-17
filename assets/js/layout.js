@@ -8,6 +8,8 @@ import '../css/main.css';
 import 'select2/dist/css/select2.min.css'
 import 'typeahead.js/dist/typeahead.jquery.min'
 
+window.jQuery = $;
+
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
