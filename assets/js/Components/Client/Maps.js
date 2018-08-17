@@ -5,9 +5,9 @@ import $ from 'jquery';
 class Maps {
 
     constructor() {
-        let $wrapper    = $('#company_address_coordinate');
-        this.coordinate = $wrapper.data('coordinate').slice(1).slice(0, -1).split(',');
-        this.address    = $wrapper.data('address');
+        let $target     = $('#company_address_coordinate');
+        this.coordinate = $target.data('coordinate').slice(1).slice(0, -1).split(',');
+        this.address    = $target.data('address');
     }
 
     initMap() {
