@@ -1,91 +1,96 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('build/css/tyres/show_tyres.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
 
     <div class="container js-tyres-show-module">
 
         {% set pictures = tyre.picture|json_decode %}
 
-        {% for picture in pictures %}
-            <img src="{{ picture }}" width="110" height="110">
-        {% endfor %}
-
         <div class="row">
-            {% if tyre.brand %}
-                Производитель
-                {{ tyre.brand.name }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.model %}
-                Модель
-                {{ tyre.model.name }}
-            {% endif %}
-        </div>
-        <div>
-            {% if tyre.seasonality %}
-                Сезонность
-                {{ tyre.seasonality.name }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.width %}
-                Ширина
-                {{ tyre.width }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.height %}
-                Высота
-                {{ tyre.height }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.diameter %}
-                Диаметор
-                {{ tyre.diameter }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.price %}
-                Цена
-                {{ tyre.price }} руб. за 1 шт.
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.availability %}
-                {{ tyre.availability.name }}
-            {% endif %}
+            {% for picture in pictures %}
+                <div class="col-2">
+                    <img src="{{ picture }}" width="110" height="110">
+                </div>
+            {% endfor %}
+            <div class="col-4">
+                <div class="row tyre_data">
+                    {% if tyre.brand %}
+                        <span>Производитель {{ tyre.brand.name }}</span>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% if tyre.model %}
+                        Модель {{ tyre.model.name }}
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% if tyre.seasonality %}
+                        Сезонность {{ tyre.seasonality.name }}
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% if tyre.width %}
+                        Ширина {{ tyre.width }}
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% if tyre.height %}
+                        Высота {{ tyre.height }}
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% if tyre.diameter %}
+                        Диаметор {{ tyre.diameter }}
+                    {% endif %}
+                </div>
+                <div class="row">
+                    {% if tyre.price %}
+                        Цена {{ tyre.price }} руб. за 1 шт.
+                    {% endif %}
+                </div>
+                <div class="row availability">
+                    {% if tyre.availability %}
+                        {{ tyre.availability.name }}
+                    {% endif %}
+                </div>
+            </div>
         </div>
 
         <hr>
-
         <h3>Карточка продовца</h3>
 
-        <img src="/images/{{ company.logotype }}" width="110" height="110">
-
-        <div class="row" id="company_address_coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
-            г. {{ company.city }}, {{ company.address }}
+        <div class="card">
+            <img src="/images/{{ company.logotype }}" width="110" height="110">
+            <div class="card-body">
+                <h4 class="card-title">Информация от продавца</h4>
+                <p class="card-text">
+                    {{ company.preview }}
+                </p>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for phone in company.phones %}
+                    <li class="list-group-item">{{ phone }}</li>
+                {% endfor %}
+            </ul>
+            <ul class="list-group list-group-flush">
+                {% for email in company.emails %}
+                    <li class="list-group-item">{{ email }}</li>
+                {% endfor %}
+            </ul>
+            <div id="company_map" style="width: 480px; height: 320px;"></div>
+            <div class="card-body">
+                <h4 class="card-title">Адрес</h4>
+                <p class="card-text" id="company_address_coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
+                    г. {{ company.city }}, {{ company.address }}
+                </p>
+            </div>
         </div>
-        <h5>Телефон</h5>
-        <ul>
-            {% for phone in company.phones %}
-                <li>{{ phone }}</li>
-            {% endfor %}
-        </ul>
-        <h5>Email адреса</h5>
-        <ul>
-            {% for email in company.emails %}
-                <li>{{ email }}</li>
-            {% endfor %}
-        </ul>
-        <h5>Информация от продавца</h5>
-        <div class="row">
-            {{ company.preview }}
-        </div>
-
-        <div id="company_map" style="width: 480px; height: 320px;"></div>
-
     </div>
 
 {% endblock %}

@@ -15,6 +15,7 @@ Encore
     .createSharedEntry('layout', './assets/js/layout.js')
     .addEntry('app', './assets/js/app.js')
     .addEntry('appMaps', './assets/js/appMaps.js')
+    .addStyleEntry('css/tyres/show_tyres', './assets/css/tyres/show_tyres.css')
 
     .cleanupOutputBeforeBuild()
     // .addStyleEntry('css/app', './assets/css/app.scss')
