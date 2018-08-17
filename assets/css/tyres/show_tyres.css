@@ -1,33 +1,40 @@
-#tyres_img {
+#tyres-img {
     width: 110px;
     height: 110px;
 }
 
-#tyres_img_card {
+#tyres-img-card {
     height: 220px;
 }
 
-#tyres_card {
+#tyres-card {
     width: 420px;
 }
 
-#company_map {
+#company-map {
     height: 220px;
 }
 
-ul.oglavl {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
+.fix-media-cont {
+    width: 800px;
+    margin-bottom: 5px;
 }
 
-.tyre_availability_name {
+.tyre-availability-name {
     border-radius: 10px;
     box-shadow: 0 0 7px 3px #ff4f00;
     text-indent: 30px;
     padding: 10px 20px 10px 20px;
     margin: 20px auto;
     width: 400px;
+}
+
+/* Информация о товаре */
+
+ul.oglavl {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
 }
 
 ul.oglavl li {

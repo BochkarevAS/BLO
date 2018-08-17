@@ -6,8 +6,8 @@ class Maps {
 
     constructor() {
         let $target     = $('#company-address-coordinate');
-        this.coordinate = $target.data('coordinate').slice(1).slice(0, -1).split(',');
         this.address    = $target.data('address');
+        this.coordinate = $target.data('coordinate').slice(1).slice(0, -1).split(',');
     }
 
     initMap() {
