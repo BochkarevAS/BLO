@@ -47,7 +47,7 @@ class TyresCommand extends ContainerAwareCommand
     {
         $file = '616.csv';
         $file = '795.csv';
-        $file = 'tyres_min.csv';
+//        $file = 'tyres_min.csv';
 //        $file = 'test.csv';
 
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
