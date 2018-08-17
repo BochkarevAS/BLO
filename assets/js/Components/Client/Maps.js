@@ -5,7 +5,7 @@ import $ from 'jquery';
 class Maps {
 
     constructor() {
-        let $target     = $('#company_address_coordinate');
+        let $target     = $('#company-address-coordinate');
         this.coordinate = $target.data('coordinate').slice(1).slice(0, -1).split(',');
         this.address    = $target.data('address');
     }
@@ -19,7 +19,7 @@ class Maps {
             lng = parseFloat(this.coordinate[1]);
         }
 
-        let map = new google.maps.Map(document.getElementById('company_map'), {
+        let map = new google.maps.Map(document.getElementById('company-map'), {
             zoom: 17,
             center: {lat: lat, lng: lng}
         });
