@@ -104,7 +104,7 @@
 
         {% set pictures = tyre.picture|json_decode %}
 
-        <div class="row">
+        {#<div class="row">#}
             {#<div class="col-5">#}
                 {#{% for picture in pictures %}#}
                     {#<div class="col-2">#}
@@ -113,19 +113,16 @@
                 {#{% endfor %}#}
             {#</div>#}
 
-            {#<div class="col-4">#}
+        <div class="row">
+            {#<div class="row">#}
+                {#<img id="tyres-img-card" src="/images/{{ company.logotype }}">#}
+            {#</div>#}
 
+            <h5>Компания {{ company.name }}</h5>
+            {{ company.preview }}
 
-
+            <h5>Контактная информация</h5>
             <div class="row">
-                {#<div class="row">#}
-                    {#<img id="tyres-img-card" src="/images/{{ company.logotype }}">#}
-                {#</div>#}
-
-                <h5>Компания {{ company.name }}</h5>
-                {{ company.preview }}
-                <h5>Контактная информация</h5>
-
                 <ul class="list-group list-group-flush">
                     {% for phone in company.phones %}
                         <li class="list-group-item">{{ phone }}</li>
@@ -136,10 +133,15 @@
                         <li class="list-group-item">{{ email }}</li>
                     {% endfor %}
                 </ul>
+            </div>
+
+            <div id="tyres-card">
 
                 <div id="company-map"></div>
-                <div id="company-address-coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
-                    г. {{ company.city }}, {{ company.address }}
+                <div class="card-body">
+                    <p class="card-text" id="company-address-coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
+                        г. {{ company.city }}, {{ company.address }}
+                    </p>
                 </div>
             </div>
         </div>
