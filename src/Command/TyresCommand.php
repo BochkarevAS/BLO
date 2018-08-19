@@ -20,6 +20,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
+
 class TyresCommand extends ContainerAwareCommand
 {
     protected function configure()
@@ -50,6 +51,7 @@ class TyresCommand extends ContainerAwareCommand
             'base_uri' => 'http://p.bimbilo.ru/',
             'timeout'  => 10
         ]);
+
         $response = $client->request('POST', '/api', [
             'form_params' => [
                 'auth'   => 'bimbilo_13062018',
@@ -58,8 +60,11 @@ class TyresCommand extends ContainerAwareCommand
                 'args'   => [1, 1, $prices]
             ]
         ]);
+
         $contents = $response->getBody()->getContents();
+
         dump($contents);
+
         if (!$contents) {
             throw new Exception('Error');
         }

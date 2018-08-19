@@ -2,11 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-<<<<<<<<< Temporary merge branch 1
-        "php": "^7.2.7",
-=========
         "php": "^7.2.8",
->>>>>>>>> Temporary merge branch 2
         "ext-iconv": "*",
         "friendsofsymfony/ckeditor-bundle": "^1.1",
         "friendsofsymfony/elastica-bundle": "^5.0",
@@ -35,12 +31,8 @@
         "symfony/validator": "^4.1",
         "symfony/web-link": "^4.1",
         "symfony/webpack-encore-pack": "*",
-<<<<<<<<< Temporary merge branch 1
-        "symfony/yaml": "^4.1"
-=========
         "symfony/yaml": "^4.1",
         "twig/extensions": "^1.5"
->>>>>>>>> Temporary merge branch 2
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
