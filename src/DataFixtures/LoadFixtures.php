@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Administration\News;
+<<<<<<< HEAD
 use App\Entity\Administration\NewsCategories;
 use App\Entity\Parts\Oem;
 use App\Entity\Client\Company1;
@@ -18,6 +19,11 @@ use Faker\Factory;
 use Faker\Provider\bg_BG\Payment;
 use Faker\Provider\da_DK\Person;
 use Faker\Provider\fr_FR\Address;
+=======
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
+>>>>>>> Initial commit
 
 class LoadFixtures extends Fixture
 {
@@ -26,6 +32,7 @@ class LoadFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->faker = Factory::create();
+<<<<<<< HEAD
         $this->faker->addProvider(new Address($this->faker));
         $this->faker->addProvider(new Payment($this->faker));
         $this->faker->addProvider(new Person($this->faker));
@@ -218,10 +225,14 @@ class LoadFixtures extends Fixture
         }
 
         $manager->flush();
+=======
+        $this->addNews($manager);
+>>>>>>> Initial commit
     }
 
     private function addNews($manager)
     {
+<<<<<<< HEAD
         for ($i = 1; $i <= 100; $i++) {
             $news = new News();
             $news->setName($this->faker->creditCardType());
@@ -235,11 +246,27 @@ class LoadFixtures extends Fixture
             $news->setMassage($this->faker->text($maxNbChars = 50));
             $this->setReference('news_' . $i, $news);
 
+=======
+        for ($i = 1; $i <= 10; $i++) {
+            $news = new News();
+            $news->setName($this->faker->creditCardType());
+            $news->setImg($this->faker->imageUrl($width = 640, $height = 480));
+            $news->setUrl($this->faker->url());
+            $news->setTitle($this->faker->realText($maxNbChars = 200, $indexSize = 2));
+            $news->setCompany($this->faker->creditCardType());
+            $news->setUid($this->faker->numberBetween(1, 100));
+            $news->setDisplay($this->faker->numberBetween(1, 2));
+            $news->setDisplayOnMain($this->faker->numberBetween(1, 2));
+            $news->setTypeNews($this->faker->numberBetween(1, 10));
+            $news->setCreatedAt();
+            $this->setReference('news_' . $i, $news);
+>>>>>>> Initial commit
             $manager->persist($news);
         }
 
         $manager->flush();
     }
+<<<<<<< HEAD
 
     private function addNewsCategoeys($manager)
     {
@@ -267,4 +294,6 @@ class LoadFixtures extends Fixture
 
         $manager->flush();
     }
+=======
+>>>>>>> Initial commit
 }
