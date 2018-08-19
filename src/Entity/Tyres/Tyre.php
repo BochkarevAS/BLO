@@ -55,6 +55,10 @@ class Tyre
      * Шипы
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn")
+<<<<<<<<< Temporary merge branch 1
+     * @ORM\JoinColumn(referencedColumnName="id")
+=========
+>>>>>>>>> Temporary merge branch 2
      */
     private $thorn;
 
@@ -62,6 +66,10 @@ class Tyre
      * Сезонность
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality")
+<<<<<<<<< Temporary merge branch 1
+     * @ORM\JoinColumn(referencedColumnName="id")
+=========
+>>>>>>>>> Temporary merge branch 2
      */
     private $seasonality;
 
@@ -74,6 +82,10 @@ class Tyre
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model")
+<<<<<<<<< Temporary merge branch 1
+     * @ORM\JoinColumn(referencedColumnName="id")
+=========
+>>>>>>>>> Temporary merge branch 2
      */
     private $model;
 
@@ -81,6 +93,10 @@ class Tyre
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
+<<<<<<<<< Temporary merge branch 1
+     * @ORM\JoinColumn(referencedColumnName="id")
+=========
+>>>>>>>>> Temporary merge branch 2
      */
     private $city;
 
@@ -88,6 +104,10 @@ class Tyre
      * Компания продавец
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
+<<<<<<<<< Temporary merge branch 1
+     * @ORM\JoinColumn(referencedColumnName="id")
+=========
+>>>>>>>>> Temporary merge branch 2
      */
     private $company;
 
@@ -106,6 +126,8 @@ class Tyre
     private $price;
 
     /**
+<<<<<<<<< Temporary merge branch 1
+=========
      * Состояние
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Availability")
@@ -120,6 +142,7 @@ class Tyre
     private $condition;
 
     /**
+>>>>>>>>> Temporary merge branch 2
      * Фотографии
      *
      * @ORM\Column(type="json")
@@ -178,6 +201,12 @@ class Tyre
         $this->quantity = $quantity;
     }
 
+<<<<<<<<< Temporary merge branch 1
+    /**
+     * @return Seasonality
+     */
+=========
+>>>>>>>>> Temporary merge branch 2
     public function getSeasonality()
     {
         return $this->seasonality;
@@ -188,6 +217,12 @@ class Tyre
         $this->seasonality = $seasonality;
     }
 
+<<<<<<<<< Temporary merge branch 1
+    /**
+     * @return Thorn
+     */
+=========
+>>>>>>>>> Temporary merge branch 2
     public function getThorn()
     {
         return $this->thorn;
@@ -208,6 +243,12 @@ class Tyre
         $this->model = $model;
     }
 
+<<<<<<<<< Temporary merge branch 1
+    /**
+     * @return Brand
+     */
+=========
+>>>>>>>>> Temporary merge branch 2
     public function getBrand()
     {
         return $this->brand;
@@ -238,6 +279,8 @@ class Tyre
         $this->price = $price;
     }
 
+<<<<<<<<< Temporary merge branch 1
+=========
     public function getAvailability()
     {
         return $this->availability;
@@ -258,6 +301,7 @@ class Tyre
         $this->condition = $condition;
     }
 
+>>>>>>>>> Temporary merge branch 2
     public function getCity()
     {
         return $this->city;

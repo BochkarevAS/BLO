@@ -2,4 +2,7 @@ twig:
     paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+<<<<<<<<< Temporary merge branch 1
+=========
     form_themes: ['bootstrap_4_layout.html.twig']
+>>>>>>>>> Temporary merge branch 2
