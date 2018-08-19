@@ -2,15 +2,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-<<<<<<< HEAD
-    prices_directory: '%kernel.project_dir%/public/uploads/prices'
-=======
     prices_directory: '%kernel.project_dir%/public/prices'
-<<<<<<< HEAD
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
-=======
     logotype_directory: '%kernel.project_dir%/public/images'
->>>>>>> ac16db0a3e23ea62b96f41065e079c905d4ccef8
 
 services:
     # default configuration for services in *this* file

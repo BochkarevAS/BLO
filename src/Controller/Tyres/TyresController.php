@@ -2,19 +2,15 @@
 
 namespace App\Controller\Tyres;
 
-<<<<<<< HEAD
-=======
+
 use App\Entity\Client\Company;
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
 use App\Entity\Tyres\Tyre;
 use App\Form\Tyres\TyreType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-<<<<<<< HEAD
-=======
+
 use Symfony\Component\HttpFoundation\Response;
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -46,8 +42,6 @@ class TyresController extends AbstractController
             'form'  => $form->createView()
         ]);
     }
-<<<<<<< HEAD
-=======
 
     /**
      * @Route("/show/{id}", name="tyres_show", methods="GET")
@@ -61,5 +55,4 @@ class TyresController extends AbstractController
             'tyre'    => $tyre
         ]);
     }
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
 }

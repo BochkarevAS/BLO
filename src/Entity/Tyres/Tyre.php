@@ -248,8 +248,6 @@ class Tyre
         $this->price = $price;
     }
 
-<<<<<<< HEAD
-=======
     public function getAvailability()
     {
         return $this->availability;
@@ -260,9 +258,6 @@ class Tyre
         $this->availability = $availability;
     }
 
-<<<<<<< HEAD
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
-=======
     public function getCondition()
     {
         return $this->condition;
@@ -273,7 +268,7 @@ class Tyre
         $this->condition = $condition;
     }
 
->>>>>>> ac16db0a3e23ea62b96f41065e079c905d4ccef8
+
     public function getCity()
     {
         return $this->city;
