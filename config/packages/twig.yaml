@@ -2,4 +2,7 @@ twig:
     paths: ['%kernel.project_dir%/templates']
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+<<<<<<< HEAD
     form_themes: ['bootstrap_4_layout.html.twig']
+=======
+>>>>>>> Initial commit
