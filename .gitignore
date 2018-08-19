@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /.env
 /public/bundles/
@@ -21,12 +20,6 @@ yarn-error.log
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-<<<<<<< HEAD
 /.idea
-<<<<<<< HEAD
 /yarn.lock
 /composer.phar
-=======
-=======
->>>>>>> Initial commit
->>>>>>> test
