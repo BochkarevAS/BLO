@@ -41,19 +41,12 @@ class PartsCommand extends ContainerAwareCommand
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-<<<<<<<<< Temporary merge branch 1
+
 //        $file = 'parts_test.csv';
         $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
-        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-=========
-        $file = 'parts_test.csv';
-//        $file = 'big_parts.csv';
-//        $file = 'parts_1.csv';
-
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
->>>>>>>>> Temporary merge branch 2
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -168,12 +161,8 @@ class PartsCommand extends ContainerAwareCommand
             $part->setCompany($company);
         }
 
-<<<<<<<<< Temporary merge branch 1
-        $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
-=========
         $pictures = explode(',', $record['pictures']);
         $json = $serializer->serialize($pictures, 'json');
->>>>>>>>> Temporary merge branch 2
         $part->setPicture($json);
     }
 }
