@@ -1,8 +1,2 @@
-<<<<<<< HEAD
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-=======
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
->>>>>>> Initial commit
