@@ -56,3 +56,4 @@ services:
 #    App\Controller\Parts\PartsController:
 #        arguments:
 #            $finder: '@fos_elastica.finder.app.part'
+# please note that last definitions always *replace* previous ones

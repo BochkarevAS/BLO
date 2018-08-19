@@ -3,21 +3,26 @@
     "license": "proprietary",
     "require": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "php": "^7.2.7",
 =======
         "php": "^7.2.8",
 >>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
         "ext-iconv": "*",
+=======
+        "php": "^7.1.3",
+>>>>>>> test
         "friendsofsymfony/ckeditor-bundle": "^1.1",
         "friendsofsymfony/elastica-bundle": "^5.0",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "friendsofsymfony/user-bundle": "^2.1",
         "guzzlehttp/guzzle": "^6.3",
         "javiereguiluz/easyadmin-bundle": "^1.17",
-        "knplabs/knp-paginator-bundle": "^2.8",
         "league/csv": "^9.1",
-        "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "dev-master",
+        "ext-iconv": "*",
+        "knplabs/knp-paginator-bundle": "^2.8",
+        "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.1",
         "symfony/console": "^4.1",
         "symfony/expression-language": "^4.1",
@@ -53,6 +58,7 @@
         "symfony/profiler-pack": "^1.0",
         "symfony/test-pack": "^1.0",
         "symfony/var-dumper": "^3.3|^4.0",
+        "symfony/yaml": "^4.1",
         "symfony/web-server-bundle": "^4.1"
     },
     "config": {
