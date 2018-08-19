@@ -9,10 +9,6 @@ doctrine:
     dbal:
         # configure these for your database server
         driver: 'pdo_postgresql'
-<<<<<<< HEAD
-#        server_version: '9.5'
-=======
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
         server_version: '10.4'
         charset: utf8
         default_table_options:

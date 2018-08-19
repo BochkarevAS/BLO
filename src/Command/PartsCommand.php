@@ -41,19 +41,12 @@ class PartsCommand extends ContainerAwareCommand
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-<<<<<<< HEAD
-//        $file = 'parts_test.csv';
-        $file = 'big_parts.csv';
-//        $file = 'parts_1.csv';
 
-        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
-=======
         $file = 'parts_test.csv';
 //        $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -168,12 +161,8 @@ class PartsCommand extends ContainerAwareCommand
             $part->setCompany($company);
         }
 
-<<<<<<< HEAD
-        $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
-=======
         $pictures = explode(',', $record['pictures']);
         $json = $serializer->serialize($pictures, 'json');
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
         $part->setPicture($json);
     }
 }
