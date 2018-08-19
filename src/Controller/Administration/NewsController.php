@@ -3,20 +3,31 @@
 namespace App\Controller\Administration;
 
 use App\Entity\Administration\News;
+<<<<<<< HEAD
 use App\Form\Administration\NewsType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+=======
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+>>>>>>> Initial commit
 use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends AbstractController
 {
+<<<<<<< HEAD
+=======
+
+>>>>>>> Initial commit
     /**
      * @Route("/news", name="news_render")
      */
     public function renderNews(Request $request, PaginatorInterface $paginator)
     {
+<<<<<<< HEAD
         $form = $this->createForm(NewsType::class);
 
         $em = $this->getDoctrine()->getManager();
@@ -145,6 +156,18 @@ class NewsController extends AbstractController
 
         return $this->render('administration/news.html.twig', [
             'form' => $form->createView()
+=======
+        $newsAll = $this->getDoctrine()->getRepository(News::class)->findAll();
+
+        $news = $paginator->paginate(
+            $newsAll,
+            $request->query->getInt('page', 1),
+            1
+        );
+
+        return $this->render('administration/news.html.twig', [
+            'news' => $news
+>>>>>>> Initial commit
         ]);
     }
 }

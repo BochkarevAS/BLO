@@ -1,7 +1,10 @@
 {
+<<<<<<< HEAD
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+=======
+>>>>>>> Initial commit
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -56,9 +59,12 @@
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
         }
     },
+<<<<<<< HEAD
     "doctrine/event-manager": {
         "version": "v1.0.0"
     },
+=======
+>>>>>>> Initial commit
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
@@ -74,12 +80,15 @@
     "doctrine/orm": {
         "version": "v2.6.1"
     },
+<<<<<<< HEAD
     "doctrine/persistence": {
         "version": "v1.0.0"
     },
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+=======
+>>>>>>> Initial commit
     "easycorp/easy-log-handler": {
         "version": "1.0",
         "recipe": {
@@ -92,6 +101,7 @@
     "egulias/email-validator": {
         "version": "2.1.4"
     },
+<<<<<<< HEAD
     "elasticsearch/elasticsearch": {
         "version": "v6.0.1"
     },
@@ -152,6 +162,14 @@
             "ref": "e58cc3a3956761ff41c27bc9847b145655494d42"
         }
     },
+=======
+    "fig/link-util": {
+        "version": "1.0.0"
+    },
+    "fzaninotto/faker": {
+        "version": "v1.7.1"
+    },
+>>>>>>> Initial commit
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -161,9 +179,12 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
     },
+<<<<<<< HEAD
     "league/csv": {
         "version": "9.1.4"
     },
+=======
+>>>>>>> Initial commit
     "monolog/monolog": {
         "version": "1.23.0"
     },
@@ -173,12 +194,15 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+<<<<<<< HEAD
     "pagerfanta/pagerfanta": {
         "version": "v1.1.0"
     },
     "paragonie/random_compat": {
         "version": "v2.0.17"
     },
+=======
+>>>>>>> Initial commit
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -194,9 +218,12 @@
     "psr/container": {
         "version": "1.0.0"
     },
+<<<<<<< HEAD
     "psr/http-message": {
         "version": "1.0.1"
     },
+=======
+>>>>>>> Initial commit
     "psr/link": {
         "version": "1.0.0"
     },
@@ -206,12 +233,15 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+<<<<<<< HEAD
     "react/promise": {
         "version": "v2.7.0"
     },
     "ruflin/elastica": {
         "version": "6.0.2"
     },
+=======
+>>>>>>> Initial commit
     "sensio/framework-extra-bundle": {
         "version": "4.0",
         "recipe": {
@@ -221,6 +251,7 @@
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
     },
+<<<<<<< HEAD
     "sensiolabs/ansi-to-html": {
         "version": "v1.1.3"
     },
@@ -233,6 +264,8 @@
             "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
         }
     },
+=======
+>>>>>>> Initial commit
     "swiftmailer/swiftmailer": {
         "version": "v6.0.2"
     },
@@ -434,9 +467,12 @@
             "ref": "3db029c03e452b4a23f7fc45cec7c922c2247eb8"
         }
     },
+<<<<<<< HEAD
     "symfony/templating": {
         "version": "v4.1.1"
     },
+=======
+>>>>>>> Initial commit
     "symfony/test-pack": {
         "version": "v1.0.2"
     },
@@ -500,6 +536,7 @@
     "symfony/yaml": {
         "version": "v4.1.0"
     },
+<<<<<<< HEAD
     "twig/extensions": {
         "version": "1.0",
         "recipe": {
@@ -509,15 +546,20 @@
             "ref": "4851df0afc426b8f07204379d21fca25b6df5d68"
         }
     },
+=======
+>>>>>>> Initial commit
     "twig/twig": {
         "version": "v2.4.8"
     },
     "webmozart/assert": {
         "version": "1.3.0"
     },
+<<<<<<< HEAD
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"
     },
+=======
+>>>>>>> Initial commit
     "zendframework/zend-code": {
         "version": "3.3.0"
     },
