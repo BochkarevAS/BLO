@@ -55,7 +55,6 @@ class Tyre
      * Шипы
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Thorn")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $thorn;
 
@@ -63,7 +62,6 @@ class Tyre
      * Сезонность
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Seasonality")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $seasonality;
 
@@ -76,7 +74,6 @@ class Tyre
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $model;
 
@@ -84,7 +81,6 @@ class Tyre
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $city;
 
@@ -92,7 +88,6 @@ class Tyre
      * Компания продавец
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $company;
 
@@ -112,13 +107,29 @@ class Tyre
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
      * @ORM\Column(type="string", nullable=true)
+=======
+     * Состояние
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Availability")
+>>>>>>> ac16db0a3e23ea62b96f41065e079c905d4ccef8
      */
     private $availability;
 
     /**
+<<<<<<< HEAD
 >>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
+=======
+     * Наличие
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Condition")
+     */
+    private $condition;
+
+    /**
+>>>>>>> ac16db0a3e23ea62b96f41065e079c905d4ccef8
      * Фотографии
      *
      * @ORM\Column(type="json")
@@ -177,9 +188,6 @@ class Tyre
         $this->quantity = $quantity;
     }
 
-    /**
-     * @return Seasonality
-     */
     public function getSeasonality()
     {
         return $this->seasonality;
@@ -190,9 +198,6 @@ class Tyre
         $this->seasonality = $seasonality;
     }
 
-    /**
-     * @return Thorn
-     */
     public function getThorn()
     {
         return $this->thorn;
@@ -213,9 +218,6 @@ class Tyre
         $this->model = $model;
     }
 
-    /**
-     * @return Brand
-     */
     public function getBrand()
     {
         return $this->brand;
@@ -258,7 +260,20 @@ class Tyre
         $this->availability = $availability;
     }
 
+<<<<<<< HEAD
 >>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
+=======
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+    }
+
+>>>>>>> ac16db0a3e23ea62b96f41065e079c905d4ccef8
     public function getCity()
     {
         return $this->city;

@@ -86,7 +86,9 @@
                             <td>
                                 {{ tyre.updatedAt|date('d-m-Y H:i') }}
                                 <br>
-                                {{ tyre.availability }}
+                                {% if tyre.availability %}
+                                    {{ tyre.availability.name }}
+                                {% endif %}
                             </td>
 >>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
                         </tr>

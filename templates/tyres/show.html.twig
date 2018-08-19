@@ -1,85 +1,159 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('build/css/tyres/show_tyres.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/js/appFancybox.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
 
-    <div class="container">
-
-        {% set pictures = tyre.picture|json_decode %}
-
-        {% for picture in pictures %}
-            <img src="{{ picture }}" width="110" height="110">
-        {% endfor %}
+    <div class="container js-tyres-show-module">
 
         <div class="row">
-            {% if tyre.brand %}
-                Производитель
-                {{ tyre.brand.name }}
-            {% endif %}
+            <div class="col-5">
+                <a data-trigger="preview" href="javascript:;" style="max-width: 480px;">
+                    <img src="https://source.unsplash.com/LuK-MuZ-yf0/448x336" />
+                </a>
+            </div>
+            <div class="col-4">
+                <ul class="oglavl">
+                    {% if tyre.brand %}
+                        <li>
+                            <span class="text">Производитель</span>
+                            <span class="page">{{ tyre.brand.name }}</span>
+                        </li>
+                    {% endif %}
+                    {% if tyre.model %}
+                        <li>
+                            <span class="text">Модель</span>
+                            <span class="page">{{ tyre.model.name }}</span>
+                        </li>
+                    {% endif %}
+                    {% if tyre.seasonality %}
+                        <li>
+                            <span class="text">Сезонность</span>
+                            <span class="page">{{ tyre.seasonality.name }}</span>
+                        </li>
+                    {% endif %}
+                    {% if tyre.width %}
+                        <li>
+                            <span class="text">Ширина</span>
+                            <span class="page">{{ tyre.width }}</span>
+                        </li>
+                    {% endif %}
+                    {% if tyre.height %}
+                        <li>
+                            <span class="text">Высота</span>
+                            <span class="page">{{ tyre.height }}</span>
+                        </li>
+                    {% endif %}
+                    {% if tyre.diameter %}
+                        <li>
+                            <span class="text">Диаметор</span>
+                            <span class="page">{{ tyre.diameter }}</span>
+                        </li>
+                    {% endif %}
+                    {% if tyre.price %}
+                        <li>
+                            <span class="text">Цена</span>
+                            <span class="page">{{ tyre.price }} руб. за 1 шт.</span>
+                        </li>
+                    {% endif %}
+                    {% if tyre.availability %}
+                        <span class="text">{{ tyre.availability.name }}</span>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-        <div class="row">
-            {% if tyre.model %}
-                Модель
-                {{ tyre.model.name }}
-            {% endif %}
-        </div>
-        <div>
-            {% if tyre.seasonality %}
-                Сезонность
-                {{ tyre.seasonality.name }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.width %}
-                Ширина
-                {{ tyre.width }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.height %}
-                Высота
-                {{ tyre.height }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.diameter %}
-                Диаметор
-                {{ tyre.diameter }}
-            {% endif %}
-        </div>
-        <div class="row">
-            {% if tyre.price %}
-                Цена
-                {{ tyre.price }} руб. за 1 шт.
-            {% endif %}
-        </div>
-        <div class="row">
-            {{ tyre.availability }}
+
+        <br>
+
+        <div class="fix-media-cont">
+            <a href="https://source.unsplash.com/LuK-MuZ-yf0/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/LuK-MuZ-yf0/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/Oaqk7qqNh_c/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/Oaqk7qqNh_c/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/X9GHkHbJIaU/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/X9GHkHbJIaU/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/9c_djeQTDyY/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/9c_djeQTDyY/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/9c_djeQTDyY/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/9c_djeQTDyY/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/9c_djeQTDyY/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/9c_djeQTDyY/120x80" />
+            </a>
+
+            <a href="https://source.unsplash.com/9c_djeQTDyY/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                <img src="https://source.unsplash.com/9c_djeQTDyY/120x80" />
+            </a>
         </div>
 
         <hr>
 
-        <h3>Карточка продовца</h3>
+        {% set pictures = tyre.picture|json_decode %}
+
+        {#<div class="row">#}
+            {#<div class="col-5">#}
+                {#{% for picture in pictures %}#}
+                    {#<div class="col-2">#}
+                        {#<img id="tyres-img" src="{{ picture }}">#}
+                    {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
 
         <div class="row">
-            г. {{ company.city }}, {{ company.address }}
-        </div>
-        <h5>Телефон</h5>
-        <ul>
-            {% for phone in company.phones %}
-                <li>{{ phone }}</li>
-            {% endfor %}
-        </ul>
-        <h5>Email адреса</h5>
-        <ul>
-            {% for email in company.emails %}
-                <li>{{ email }}</li>
-            {% endfor %}
-        </ul>
-        <h5>Информация от продавца</h5>
-        <div class="row">
+            {#<div class="row">#}
+                {#<img id="tyres-img-card" src="/images/{{ company.logotype }}">#}
+            {#</div>#}
+
+            <h5>Компания {{ company.name }}</h5>
             {{ company.preview }}
-        </div>
 
+            <h5>Контактная информация</h5>
+            <div class="row">
+                <ul class="list-group list-group-flush">
+                    {% for phone in company.phones %}
+                        <li class="list-group-item">{{ phone }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="list-group list-group-flush">
+                    {% for email in company.emails %}
+                        <li class="list-group-item">{{ email }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div id="tyres-card">
+
+                <div id="company-map"></div>
+                <div class="card-body">
+                    <p class="card-text" id="company-address-coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
+                        г. {{ company.city }}, {{ company.address }}
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {#<script async defer src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyCpBhRQ6bMk1Xzx6Ik1b6lqPytOf8XBm1A"></script>#}
+    <script async defer src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="{{ asset('build/js/appMap.js') }}"></script>
+    <script src="{{ asset('build/js/appFancybox.js') }}"></script>
 {% endblock %}

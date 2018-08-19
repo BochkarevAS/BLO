@@ -6,7 +6,11 @@ parameters:
     prices_directory: '%kernel.project_dir%/public/uploads/prices'
 =======
     prices_directory: '%kernel.project_dir%/public/prices'
+<<<<<<< HEAD
 >>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
+=======
+    logotype_directory: '%kernel.project_dir%/public/images'
+>>>>>>> ac16db0a3e23ea62b96f41065e079c905d4ccef8
 
 services:
     # default configuration for services in *this* file
@@ -31,10 +35,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
-    App\Service\FileUploader:
-        arguments:
-            $targetDirectory: '%prices_directory%'
 
     app.form.registration:
         class: App\Form\Auth\RegistrationFormType

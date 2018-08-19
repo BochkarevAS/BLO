@@ -10,7 +10,6 @@
     </head>
 
     <body>
-
         <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
 
             <a style="margin-left: 75px;" href="{{ path('parts_index') }}">Запчасти</a>
@@ -82,7 +81,7 @@
             <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
             <script src="{{ asset('build/manifest.js') }}"></script>
             <script src="{{ asset('build/layout.js') }}"></script>
-            <script src="{{ asset('build/app.js') }}"></script>
+            <script src="{{ asset('build/js/app.js') }}"></script>
         {% endblock %}
     </body>
 </html>

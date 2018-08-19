@@ -6,15 +6,13 @@
 
     <div class="container">
 
-        <h1>Редактировать компанию</h1>
+        <h3>Редактировать компанию {{ company.name }}</h3>
 
         {{ include('client/company/_form.html.twig') }}
         {{ include('client/company/_delete_form.html.twig') }}
 
         <a href="{{ path('client_price_load', {'id': company.id}) }}">Загрузить прайс</a>
-
         <br>
-
         <a href="{{ path('client_company_index') }}">Назад</a>
 
     </div>

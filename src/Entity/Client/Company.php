@@ -92,6 +92,13 @@ class Company
     private $address;
 
     /**
+     * Адрес компании
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $coordinate;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -272,6 +279,16 @@ class Company
     public function setLogotype($logotype): void
     {
         $this->logotype = $logotype;
+    }
+
+    public function getCoordinate()
+    {
+        return $this->coordinate;
+    }
+
+    public function setCoordinate($coordinate)
+    {
+        $this->coordinate = $coordinate;
     }
 
     public function getId()

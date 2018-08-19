@@ -31,7 +31,8 @@ class PriceController extends AbstractController
             $paths = [];
 
             foreach ($files as $file) {
-                $fileName = $this->getParameter('prices_directory').'/'.$fileUploader->upload($file);
+                $targetDirectory = $this->getParameter('prices_directory');
+                $fileName = $targetDirectory.'/'.$fileUploader->upload($file, $targetDirectory);
                 $price->setPath($fileName);
                 $price->setCompany($company);
                 $paths[] = $fileName;
