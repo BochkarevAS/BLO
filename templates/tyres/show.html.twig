@@ -112,37 +112,38 @@
                     {#</div>#}
                 {#{% endfor %}#}
             {#</div>#}
-
-        <div class="row">
             {#<div class="row">#}
                 {#<img id="tyres-img-card" src="/images/{{ company.logotype }}">#}
             {#</div>#}
 
+        <div class="row">
             <h5>Компания {{ company.name }}</h5>
             {{ company.preview }}
+        </div>
 
+        <br>
+
+        <div>
             <h5>Контактная информация</h5>
-            <div class="row">
-                <ul class="list-group list-group-flush">
-                    {% for phone in company.phones %}
-                        <li class="list-group-item">{{ phone }}</li>
-                    {% endfor %}
-                </ul>
-                <ul class="list-group list-group-flush">
-                    {% for email in company.emails %}
-                        <li class="list-group-item">{{ email }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <hr>
+            <ul class="list-group">
+                {% for phone in company.phones %}
+                    <li class="list-group-item fa fa-phone">{{ phone }}</li>
+                {% endfor %}
+            </ul>
+            <ul class="list-group">
+                {% for email in company.emails %}
+                    <li class="list-group-item fa fa-envelope">{{ email }}</li>
+                {% endfor %}
+            </ul>
+        </div>
 
-            <div id="tyres-card">
-
-                <div id="company-map"></div>
-                <div class="card-body">
-                    <p class="card-text" id="company-address-coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
-                        г. {{ company.city }}, {{ company.address }}
-                    </p>
-                </div>
+        <div id="tyres-card">
+            <div id="company-map"></div>
+            <div class="card-body">
+                <p class="card-text" id="company-address-coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
+                    г. {{ company.city }}, {{ company.address }}
+                </p>
             </div>
         </div>
     </div>

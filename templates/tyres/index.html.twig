@@ -7,13 +7,17 @@
         {{ include('/tyres/_form.html.twig') }}
 
         {% if tyres %}
+
+            <div class="count">
+                <h4>Найдено объявлений {{ tyres.getTotalItemCount }}</h4>
+            </div>
+
             <div class="navigator">
                 {{ knp_pagination_render(tyres) }}
             </div>
 
             <table class="table table-hover">
                 <tbody>
-
                     {% for tyre in tyres %}
                         <tr>
                             <td>
