@@ -89,7 +89,8 @@ class CompanyController extends Controller
      */
     public function edit(Request $request, Company $company): Response
     {
-        $logotype = $this->getParameter('logotype_directory').'/'.$company->getLogotype();
+        $path = $this->getParameter('logotype_directory').'/'.$company->getLogotype();
+        $logotype = $company->getLogotype();
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
@@ -97,8 +98,8 @@ class CompanyController extends Controller
             $fileName = $this->fileUploader($company);
             $company->setLogotype($fileName);
 
-            if (file_exists($logotype)) {
-                unlink($logotype);
+            if (file_exists($path) && $logotype) {
+                unlink($path);
             }
 
             $this->getDoctrine()->getManager()->flush();

@@ -90,7 +90,8 @@ class CompanyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Company::class
+            'data_class'      => Company::class,
+            'csrf_protection' => false
         ]);
     }
 }
