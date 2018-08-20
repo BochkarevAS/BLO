@@ -32,19 +32,19 @@ class CompanyType extends AbstractType
             ->add('bank', CKEditorType::class, [
                 'label' => 'Банковские реквизиты',
                 'config' => [
-                    'uiColor' => '#ffff111'
+                    'uiColor' => '#00BFFF'
                 ]
             ])
             ->add('preview', CKEditorType::class, [
                 'label' => 'Краткая информация о компании',
                 'config' => [
-                    'uiColor' => '#ffff111'
+                    'uiColor' => '#00BFFF'
                 ]
             ])
             ->add('address', CKEditorType::class, [
                 'label' => 'Адрес компании',
                 'config' => [
-                    'uiColor' => '#ffff111'
+                    'uiColor' => '#00BFFF'
                 ]
             ])
             ->add('city', EntityType::class, [

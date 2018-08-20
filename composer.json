@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2.8",
+        "php": "^7.2.7",
         "ext-iconv": "*",
         "friendsofsymfony/ckeditor-bundle": "^1.1",
         "friendsofsymfony/elastica-bundle": "^5.0",

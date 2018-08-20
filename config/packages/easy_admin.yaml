@@ -45,8 +45,6 @@ easy_admin:
                     - { property: 'syte', label: 'Сайт', css_class: 'col-sm-2' }
                     - { property: 'phones', css_class: 'col-sm-2', label: 'Телефоны', type: 'collection', type_options: {entry_type: App\Form\Client\PhoneEmbeddedForm, allow_delete: true, allow_add: true, by_reference: false} }
                     - { property: 'emails', css_class: 'col-sm-2', label: 'Email адреса', type: 'collection', type_options: {entry_type: App\Form\Client\EmailEmbeddedForm, allow_delete: true, allow_add: true, by_reference: false} }
-
-
             fields: ['id', 'name']
         User:
             class: App\Entity\Auth\User
