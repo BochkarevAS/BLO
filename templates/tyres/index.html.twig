@@ -17,31 +17,6 @@
                     {% for tyre in tyres %}
                         <tr>
                             <td>
-<<<<<<< HEAD
-                                <img src="#" width="110" height="110">
-                            </td>
-                            <td>
-                                Шины
-                                {% if tyre.brand %}
-                                    {{ tyre.brand.name }}
-                                {% endif %}
-                                {% if tyre.width %}
-                                    {{ tyre.width }}
-                                {% endif %}
-                                {% if tyre.height %}
-                                    / {{ tyre.height }}
-                                {% endif %}
-                                {% if tyre.diameter %}
-                                    / {{ tyre.diameter }}
-                                {% endif %}
-                                {% if tyre.model %}
-                                    {{ tyre.model.name }}
-                                {% endif %}
-                                <br>
-                                {% if tyre.quantity %}
-                                    Комплект {{ tyre.quantity }} шт.
-                                {% endif %}
-=======
                                 {% set pictures = tyre.picture|json_decode %}
                                 <img src="{{ pictures[0] }}" width="110" height="110">
                             </td>
@@ -68,7 +43,6 @@
                                         Комплект {{ tyre.quantity }} шт.
                                     {% endif %}
                                 </a>
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
                             </td>
                             <td>
                                 {% if tyre.price %}
@@ -80,9 +54,6 @@
                                     {{ tyre.company.name }} {% if tyre.city %} / {{ tyre.city.name }} {% endif %}
                                 {% endif %}
                             </td>
-<<<<<<< HEAD
-                            <td>{{ tyre.updatedAt|date('d-m-Y H:i') }}</td>
-=======
                             <td>
                                 {{ tyre.updatedAt|date('d-m-Y H:i') }}
                                 <br>
@@ -90,7 +61,6 @@
                                     {{ tyre.availability.name }}
                                 {% endif %}
                             </td>
->>>>>>> d64030f00bcd61c2232c1535f463e9fcecdb7685
                         </tr>
                     {% endfor %}
                 </tbody>

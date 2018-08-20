@@ -30,6 +30,7 @@ class TyresCommand extends ContainerAwareCommand
             ->setDescription('Import tyres from CSV file')
         ;
     }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $now = new \DateTime();
@@ -38,6 +39,7 @@ class TyresCommand extends ContainerAwareCommand
         $now = new \DateTime();
         $output->writeln('<comment>End : ' . $now->format('d-m-Y G:i:s') . ' ---</comment>');
     }
+
     protected function import(InputInterface $input, OutputInterface $output)
     {
         $file = '616.csv';
@@ -46,7 +48,9 @@ class TyresCommand extends ContainerAwareCommand
 //        $file = 'test.csv';
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
+
         $prices = $em->getRepository(Price::class)->findAllPricesByCompany(new \DateTime());
+
         $client = new Client([
             'base_uri' => 'http://p.bimbilo.ru/',
             'timeout'  => 10
@@ -63,11 +67,12 @@ class TyresCommand extends ContainerAwareCommand
 
         $contents = $response->getBody()->getContents();
 
-        dump($contents);
+//        dump($contents);
 
         if (!$contents) {
             throw new Exception('Error');
         }
+
         $stopwatch = new Stopwatch();
         $stopwatch->start('sanitize');
         $reader = Reader::createFromPath($path);
@@ -86,11 +91,14 @@ class TyresCommand extends ContainerAwareCommand
         $i = 0;
         $batchSize = 1000;
         $company = 'Vladmotors';
+
         $progress = new ProgressBar($output, count($reader));
         $progress->start();
+
         foreach ($records as $offset => $record) {
             $hash = md5($record['quantity'] . $record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] . $record['model'] . $record['index_of_speed'] . $record['load_index'] . $record['brand'] . $record['pictures']);
             $tyre = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
+
             if ($tyre === null) {
                 $tyre = new Tyre();
                 $this->insert($tyre, $hash, $record, $em, $company);
@@ -99,9 +107,11 @@ class TyresCommand extends ContainerAwareCommand
                 $this->insert($tyre, $hash, $record, $em, $company);
                 $em->merge($tyre);
             }
+
             if (($i % $batchSize) === 0) {
                 $em->flush();
                 $em->clear();
+
                 $event = $stopwatch->lap('sanitize');
                 $progress->advance($batchSize);
                 $now = new \DateTime();
@@ -109,11 +119,14 @@ class TyresCommand extends ContainerAwareCommand
             }
             $i++;
         }
+
         $em->flush();
         $em->clear();
+
         $stopwatch->stop('sanitize');
         $progress->finish();
     }
+
     private function insert(Tyre $tyre, $hash, array $record, EntityManager $em, $company)
     {
         $serializer = $this->getContainer()->get('serializer');
@@ -129,14 +142,17 @@ class TyresCommand extends ContainerAwareCommand
             $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
             $tyre->setBrand($brand);
         }
+
         if ($record['model']) {
             $model = $em->getRepository(Model::class)->findByName(mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'));
             $tyre->setModel($model);
         }
+
         if ($record['seasonality']) {
             $seasonality = $em->getRepository(Seasonality::class)->findByName(mb_convert_encoding($record['seasonality'], 'UTF-8', 'Windows-1251'));
             $tyre->setSeasonality($seasonality);
         }
+
         if ($record['thorn']) {
             $thorn = $em->getRepository(Thorn::class)->findByName(mb_convert_encoding($record['thorn'], 'UTF-8', 'Windows-1251'));
             $tyre->setSeasonality($thorn);
@@ -156,10 +172,12 @@ class TyresCommand extends ContainerAwareCommand
         if ($city) {
             $tyre->setCity($city);
         }
+
         $company = $em->getRepository(Company::class)->findByName($company);
         if ($company) {
             $tyre->setCompany($company);
         }
+
         $pictures = explode(',', $record['pictures']);
         $json = $serializer->serialize($pictures, 'json');
         $tyre->setPicture($json);
