@@ -102,7 +102,7 @@
 
         <hr>
 
-        {% set pictures = tyre.picture|json_decode %}
+        {#{% set pictures = tyre.picture|json_decode %}#}
 
         {#<div class="row">#}
             {#<div class="col-5">#}
@@ -113,13 +113,13 @@
                 {#{% endfor %}#}
             {#</div>#}
         {#</div>#}
-        
+
         <div>
             <h5>Компания {{ company.name }}</h5>
             {{ company.preview }}
-            <div>
-                <img id="tyres-img-card" src="/images/{{ company.logotype }}">
-            </div>
+            {#<div>#}
+                {#<img id="tyres-img-card" src="/images/{{ company.logotype }}">#}
+            {#</div>#}
         </div>
 
         <br>
