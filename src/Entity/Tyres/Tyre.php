@@ -263,6 +263,10 @@ class Tyre
         $this->condition = $condition;
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a88c8101517e6966d84ca1ff2ffa8b41f3c026c
     public function getCity()
     {
         return $this->city;

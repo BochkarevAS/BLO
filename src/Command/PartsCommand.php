@@ -41,11 +41,23 @@ class PartsCommand extends ContainerAwareCommand
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2a88c8101517e6966d84ca1ff2ffa8b41f3c026c
 //        $file = 'parts_test.csv';
         $file = 'big_parts.csv';
 //        $file = 'parts_1.csv';
 
+<<<<<<< HEAD
+=======
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/' . DIRECTORY_SEPARATOR . $file;
+
+        $file = 'parts_test.csv';
+//        $file = 'big_parts.csv';
+//        $file = 'parts_1.csv';
+
+>>>>>>> 2a88c8101517e6966d84ca1ff2ffa8b41f3c026c
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
@@ -161,6 +173,10 @@ class PartsCommand extends ContainerAwareCommand
             $part->setCompany($company);
         }
 
+<<<<<<< HEAD
+=======
+        $json = $serializer->serialize(['link' => mb_convert_encoding($record['pictures'], 'UTF-8', 'Windows-1251')], 'json');
+>>>>>>> 2a88c8101517e6966d84ca1ff2ffa8b41f3c026c
         $pictures = explode(',', $record['pictures']);
         $json = $serializer->serialize($pictures, 'json');
         $part->setPicture($json);
