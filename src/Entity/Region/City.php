@@ -2,7 +2,6 @@
 
 namespace App\Entity\Region;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +14,6 @@ class City
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\PartEngineRelation", mappedBy="citys")
      */
     private $id;
 
@@ -34,11 +32,6 @@ class City
      */
     private $coordinate;
 
-    public function __construct()
-    {
-        $this->region = new ArrayCollection();
-    }
-
     public function getName()
     {
         return $this->name;
@@ -56,7 +49,7 @@ class City
 
     public function setRegion($region): void
     {
-        $this->region[] = $region;
+        $this->region = $region;
     }
 
     public function getCoordinate()

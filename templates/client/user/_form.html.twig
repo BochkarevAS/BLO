@@ -2,7 +2,7 @@
     {{ form_errors(form) }}
 
     <div class="form-group">
-        <div class="form-row">
+        <div id="data-user-id" class="form-row" data-id="{{ user.id }}">
             <div class="col-3">
                 {{ form_row(form.first_name, {'id': 'first-name', 'attr': {'class': 'form-control form-control-sm'}}) }}
             </div>
@@ -13,13 +13,16 @@
                 {{ form_row(form.phone, {'id': 'user-phone', 'attr': {'class': 'form-control, form-control-sm'}}) }}
             </div>
             <div class="col-3">
+                {{ form_row(form.region, {'id': 'user-region', 'attr': {'class': 'form-control, form-control-sm'}}) }}
+            </div>
+            <div class="col-3">
                 {{ form_row(form.city, {'id': 'user-city', 'attr': {'class': 'form-control, form-control-sm'}}) }}
             </div>
         </div>
         <div class="row">
             <div class="col-4">
                 <img src="/images/{{ user.avatar }}" width="110" height="110">
-                {{ form_row(form.avatar, {'id': 'user-avatar', 'attr': {'class': 'custom-file-input '}}) }}
+                {{ form_row(form.avatar, {'id': 'user-avatar', 'attr': {'class': 'custom-file-input'}}) }}
             </div>
         </div>
     </div>

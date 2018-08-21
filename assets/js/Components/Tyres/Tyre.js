@@ -9,7 +9,7 @@ class Tyre {
     constructor($wrapper) {
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on('change', '#tyres_brand',
+        this.$wrapper.on('change', '#tyres-brand',
             this.setRelation.bind(this)
         );
 
@@ -27,14 +27,14 @@ class Tyre {
     setRelation(e) {
         let $field = $(e.currentTarget);
         let $brandField = $('#tyres_brand');
-        let target = '#tyres_model';
+        let target = '#tyres-model';
         let data = {};
 
         data[$brandField.attr('name')] = $brandField.val();
         data[$field.attr('name')] = $field.val();
 
         $.ajax({
-            url: Routing.generate('tyres_index'),
+            url: Routing.generate('tyres-index'),
             data: data
         }).then((data) => {
             let $input = $(data).find(target);

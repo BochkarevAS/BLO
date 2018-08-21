@@ -2,6 +2,7 @@
 
 namespace App\Entity\Region;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,11 @@ class Region
      */
     private $citys;
 
+    public function __construct()
+    {
+        $this->citys = new ArrayCollection();
+    }
+
     public function getName()
     {
         return $this->name;
@@ -44,6 +50,16 @@ class Region
 
     public function setCitys($citys): void
     {
-        $this->citys = $citys;
+        $this->citys[] = $citys;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 }

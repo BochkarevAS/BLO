@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Model from '../Components/Parts/Model';
 import Tyre from '../Components/Tyres/Tyre';
 import Company from '../Components/Client/Company';
+import Region from '../Components/Client/Region';
 
 // import Part from "./Components/Parts/Part";
 
@@ -16,6 +17,9 @@ $(document).ready(function() {
 
     $wrapper = $('.js-tyres-module');
     let tyre = new Tyre($wrapper);
+
+    $wrapper = $('.js-user-module');
+    let region = new Region($wrapper);
 
     // let part = new Part();
 });

@@ -22,7 +22,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="client_user_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="client_user_edit", methods="GET|POST", options={"expose"=true})
      */
     public function edit(Request $request, User $user)
     {

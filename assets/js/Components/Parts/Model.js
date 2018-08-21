@@ -9,7 +9,7 @@ class Model {
     constructor($wrapper) {
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on('change', '#parts_brand, #parts_model',
+        this.$wrapper.on('change', '#parts-brand, #parts-model',
             this.setRelation.bind(this)
         );
 
@@ -26,14 +26,14 @@ class Model {
         data[$field.attr('name')] = $field.val();
 
         $.ajax({
-            url: Routing.generate('parts_index'),
+            url: Routing.generate('parts-index'),
             data: data
         }).then((data) => {
             let $input = $(data).find(target);
             $(target).replaceWith($input);
 
             if ('#parts_model' === target) {
-                $('#parts_carcase').replaceWith('<select id="parts_carcase" name="brand[carcase]" class="form-control"></select>');
+                $('#parts_carcase').replaceWith('<select id="parts-carcase" name="brand[carcase]" class="form-control"></select>');
             }
         })
     }
