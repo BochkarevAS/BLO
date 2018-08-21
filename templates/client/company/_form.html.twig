@@ -43,9 +43,9 @@
         </div>
 
         <div class="form-row align-items-center">
-            <img src="/images/{{ company.logotype }}" width="110" height="110">
             <div class="col-4">
-                {{ form_row(form.logotype, {'id': 'company_logotype', 'attr': {'class': 'custom-file-input'}}) }}
+                <img src="/images/{{ company.logotype }}" width="110" height="110">
+                {{ form_row(form.logotype, {'id': 'company_logotype', 'attr': {'class': 'custom-file-input form-control-sm'}}) }}
             </div>
             <div class="col-4">
                 {{ form_row(form.sections, {'id': 'company_sections', 'attr': {'class': 'custom-control custom-checkbox'}}) }}

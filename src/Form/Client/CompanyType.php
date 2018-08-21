@@ -6,11 +6,11 @@ use App\Entity\Client\Company;
 use App\Entity\Client\Section;
 use App\Entity\Region\City;
 use App\Repository\Region\CityRepository;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,23 +29,14 @@ class CompanyType extends AbstractType
             ->add('syte', TextType::class, [
                 'label' => 'Сайт'
             ])
-            ->add('bank', CKEditorType::class, [
-                'label' => 'Банковские реквизиты',
-                'config' => [
-                    'uiColor' => '#00BFFF'
-                ]
+            ->add('bank', TextareaType::class, [
+                'label' => 'Банковские реквизиты'
             ])
-            ->add('preview', CKEditorType::class, [
-                'label' => 'Краткая информация о компании',
-                'config' => [
-                    'uiColor' => '#00BFFF'
-                ]
+            ->add('preview', TextareaType::class, [
+                'label' => 'Краткая информация о компании'
             ])
-            ->add('address', CKEditorType::class, [
-                'label' => 'Адрес компании',
-                'config' => [
-                    'uiColor' => '#00BFFF'
-                ]
+            ->add('address', TextareaType::class, [
+                'label' => 'Адрес компании'
             ])
             ->add('city', EntityType::class, [
                 'class'         => City::class,

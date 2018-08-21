@@ -13,18 +13,23 @@
         <div class="row">
             <div class="col-4">
 
-                <div class="row">Профиль</div>
-                <div class="row">{{ user.firstName }}</div>
-                <div class="row">{{ user.username }}</div>
-                <div class="row">{{ user.phone }}</div>
-                <div class="row">{{ user.city }}</div>
-
-                <div class="row">
-                    <a href="{{ path('client_user_edit', {'id': user.id}) }}">Редактировать профиль</a>
+                <div class="card" style="width:300px">
+                    <img class="card-img-top" src="/images/{{ user.avatar }}">
+                    <div class="card-body text-center">
+                        <h6 class="card-title">{{ user.firstName }}</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fa fa-envelope mr-3"></i>{{ user.username }}</li>
+                        <li class="list-group-item"><i class="fa fa-phone mr-3"></i>{{ user.phone }}</li>
+                        <li class="list-group-item"><i class="fa fa-home mr-3"></i>{{ user.city }}</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="{{ path('client_user_edit', {'id': user.id}) }}" class="btn btn-primary">Редактировать профиль</a>
+                    </div>
                 </div>
-                <div class="row">
-                    <a href="{{ path('client_company_new') }}">Добавить компанию</a>
-                </div>
+            </div>
+            <div class="col-3">
+                <a href="{{ path('client_company_new') }}">Добавить компанию</a>
             </div>
             <div class="col-4">
                 Компании
