@@ -31,7 +31,8 @@ class CompanyController extends Controller
         $user = $this->getUser();
 
         return $this->render('client/company/index.html.twig', [
-            'companys' => $companyRepository->getCompanyByUserId($user)
+            'companys' => $companyRepository->getCompanyByUserId($user),
+            'user'     => $user
         ]);
     }
 
@@ -89,8 +90,9 @@ class CompanyController extends Controller
      */
     public function edit(Request $request, Company $company): Response
     {
-        $path = $this->getParameter('logotype_directory').'/'.$company->getLogotype();
         $logotype = $company->getLogotype();
+        $path = $this->getParameter('logotype_directory').'/'.$logotype;
+
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 

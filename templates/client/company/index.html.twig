@@ -6,15 +6,35 @@
 
     <div class="container">
 
-        <h1>Личный кабинет</h1>
+        <div class="row">
+            <h4>Личный кабинет</h4>
+        </div>
 
-        <a href="{{ path('client_company_new') }}">Добавить компанию</a>
+        <div class="row">
+            <div class="col-4">
 
-        <ul>
-            {% for company in companys %}
-                <li><a href="{{ path('client_company_edit', {'id': company.id}) }}">{{ company.name }}</a></li>
-            {% endfor %}
-        </ul>
+                <div class="row">Профиль</div>
+                <div class="row">{{ user.firstName }}</div>
+                <div class="row">{{ user.username }}</div>
+                <div class="row">{{ user.phone }}</div>
+                <div class="row">{{ user.city }}</div>
+
+                <div class="row">
+                    <a href="{{ path('client_user_edit', {'id': user.id}) }}">Редактировать профиль</a>
+                </div>
+                <div class="row">
+                    <a href="{{ path('client_company_new') }}">Добавить компанию</a>
+                </div>
+            </div>
+            <div class="col-4">
+                Компании
+                <ul>
+                    {% for company in companys %}
+                        <li><a href="{{ path('client_company_edit', {'id': company.id}) }}">{{ company.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
     </div>
 

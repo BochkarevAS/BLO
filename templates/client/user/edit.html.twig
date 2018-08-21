@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h3>Редактировать профиль {{ user.username }}</h3>
+
+        {{ include('client/user/_form.html.twig') }}
+
+        <a href="{{ path('client_company_index') }}">Назад</a>
+
+    </div>
+
+{% endblock %}

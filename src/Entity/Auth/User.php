@@ -34,6 +34,13 @@ class User extends BaseUser
      */
     protected $city;
 
+    /**
+     * Аватар пользователя
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $avatar;
+
     public function getFirstName()
     {
         return $this->firstName;
@@ -69,6 +76,16 @@ class User extends BaseUser
         $this->setUsername($email);
 
         return parent::setEmail($email);
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar($avatar): void
+    {
+        $this->avatar = $avatar;
     }
 
     public function setId($id): void
