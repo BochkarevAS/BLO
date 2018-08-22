@@ -15,7 +15,7 @@ $(document).ready(function() {
     $wrapper = $('.js-company-module');
     let company = new Company($wrapper);
 
-    $wrapper = $('.js-tyres-module');
+    $wrapper = $('.js-tyre-module');
     let tyre = new Tyre($wrapper);
 
     $wrapper = $('.js-user-module');

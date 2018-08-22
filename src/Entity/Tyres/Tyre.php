@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Tyres\TyresRepository")
- * @ORM\Table(name="tyre", schema="tyres", indexes={
+ * @ORM\Table(name="tyre", schema="tyre", indexes={
  *     @ORM\Index(name="width_idx", columns={"width"}),
  *     @ORM\Index(name="height_idx", columns={"height"}),
  *     @ORM\Index(name="diameter_idx", columns={"diameter"}),
@@ -76,7 +76,6 @@ class Tyre
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tyres\Model")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $model;
 
@@ -84,7 +83,6 @@ class Tyre
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $city;
 
@@ -92,7 +90,6 @@ class Tyre
      * Компания продавец
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
-     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $company;
 

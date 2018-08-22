@@ -16,7 +16,7 @@ Encore
     .addEntry('js/app', './assets/js/app/app.js')
     .addEntry('js/appMap', './assets/js/app/appMap.js')
     .addEntry('js/appFancybox', './assets/js/app/appFancybox.js')
-    .addStyleEntry('css/tyres/show_tyres', './assets/css/tyres/show_tyres.css')
+    .addStyleEntry('css/tyre/show_tyres', './assets/css/tyre/show_tyres.css')
     .cleanupOutputBeforeBuild()
     // .addStyleEntry('css/app', './assets/css/app.scss')
 

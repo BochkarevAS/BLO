@@ -32,15 +32,14 @@
             </div>
             <div class="col-3">
                 <p><b>Действия</b></p>
-                <a href="{{ path('client_company_new') }}">Добавить компанию</a>
+                <p><a href="{{ path('client_company_new') }}">Добавить компанию</a></p>
+                <p><a href="{{ path('tyre_new') }}">Добавить обявление шины</a></p>
             </div>
             <div class="col-4">
                 <p><b>Компании</b></p>
-                <ul>
-                    {% for company in companys %}
-                        <li><a href="{{ path('client_company_edit', {'id': company.id}) }}">{{ company.name }}</a></li>
-                    {% endfor %}
-                </ul>
+                {% for company in companys %}
+                    <p><a href="{{ path('client_company_edit', {'id': company.id}) }}">{{ company.name }}</a></p>
+                {% endfor %}
             </div>
         </div>
 

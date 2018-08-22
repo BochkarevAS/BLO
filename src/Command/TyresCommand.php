@@ -26,8 +26,8 @@ class TyresCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('import:tyres')
-            ->setDescription('Import tyres from CSV file')
+            ->setName('import:tyre')
+            ->setDescription('Import tyre from CSV file')
         ;
     }
 
@@ -115,7 +115,7 @@ class TyresCommand extends ContainerAwareCommand
                 $event = $stopwatch->lap('sanitize');
                 $progress->advance($batchSize);
                 $now = new \DateTime();
-                $output->writeln(' of tyres imported ... | ' . $now->format('d-m-Y G:i:s') . ' | memory used : ' . number_format($event->getMemory() / 1048576, 2) . ' MB');
+                $output->writeln(' of tyre imported ... | ' . $now->format('d-m-Y G:i:s') . ' | memory used : ' . number_format($event->getMemory() / 1048576, 2) . ' MB');
             }
             $i++;
         }

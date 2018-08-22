@@ -3,7 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link href="{{ asset('build/css/tyres/show_tyres.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/css/tyre/show_tyres.css') }}" rel="stylesheet" />
     <link href="{{ asset('build/js/appFancybox.css') }}" rel="stylesheet" />
 {% endblock %}
 
@@ -108,7 +108,7 @@
             {#<div class="col-5">#}
                 {#{% for picture in pictures %}#}
                     {#<div class="col-2">#}
-                        {#<img id="tyres-img" src="{{ picture }}">#}
+                        {#<img id="tyre-img" src="{{ picture }}">#}
                     {#</div>#}
                 {#{% endfor %}#}
             {#</div>#}
@@ -118,7 +118,7 @@
             <h5>Компания {{ company.name }}</h5>
             {{ company.preview }}
             {#<div>#}
-                {#<img id="tyres-img-card" src="/images/{{ company.logotype }}">#}
+                {#<img id="tyre-img-card" src="/images/{{ company.logotype }}">#}
             {#</div>#}
         </div>
 

@@ -22,7 +22,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="client_user_index", options={"expose"=true})
+     * @Route("/{id}/index", name="client_user_index", options={"expose"=true})
      */
     public function index(Request $request, User $user)
     {

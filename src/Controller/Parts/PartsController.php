@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/parts")
+ * @Route("/part")
  */
 class PartsController extends AbstractController
 {
@@ -25,7 +25,7 @@ class PartsController extends AbstractController
 //    }
 
     /**
-     * @Route("/", name="parts_index", options={"expose"=true})
+     * @Route("/", name="part_index", options={"expose"=true})
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новая шина{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h4>Добавить шины</h4>
+
+        {{ include('tyre/_form.html.twig') }}
+
+        <a href="{{ path('client_company_index') }}">Назад</a>
+
+    </div>
+
+{% endblock %}

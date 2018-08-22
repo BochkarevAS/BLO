@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Tyres\SeasonalityRepository")
- * @ORM\Table(name="seasonality", schema="tyres")
+ * @ORM\Table(name="seasonality", schema="tyre")
  */
 class Seasonality
 {
