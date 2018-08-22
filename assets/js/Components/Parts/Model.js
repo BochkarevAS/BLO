@@ -9,7 +9,7 @@ class Model {
     constructor($wrapper) {
         this.$wrapper = $wrapper;
 
-        this.$wrapper.on('change', '#parts-brand, #parts-model',
+        this.$wrapper.on('change', '#part-brand, #part-model',
             this.setRelation.bind(this)
         );
 
@@ -18,7 +18,7 @@ class Model {
 
     setRelation(e) {
         let $field = $(e.currentTarget);
-        let $brandField = $('#parts-brand');
+        let $brandField = $('#part-brand');
         let target = '#' + $field.attr('id').replace('model', 'carcase').replace('brand', 'model');
         let data = {};
 
@@ -32,8 +32,8 @@ class Model {
             let $input = $(data).find(target);
             $(target).replaceWith($input);
 
-            if ('#parts-model' === target) {
-                $('#parts-carcase').replaceWith('<select id="parts-carcase" name="brand[carcase]" class="form-control"></select>');
+            if ('#part-model' === target) {
+                $('#part-carcase').replaceWith('<select id="part-carcase" name="brand[carcase]" class="form-control"></select>');
             }
         })
     }

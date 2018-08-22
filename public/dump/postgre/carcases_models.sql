@@ -2776,7 +2776,7 @@ INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (5429, 3711);
 INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (5934, 10526);
 INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (2424, 11216);
 INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (3920, 5539);
--- INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (4857, 0);
+-- INSERT INTO part.models_carcases (carcase_id, model_id) VALUES (4857, 0);
 INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (5431, 6307);
 INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (1826, 11156);
 INSERT INTO parts.models_carcases (carcase_id, model_id) VALUES (6418, 11098);

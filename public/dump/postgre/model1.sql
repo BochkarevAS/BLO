@@ -23,7 +23,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 247 (class 1259 OID 28200)
--- Name: model; Type: TABLE; Schema: parts; Owner: postgres
+-- Name: model; Type: TABLE; Schema: part; Owner: postgres
 --
 
 CREATE TABLE parts.model (
@@ -40,7 +40,7 @@ ALTER TABLE parts.model OWNER TO postgres;
 --
 -- TOC entry 3007 (class 0 OID 28200)
 -- Dependencies: 247
--- Data for Name: model; Type: TABLE DATA; Schema: parts; Owner: postgres
+-- Data for Name: model; Type: TABLE DATA; Schema: part; Owner: postgres
 --
 
 INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (8, 2, 1, 1, 'CL');
@@ -2924,7 +2924,7 @@ INSERT INTO parts.model (id, brand_id, display, rank, name) VALUES (13043, 630, 
 
 --
 -- TOC entry 2884 (class 2606 OID 28204)
--- Name: model model_pkey; Type: CONSTRAINT; Schema: parts; Owner: postgres
+-- Name: model model_pkey; Type: CONSTRAINT; Schema: part; Owner: postgres
 --
 
 ALTER TABLE ONLY parts.model
@@ -2933,7 +2933,7 @@ ALTER TABLE ONLY parts.model
 
 --
 -- TOC entry 2882 (class 1259 OID 28205)
--- Name: idx_ac5ed35c44f5d008; Type: INDEX; Schema: parts; Owner: postgres
+-- Name: idx_ac5ed35c44f5d008; Type: INDEX; Schema: part; Owner: postgres
 --
 
 CREATE INDEX idx_ac5ed35c44f5d008 ON parts.model USING btree (brand_id);
@@ -2941,7 +2941,7 @@ CREATE INDEX idx_ac5ed35c44f5d008 ON parts.model USING btree (brand_id);
 
 --
 -- TOC entry 2885 (class 2606 OID 28362)
--- Name: model fk_ac5ed35c44f5d008; Type: FK CONSTRAINT; Schema: parts; Owner: postgres
+-- Name: model fk_ac5ed35c44f5d008; Type: FK CONSTRAINT; Schema: part; Owner: postgres
 --
 
 ALTER TABLE ONLY parts.model

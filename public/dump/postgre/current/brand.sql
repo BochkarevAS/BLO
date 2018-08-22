@@ -23,7 +23,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 243 (class 1259 OID 28178)
--- Name: brand; Type: TABLE; Schema: parts; Owner: postgres
+-- Name: brand; Type: TABLE; Schema: part; Owner: postgres
 --
 
 CREATE TABLE parts.brand (
@@ -37,7 +37,7 @@ ALTER TABLE parts.brand OWNER TO postgres;
 --
 -- TOC entry 3009 (class 0 OID 28178)
 -- Dependencies: 243
--- Data for Name: brand; Type: TABLE DATA; Schema: parts; Owner: postgres
+-- Data for Name: brand; Type: TABLE DATA; Schema: part; Owner: postgres
 --
 
 INSERT INTO parts.brand (id, name) VALUES (2, 'Acura');
@@ -173,7 +173,7 @@ INSERT INTO parts.brand (id, name) VALUES (656, 'Howo');
 
 --
 -- TOC entry 2887 (class 2606 OID 28182)
--- Name: brand brand_pkey; Type: CONSTRAINT; Schema: parts; Owner: postgres
+-- Name: brand brand_pkey; Type: CONSTRAINT; Schema: part; Owner: postgres
 --
 
 ALTER TABLE ONLY parts.brand

@@ -9,7 +9,7 @@ import Region from '../Components/Client/Region';
 // import Part from "./Components/Parts/Part";
 
 $(document).ready(function() {
-    let $wrapper = $('.js-parts-module');
+    let $wrapper = $('.js-part-module');
     let model = new Model($wrapper);
 
     $wrapper = $('.js-company-module');

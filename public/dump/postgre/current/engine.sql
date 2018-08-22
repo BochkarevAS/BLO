@@ -23,7 +23,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 246 (class 1259 OID 28195)
--- Name: engine; Type: TABLE; Schema: parts; Owner: postgres
+-- Name: engine; Type: TABLE; Schema: part; Owner: postgres
 --
 
 CREATE TABLE parts.engine (
@@ -37,7 +37,7 @@ ALTER TABLE parts.engine OWNER TO postgres;
 --
 -- TOC entry 3009 (class 0 OID 28195)
 -- Dependencies: 246
--- Data for Name: engine; Type: TABLE DATA; Schema: parts; Owner: postgres
+-- Data for Name: engine; Type: TABLE DATA; Schema: part; Owner: postgres
 --
 
 INSERT INTO parts.engine (id, name) VALUES (1, '4KE');
@@ -3536,7 +3536,7 @@ INSERT INTO parts.engine (id, name) VALUES (3492, 'M113E43');
 
 --
 -- TOC entry 2887 (class 2606 OID 28199)
--- Name: engine engine_pkey; Type: CONSTRAINT; Schema: parts; Owner: postgres
+-- Name: engine engine_pkey; Type: CONSTRAINT; Schema: part; Owner: postgres
 --
 
 ALTER TABLE ONLY parts.engine

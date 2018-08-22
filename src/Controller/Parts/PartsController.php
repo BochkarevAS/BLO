@@ -59,7 +59,7 @@ class PartsController extends AbstractController
             }
         }
 
-        return $this->render('parts/index.html.twig', [
+        return $this->render('part/index.html.twig', [
             'parts' => $parts,
             'form'  => $form->createView()
         ]);

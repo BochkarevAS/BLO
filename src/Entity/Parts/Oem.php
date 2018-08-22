@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\OemRepository")
- * @ORM\Table(name="oem", schema="parts")
+ * @ORM\Table(name="oem", schema="part")
  */
 class Oem
 {
@@ -25,7 +25,7 @@ class Oem
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="oems")
-     * @JoinTable(name="parts_oems", schema="parts")
+     * @JoinTable(name="parts_oems", schema="part")
      */
     private $parts;
 

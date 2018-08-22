@@ -111,7 +111,7 @@ class CompanyController extends Controller
             ]);
         }
 
-        return $this->render('client/company/index.html.twig', [
+        return $this->render('client/company/edit.html.twig', [
             'company' => $company,
             'form'    => $form->createView(),
         ]);

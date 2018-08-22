@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\PartRepository")
- * @ORM\Table(name="part", schema="parts")
+ * @ORM\Table(name="part", schema="part")
  */
 class Part
 {
@@ -53,19 +53,19 @@ class Part
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="parts")
-     * @JoinTable(name="parts_carcases", schema="parts")
+     * @JoinTable(name="parts_carcases", schema="part")
      */
     private $carcases;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="parts")
-     * @JoinTable(name="parts_engines", schema="parts")
+     * @JoinTable(name="parts_engines", schema="part")
      */
     private $engines;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Oem", inversedBy="parts")
-     * @JoinTable(name="parts_oems", schema="parts")
+     * @JoinTable(name="parts_oems", schema="part")
      */
     private $oems;
 

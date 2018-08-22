@@ -23,8 +23,8 @@ class PartsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('import:parts')
-            ->setDescription('Import parts from CSV file')
+            ->setName('import:part')
+            ->setDescription('Import part from CSV file')
         ;
     }
 
@@ -92,7 +92,7 @@ class PartsCommand extends ContainerAwareCommand
                 $event = $stopwatch->lap('sanitize');
                 $progress->advance($batchSize);
                 $now = new \DateTime();
-                $output->writeln(' of parts imported ... | ' . $now->format('d-m-Y G:i:s') . ' | memory used : ' . number_format($event->getMemory() / 1048576, 2) . ' MB');
+                $output->writeln(' of part imported ... | ' . $now->format('d-m-Y G:i:s') . ' | memory used : ' . number_format($event->getMemory() / 1048576, 2) . ' MB');
             }
 
             $i++;

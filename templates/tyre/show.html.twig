@@ -12,11 +12,11 @@
     <div class="container js-tyre-show-module">
 
         <div class="row">
-            <div class="col-5">
+            <div class="col-6">
                 {% set pictures = tyre.picture|json_decode %}
 
-                <a data-trigger="preview" href="javascript:;" style="max-width: 480px;">
-                    <img id="tyre-img" src="/images/{{ pictures[0] }}" width="480" height="500">
+                <a data-trigger="preview" href="javascript:">
+                    <img src="/images/{{ pictures[0] }}" width="480" height="500">
                 </a>
             </div>
             <div class="col-4">

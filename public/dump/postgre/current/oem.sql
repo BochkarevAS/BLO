@@ -23,7 +23,7 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 248 (class 1259 OID 28206)
--- Name: oem; Type: TABLE; Schema: parts; Owner: postgres
+-- Name: oem; Type: TABLE; Schema: part; Owner: postgres
 --
 
 CREATE TABLE parts.oem (
@@ -37,7 +37,7 @@ ALTER TABLE parts.oem OWNER TO postgres;
 --
 -- TOC entry 3009 (class 0 OID 28206)
 -- Dependencies: 248
--- Data for Name: oem; Type: TABLE DATA; Schema: parts; Owner: postgres
+-- Data for Name: oem; Type: TABLE DATA; Schema: part; Owner: postgres
 --
 
 INSERT INTO parts.oem (id, name) VALUES (1, '234011070');
@@ -4066,7 +4066,7 @@ INSERT INTO parts.oem (id, name) VALUES (4022, '1431507481');
 
 --
 -- TOC entry 2887 (class 2606 OID 28210)
--- Name: oem oem_pkey; Type: CONSTRAINT; Schema: parts; Owner: postgres
+-- Name: oem oem_pkey; Type: CONSTRAINT; Schema: part; Owner: postgres
 --
 
 ALTER TABLE ONLY parts.oem

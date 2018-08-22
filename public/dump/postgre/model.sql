@@ -229,7 +229,7 @@ INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (182, 0, 1, '
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (183, 0, 1, 'B3 универсал (E30)', 13);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (184, 0, 1, 'B3 универсал (E36)', 13);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (185, 0, 1, 'B3 универсал (E46)', 13);
--- INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (186, 0, 1, 'B3 универсал (E91)', 13);
+-- INSERT INTO part.model (id, display, rank, name, brand_id) VALUES (186, 0, 1, 'B3 универсал (E91)', 13);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (187, 0, 1, 'B3 универсал (F31)', 13);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (188, 1, 1, 'B4', 13);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (189, 0, 1, 'B4 купе (F32)', 13);
@@ -3301,7 +3301,7 @@ INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3239, 0, 1, 
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3240, 0, 1, 'MONDIAL кабрио', 185);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3241, 0, 1, 'SUPERAMERICA', 185);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3242, 1, 1, 'Testarossa', 185);
--- INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3243, 1, 1, 'VEGA', 186);
+-- INSERT INTO part.model (id, display, rank, name, brand_id) VALUES (3243, 1, 1, 'VEGA', 186);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3244, 0, 1, '1000 Serie', 187);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3245, 0, 1, '1000er-Serie', 187);
 INSERT INTO parts.model (id, display, rank, name, brand_id) VALUES (3246, 0, 1, '1100 седан (US)', 187);

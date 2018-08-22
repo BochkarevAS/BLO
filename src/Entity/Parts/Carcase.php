@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\CarcaseRepository")
- * @ORM\Table(name="carcase", schema="parts")
+ * @ORM\Table(name="carcase", schema="part")
  */
 class Carcase
 {
@@ -26,13 +26,13 @@ class Carcase
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", inversedBy="carcases")
-     * @JoinTable(name="models_carcases", schema="parts")
+     * @JoinTable(name="models_carcases", schema="part")
      */
     private $models;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases", fetch="EXTRA_LAZY")
-     * @JoinTable(name="parts_carcases", schema="parts")
+     * @JoinTable(name="parts_carcases", schema="part")
      */
     private $parts;
 
