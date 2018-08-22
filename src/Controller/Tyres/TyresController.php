@@ -4,6 +4,7 @@ namespace App\Controller\Tyres;
 
 use App\Entity\Client\Company;
 use App\Entity\Tyres\Tyre;
+use App\Form\Tyres\TyreNewType;
 use App\Form\Tyres\TyreType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,24 +64,27 @@ class TyresController extends AbstractController
         $user = $this->getUser();
 //        $tyre->setUser($this->getUser());
 
-        $form = $this->createForm(TyreType::class, $tyre);
+        $form = $this->createForm(TyreNewType::class, $tyre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($tyre);
+            $em->flush();
 
 
-            dump($form);
-            die;
-
-
-            $this->getDoctrine()->getManager()->flush();
+//            dump($form);
+//            die;
 
 
 
 
 
-            return $this->redirectToRoute('client_user_index', [
-                'id' => $user->getId()
+
+
+            return $this->redirectToRoute('tyre_new', [
+//                'id' => $user->getId()
             ]);
         }
 

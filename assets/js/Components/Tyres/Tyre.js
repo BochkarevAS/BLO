@@ -13,6 +13,10 @@ class Tyre {
             this.setRelation.bind(this)
         );
 
+        this.$wrapper.on('change', '#tyre-new-brand',
+            this.setRelation.bind(this)
+        );
+
         $("#tyre-model").select2({
             closeOnSelect: false
         });

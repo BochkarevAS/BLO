@@ -38,6 +38,12 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-3">
+                {{ form_row(form.picture, {'id': 'tyre-picture', 'attr': {'class': 'custom-file-input form-control-sm'}}) }}
+            </div>
+        </div>
+
         <div class="btn-group btn-group-toggle">
             {{ form_row(form.availability, {'id': 'tyre-availability'}) }}
         </div>
@@ -46,15 +52,15 @@
         </div>
 
         {#<div class="btn-group btn-group-toggle" data-toggle="buttons">#}
-            {#<label class="btn btn-secondary active">#}
-                {#<input type="radio" name="options" id="option1" autocomplete="off" checked> Active#}
-            {#</label>#}
-            {#<label class="btn btn-secondary">#}
-                {#<input type="radio" name="options" id="option2" autocomplete="off"> Radio#}
-            {#</label>#}
-            {#<label class="btn btn-secondary">#}
-                {#<input type="radio" name="options" id="option3" autocomplete="off"> Radio#}
-            {#</label>#}
+        {#<label class="btn btn-secondary active">#}
+        {#<input type="radio" name="options" id="option1" autocomplete="off" checked> Active#}
+        {#</label>#}
+        {#<label class="btn btn-secondary">#}
+        {#<input type="radio" name="options" id="option2" autocomplete="off"> Radio#}
+        {#</label>#}
+        {#<label class="btn btn-secondary">#}
+        {#<input type="radio" name="options" id="option3" autocomplete="off"> Radio#}
+        {#</label>#}
         {#</div>#}
 
         <div class="modal-footer">
