@@ -14,7 +14,8 @@ class Region {
     }
 
     setRelation(e) {
-        let $field = $(e.currentTarget);
+        e.preventDefault();
+
         let $regionField = $('#user-region');
         let $target = $('#data-user-id');
         let userId = $target.data('id');
@@ -22,16 +23,15 @@ class Region {
         let data = {};
 
         data[$regionField.attr('name')] = $regionField.val();
-        data[$field.attr('name')] = $field.val();
 
         $.ajax({
-            url: Routing.generate('client_user_edit', {id: userId}),
+            url: Routing.generate('client_user_index', {id: userId}),
             method: 'POST',
             data: data
         }).then((data) => {
             let $input = $(data).find(target);
             $(target).replaceWith($input);
-        })
+        });
     }
 }
 

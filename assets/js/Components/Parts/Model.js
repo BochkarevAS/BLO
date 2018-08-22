@@ -18,7 +18,7 @@ class Model {
 
     setRelation(e) {
         let $field = $(e.currentTarget);
-        let $brandField = $('#parts_brand');
+        let $brandField = $('#parts-brand');
         let target = '#' + $field.attr('id').replace('model', 'carcase').replace('brand', 'model');
         let data = {};
 
@@ -26,14 +26,14 @@ class Model {
         data[$field.attr('name')] = $field.val();
 
         $.ajax({
-            url: Routing.generate('parts-index'),
+            url: Routing.generate('parts_index'),
             data: data
         }).then((data) => {
             let $input = $(data).find(target);
             $(target).replaceWith($input);
 
-            if ('#parts_model' === target) {
-                $('#parts_carcase').replaceWith('<select id="parts-carcase" name="brand[carcase]" class="form-control"></select>');
+            if ('#parts-model' === target) {
+                $('#parts-carcase').replaceWith('<select id="parts-carcase" name="brand[carcase]" class="form-control"></select>');
             }
         })
     }

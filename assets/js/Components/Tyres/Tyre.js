@@ -13,20 +13,14 @@ class Tyre {
             this.setRelation.bind(this)
         );
 
-        $("#tyres_model").select2({
+        $("#tyres-model").select2({
             closeOnSelect: false
         });
-
-        $("#tyres_vendor").select2({
-            closeOnSelect: false
-        });
-
-        $("#tyres_brand").select2();
     }
 
     setRelation(e) {
         let $field = $(e.currentTarget);
-        let $brandField = $('#tyres_brand');
+        let $brandField = $('#tyres-brand');
         let target = '#tyres-model';
         let data = {};
 
@@ -34,7 +28,7 @@ class Tyre {
         data[$field.attr('name')] = $field.val();
 
         $.ajax({
-            url: Routing.generate('tyres-index'),
+            url: Routing.generate('tyres_index'),
             data: data
         }).then((data) => {
             let $input = $(data).find(target);

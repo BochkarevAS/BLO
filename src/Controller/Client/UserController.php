@@ -22,15 +22,22 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="client_user_edit", methods="GET|POST", options={"expose"=true})
+     * @Route("/{id}/edit", name="client_user_index", options={"expose"=true})
      */
-    public function edit(Request $request, User $user)
+    public function index(Request $request, User $user)
     {
         $avatar = $user->getAvatar();
         $path = $this->getParameter('logotype_directory').'/'.$avatar;
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('client/user/index.html.twig', [
+                'user' => $user,
+                'form' => $form->createView()
+            ]);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $fileName = $this->fileUploader($user);
@@ -42,12 +49,12 @@ class UserController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('client_user_edit', [
+            return $this->redirectToRoute('client_user_index', [
                 'id' => $user->getId()
             ]);
         }
 
-        return $this->render('client/user/edit.html.twig', [
+        return $this->render('client/user/index.html.twig', [
             'user' => $user,
             'form' => $form->createView()
         ]);

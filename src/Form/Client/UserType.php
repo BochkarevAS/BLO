@@ -47,7 +47,7 @@ class UserType extends AbstractType
         ;
 
         $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
+            FormEvents::POST_SET_DATA,
             function (FormEvent $event) {
                 $data = $event->getData();
 
