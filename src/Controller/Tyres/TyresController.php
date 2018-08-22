@@ -6,17 +6,20 @@ use App\Entity\Client\Company;
 use App\Entity\Tyres\Tyre;
 use App\Form\Tyres\TyreNewType;
 use App\Form\Tyres\TyreType;
+use App\Service\FileUploader;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @Route("/tyre")
  */
 class TyresController extends AbstractController
 {
+
     /**
      * @Route("/", name="tyre_index", options={"expose"=true})
      */
@@ -56,13 +59,24 @@ class TyresController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="tyre_new", methods="GET|POST")
+     * @Route("/new", name="tyre_new", options={"expose"=true}, methods="GET|POST")
      */
-    public function new(Request $request)
+    public function new(Request $request, FileUploader $fileUploader)
     {
         $tyre = new Tyre();
-        $user = $this->getUser();
+//        $user = $this->getUser();
 //        $tyre->setUser($this->getUser());
+
+        $targetDirectory = $this->getParameter('images_directory');
+
+        if ($request->isXmlHttpRequest()) {
+            $form = $this->createForm(TyreNewType::class, $tyre, ['method' => 'GET']);
+            $form->handleRequest($request);
+
+            return $this->render('tyre/new.html.twig', [
+                'form' => $form->createView()
+            ]);
+        }
 
         $form = $this->createForm(TyreNewType::class, $tyre);
         $form->handleRequest($request);
@@ -70,18 +84,30 @@ class TyresController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $em->persist($tyre);
-            $em->flush();
+            $files = $fileUploader->uploadMultiple($tyre->getPicture(), $targetDirectory);
+            $json = json_encode($files);
+            $tyre->setPicture($json);
 
-
-//            dump($form);
+//            dump($json);
 //            die;
 
+            $hash = md5(
+                $tyre->getBrand() .
+                $tyre->getModel() .
+                $tyre->getCity() .
+                $tyre->getHash() .
+                $tyre->getWidth() .
+                $tyre->getAvailability() .
+                $tyre->getCondition() .
+                $tyre->getQuantity() .
+                $tyre->getDiameter() .
+                $tyre->getPicture()
+            );
 
+            $tyre->setHash($hash);
 
-
-
-
+            $em->persist($tyre);
+            $em->flush();
 
             return $this->redirectToRoute('tyre_new', [
 //                'id' => $user->getId()

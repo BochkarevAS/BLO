@@ -91,7 +91,7 @@ class CompanyController extends Controller
     public function edit(Request $request, Company $company): Response
     {
         $logotype = $company->getLogotype();
-        $path = $this->getParameter('logotype_directory').'/'.$logotype;
+        $path = $this->getParameter('images_directory').'/'.$logotype;
 
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
@@ -133,7 +133,7 @@ class CompanyController extends Controller
 
     private function fileUploader(Company $company)
     {
-        $targetDirectory = $this->getParameter('logotype_directory');
+        $targetDirectory = $this->getParameter('images_directory');
         $fileName = $this->fileUploader->upload($company->getLogotype(), $targetDirectory);
 
         return $fileName;

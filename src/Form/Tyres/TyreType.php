@@ -108,14 +108,6 @@ class TyreType extends AbstractType
                 'required'     => false,
                 'expanded'     => true
             ])
-            ->add('picture', FileType::class, [
-                'label'      => 'Фото',
-                'data_class' => null,
-                'multiple'   => true,
-                'attr'       => [
-                    'accept' => 'image/*',
-                ]
-            ])
         ;
 
         $builder->addEventListener(
