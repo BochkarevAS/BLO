@@ -39,10 +39,10 @@ class CompanyController extends Controller
     /**
      * @Route("/show", name="client_company_show_all", methods={"GET"})
      */
-    public function showAll(CompanyRepository $companyRepository)
+    public function showAll(CompanyRepository $repository)
     {
         return $this->render('client/company/show_all.html.twig', [
-            'companys' => $companyRepository->findAll()
+            'companys' => $repository->findAll()
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace App\Controller\Client;
 
 use App\Entity\Auth\User;
 use App\Form\Client\UserType;
+use App\Repository\Client\UserRepository;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,5 +54,10 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form->createView()
         ]);
+    }
+
+    public function showAll(UserRepository $repository)
+    {
+
     }
 }
