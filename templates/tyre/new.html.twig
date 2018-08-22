@@ -7,6 +7,12 @@
     <div class="container js-tyre-module">
         <h4>Добавить шины</h4>
 
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ msg }}
+            </div>
+        {% endfor %}
+
         {{ include('tyre/_form_new.html.twig') }}
 
         <a href="{{ path('client_company_index') }}">Назад</a>

@@ -12,14 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * @Route("/tyre")
  */
 class TyresController extends AbstractController
 {
-
     /**
      * @Route("/", name="tyre_index", options={"expose"=true})
      */
@@ -64,9 +62,6 @@ class TyresController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader)
     {
         $tyre = new Tyre();
-//        $user = $this->getUser();
-//        $tyre->setUser($this->getUser());
-
         $targetDirectory = $this->getParameter('images_directory');
 
         if ($request->isXmlHttpRequest()) {
@@ -88,9 +83,6 @@ class TyresController extends AbstractController
             $json = json_encode($files);
             $tyre->setPicture($json);
 
-//            dump($json);
-//            die;
-
             $hash = md5(
                 $tyre->getBrand() .
                 $tyre->getModel() .
@@ -108,10 +100,9 @@ class TyresController extends AbstractController
 
             $em->persist($tyre);
             $em->flush();
+            $this->addFlash("success", "Ваше объявление добавлено");
 
-            return $this->redirectToRoute('tyre_new', [
-//                'id' => $user->getId()
-            ]);
+            return $this->redirectToRoute('tyre_new');
         }
 
         return $this->render('tyre/new.html.twig', [

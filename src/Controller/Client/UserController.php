@@ -27,6 +27,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($request->isXmlHttpRequest()) {
+
             return $this->render('client/user/index.html.twig', [
                 'user' => $user,
                 'form' => $form->createView()
