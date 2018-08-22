@@ -60,6 +60,7 @@ class TyresController extends AbstractController
     public function new(Request $request)
     {
         $tyre = new Tyre();
+        $user = $this->getUser();
 //        $tyre->setUser($this->getUser());
 
         $form = $this->createForm(TyreType::class, $tyre);
@@ -67,6 +68,20 @@ class TyresController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
+            dump($form);
+            die;
+
+
+            $this->getDoctrine()->getManager()->flush();
+
+
+
+
+
+            return $this->redirectToRoute('client_user_index', [
+                'id' => $user->getId()
+            ]);
         }
 
         return $this->render('tyre/new.html.twig', [
