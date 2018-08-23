@@ -46,6 +46,12 @@ services:
     login_success_handler:
         class: App\Service\LoginSuccessHandler
 
+    app.upload_listener:
+        class: App\EventListener\UploadListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+
 #    App\Controller\Parts\PartsController:
 #        arguments:
 #            $finder: '@fos_elastica.finder.app.part'

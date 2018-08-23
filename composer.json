@@ -12,6 +12,7 @@
         "javiereguiluz/easyadmin-bundle": "^1.17",
         "knplabs/knp-paginator-bundle": "^2.8",
         "league/csv": "^9.1",
+        "oneup/uploader-bundle": "^2.0",
         "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "dev-master",
         "symfony/asset": "^4.1",
