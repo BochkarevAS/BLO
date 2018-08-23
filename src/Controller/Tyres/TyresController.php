@@ -62,6 +62,7 @@ class TyresController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader)
     {
         $tyre = new Tyre();
+        $user = $this->getUser();
         $targetDirectory = $this->getParameter('images_directory');
 
         if ($request->isXmlHttpRequest()) {
@@ -82,8 +83,10 @@ class TyresController extends AbstractController
             $files = $fileUploader->uploadMultiple($tyre->getPicture(), $targetDirectory);
             $json = json_encode($files);
             $tyre->setPicture($json);
+            $tyre->setUser($user);
 
             $hash = md5(
+                $this->getUser() .
                 $tyre->getBrand() .
                 $tyre->getModel() .
                 $tyre->getCity() .
@@ -107,6 +110,29 @@ class TyresController extends AbstractController
 
         return $this->render('tyre/new.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="tyre_edit", methods="GET|POST")
+     */
+    public function edit(Request $request, Tyre $tyre)
+    {
+        $form = $this->createForm(TyreNewType::class, $tyre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash("success", "Ваше объявление обновлено");
+
+            return $this->redirectToRoute('tyre_edit', [
+                'id' => $tyre->getId()
+            ]);
+        }
+
+        return $this->render('tyre/edit.html.twig', [
+            '$tyres' => $tyre,
+            'form'   => $form->createView()
         ]);
     }
 }

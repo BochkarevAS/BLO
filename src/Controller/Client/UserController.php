@@ -56,8 +56,15 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/show/all", name="client_user_index_show_all", methods={"GET"})
+     */
     public function showAll(UserRepository $repository)
     {
+        $user = $this->getUser();
 
+        return $this->render('client/user/show_all.html.twig', [
+            'posts' => $repository->findAllPost($user)
+        ]);
     }
 }

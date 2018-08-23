@@ -94,6 +94,13 @@ class Tyre
     private $company;
 
     /**
+     * ID пользователя
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
+     */
+    private $user;
+
+    /**
      * Хэш уникальный индефекатор шины
      *
      * @ORM\Column(type="string")
@@ -280,7 +287,17 @@ class Tyre
         $this->company = $company;
     }
 
-    public function getPicture()
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+        public function getPicture()
     {
         return $this->picture;
     }

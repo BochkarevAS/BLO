@@ -22,14 +22,14 @@ class CompanyRepository extends ServiceEntityRepository
 
     public function getCompanyByUserId(User $user)
     {
-        if (!$user->getId()) {
+        if (!$user) {
             return null;
         }
 
         $qb = $this->createQueryBuilder('c')
             ->join('c.user', 'u')
-            ->andWhere('c.user = :id')
-            ->setParameter(':id', $user->getId());
+            ->andWhere('c.user = :user')
+            ->setParameter(':user', $user);
 
         return $qb->getQuery()->execute();
     }

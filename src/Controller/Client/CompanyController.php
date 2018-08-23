@@ -37,7 +37,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * @Route("/show", name="client_company_show_all", methods={"GET"})
+     * @Route("/show/all", name="client_company_show_all", methods={"GET"})
      */
     public function showAll(CompanyRepository $repository)
     {
@@ -76,7 +76,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="client_company_show", methods="GET")
+     * @Route("/{id}/show", name="client_company_show", methods="GET")
      */
     public function show(Company $company): Response
     {
@@ -113,7 +113,7 @@ class CompanyController extends Controller
 
         return $this->render('client/company/edit.html.twig', [
             'company' => $company,
-            'form'    => $form->createView(),
+            'form'    => $form->createView()
         ]);
     }
 
