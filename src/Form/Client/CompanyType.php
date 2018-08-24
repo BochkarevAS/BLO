@@ -20,23 +20,28 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city', TextType::class, [
-                'label' => 'Город'
-            ])
             ->add('name', TextType::class, [
-                'label' => 'Название компании'
+                'label'    => 'Название компании'
+            ])
+            ->add('city', TextType::class, [
+                'label'    => 'Город',
+                'required' => false
             ])
             ->add('syte', TextType::class, [
-                'label' => 'Сайт'
+                'label'    => 'Сайт',
+                'required' => false
             ])
             ->add('bank', TextareaType::class, [
-                'label' => 'Банковские реквизиты'
+                'label'    => 'Банковские реквизиты',
+                'required' => false
             ])
             ->add('preview', TextareaType::class, [
-                'label' => 'Краткая информация о компании'
+                'label'    => 'Краткая информация о компании',
+                'required' => false
             ])
             ->add('address', TextareaType::class, [
-                'label' => 'Адрес компании'
+                'label'    => 'Адрес компании',
+                'required' => false
             ])
             ->add('city', EntityType::class, [
                 'class'         => City::class,
@@ -69,9 +74,11 @@ class CompanyType extends AbstractType
                 'by_reference' => false
             ])
             ->add('file', VichFileType::class, [
-                'required'     => false,
-                'allow_delete' => true,
-                'label'        => false
+                'required'       => false,
+                'allow_delete'   => true,
+                'download_label' => false,
+                'download_uri'   => false,
+                'label'          => 'Логотип'
             ])
         ;
     }

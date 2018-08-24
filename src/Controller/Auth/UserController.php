@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\Client;
+namespace App\Controller\Auth;
 
 use App\Entity\Auth\User;
-use App\Form\Client\UserType;
+use App\Form\Auth\UserType;
 use App\Repository\Client\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

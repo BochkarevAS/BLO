@@ -3,7 +3,6 @@
 namespace App\Form\Tyres;
 
 use App\Entity\Client\Availability;
-use App\Entity\Client\Company;
 use App\Entity\Client\Condition;
 use App\Entity\Region\City;
 use App\Entity\Tyres\Brand;
@@ -11,7 +10,6 @@ use App\Entity\Tyres\Model;
 use App\Entity\Tyres\Seasonality;
 use App\Entity\Tyres\Thorn;
 use App\Entity\Tyres\Tyre;
-use App\Repository\Client\CompanyRepository;
 use App\Repository\Region\CityRepository;
 use App\Repository\Tyres\ModelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,15 +38,6 @@ class TyreNewType extends AbstractType
                 'label'         => 'Производитель',
                 'required'      => false,
                 'choice_label'  => 'name'
-            ])
-            ->add('company', EntityType::class, [
-                'class'         => Company::class,
-                'label'         => 'Продавец',
-                'choice_label'  => 'name',
-                'required'      => false,
-                'query_builder' => function (CompanyRepository $repository) {
-                    return $repository->orderBy();
-                }
             ])
             ->add('city', EntityType::class, [
                 'class'         => City::class,

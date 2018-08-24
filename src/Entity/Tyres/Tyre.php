@@ -88,6 +88,7 @@ class Tyre
 
     /**
      * Компания продавец
+     * ID может отсутствовать это значит, что объявление подано частным лицом
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
      */

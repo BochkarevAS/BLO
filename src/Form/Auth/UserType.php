@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Client;
+namespace App\Form\Auth;
 
 use App\Entity\Auth\User;
 use App\Entity\Region\City;

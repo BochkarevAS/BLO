@@ -32,14 +32,14 @@ class Company
     /**
      * Краткая информация о компании
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $preview;
 
     /**
      * Банковские реквизиты
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $bank;
 
@@ -53,7 +53,7 @@ class Company
     /**
      * Сайт
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $syte;
 
@@ -101,7 +101,7 @@ class Company
     /**
      * Адрес компании
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $address;
 
