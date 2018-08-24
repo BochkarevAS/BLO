@@ -2,7 +2,10 @@
 
 import $ from 'jquery';
 import '../../../css/client/fileupload.css'
+// import 'blueimp-file-upload/js/jquery.fileupload'
+// import 'jquery-ui/ui/widget'
 import 'blueimp-file-upload/js/jquery.fileupload'
+import 'blueimp-file-upload/js/jquery.iframe-transport'
 
 class Fileupload {
 
@@ -12,9 +15,7 @@ class Fileupload {
         $('#drop a').click(function() {
             $(this).parent().find('input').click();
         });
-    }
 
-    fileupload() {
         $('#fileupload').fileupload({
 
             // Этот элемент будет принимать загрузку перетаскивания файлов
@@ -28,8 +29,9 @@ class Fileupload {
                     ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
 
                 // Добавить имя файла и размер файла
+                let size = formatFileSize(data.files[0].size);
                 tpl.find('p').text(data.files[0].name)
-                    .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
+                    .append('<i>' + size + '</i>');
 
                 // Добавьте HTML в элемент UL
                 data.context = tpl.appendTo(ul);
@@ -72,7 +74,7 @@ class Fileupload {
     }
 
     // Функция помощника, которая форматирует размеры файлов
-    formatFileSize(bytes) {
+    static formatFileSize(bytes) {
         if (typeof bytes !== 'number') {
             return '';
         }
@@ -88,3 +90,5 @@ class Fileupload {
         return (bytes / 1000).toFixed(2) + ' KB';
     }
 }
+
+export default Fileupload;

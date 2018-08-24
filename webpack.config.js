@@ -1,5 +1,7 @@
 let Encore = require('@symfony/webpack-encore');
 
+let path = require('path');
+
 Encore
     // the project directory where compiled assets will be stored
     .setOutputPath('public/build/')
@@ -16,6 +18,7 @@ Encore
     .addEntry('js/app', './assets/js/app/app.js')
     .addEntry('js/appMap', './assets/js/app/appMap.js')
     .addEntry('js/appFancybox', './assets/js/app/appFancybox.js')
+    .addEntry('js/appFileupload', './assets/js/app/appFileupload.js')
     .addStyleEntry('css/tyre/show_tyre', './assets/css/tyre/show_tyre.css')
     .cleanupOutputBeforeBuild()
     // .addStyleEntry('css/app', './assets/css/app.scss')
@@ -27,5 +30,11 @@ Encore
     // .autoProvidejQuery()
 ;
 
-module.exports = Encore.getWebpackConfig();
+let config = Encore.getWebpackConfig();
+
+config.resolve.alias = {
+    'jquery-ui/ui/widget': path.resolve(__dirname, 'node_modules/jquery.ui.widget/jquery.ui.widget.js')
+};
+
+module.exports = config;
 

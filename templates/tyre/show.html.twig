@@ -82,37 +82,42 @@
 
         <hr>
 
-        <div>
-            <h5>Компания {{ company.name }}</h5>
-            {{ company.preview }}
-        </div>
-
-        <br>
-
-        <div>
-            <h5>Контактная информация</h5>
-            <ul class="list-group list-group-flush">
-                {% for phone in company.phones %}
-                    <li class="list-group-item"><i class="fa fa-phone mr-3"></i>{{ phone }}</li>
-                {% endfor %}
-            </ul>
-            <ul class="list-group list-group-flush">
-                {% for email in company.emails %}
-                    <li class="list-group-item"><i class="fa fa-envelope mr-3"></i>{{ email }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <br>
-
-        <div id="tyres-card">
-            <div id="company-map"></div>
-            <div class="card-body">
-                <p class="card-text" id="company-address-coordinate" data-address="{{ company.address }}" data-coordinate="{{ company.coordinate }}">
-                    <h6>г. {{ company.city }}, {{ company.address }}</h6>
-                </p>
+        {% if tyre.company %}
+            <div>
+                <h5>Компания {{ tyre.company.name }}</h5>
+                {{ tyre.company.preview }}
             </div>
-        </div>
+
+            <br>
+
+            <div>
+                <h5>Контактная информация</h5>
+                <ul class="list-group list-group-flush">
+                    {% for phone in tyre.company.phones %}
+                        <li class="list-group-item"><i class="fa fa-phone mr-3"></i>{{ phone }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="list-group list-group-flush">
+                    {% for email in tyre.company.emails %}
+                        <li class="list-group-item"><i class="fa fa-envelope mr-3"></i>{{ email }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <br>
+
+            <div id="tyres-card">
+                <div id="company-map"></div>
+                <div class="card-body">
+                    <p class="card-text" id="company-address-coordinate" data-address="{{ tyre.company.address }}" data-coordinate="{{ tyre.company.coordinate }}">
+                        <h6>г. {{ tyre.company.city }}, {{ tyre.company.address }}</h6>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+
+        {% endif %}
+
     </div>
 
 {% endblock %}
