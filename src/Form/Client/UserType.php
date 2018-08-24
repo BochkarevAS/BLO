@@ -38,9 +38,11 @@ class UserType extends AbstractType
                 'required'      => false
             ])
             ->add('file', VichFileType::class, [
-                 'required'     => false,
-                 'allow_delete' => true,
-                 'label'        => false
+                 'required'       => false,
+                 'allow_delete'   => true,
+                 'download_label' => false,
+                 'download_uri'   => false,
+                 'label'          => 'Аватар'
              ])
         ;
 

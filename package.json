@@ -16,6 +16,7 @@
         "@fancyapps/fancybox": "^3.3.5",
         "@google/maps": "^0.5.5",
         "bloodhound-js": "^1.2.3",
+        "blueimp-file-upload": "^9.22.0",
         "bootstrap": "^4.1.1",
         "font-awesome": "^4.7.0",
         "jquery": "^3.3.1",
