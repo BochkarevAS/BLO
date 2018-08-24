@@ -9,11 +9,11 @@ use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class CompanyType extends AbstractType
 {
@@ -68,12 +68,10 @@ class CompanyType extends AbstractType
                 'allow_add'    => true,
                 'by_reference' => false
             ])
-            ->add('logotype', FileType::class, [
-                'label'      => 'Логотип',
-                'data_class' => null,
-                'attr'       => [
-                    'accept' => 'image/*',
-                ]
+            ->add('file', VichFileType::class, [
+                'required'     => false,
+                'allow_delete' => true,
+                'label'        => false
             ])
         ;
     }

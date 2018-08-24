@@ -5,10 +5,13 @@ namespace App\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Client\CompanyRepository")
  * @ORM\Table(name="company", schema="client")
+ * @Vich\Uploadable
  */
 class Company
 {
@@ -68,9 +71,20 @@ class Company
     private $user;
 
     /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="logotype_image", fileNameProperty="logotype")
+     *
+     * @var File
+     */
+    private $file;
+
+    /**
      * Логотип компании
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
      */
     private $logotype;
 
@@ -269,6 +283,23 @@ class Company
     public function setAddress($address): void
     {
         $this->address = $address;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
+     */
+    public function setFile(?File $file = null): void
+    {
+        $this->file = $file;
+
+        if (null !== $file) {
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
     }
 
     public function getLogotype()

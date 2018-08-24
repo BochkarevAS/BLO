@@ -5,7 +5,6 @@ namespace App\Controller\Client;
 use App\Entity\Client\Company;
 use App\Form\Client\CompanyType;
 use App\Repository\Client\CompanyRepository;
-use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CompanyController extends Controller
 {
-    protected $fileUploader;
-
-    public function __construct(FileUploader $fileUploader)
-    {
-        $this->fileUploader = $fileUploader;
-    }
-
     /**
      * @Route("/", name="client_company_index", methods="GET")
      */
@@ -59,10 +51,6 @@ class CompanyController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $fileName = $this->fileUploader($company);
-
-            $company->setLogotype($fileName);
-
             $em->persist($company);
             $em->flush();
 
@@ -90,20 +78,10 @@ class CompanyController extends Controller
      */
     public function edit(Request $request, Company $company): Response
     {
-        $logotype = $company->getLogotype();
-        $path = $this->getParameter('images_directory').'/'.$logotype;
-
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $fileName = $this->fileUploader($company);
-            $company->setLogotype($fileName);
-
-            if (file_exists($path) && $logotype) {
-                unlink($path);
-            }
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('client_company_edit', [
@@ -129,13 +107,5 @@ class CompanyController extends Controller
         }
 
         return $this->redirectToRoute('client_company_index');
-    }
-
-    private function fileUploader(Company $company)
-    {
-        $targetDirectory = $this->getParameter('images_directory');
-        $fileName = $this->fileUploader->upload($company->getLogotype(), $targetDirectory);
-
-        return $fileName;
     }
 }
