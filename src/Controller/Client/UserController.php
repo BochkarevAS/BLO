@@ -5,7 +5,6 @@ namespace App\Controller\Client;
 use App\Entity\Auth\User;
 use App\Form\Client\UserType;
 use App\Repository\Client\UserRepository;
-use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,12 +17,8 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/index", name="client_user_index", options={"expose"=true})
      */
-    public function index(Request $request, User $user, FileUploader $fileUploader)
+    public function index(Request $request, User $user)
     {
-        $avatar = $user->getAvatar();
-        $targetDirectory = $this->getParameter('images_directory');
-        $path = $targetDirectory.'/'.$avatar;
-
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -36,13 +31,6 @@ class UserController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $fileName = $fileUploader->upload($user->getAvatar(), $targetDirectory);
-            $user->setAvatar($fileName);
-
-            if (file_exists($path) && $avatar) {
-                unlink($path);
-            }
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('client_user_index', [

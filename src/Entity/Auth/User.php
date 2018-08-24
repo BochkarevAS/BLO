@@ -3,11 +3,15 @@
 namespace App\Entity\Auth;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Client\UserRepository")
  * @ORM\Table(name="users")
+ * @Vich\Uploadable
  */
 class User extends BaseUser
 {
@@ -34,11 +38,32 @@ class User extends BaseUser
     protected $city;
 
     /**
-     * Аватар пользователя
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @Vich\UploadableField(mapping="avatar_image", fileNameProperty="avatar")
+     *
+     * @var File
+     */
+    protected $file;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
      */
     protected $avatar;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
+     */
+    private $updatedAt;
 
     public function getFirstName()
     {
@@ -77,6 +102,23 @@ class User extends BaseUser
         return parent::setEmail($email);
     }
 
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
+     */
+    public function setFile(?File $file = null): void
+    {
+        $this->file = $file;
+
+        if (null !== $file) {
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
     public function getAvatar()
     {
         return $this->avatar;
@@ -95,6 +137,16 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
     public function __toString()

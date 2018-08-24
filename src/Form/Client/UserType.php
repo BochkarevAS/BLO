@@ -8,13 +8,13 @@ use App\Entity\Region\Region;
 use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class UserType extends AbstractType
 {
@@ -37,13 +37,11 @@ class UserType extends AbstractType
                 'mapped'        => false,
                 'required'      => false
             ])
-            ->add('avatar', FileType::class, [
-                'label'      => 'Аватар',
-                'data_class' => null,
-                'attr'       => [
-                    'accept' => 'image/*',
-                ]
-            ])
+            ->add('file', VichFileType::class, [
+                 'required'     => false,
+                 'allow_delete' => true,
+                 'label'        => false
+             ])
         ;
 
         $builder->addEventListener(
@@ -51,7 +49,7 @@ class UserType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
 
-                /* @var $city City */
+                /* @var City $city */
                 $city = $data->getCity();
                 $form = $event->getForm();
 

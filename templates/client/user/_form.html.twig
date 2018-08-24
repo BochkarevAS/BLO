@@ -21,8 +21,8 @@
         </div>
         <div class="row">
             <div class="col-4">
-                <img src="/images/{{ user.avatar }}" width="110" height="110">
-                {{ form_row(form.avatar, {'id': 'user-avatar', 'attr': {'class': 'custom-file-input'}}) }}
+                <img src="{{vich_uploader_asset (user, 'file', 'App\\Entity\\Auth\\User')}}"width="110" height="110">
+                {{ form_row(form.file, {'id': 'user-avatar', 'attr': {'class': 'custom-file-input'}}) }}
             </div>
         </div>
     </div>

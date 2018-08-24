@@ -22,11 +22,11 @@ class UploadListener
 
 //        die;
 
-//        $object = new Tyre();
-//        $object->setPicture($file->getPathName());
-//
-//        $this->manager->persist($object);
-//        $this->manager->flush();
+        $object = new Tyre();
+        $object->setPicture($file->getPathName());
+
+        $this->manager->persist($object);
+        $this->manager->flush();
 
         $response = $event->getResponse();
         $response['success'] = true;
