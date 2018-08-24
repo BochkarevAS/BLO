@@ -2,6 +2,7 @@
 
 namespace App\Entity\Tyres;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -147,6 +148,11 @@ class Tyre
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getWidth()
     {
