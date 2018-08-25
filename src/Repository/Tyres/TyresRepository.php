@@ -23,11 +23,11 @@ class TyresRepository extends EntityRepository
         $company      = $tyre->getCompany();
 
         $qb = $this->createQueryBuilder('t')
-            ->addSelect('b, m, s, a, c, thorn')
+            ->addSelect('b, m, s, a, c, th')
             ->leftJoin('t.brand', 'b')
             ->leftJoin('t.model', 'm')
             ->leftJoin('t.seasonality', 's')
-            ->leftJoin('t.thorn', 'thorn')
+            ->leftJoin('t.thorn', 'th')
             ->leftJoin('t.availability', 'a')
             ->leftJoin('t.condition', 'c')
             ->leftJoin('t.city', 'city')
@@ -35,7 +35,7 @@ class TyresRepository extends EntityRepository
 
         /* Фильтр по производителям */
         if ($brand) {
-            $qb->andWhere('b.id = :bid')->setParameter('bid', $brand->getId());
+            $qb->andWhere('b.id = :bid')->setParameter('bid', $brand);
         }
 
         /* Фильтр по моделям */
@@ -45,12 +45,12 @@ class TyresRepository extends EntityRepository
 
         /* Фильтр по шипам */
         if ($thorn) {
-            $qb->andWhere('th.id = :thornId')->setParameter('thornId', $thorn->getId());
+            $qb->andWhere('th.id = :thorn')->setParameter('thorn', $thorn);
         }
 
         /* Фильтр по сезонам */
         if ($seasonality) {
-            $qb->andWhere('s.id = :seasonalityId')->setParameter('seasonalityId', $seasonality->getId());
+            $qb->andWhere('s.id = :seasonalityId')->setParameter('seasonalityId', $seasonality);
         }
 
         /* Фильтр по количеству шин */
@@ -85,12 +85,12 @@ class TyresRepository extends EntityRepository
 
         /* Фильтр по городам */
         if ($city) {
-            $qb->andWhere('city.id = :id')->setParameter('id', $city->getId());
+            $qb->andWhere('city.id = :city')->setParameter('city', $city);
         }
 
         /* Фильтр по компаниям */
         if ($company) {
-            $qb->andWhere('company.id = :id')->setParameter('id', $company->getId());
+            $qb->andWhere('company.id = :company')->setParameter('company', $company);
         }
 
         return $qb->getQuery();

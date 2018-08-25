@@ -2,6 +2,7 @@
 
 namespace App\Entity\Tyres;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,14 +24,14 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Model", mappedBy="brand")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Model", mappedBy="brand", fetch="EXTRA_LAZY")
      */
     private $models;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Tyre", mappedBy="brand")
-     */
-    private $tyres;
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
 
     public function getName()
     {
@@ -49,17 +50,7 @@ class Brand
 
     public function setModels($models)
     {
-        $this->models = $models;
-    }
-
-    public function getTyres()
-    {
-        return $this->tyres;
-    }
-
-    public function setTyres($tyres)
-    {
-        $this->tyres = $tyres;
+        $this->models[] = $models;
     }
 
     public function getId()

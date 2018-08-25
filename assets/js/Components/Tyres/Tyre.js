@@ -54,6 +54,7 @@ class Tyre {
 
         $.ajax({
             url: Routing.generate('tyre_new'),
+            method: 'POST',
             data: data
         }).then((data) => {
             let $input = $(data).find(target);

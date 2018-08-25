@@ -28,8 +28,7 @@ class TyresController extends AbstractController
         $tyres = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entity = $form->getData();
-            $query  = $this->getDoctrine()->getRepository(Tyre::class)->search($entity);
+            $query  = $this->getDoctrine()->getRepository(Tyre::class)->search($tyre);
 
             if ($query) {
                 $tyres = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
@@ -61,19 +60,10 @@ class TyresController extends AbstractController
         $user = $this->getUser();
         $targetDirectory = $this->getParameter('images_directory');
 
-        if ($request->isXmlHttpRequest()) {
-            $form = $this->createForm(TyreNewType::class, $tyre, ['method' => 'GET']);
-            $form->handleRequest($request);
-
-            return $this->render('tyre/new.html.twig', [
-                'form' => $form->createView()
-            ]);
-        }
-
         $form = $this->createForm(TyreNewType::class, $tyre);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $files = $fileUploader->uploadMultiple($tyre->getPicture(), $targetDirectory);
