@@ -57,6 +57,16 @@ class Carcase
         return $this->models;
     }
 
+    public function setModels($models): void
+    {
+        $this->models[] = $models;
+    }
+
+    public function setParts($parts): void
+    {
+        $this->parts[] = $parts;
+    }
+
     public function getParts()
     {
         return $this->parts;

@@ -43,9 +43,17 @@ class Oem
         $this->name = $name;
     }
 
+    /**
+     * @return ArrayCollection|Part[]
+     */
     public function getParts()
     {
         return $this->parts;
+    }
+
+    public function setParts($parts): void
+    {
+        $this->parts[] = $parts;
     }
 
     public function getId()
