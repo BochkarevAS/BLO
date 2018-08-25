@@ -35,7 +35,7 @@ class Model
     private $brand;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", mappedBy="models")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="models")
      * @JoinTable(name="models_carcases", schema="part")
      */
     private $carcases;

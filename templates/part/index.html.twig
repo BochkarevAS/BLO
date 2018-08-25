@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <div class="container js-parts-module">
+    <div class="container js-part-module">
 
         {{ include('/part/_form.html.twig') }}
 
@@ -88,6 +88,6 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="{{ asset('build/app.js') }}"></script>
+    <script src="{{ asset('build/js/app.js') }}"></script>
 
 {% endblock %}

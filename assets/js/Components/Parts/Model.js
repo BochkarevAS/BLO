@@ -20,7 +20,7 @@ class Model {
         let $field = $(e.currentTarget);
         let $brandField = $('#part-brand');
         let target = '#' + $field.attr('id').replace('model', 'carcase').replace('brand', 'model');
-        let data = {};
+        let data = {}; console.log(111);
 
         data[$brandField.attr('name')] = $brandField.val();
         data[$field.attr('name')] = $field.val();

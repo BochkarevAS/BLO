@@ -4,7 +4,6 @@ namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\EngineRepository")
@@ -26,7 +25,6 @@ class Engine
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="engines")
-     * @JoinTable(name="parts_engines", schema="part")
      */
     private $parts;
 
@@ -50,9 +48,9 @@ class Engine
         return $this->parts;
     }
 
-    public function setParts($parts): void
+    public function getId()
     {
-        $this->parts[] = $parts;
+        return $this->id;
     }
 
     public function __toString()

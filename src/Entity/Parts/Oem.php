@@ -2,8 +2,8 @@
 
 namespace App\Entity\Parts;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\OemRepository")
@@ -25,9 +25,13 @@ class Oem
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="oems")
-     * @JoinTable(name="parts_oems", schema="part")
      */
     private $parts;
+
+    public function __construct()
+    {
+        return $this->parts = new ArrayCollection();
+    }
 
     public function getName()
     {
@@ -42,11 +46,6 @@ class Oem
     public function getParts()
     {
         return $this->parts;
-    }
-
-    public function setParts($parts): void
-    {
-        $this->parts[] = $parts;
     }
 
     public function getId()
