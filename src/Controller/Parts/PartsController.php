@@ -4,11 +4,12 @@ namespace App\Controller\Parts;
 
 use App\Dto\Parts\SearchDTO;
 use App\Entity\Parts\Part;
+use App\Form\Parts\PartNewType;
 use App\Form\Parts\PartType;
+use App\Service\FileUploader;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -62,6 +63,48 @@ class PartsController extends AbstractController
         return $this->render('part/index.html.twig', [
             'parts' => $parts,
             'form'  => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="part_new", options={"expose"=true}, methods="GET|POST")
+     */
+    public function new(Request $request, FileUploader $fileUploader)
+    {
+        $part = new Part();
+        $user = $this->getUser();
+        $targetDirectory = $this->getParameter('images_directory');
+
+        $form = $this->createForm(PartNewType::class, $part);
+        $form->handleRequest($request);
+
+        if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $files = $fileUploader->uploadMultiple($part->getPicture(), $targetDirectory);
+            $json = json_encode($files);
+            $part->setPicture($json);
+            $part->setUser($user);
+
+            $hash = md5(
+                $this->getUser() .
+                $part->getBrand() .
+                $part->getModel() .
+                $part->getCity() .
+                $part->getPicture()
+            );
+
+            $part->setHash($hash);
+
+            $em->persist($part);
+            $em->flush();
+            $this->addFlash("success", "Ваше объявление добавлено");
+
+            return $this->redirectToRoute('part_new');
+        }
+
+        return $this->render('part/new.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

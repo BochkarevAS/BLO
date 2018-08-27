@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новая запчасть{% endblock %}
+
+{% block body %}
+
+    <div class="container js-part-module">
+        <h4>Добавить запчасть</h4>
+
+        {% for msg in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ msg }}
+            </div>
+        {% endfor %}
+
+        {{ include('part/_form_new.html.twig') }}
+
+        <a href="{{ path('client_company_index') }}">Назад</a>
+    </div>
+
+{% endblock %}

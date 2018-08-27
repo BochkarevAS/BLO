@@ -76,7 +76,6 @@ class TyresController extends AbstractController
                 $tyre->getBrand() .
                 $tyre->getModel() .
                 $tyre->getCity() .
-                $tyre->getHash() .
                 $tyre->getWidth() .
                 $tyre->getAvailability() .
                 $tyre->getCondition() .
