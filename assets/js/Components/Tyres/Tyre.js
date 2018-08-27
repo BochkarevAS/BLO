@@ -59,9 +59,6 @@ class Tyre {
         }).then((data) => {
             let $input = $(data).find(target);
             $(target).replaceWith($input);
-            $(target).select2({
-                closeOnSelect: false
-            });
         })
     }
 }

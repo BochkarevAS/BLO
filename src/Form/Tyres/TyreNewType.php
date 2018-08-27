@@ -46,7 +46,7 @@ class TyreNewType extends AbstractType
                 'required'      => false,
                 'query_builder' => function (CityRepository $repository) {
                     return $repository->orderBy();
-                },
+                }
             ])
             ->add('thorn', EntityType::class, [
                 'class'         => Thorn::class,
@@ -78,7 +78,7 @@ class TyreNewType extends AbstractType
             ->add('quantity', ChoiceType::class, [
                 'choices'  => $quantitys,
                 'label'    => 'Количество',
-                'required' => false,
+                'required' => false
             ])
             ->add('availability',EntityType::class, [
                 'class'        => Availability::class,
@@ -87,7 +87,7 @@ class TyreNewType extends AbstractType
                 'placeholder'  => 'Все',
                 'multiple'     => false,
                 'required'     => false,
-                'expanded'     => true,
+                'expanded'     => true
             ])
             ->add('condition', EntityType::class, [
                 'class'        => Condition::class,
@@ -101,12 +101,13 @@ class TyreNewType extends AbstractType
             ->add('price', TextType::class, [
                 'label' => 'Цена'
             ])
-            ->add('picture', FileType::class, [
+            ->add('image', FileType::class, [
                 'label'      => 'Фото',
+                'required'   => false,
                 'data_class' => null,
                 'multiple'   => true,
                 'attr'       => [
-                    'accept' => 'image/*',
+                    'accept' => 'image/*'
                 ]
             ])
         ;

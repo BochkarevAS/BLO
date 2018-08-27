@@ -15,6 +15,7 @@ use App\Repository\Parts\BrandRepository;
 use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -33,15 +34,6 @@ class PartNewType extends AbstractType
                 'choice_label'  => 'name',
                 'required'      => false,
                 'query_builder' => function (BrandRepository $repository) {
-                    return $repository->orderBy();
-                }
-            ])
-            ->add('company', EntityType::class, [
-                'class'         => Company::class,
-                'label'         => 'Продавец',
-                'choice_label'  => 'name',
-                'required'      => false,
-                'query_builder' => function (CompanyRepository $repository) {
                     return $repository->orderBy();
                 }
             ])
@@ -85,6 +77,18 @@ class PartNewType extends AbstractType
                 'multiple'     => false,
                 'required'     => false,
                 'expanded'     => true
+            ])
+            ->add('price', TextType::class, [
+                'label' => 'Цена'
+            ])
+            ->add('image', FileType::class, [
+                'label'      => 'Фото',
+                'required'   => false,
+                'data_class' => null,
+                'multiple'   => true,
+                'attr'       => [
+                    'accept' => 'image/*'
+                ]
             ])
         ;
 

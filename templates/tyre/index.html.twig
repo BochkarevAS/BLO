@@ -19,9 +19,14 @@
             {% for tyre in tyres %}
                 <div class="row">
                     <div class="col-2">
-                        {% if tyre.picture %}
-                            {% set pictures = tyre.picture|json_decode %}
-                            <img src="/images/{{ pictures[0] }}" width="110" height="110">
+                        {% if tyre.image %}
+                            {% set images = tyre.image|json_decode %}
+
+                            {% if images %}
+                                <img src="/images/{{ images[0] }}" width="110" height="110">
+                            {% else %}
+                                <img src="#" width="110" height="110">
+                            {% endif %}
                         {% endif %}
                     </div>
                     <div class="col-4">
@@ -66,7 +71,6 @@
                         {% endif %}
                     </div>
                 </div>
-                <br>
             {% endfor %}
 
             <div class="navigator">

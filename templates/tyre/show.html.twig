@@ -13,10 +13,17 @@
 
         <div class="row">
             <div class="col-6">
-                {% set pictures = tyre.picture|json_decode %}
 
                 <a data-trigger="preview" href="javascript:">
-                    <img src="/images/{{ pictures[0] }}" width="480" height="500">
+                    {% if tyre.image %}
+                        {% set images = tyre.image|json_decode %}
+
+                        {% if images %}
+                            <img src="/images/{{ images[0] }}" width="480" height="500">
+                        {% else %}
+                            <img src="#" width="480" height="500">
+                        {% endif %}
+                    {% endif %}
                 </a>
             </div>
             <div class="col-4">
@@ -73,9 +80,9 @@
         <br>
 
         <div class="fix-media-cont">
-            {% for picture in pictures %}
-                <a href="/images/{{ picture }}/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
-                    <img id="tyre-img" src="/images/{{ picture }}" width="110" height="110">
+            {% for image in images %}
+                <a href="/images/{{ image }}/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                    <img id="tyre-img" src="/images/{{ image }}" width="110" height="110">
                 </a>
             {% endfor %}
         </div>

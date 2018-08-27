@@ -94,7 +94,7 @@ class Part
      *
      * @ORM\Column(type="json")
      */
-    private $picture;
+    private $image;
 
     /**
      * ID пользователя
@@ -301,14 +301,14 @@ class Part
         $this->company = $company;
     }
 
-    public function getPicture()
+    public function getImage()
     {
-        return $this->picture;
+        return $this->image;
     }
 
-    public function setPicture($picture): void
+    public function setImage($image): void
     {
-        $this->picture = $picture;
+        $this->image = $image;
     }
 
     public function getAvailability()

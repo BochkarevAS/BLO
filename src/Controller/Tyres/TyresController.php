@@ -66,9 +66,9 @@ class TyresController extends AbstractController
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $files = $fileUploader->uploadMultiple($tyre->getPicture(), $targetDirectory);
+            $files = $fileUploader->uploadMultiple($tyre->getImage(), $targetDirectory);
             $json = json_encode($files);
-            $tyre->setPicture($json);
+            $tyre->setImage($json);
             $tyre->setUser($user);
 
             $hash = md5(
@@ -81,7 +81,7 @@ class TyresController extends AbstractController
                 $tyre->getCondition() .
                 $tyre->getQuantity() .
                 $tyre->getDiameter() .
-                $tyre->getPicture()
+                $tyre->getImage()
             );
 
             $tyre->setHash($hash);
@@ -109,9 +109,9 @@ class TyresController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $files = $fileUploader->uploadMultiple($tyre->getPicture(), $targetDirectory);
+            $files = $fileUploader->uploadMultiple($tyre->getImage(), $targetDirectory);
             $json = json_encode($files);
-            $tyre->setPicture($json);
+            $tyre->setImage($json);
 
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "Ваше объявление обновлено");

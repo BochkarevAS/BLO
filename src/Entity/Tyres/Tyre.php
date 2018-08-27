@@ -133,7 +133,7 @@ class Tyre
      *
      * @ORM\Column(type="json")
      */
-    private $picture;
+    private $image;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -302,14 +302,14 @@ class Tyre
         $this->user = $user;
     }
 
-        public function getPicture()
+    public function getImage()
     {
-        return $this->picture;
+        return $this->image;
     }
 
-    public function setPicture($picture): void
+    public function setImage($image): void
     {
-        $this->picture = $picture;
+        $this->image = $image;
     }
 
     public function getId()

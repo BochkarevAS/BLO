@@ -11,6 +11,7 @@ use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -67,6 +68,16 @@ class PartsController extends AbstractController
     }
 
     /**
+     * @Route("/show/{id}", name="part_show", methods="GET")
+     */
+    public function show(Part $part): Response
+    {
+        return $this->render('part/show.html.twig', [
+            'part' => $part
+        ]);
+    }
+
+    /**
      * @Route("/new", name="part_new", options={"expose"=true}, methods="GET|POST")
      */
     public function new(Request $request, FileUploader $fileUploader)
@@ -81,9 +92,9 @@ class PartsController extends AbstractController
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $files = $fileUploader->uploadMultiple($part->getPicture(), $targetDirectory);
+            $files = $fileUploader->uploadMultiple($part->getImage(), $targetDirectory);
             $json = json_encode($files);
-            $part->setPicture($json);
+            $part->setImage($json);
             $part->setUser($user);
 
             $hash = md5(
@@ -91,7 +102,7 @@ class PartsController extends AbstractController
                 $part->getBrand() .
                 $part->getModel() .
                 $part->getCity() .
-                $part->getPicture()
+                $part->getImage()
             );
 
             $part->setHash($hash);
