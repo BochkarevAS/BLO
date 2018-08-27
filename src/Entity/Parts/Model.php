@@ -90,7 +90,7 @@ class Model
         }
 
         $this->carcases[] = $carcase;
-        $carcase->setModels($this);
+        $carcase->addModels($this);
     }
 
     public function removeCarcase(Carcase $carcase)
@@ -100,7 +100,7 @@ class Model
         }
 
         $this->carcases->removeElement($carcase);
-        $carcase->setModels(null);
+        $carcase->removeModels($this);
     }
 
     public function getId()

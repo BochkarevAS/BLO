@@ -195,7 +195,7 @@ class Part
         }
 
         $this->carcases->removeElement($carcase);
-        $carcase->addParts($this);
+        $carcase->removeParts($this);
     }
 
     public function getEngines()
@@ -220,7 +220,7 @@ class Part
         }
 
         $this->engines->removeElement($engine);
-        $engine->addParts($this);
+        $engine->removeParts($this);
     }
 
     public function getOems()
@@ -245,7 +245,7 @@ class Part
         }
 
         $this->oems->removeElement($oem);
-        $oem->addParts($this);
+        $oem->removeParts($this);
     }
 
     public function getName()
@@ -342,6 +342,7 @@ class Part
     {
         return $this->mark;
     }
+
     public function setMark($mark): void
     {
         $this->mark = $mark;

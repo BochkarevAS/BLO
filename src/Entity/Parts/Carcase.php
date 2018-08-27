@@ -29,14 +29,20 @@ class Carcase
     private $models;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="carcases")
+     */
+    private $engines;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases", fetch="EXTRA_LAZY")
      */
     private $parts;
 
     public function __construct()
     {
-        $this->parts  = new ArrayCollection();
-        $this->models = new ArrayCollection();
+        $this->parts   = new ArrayCollection();
+        $this->models  = new ArrayCollection();
+        $this->engines = new ArrayCollection();
     }
 
     public function getName()
@@ -57,9 +63,22 @@ class Carcase
         return $this->models;
     }
 
-    public function setModels($models): void
+    public function addModels(Model $models): void
     {
+        if ($this->models->contains($models)) {
+            return;
+        }
+
         $this->models[] = $models;
+    }
+
+    public function removeModels(Model $model)
+    {
+        if (!$this->models->contains($model)) {
+            return;
+        }
+
+        $this->models->removeElement($this);
     }
 
     /**
