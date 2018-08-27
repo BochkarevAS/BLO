@@ -102,12 +102,18 @@ class TyresController extends AbstractController
     /**
      * @Route("/{id}/edit", name="tyre_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Tyre $tyre)
+    public function edit(Request $request, Tyre $tyre, FileUploader $fileUploader)
     {
+        $targetDirectory = $this->getParameter('images_directory');
+
         $form = $this->createForm(TyreNewType::class, $tyre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $files = $fileUploader->uploadMultiple($tyre->getPicture(), $targetDirectory);
+            $json = json_encode($files);
+            $tyre->setPicture($json);
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "Ваше объявление обновлено");
 

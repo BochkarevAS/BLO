@@ -51,9 +51,18 @@ class Engine
         return $this->parts;
     }
 
-    public function setParts($parts): void
+    public function addParts(Part $part)
     {
-        $this->parts[] = $parts;
+        if ($this->parts->contains($part)) {
+            return;
+        }
+
+        $this->parts[] = $part;
+    }
+
+    public function removeParts(Part $part)
+    {
+        $this->parts->removeElement($part);
     }
 
     public function getId()

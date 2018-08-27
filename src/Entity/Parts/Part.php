@@ -97,6 +97,27 @@ class Part
     private $picture;
 
     /**
+     * ID пользователя
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
+     */
+    private $user;
+
+    /**
+     * Состояние
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Availability")
+     */
+    private $availability;
+
+    /**
+     * Наличие
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Condition")
+     */
+    private $condition;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -157,7 +178,7 @@ class Part
         }
 
         $this->carcases[] = $carcase;
-        $carcase->setParts($this);
+        $carcase->addParts($this);
     }
 
     public function removeCarcase(Carcase $carcase)
@@ -167,7 +188,7 @@ class Part
         }
 
         $this->carcases->removeElement($carcase);
-        $carcase->setParts(null);
+        $carcase->addParts($this);
     }
 
     public function getEngines()
@@ -182,7 +203,7 @@ class Part
         }
 
         $this->engines[] = $engine;
-        $engine->setParts($this);
+        $engine->addParts($this);
     }
 
     public function removeEngine(Engine $engine)
@@ -192,7 +213,7 @@ class Part
         }
 
         $this->engines->removeElement($engine);
-        $engine->setParts(null);
+        $engine->addParts($this);
     }
 
     public function getOems()
@@ -207,7 +228,7 @@ class Part
         }
 
         $this->oems[] = $oem;
-        $oem->setParts($this);
+        $oem->addParts($this);
     }
 
     public function removeOem(Oem $oem)
@@ -217,7 +238,7 @@ class Part
         }
 
         $this->oems->removeElement($oem);
-        $oem->setParts(null);
+        $oem->addParts($this);
     }
 
     public function getName()
@@ -250,6 +271,16 @@ class Part
         $this->price = $price;
     }
 
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
     public function getCity()
     {
         return $this->city;
@@ -278,6 +309,26 @@ class Part
     public function setPicture($picture): void
     {
         $this->picture = $picture;
+    }
+
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability($availability): void
+    {
+        $this->availability = $availability;
+    }
+
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    public function setCondition($condition): void
+    {
+        $this->condition = $condition;
     }
 
     public function getId()

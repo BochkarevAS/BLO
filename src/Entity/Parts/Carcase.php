@@ -62,14 +62,26 @@ class Carcase
         $this->models[] = $models;
     }
 
-    public function setParts($parts): void
-    {
-        $this->parts[] = $parts;
-    }
-
+    /**
+     * @return ArrayCollection|Part[]
+     */
     public function getParts()
     {
         return $this->parts;
+    }
+
+    public function addParts(Part $part)
+    {
+        if ($this->parts->contains($part)) {
+            return;
+        }
+
+        $this->parts[] = $part;
+    }
+
+    public function removeParts(Part $part)
+    {
+        $this->parts->removeElement($part);
     }
 
     public function getId()

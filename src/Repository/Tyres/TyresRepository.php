@@ -85,12 +85,12 @@ class TyresRepository extends EntityRepository
 
         /* Фильтр по городам */
         if ($city) {
-            $qb->andWhere('city.id = :city')->setParameter('city', $city);
+            $qb->andWhere('t.city = :city')->setParameter('city', $city);
         }
 
         /* Фильтр по компаниям */
         if ($company) {
-            $qb->andWhere('company.id = :company')->setParameter('company', $company);
+            $qb->andWhere('t.company = :company')->setParameter('company', $company);
         }
 
         return $qb->getQuery();

@@ -2,7 +2,9 @@
 
 namespace App\Form\Parts;
 
+use App\Entity\Client\Availability;
 use App\Entity\Client\Company;
+use App\Entity\Client\Condition;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Model;
@@ -64,7 +66,25 @@ class PartType extends AbstractType
                 'required'      => false,
                 'query_builder' => function (CityRepository $repository) {
                     return $repository->orderBy();
-                },
+                }
+            ])
+            ->add('availability',EntityType::class, [
+                'class'        => Availability::class,
+                'choice_label' => 'name',
+                'label'        => 'Наличие',
+                'placeholder'  => 'Все',
+                'multiple'     => false,
+                'required'     => false,
+                'expanded'     => true,
+            ])
+            ->add('condition', EntityType::class, [
+                'class'        => Condition::class,
+                'choice_label' => 'name',
+                'label'        => 'Состояние',
+                'placeholder'  => 'Все',
+                'multiple'     => false,
+                'required'     => false,
+                'expanded'     => true
             ])
         ;
 
