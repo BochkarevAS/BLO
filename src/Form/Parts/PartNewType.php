@@ -3,14 +3,12 @@
 namespace App\Form\Parts;
 
 use App\Entity\Client\Availability;
-use App\Entity\Client\Company;
 use App\Entity\Client\Condition;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Part;
 use App\Entity\Region\City;
-use App\Repository\Client\CompanyRepository;
 use App\Repository\Parts\BrandRepository;
 use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -38,6 +36,10 @@ class PartNewType extends AbstractType
                 }
             ])
             ->add('name', TextType::class, [
+                'label'    => 'Название запчасти',
+                'required' => false
+            ])
+            ->add('mark', TextType::class, [
                 'label'    => 'Номер, маркировка запчасти',
                 'required' => false
             ])

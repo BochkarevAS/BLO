@@ -118,6 +118,13 @@ class Part
     private $condition;
 
     /**
+     * Номер, маркировка запчасти
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Mark")
+     */
+    private $mark;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -329,6 +336,15 @@ class Part
     public function setCondition($condition): void
     {
         $this->condition = $condition;
+    }
+
+    public function getMark()
+    {
+        return $this->mark;
+    }
+    public function setMark($mark): void
+    {
+        $this->mark = $mark;
     }
 
     public function getId()

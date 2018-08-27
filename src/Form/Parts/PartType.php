@@ -46,6 +46,10 @@ class PartType extends AbstractType
                 }
             ])
             ->add('name', TextType::class, [
+                'label'    => 'Название запчасти',
+                'required' => false
+            ])
+            ->add('mark', TextType::class, [
                 'label'    => 'Номер, маркировка запчасти',
                 'required' => false
             ])

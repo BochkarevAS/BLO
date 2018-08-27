@@ -42,10 +42,11 @@ class TyresCommand extends ContainerAwareCommand
 
     protected function import(InputInterface $input, OutputInterface $output)
     {
-        $file = '616.csv';
-        $file = '795.csv';
 //        $file = 'tyres_min.csv';
 //        $file = 'test.csv';
+        $file = '616.csv';
+        $file = '795.csv';
+
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
@@ -67,8 +68,6 @@ class TyresCommand extends ContainerAwareCommand
 
         $contents = $response->getBody()->getContents();
 
-//        dump($contents);
-
         if (!$contents) {
             throw new Exception('Error');
         }
@@ -85,7 +84,7 @@ class TyresCommand extends ContainerAwareCommand
             'quantity', 'thorn', 'ply_rating', 'index_of_speed', 'load_index',
             'mud_at', 'dirt_mt', 'axis', 'presence_of_camera', 'radius', 'moto_class',
             'in_order', 'tra_code', 'lt_tire_function', 'price', 'availability',
-            'description', 'pictures', 'opt', 'region', 'city', 'link_youtube'
+            'description', 'image', 'opt', 'region', 'city', 'link_youtube'
         ];
         $records = $reader->getRecords($header);
         $i = 0;
@@ -96,7 +95,17 @@ class TyresCommand extends ContainerAwareCommand
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['quantity'] . $record['diameter_mm'] . $record['height_proc'] . $record['width_mm'] . $record['model'] . $record['index_of_speed'] . $record['load_index'] . $record['brand'] . $record['pictures']);
+            $hash = md5(
+                $record['quantity'] .
+                $record['diameter_mm'] .
+                $record['height_proc'] .
+                $record['width_mm'] .
+                $record['model'] .
+                $record['index_of_speed'] .
+                $record['load_index'] .
+                $record['brand'] .
+                $record['image']);
+
             $tyre = $em->getRepository(Tyre::class)->findOneBy(['hash' => $hash]);
 
             if ($tyre === null) {
@@ -129,7 +138,6 @@ class TyresCommand extends ContainerAwareCommand
 
     private function insert(Tyre $tyre, $hash, array $record, EntityManager $em, $company)
     {
-        $serializer = $this->getContainer()->get('serializer');
         $tyre->setHash($hash);
         $tyre->setPrice((int) $record['price']);
         $tyre->setWidth((int) $record['width_mm']);
@@ -178,8 +186,8 @@ class TyresCommand extends ContainerAwareCommand
             $tyre->setCompany($company);
         }
 
-        $pictures = explode(',', $record['pictures']);
-        $json = $serializer->serialize($pictures, 'json');
-        $tyre->setPicture($json);
+        $images = explode(',', $record['image']);
+        $json = json_encode($images);
+        $tyre->setImage($json);
     }
 }

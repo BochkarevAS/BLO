@@ -48,7 +48,7 @@ class PartRepository extends EntityRepository
 
         /* Фильтр по кузовам */
         if ($carcase) {
-            $qb->andWhere('p.carcase = :carcase')->setParameter('carcase', $carcase);
+            $qb->andWhere('c.id = :carcase')->setParameter('carcase', $carcase);
         }
 
         /* Фильтр по запчастям */

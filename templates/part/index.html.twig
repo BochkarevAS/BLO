@@ -42,7 +42,7 @@
                             {% endif %}
                         </a>
                     </div>
-                    <div class="col-1">
+                    <div class="col-3">
                         {% if part.engines %}
                             {% for engine in part.engines %}
                                 {{ engine.name }} {% if part.engines|last != engine %} , {% endif %}
@@ -59,12 +59,12 @@
                             {{ part.company.name }} {% if part.city %} / {{ part.city.name }} {% endif %}
                         {% endif %}
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                         {% if part.price %}
                             {{ part.price }} руб.
                         {% endif %}
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                         {{ part.updatedAt|date('d-m-Y H:i') }}
                         <br>
                         {% if part.availability %}
@@ -72,6 +72,7 @@
                         {% endif %}
                     </div>
                 </div>
+                <br>
             {% endfor %}
 
             {#<table class="table table-hover">#}

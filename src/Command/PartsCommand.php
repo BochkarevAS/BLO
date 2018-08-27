@@ -6,6 +6,7 @@ use App\Entity\Client\Company;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Engine;
+use App\Entity\Parts\Mark;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
@@ -43,10 +44,10 @@ class PartsCommand extends ContainerAwareCommand
     {
 
 //        $file = 'parts_test.csv';
-        $file = 'big_parts.csv';
-//        $file = 'parts_1.csv';
+//        $file = 'big_parts.csv';
+        $file = 'parts_1.csv';
 
-        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/prices/' . DIRECTORY_SEPARATOR . $file;
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/uploads/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
 
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
@@ -58,9 +59,9 @@ class PartsCommand extends ContainerAwareCommand
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
         $header = [
-            'part', 'brand', 'model', 'availability', 'carcase', 'engine', 'number', 'oem',
+            'part', 'brand', 'model', 'availability', 'carcase', 'engine', 'number_mark', 'oem',
             'year', 'colour', 'horizontally', 'vertically', 'order', 'price', 'type', 'tuning',
-            'proporty', 'pictures', 'opt', 'vendor', 'condition', 'region', 'city', 'youtube'
+            'proporty', 'image', 'opt', 'vendor', 'condition', 'region', 'city', 'youtube'
         ];
         $records = $reader->getRecords($header);
 
@@ -72,7 +73,19 @@ class PartsCommand extends ContainerAwareCommand
         $progress->start();
 
         foreach ($records as $offset => $record) {
-            $hash = md5($record['part'] . $record['brand'] . $record['model'] . $record['carcase'] . $record['engine'] . $record['oem'] . $record['city'] . $record['pictures']);
+            $hash = md5(
+                $record['part'] .
+                $record['brand'] .
+                $record['model'] .
+                $record['carcase'] .
+                $record['engine'] .
+                $record['oem'] .
+                $record['city'] .
+                $record['image'] .
+                $record['availability'] .
+                $record['condition'] .
+                $record['number_mark']
+            );
 
             $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
 
@@ -106,8 +119,6 @@ class PartsCommand extends ContainerAwareCommand
 
     private function insert(Part $part, $hash, array $record, EntityManager $em, $company)
     {
-        $serializer = $this->getContainer()->get('serializer');
-
         $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
         $part->setHash($hash);
         $part->setPrice((int) $record['price']);
@@ -119,6 +130,11 @@ class PartsCommand extends ContainerAwareCommand
 
         if ($record['model']) {
             $model= $em->getRepository(Model::class)->findByName(mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'));
+            $part->setModel($model);
+        }
+
+        if ($record['number_mark']) {
+            $model= $em->getRepository(Mark::class)->findByName(mb_convert_encoding($record['number_mark'], 'UTF-8', 'Windows-1251'));
             $part->setModel($model);
         }
 
@@ -161,8 +177,8 @@ class PartsCommand extends ContainerAwareCommand
             $part->setCompany($company);
         }
 
-        $pictures = explode(',', $record['pictures']);
-        $json = $serializer->serialize($pictures, 'json');
-        $part->setPicture($json);
+        $images = explode(',', $record['image']);
+        $json = json_encode($images);
+        $part->setImage($json);
     }
 }

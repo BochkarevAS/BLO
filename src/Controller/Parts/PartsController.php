@@ -3,6 +3,7 @@
 namespace App\Controller\Parts;
 
 use App\Dto\Parts\SearchDTO;
+use App\Entity\Parts\Mark;
 use App\Entity\Parts\Part;
 use App\Form\Parts\PartNewType;
 use App\Form\Parts\PartType;
@@ -96,14 +97,29 @@ class PartsController extends AbstractController
             $json = json_encode($files);
             $part->setImage($json);
             $part->setUser($user);
+            $mark = $em->getRepository(Mark::class)->findOneBy(['name' => $part->getMark()]);
+            $part->setMark($mark);
+
+            $carcases = $part->getCarcases()->toArray();
+            $engines = $part->getEngines()->toArray();
+            $oems = $part->getOems()->toArray();
 
             $hash = md5(
                 $this->getUser() .
+                $part->getName() .
                 $part->getBrand() .
                 $part->getModel() .
                 $part->getCity() .
-                $part->getImage()
+                $part->getImage() .
+                $part->getAvailability() .
+                $part->getCondition() .
+                $part->getMark() .
+                json_encode($carcases) .
+                json_encode($engines) .
+                json_encode($oems)
             );
+
+//            $part->addCarcase()
 
             $part->setHash($hash);
 
