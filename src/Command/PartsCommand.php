@@ -142,7 +142,7 @@ class PartsCommand extends ContainerAwareCommand
 //            $mark = $em->getRepository(Mark::class)->findByName(mb_convert_encoding($record['number_mark'], 'UTF-8', 'Windows-1251'));
 //            $part->setMark($mark);
 //        }
-        
+
         $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['engine']));
 
         if ($patterns) {

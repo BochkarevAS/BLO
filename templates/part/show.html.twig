@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('build/css/tyre/show_tyre.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/js/appFancybox.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+
+    <div class="container js-part-show-module">
+
+        <div class="row">
+            <div class="col-6">
+
+                <a data-trigger="preview" href="javascript:">
+                    {% if part.image %}
+                        {% set images = part.image|json_decode %}
+
+                        {% if images %}
+                            <img src="/images/{{ images[0] }}" width="480" height="500">
+                        {% else %}
+                            <img src="#" width="480" height="500">
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </div>
+            <div class="col-4">
+                <ul class="oglavl">
+                    {% if part.name %}
+                        <li>
+                            <span class="text">Название</span>
+                            <span class="page">{{ part.name }}</span>
+                        </li>
+                    {% endif %}
+                    {% if part.brand %}
+                        <li>
+                            <span class="text">Производитель</span>
+                            <span class="page">{{ part.brand.name }}</span>
+                        </li>
+                    {% endif %}
+                    {% if part.model %}
+                        <li>
+                            <span class="text">Модель</span>
+                            <span class="page">{{ part.model.name }}</span>
+                        </li>
+                    {% endif %}
+                    {% if part.carcase %}
+                        <li>
+                            <span class="text">Кузов</span>
+                            <span class="page">{{ part.carcase.name }}</span>
+                        </li>
+                    {% endif %}
+                    {% if part.engines|length %}
+                        <span class="text">Двигатель</span>
+                        {% for engine in part.engines %}
+                            <li>
+                                <span class="page">{{ engine.name }}</span>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if part.oems|length %}
+                        <span class="text">OEM, артикул</span>
+                        {% for oem in part.oems %}
+                            <li>
+                                <span class="page">{{ oem.name }}</span>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if part.price %}
+                        <li>
+                            <span class="text">Цена</span>
+                            <span class="page">{{ part.price }} руб. за 1 шт.</span>
+                        </li>
+                    {% endif %}
+                    {% if part.availability %}
+                        <span class="text">{{ part.availability.name }}</span>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="fix-media-cont">
+            {% for image in images %}
+                <a href="/images/{{ image }}/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                    <img id="tyre-img" src="/images/{{ image }}" width="110" height="110">
+                </a>
+            {% endfor %}
+        </div>
+
+        <hr>
+
+        {% if part.company %}
+            <div>
+                <h5>Компания {{ part.company.name }}</h5>
+                {{ part.company.preview }}
+            </div>
+
+            <br>
+
+            <div>
+                <h5>Контактная информация</h5>
+                <ul class="list-group list-group-flush">
+                    {% for phone in part.company.phones %}
+                        <li class="list-group-item"><i class="fa fa-phone mr-3"></i>{{ phone }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="list-group list-group-flush">
+                    {% for email in part.company.emails %}
+                        <li class="list-group-item"><i class="fa fa-envelope mr-3"></i>{{ email }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <br>
+
+            <div id="parts-card">
+                <div id="company-map"></div>
+                <div class="card-body">
+                    <p class="card-text" id="company-address-coordinate" data-address="{{ part.company.address }}" data-coordinate="{{ part.company.coordinate }}">
+                        <h6>г. {{ part.company.city }}, {{ part.company.address }}</h6>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {#<script async defer src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyCpBhRQ6bMk1Xzx6Ik1b6lqPytOf8XBm1A"></script>#}
+    <script async defer src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="{{ asset('build/js/appMap.js') }}"></script>
+    <script src="{{ asset('build/js/appFancybox.js') }}"></script>
+{% endblock %}

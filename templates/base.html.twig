@@ -10,55 +10,89 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
-            <a style="margin-left: 75px;" href="{{ path('part_index') }}">Запчасти</a>
-            <a style="margin-left: 75px;" href="{{ path('tyre_index') }}">Шины</a>
-            <a style="margin-left: 75px;" href="{{ path('drives_render') }}">Диски</a>
-            <a style="margin-left: 75px;" href="{{ path('client_company_show_all') }}">Продавцы</a>
+        <header>
+            <div id="navbar" class="container-fluid">
+                <div class="container nav-fill w-100">
+                    <nav class="navbar navbar-expand-md navbar-light" role="navigation">
+                        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarContent">
+                            <ul class="navbar-nav nav-fill w-100">
+                                <li class="nav-item">
+                                    <a href="{{ path('part_index') }}" role="button" class="btn btn-default">Запчасти</a>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="btn-group">
+                                        <a href="{{ path('tyre_index') }}" role="button" class="btn btn-default">Шины</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="btn-group">
+                                        <a href="{{ path('drives_render') }}" role="button" class="btn btn-default">Диски</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="btn-group">
+                                        <a href="{{ path('client_company_show_all') }}" role="button" class="btn btn-default">Продавцы</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="btn-group">
+                                        {% if is_granted('ROLE_USER') %}
+                                            <a href="{{ path('client_company_index') }}" role="button" class="btn btn-default">Личный кабинет</a>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="btn-group">
+                                        {% if is_granted('ROLE_USER') %}
+                                            <a href="{{ path('admin') }}" role="button" class="btn btn-default">Админка</a>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                    <ul class="navbar-nav ml-auto">
+                                        <li class="nav-item dropdown" style="margin-right: 75px;">
+                                            <div class="navbar-collapse collapse">
 
-            {% if is_granted('ROLE_USER') %}
-                <a style="margin-left: 75px;" href="{{ path('client_company_index') }}">Личный кабинет</a>
-            {% endif %}
-
-            {% if is_granted('ROLE_ADMIN') %}
-                <a style="margin-left: 75px;" href="{{ path('admin') }}">Админка</a>
-            {% endif %}
-
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown" style="margin-right: 75px;">
-                        <div class="navbar-collapse collapse">
-
-                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li class="drop-down" data-toggle="tooltip" data-placement="left" title="Добропожаловать ">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                            <span class="fa fa-user"></span>
-                                                <strong>{{ app.user.username }}</strong>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="{{ path('fos_user_security_logout') }}" class="dropdown-item">Выход<span class="mini-dumbbell"></span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            {% else %}
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li>
-                                        <a href="{{ path('fos_user_security_login') }}" class="dropdown"><span class="fa fa-sign-out"></span>Вход</a>
-                                    </li>
-                                    <li>
-                                        <div class="col-1"><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></div>
-                                    </li>
-                                </ul>
-                            {% endif %}
+                                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                                    <ul class="nav navbar-nav navbar-right">
+                                                        <li class="drop-down" data-toggle="tooltip" data-placement="left" title="Добропожаловать ">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <span class="fa fa-user"></span>
+                                                                <strong>{{ app.user.username }}</strong>
+                                                                <span class="caret"></span>
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a href="{{ path('fos_user_security_logout') }}" class="dropdown-item">Выход<span class="mini-dumbbell"></span></a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                {% else %}
+                                                    <ul class="nav navbar-nav navbar-right">
+                                                        <li>
+                                                            <a href="{{ path('fos_user_security_login') }}" class="dropdown"><span class="fa fa-sign-out"></span>Вход</a>
+                                                        </li>
+                                                        <li>
+                                                            <div class="col-1"><a href="{{ path('fos_user_registration_register') }}">Регистрация</a></div>
+                                                        </li>
+                                                    </ul>
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ul>
                         </div>
-                    </li>
-                </ul>
+                    </nav>
+                </div>
             </div>
-        </nav>
+        </header>
+
+        <br>
 
         <div class="main-content">
             {% for msg in app.session.flashBag.get('success') %}
