@@ -25,7 +25,7 @@ easy_admin:
                     - { name: 'delete', icon: 'trash', label: '' }
                 fields:
                     - 'id'
-                    - { property: 'logotype', label: 'Логотип компании', type: 'image', base_path: '/images/', sortable: false }
+                    - { property: 'logotype', label: 'Логотип компании', type: 'image', base_path: '/images/logotype', sortable: false }
                     - { property: 'name', label: 'Название компании' }
                     - { property: 'user', label: 'Имя пользователя' }
                     - { property: 'city', label: 'Город' }
