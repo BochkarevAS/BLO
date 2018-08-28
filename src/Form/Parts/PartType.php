@@ -141,7 +141,6 @@ class PartType extends AbstractType
         $form->add('carcase', EntityType::class, [
                 'class'           => Carcase::class,
                 'label'           => 'Кузов',
-                'mapped'          => false,
                 'required'        => false,
                 'auto_initialize' => false,
                 'choices'         => $model ? $model->getCarcases() : [],

@@ -48,10 +48,8 @@
                                 {{ engine.name }} {% if part.engines|last != engine %} , {% endif %}
                             {% endfor %}
                         {% endif %}
-                        {% if part.carcases %}
-                            {% for carcase in part.carcases %}
-                                {{ carcase.name }} {% if part.carcases|last != carcase %} , {% endif %}
-                            {% endfor %}
+                        {% if part.carcase %}
+                            {{ part.carcase.name }}
                         {% endif %}
                     </div>
                     <div class="col-2">
@@ -74,79 +72,6 @@
                 </div>
                 <br>
             {% endfor %}
-
-            {#<table class="table table-hover">#}
-                {#<thead>#}
-                    {#<tr>#}
-                        {#<th>Фото</th>#}
-                        {#<th>Название / OEM</th>#}
-                        {#<th>Расп. / Двиг. / Куз.</th>#}
-                        {#<th>Продавец / Город</th>#}
-                        {#<th>Цена</th>#}
-                        {#<th>Дата</th>#}
-                    {#</tr>#}
-                {#</thead>#}
-                {#<tbody>#}
-                    {#{% for part in parts %}#}
-                        {#<tr>#}
-                            {#<td>#}
-                                {#<div class="col-2">#}
-                                    {#{% if part.image %}#}
-                                        {#{% set images = part.image|json_decode %}#}
-
-                                        {#{% if images %}#}
-                                            {#<img src="/images/{{ images[0] }}" width="110" height="110">#}
-                                        {#{% else %}#}
-                                            {#<img src="#" width="110" height="110">#}
-                                        {#{% endif %}#}
-                                    {#{% endif %}#}
-                                {#</div>#}
-                            {#</td>#}
-                            {#<td>#}
-                                {#{% if part.name %}#}
-                                    {#{{ part.name }}#}
-                                {#{% endif %}#}
-                                {#{% if part.brand %}#}
-                                    {#{{ part.brand }}#}
-                                {#{% endif %}#}
-                                {#{% if part.model %}#}
-                                    {#{{ part.model }}#}
-                                {#{% endif %}#}
-                                {#{% if part.oems %}#}
-                                    {#{% for oem in part.oems %}#}
-                                        {#{{ oem.name }} {% if part.oems|last != oem %} , {% endif %}#}
-                                    {#{% endfor %}#}
-                                {#{% endif %}#}
-                            {#</td>#}
-                            {#<td>#}
-                                {#{% if part.engines %}#}
-                                    {#{% for engine in part.engines %}#}
-                                        {#{{ engine.name }} {% if part.engines|last != engine %} , {% endif %}#}
-                                    {#{% endfor %}#}
-                                {#{% endif %}#}
-                                {#{% if part.carcases %}#}
-                                    {#{% for carcase in part.carcases %}#}
-                                        {#{{ carcase.name }} {% if part.carcases|last != carcase %} , {% endif %}#}
-                                    {#{% endfor %}#}
-                                {#{% endif %}#}
-                            {#</td>#}
-                            {#<td>#}
-                                {#{% if part.company %}#}
-                                    {#{{ part.company.name }} {% if part.city %} / {{ part.city.name }} {% endif %}#}
-                                {#{% endif %}#}
-                            {#</td>#}
-                            {#<td>#}
-                                {#{% if part.price %}#}
-                                    {#{{ part.price }} руб.#}
-                                {#{% endif %}#}
-                            {#</td>#}
-                            {#<td>#}
-                                {#{{ part.updatedAt|date('d-m-Y H:i') }}#}
-                            {#</td>#}
-                        {#</tr>#}
-                    {#{% endfor %}#}
-                {#</tbody>#}
-            {#</table>#}
 
             <div class="navigator">
                 {{ knp_pagination_render(parts) }}

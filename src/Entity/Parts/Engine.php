@@ -62,6 +62,10 @@ class Engine
 
     public function removeParts(Part $part)
     {
+        if (!$this->parts->contains($part)) {
+            return;
+        }
+
         $this->parts->removeElement($part);
     }
 

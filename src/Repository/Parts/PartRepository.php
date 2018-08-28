@@ -15,12 +15,12 @@ class PartRepository extends EntityRepository
     {
         $brand        = $part->getBrand();
         $model        = $part->getModel();
+        $carcase      = $part->getCarcase();
         $partName     = $part->getName();
         $city         = $part->getCity();
         $company      = $part->getCompany();
         $availability = $part->getAvailability();
         $condition    = $part->getCondition();
-        $carcase      = $searchDTO->getCarcase();
         $engine       = $searchDTO->getEngine();
         $oem          = $searchDTO->getOem();
 
@@ -28,7 +28,7 @@ class PartRepository extends EntityRepository
             ->addSelect('b, m, a, cond, c, o, e')
             ->leftJoin('p.brand', 'b')
             ->leftJoin('p.model', 'm')
-            ->leftJoin('p.carcases', 'c')
+            ->leftJoin('p.carcase', 'c')
             ->leftJoin('p.oems', 'o')
             ->leftJoin('p.engines', 'e')
             ->leftJoin('p.availability', 'a')
@@ -48,7 +48,7 @@ class PartRepository extends EntityRepository
 
         /* Фильтр по кузовам */
         if ($carcase) {
-            $qb->andWhere('c.id = :carcase')->setParameter('carcase', $carcase);
+            $qb->andWhere('p.carcase = :carcase')->setParameter('carcase', $carcase);
         }
 
         /* Фильтр по запчастям */

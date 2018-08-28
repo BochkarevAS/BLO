@@ -44,8 +44,8 @@ class PartsCommand extends ContainerAwareCommand
     {
 
 //        $file = 'parts_test.csv';
-//        $file = 'big_parts.csv';
-        $file = 'parts_1.csv';
+//        $file = 'parts_1.csv';
+        $file = 'big_parts.csv';
 
         $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/uploads/' . DIRECTORY_SEPARATOR . $file;
         $em   = $this->getContainer()->get('doctrine')->getManager();
@@ -129,24 +129,20 @@ class PartsCommand extends ContainerAwareCommand
         }
 
         if ($record['model']) {
-            $model= $em->getRepository(Model::class)->findByName(mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'));
+            $model = $em->getRepository(Model::class)->findByName(mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'));
             $part->setModel($model);
         }
 
-        if ($record['number_mark']) {
-            $model= $em->getRepository(Mark::class)->findByName(mb_convert_encoding($record['number_mark'], 'UTF-8', 'Windows-1251'));
-            $part->setModel($model);
+        if ($record['carcase']) {
+            $carcase = $em->getRepository(Carcase::class)->findByName(mb_convert_encoding($record['carcase'], 'UTF-8', 'Windows-1251'));
+            $part->setCarcase($carcase);
         }
 
-        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['carcase']));
-
-        if ($patterns) {
-            $carcases = $em->getRepository(Carcase::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
-            foreach ($carcases as $carcase) {
-                $part->addCarcase($carcase);
-            }
-        }
-
+//        if ($record['number_mark']) {
+//            $mark = $em->getRepository(Mark::class)->findByName(mb_convert_encoding($record['number_mark'], 'UTF-8', 'Windows-1251'));
+//            $part->setMark($mark);
+//        }
+        
         $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['engine']));
 
         if ($patterns) {

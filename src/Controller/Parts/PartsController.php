@@ -3,6 +3,7 @@
 namespace App\Controller\Parts;
 
 use App\Dto\Parts\SearchDTO;
+use App\Entity\Parts\Engine;
 use App\Entity\Parts\Mark;
 use App\Entity\Parts\Part;
 use App\Form\Parts\PartNewType;
@@ -38,14 +39,9 @@ class PartsController extends AbstractController
         $parts = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entity = $form->getData();
             $search = $request->query->get('part');
 
             $searchDTO = new SearchDTO();
-
-            if (isset($search['carcase'])) {
-                $searchDTO->setCarcase($search['carcase']);
-            }
 
             if (isset($search['oem'])) {
                 $searchDTO->setOem($search['oem']);
@@ -55,7 +51,7 @@ class PartsController extends AbstractController
                 $searchDTO->setEngine($search['engine']);
             }
 
-            $query = $this->getDoctrine()->getRepository(Part::class)->search($entity, $searchDTO);
+            $query = $this->getDoctrine()->getRepository(Part::class)->search($part, $searchDTO);
 
             if ($query) {
                 $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
@@ -100,7 +96,6 @@ class PartsController extends AbstractController
             $mark = $em->getRepository(Mark::class)->findOneBy(['name' => $part->getMark()]);
             $part->setMark($mark);
 
-            $carcases = $part->getCarcases()->toArray();
             $engines = $part->getEngines()->toArray();
             $oems = $part->getOems()->toArray();
 
@@ -109,17 +104,17 @@ class PartsController extends AbstractController
                 $part->getName() .
                 $part->getBrand() .
                 $part->getModel() .
+                $part->getCarcase() .
                 $part->getCity() .
                 $part->getImage() .
                 $part->getAvailability() .
                 $part->getCondition() .
                 $part->getMark() .
-                json_encode($carcases) .
                 json_encode($engines) .
                 json_encode($oems)
             );
 
-//            $part->addCarcase()
+            dump($part);
 
             $part->setHash($hash);
 
@@ -127,7 +122,7 @@ class PartsController extends AbstractController
             $em->flush();
             $this->addFlash("success", "Ваше объявление добавлено");
 
-            return $this->redirectToRoute('part_new');
+//            return $this->redirectToRoute('part_new');
         }
 
         return $this->render('part/new.html.twig', [

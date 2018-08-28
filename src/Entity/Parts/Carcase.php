@@ -4,6 +4,7 @@ namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Parts\CarcaseRepository")
@@ -29,18 +30,13 @@ class Carcase
     private $models;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="carcases")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine")
+     * @JoinTable(name="carcases_engines", schema="part")
      */
     private $engines;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="carcases", fetch="EXTRA_LAZY")
-     */
-    private $parts;
-
     public function __construct()
     {
-        $this->parts   = new ArrayCollection();
         $this->models  = new ArrayCollection();
         $this->engines = new ArrayCollection();
     }
@@ -53,6 +49,32 @@ class Carcase
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return ArrayCollection|Engine[]
+     */
+    public function getEngines()
+    {
+        return $this->engines;
+    }
+
+    public function addEngines(Engine $engine)
+    {
+        if ($this->engines->contains($engine)) {
+            return;
+        }
+
+        $this->engines[] = $engine;
+    }
+
+    public function removeEngines(Engine $engine)
+    {
+        if (!$this->engines->contains($engine)) {
+            return;
+        }
+
+        $this->engines->removeElement($this);
     }
 
     /**
@@ -79,28 +101,6 @@ class Carcase
         }
 
         $this->models->removeElement($this);
-    }
-
-    /**
-     * @return ArrayCollection|Part[]
-     */
-    public function getParts()
-    {
-        return $this->parts;
-    }
-
-    public function addParts(Part $part)
-    {
-        if ($this->parts->contains($part)) {
-            return;
-        }
-
-        $this->parts[] = $part;
-    }
-
-    public function removeParts(Part $part)
-    {
-        $this->parts->removeElement($part);
     }
 
     public function getId()
