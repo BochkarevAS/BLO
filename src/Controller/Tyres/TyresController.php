@@ -54,21 +54,16 @@ class TyresController extends AbstractController
     /**
      * @Route("/new", name="tyre_new", options={"expose"=true}, methods="GET|POST")
      */
-    public function new(Request $request, FileUploader $fileUploader)
+    public function new(Request $request)
     {
         $tyre = new Tyre();
         $user = $this->getUser();
-//        $targetDirectory = $this->getParameter('images_directory');
-
         $form = $this->createForm(TyreNewType::class, $tyre);
         $form->handleRequest($request);
 
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-//            $files = $fileUploader->uploadMultiple($tyre->getImage(), $targetDirectory);
-//            $json = json_encode($files);
-//            $tyre->setImage($json);
             $tyre->setUser($user);
 
             $hash = md5(
@@ -81,8 +76,9 @@ class TyresController extends AbstractController
                 $tyre->getCondition() .
                 $tyre->getQuantity() .
                 $tyre->getDiameter()
-//                $tyre->getImage()
             );
+
+            dump($tyre->getImage());
 
             $tyre->setHash($hash);
 

@@ -26,12 +26,33 @@ class FileUploadListener
     {
         $entity = $args->getEntity();
 
+        if (!$entity instanceof Tyre && !$entity instanceof Part) {
+            return;
+        }
+
         $this->uploadFile($entity);
     }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
+
+        if (!$entity instanceof Tyre && !$entity instanceof Part) {
+            return;
+        }
+
+        $changes = $args->getEntityChangeSet();
+
+        if (array_key_exists("image", $changes)) {
+            $files = $changes["image"][0];
+
+            $files = explode(',', $files);
+
+            foreach ($files as $file) {
+                $file = trim($file, '[]""');
+                $this->deleter->delete($file);
+            }
+        }
 
         $this->uploadFile($entity);
     }
@@ -43,15 +64,10 @@ class FileUploadListener
 
     private function uploadFile($entity)
     {
-        if (!$entity instanceof Tyre && !$entity instanceof Part) {
-            return;
-        }
-
         $item = null;
-        $image = trim($entity->getImage(), '[]');
-        $files = explode(',', $image);
+        $files = $entity->getImage();
 
-        if (is_array($files)) {
+        if (is_array($files) && isset($files[0])) {
             $item = $files[0];
         }
 
@@ -59,11 +75,6 @@ class FileUploadListener
             $files = $this->uploader->uploadMultiple($files, $this->deleter->getFilePath());
             $json = json_encode($files);
             $entity->setImage($json);
-        } else {
-            foreach ($files as $file) {
-                $file = trim($file, '""');
-                $this->deleter->delete($file);
-            }
         }
     }
 }
