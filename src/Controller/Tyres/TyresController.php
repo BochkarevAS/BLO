@@ -58,7 +58,7 @@ class TyresController extends AbstractController
     {
         $tyre = new Tyre();
         $user = $this->getUser();
-        $targetDirectory = $this->getParameter('images_directory');
+//        $targetDirectory = $this->getParameter('images_directory');
 
         $form = $this->createForm(TyreNewType::class, $tyre);
         $form->handleRequest($request);
@@ -66,9 +66,9 @@ class TyresController extends AbstractController
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $files = $fileUploader->uploadMultiple($tyre->getImage(), $targetDirectory);
-            $json = json_encode($files);
-            $tyre->setImage($json);
+//            $files = $fileUploader->uploadMultiple($tyre->getImage(), $targetDirectory);
+//            $json = json_encode($files);
+//            $tyre->setImage($json);
             $tyre->setUser($user);
 
             $hash = md5(
@@ -80,8 +80,8 @@ class TyresController extends AbstractController
                 $tyre->getAvailability() .
                 $tyre->getCondition() .
                 $tyre->getQuantity() .
-                $tyre->getDiameter() .
-                $tyre->getImage()
+                $tyre->getDiameter()
+//                $tyre->getImage()
             );
 
             $tyre->setHash($hash);

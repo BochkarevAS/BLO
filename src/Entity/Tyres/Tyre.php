@@ -27,28 +27,28 @@ class Tyre
     /**
      * Ширина профиля (мм)
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $width;
 
     /**
      * Высота профиля (%)
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $height;
 
     /**
      * Посадочный диаметр (мм)
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $diameter;
 
     /**
      * Количество
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $quantity;
 
@@ -110,7 +110,7 @@ class Tyre
     /**
      * Стоимость шины
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="decimal", nullable=true)
      */
     private $price;
 
@@ -131,7 +131,7 @@ class Tyre
     /**
      * Фотографии
      *
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=true)
      */
     private $image;
 
@@ -146,11 +146,6 @@ class Tyre
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
-
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-    }
 
     public function getWidth()
     {

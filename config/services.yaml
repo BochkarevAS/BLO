@@ -3,7 +3,7 @@
 parameters:
     locale: 'en'
     prices_directory: '%kernel.project_dir%/public/uploads/prices'
-    images_directory: '%kernel.project_dir%/public/images'
+    images_directory: '%kernel.project_dir%/public/images/files'
 
 services:
     # default configuration for services in *this* file
@@ -29,13 +29,11 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    app.form.registration:
-        class: App\Form\Auth\RegistrationFormType
+    App\Form\Auth\RegistrationFormType:
         tags:
             - { name: form.type }
 
-    app.redirect_after_registration_subscriber:
-        class: App\EventListener\RedirectAfterRegistrationSubscriber
+    App\EventListener\RedirectAfterRegistrationSubscriber:
         autowire: true
         tags:
             - { name: kernel.event_subscriber }
@@ -46,11 +44,16 @@ services:
     login_success_handler:
         class: App\Service\LoginSuccessHandler
 
-    app.upload_listener:
-        class: App\EventListener\UploadListener
-        arguments: ["@doctrine.orm.entity_manager"]
+    App\Service\FilesystemFileDeleter:
+        arguments:
+            - "@filesystem"
+            - "%images_directory%"
+
+    App\EventListener\FileUploadListener:
         tags:
-            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
 
 #    App\Controller\Parts\PartsController:
 #        arguments:

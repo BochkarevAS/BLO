@@ -110,7 +110,7 @@ class User extends BaseUser
         $this->file = $file;
 
         if (null !== $file) {
-            $this->updatedAt = new \DateTime();
+//            $this->updatedAt = new \DateTime();
         }
     }
 
