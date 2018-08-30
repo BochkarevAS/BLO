@@ -86,7 +86,7 @@ class FileUploadListener
         if (!is_array($files)) {
             $files = explode(',', $files);
         }
-        
+
         foreach ($files as $file) {
             $file = trim($file, '[]""');
             $this->deleter->delete($file);

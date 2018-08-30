@@ -19,7 +19,7 @@
                         {% set images = tyre.image|json_decode %}
 
                         {% if images %}
-                            <img src="/images/{{ images[0] }}" width="480" height="500">
+                            <img src="/images/files/{{ images[0] }}" width="480" height="500">
                         {% else %}
                             <img src="#" width="480" height="500">
                         {% endif %}
@@ -80,11 +80,13 @@
         <br>
 
         <div class="fix-media-cont">
-            {% for image in images %}
-                <a href="/images/{{ image }}/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
-                    <img id="tyre-img" src="/images/{{ image }}" width="110" height="110">
-                </a>
-            {% endfor %}
+            {% if tyre.image %}
+                {% for image in images %}
+                    <a href="/images/{{ image }}/1500x1000" data-fancybox="preview" data-width="1500" data-height="1000">
+                        <img id="tyre-img" src="/images/files/{{ image }}" width="110" height="110">
+                    </a>
+                {% endfor %}
+            {% endif %}
         </div>
 
         <hr>

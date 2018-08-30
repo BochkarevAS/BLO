@@ -18,7 +18,7 @@
                             {% set images = part.image|json_decode %}
 
                             {% if images %}
-                                <img src="/images/{{ images[0] }}" width="110" height="110">
+                                <img src="/images/files/{{ images[0] }}" width="110" height="110">
                             {% else %}
                                 <img src="#" width="110" height="110">
                             {% endif %}
