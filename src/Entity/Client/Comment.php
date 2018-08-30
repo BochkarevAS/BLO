@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="comment")
+ * @ORM\Table(name="comment", schema="client")
  */
 class Comment
 {
@@ -32,23 +32,36 @@ class Comment
     private $user;
 
     /**
+     * ID родукта (запчасть, шина ...)
+     * @ORM\Column("integer")
+     */
+    private $product;
+
+    /**
      * ID модуля 1 - запчасть, 2 - шины ...
      *
      * @ORM\Column("integer")
      */
-    private $module;
+    private $type;
 
-
-    private $owner;
-
-    public function getModule()
+    public function getType()
     {
-        return $this->module;
+        return $this->type;
     }
 
-    public function setModule($module): void
+    public function setType($type): void
     {
-        $this->module = $module;
+        $this->type = $type;
+    }
+
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    public function setProduct($product): void
+    {
+        $this->product = $product;
     }
 
     public function getMessage()

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Номер, маркировка запчасти
  *
  * @ORM\Entity
- * @ORM\Table(name="mark")
+ * @ORM\Table(name="mark", schema="part")
  */
 class Mark
 {

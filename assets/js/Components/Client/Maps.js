@@ -7,19 +7,25 @@ class Maps {
     constructor() {
         let $target     = $('#company-address-coordinate');
         this.address    = $target.data('address');
-        this.coordinate = $target.data('coordinate').slice(1).slice(0, -1).split(',');
+        this.coordinate = $target.data('coordinate');
     }
 
     initMap() {
         let lat = 0;
         let lng = 0;
+        let companyMap = document.getElementById('company-map');
+
+        if (!companyMap) {
+            return;
+        }
 
         if (this.coordinate) {
+            this.coordinate = this.coordinate.slice(1).slice(0, -1).split(',');
             lat = parseFloat(this.coordinate[0]);
             lng = parseFloat(this.coordinate[1]);
         }
 
-        let map = new google.maps.Map(document.getElementById('company-map'), {
+        let map = new google.maps.Map(companyMap, {
             zoom: 17,
             center: {lat: lat, lng: lng}
         });
