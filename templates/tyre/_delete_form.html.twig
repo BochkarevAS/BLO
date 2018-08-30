@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('tyre_delete', {'id': tyre.id}) }}" onsubmit="return confirm('Вы уверены ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tyre.id) }}">
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Удалить</button>
+    </div>
+</form>

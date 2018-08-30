@@ -78,8 +78,6 @@ class TyresController extends AbstractController
                 $tyre->getDiameter()
             );
 
-            dump($tyre->getImage());
-
             $tyre->setHash($hash);
 
             $em->persist($tyre);
@@ -95,20 +93,14 @@ class TyresController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="tyre_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="tyre_edit", options={"expose"=true}, methods="GET|POST")
      */
-    public function edit(Request $request, Tyre $tyre, FileUploader $fileUploader)
+    public function edit(Request $request, Tyre $tyre)
     {
-        $targetDirectory = $this->getParameter('images_directory');
-
         $form = $this->createForm(TyreNewType::class, $tyre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $files = $fileUploader->uploadMultiple($tyre->getImage(), $targetDirectory);
-            $json = json_encode($files);
-            $tyre->setImage($json);
-
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "Ваше объявление обновлено");
 
@@ -118,8 +110,22 @@ class TyresController extends AbstractController
         }
 
         return $this->render('tyre/edit.html.twig', [
-            '$tyres' => $tyre,
-            'form'   => $form->createView()
+            'tyre' => $tyre,
+            'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="tyre_delete", methods="DELETE")
+     */
+    public function delete(Request $request, Tyre $tyre): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$tyre->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($tyre);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('client_company_index');
     }
 }

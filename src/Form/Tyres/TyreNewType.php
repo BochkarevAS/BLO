@@ -113,10 +113,19 @@ class TyreNewType extends AbstractType
         ;
 
         $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
+            FormEvents::POST_SET_DATA,
             function (FormEvent $event) {
-                $form = $event->getForm();
-                $this->formModel($form, null);
+                $data = $event->getData();
+
+                /* @var Brand $brand */
+                $brand = $data->getBrand();
+                $form  = $event->getForm();
+
+                if ($brand) {
+                    $this->formModel($form, $brand);
+                } else {
+                    $this->formModel($form, null);
+                }
             }
         );
 

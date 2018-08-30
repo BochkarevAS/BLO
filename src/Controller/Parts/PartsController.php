@@ -77,11 +77,10 @@ class PartsController extends AbstractController
     /**
      * @Route("/new", name="part_new", options={"expose"=true}, methods="GET|POST")
      */
-    public function new(Request $request, FileUploader $fileUploader)
+    public function new(Request $request)
     {
         $part = new Part();
         $user = $this->getUser();
-        $targetDirectory = $this->getParameter('images_directory');
 
         $form = $this->createForm(PartNewType::class, $part);
         $form->handleRequest($request);
@@ -89,11 +88,8 @@ class PartsController extends AbstractController
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $files = $fileUploader->uploadMultiple($part->getImage(), $targetDirectory);
-            $json = json_encode($files);
-            $part->setImage($json);
-            $part->setUser($user);
             $mark = $em->getRepository(Mark::class)->findOneBy(['name' => $part->getMark()]);
+            $part->setUser($user);
             $part->setMark($mark);
 
             $engines = $part->getEngines()->toArray();
@@ -113,8 +109,6 @@ class PartsController extends AbstractController
                 json_encode($engines) .
                 json_encode($oems)
             );
-
-            dump($part);
 
             $part->setHash($hash);
 

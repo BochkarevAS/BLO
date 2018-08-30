@@ -13,7 +13,7 @@ class FilesystemFileDeleter implements FileDeleter
     public function __construct(Filesystem $filesystem, string $filePath)
     {
         $this->filesystem = $filesystem;
-        $this->filePath = $filePath;
+        $this->filePath   = $filePath;
     }
 
     public function delete($pathToFile)

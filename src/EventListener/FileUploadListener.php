@@ -45,13 +45,7 @@ class FileUploadListener
 
         if (array_key_exists("image", $changes)) {
             $files = $changes["image"][0];
-
-            $files = explode(',', $files);
-
-            foreach ($files as $file) {
-                $file = trim($file, '[]""');
-                $this->deleter->delete($file);
-            }
+            $this->removeFile($files);
         }
 
         $this->uploadFile($entity);
@@ -60,6 +54,15 @@ class FileUploadListener
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
+        if (!$entity instanceof Tyre && !$entity instanceof Part) {
+            return;
+        }
+
+        $files = $entity->getImage();
+        $this->removeFile($files);
+
+        $entity->setImage(null);
     }
 
     private function uploadFile($entity)
@@ -75,6 +78,18 @@ class FileUploadListener
             $files = $this->uploader->uploadMultiple($files, $this->deleter->getFilePath());
             $json = json_encode($files);
             $entity->setImage($json);
+        }
+    }
+
+    private function removeFile($files)
+    {
+        if (!is_array($files)) {
+            $files = explode(',', $files);
+        }
+        
+        foreach ($files as $file) {
+            $file = trim($file, '[]""');
+            $this->deleter->delete($file);
         }
     }
 }
