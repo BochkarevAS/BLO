@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('build/js/appFileupload.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
 
     <div class="container">
@@ -16,18 +22,12 @@
 
         <form id="fileupload" method="post" enctype="multipart/form-data">
             <div id="drop">
-                Drop Here
-
-                <a>Browse</a>
+                <a>Загрузить</a>
                 <input type="file" name="upl" multiple />
             </div>
 
-            <ul>
-                <!-- The file uploads will be shown here -->
-            </ul>
-
+            <ul></ul>
         </form>
-
     </div>
 
 {% endblock %}

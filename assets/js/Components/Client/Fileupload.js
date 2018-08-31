@@ -2,11 +2,11 @@
 
 import $ from 'jquery';
 import '../../../css/client/fileupload.css'
-import "blueimp-file-upload/js/vendor/jquery.ui.widget.js"
-import "blueimp-file-upload/js/jquery.iframe-transport.js"
-import "blueimp-file-upload/js/jquery.fileupload.js"
-import "blueimp-file-upload/js/jquery.fileupload-image.js"
-import "jquery-knob"
+import 'blueimp-file-upload/js/vendor/jquery.ui.widget.js'
+import 'blueimp-file-upload/js/jquery.iframe-transport.js'
+import 'blueimp-file-upload/js/jquery.fileupload.js'
+import 'blueimp-file-upload/js/jquery.fileupload-image.js'
+import 'jquery-knob'
 
 class Fileupload {
 
@@ -44,14 +44,17 @@ class Fileupload {
             },
             add(e, data) {
 
-                let tpl = $('' +
-                    '<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
-                    ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>' +
-                '');
+                let template = `
+                    <li class='working'>
+                        <input type='text' value='0' data-width='48' data-height='48' data-fgColor='#0788a5' data-readOnly='1' data-bgColor='#3e4043'>
+                     <p></p><span></span>
+                    </li>`;
 
-                // Добавить имя файла и размер файла
+                let tpl = $(template);
                 let file = data.files[0];
                 let size = obj.formatFileSize(file.size);
+
+                // Добавить имя файла и размер файла
                 tpl.find('p').text(file.name).append('<i>' + size + '</i>');
 
                 // Добавьте HTML в элемент UL
@@ -78,8 +81,7 @@ class Fileupload {
             progress(e, data) {
                 let progress = parseInt(data.loaded / data.total * 100, 10);
 
-                // Обновление скрытого поля ввода и запуск изменения
-                // так что плагин jQuery knob знает, что обновить
+                // Обновление скрытого поля ввода и запуск изменения так что плагин jQuery knob знает, что обновить
                 data.context.find('input').val(progress).change();
 
                 if (progress === 100){
