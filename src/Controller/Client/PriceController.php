@@ -27,13 +27,13 @@ class PriceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $files = $price->getPath();
+            $files = $price->getFile();
             $paths = [];
 
             foreach ($files as $file) {
                 $targetDirectory = $this->getParameter('prices_directory');
                 $fileName = $targetDirectory.'/'.$fileUploader->upload($file, $targetDirectory);
-                $price->setPath($fileName);
+                $price->setFile($fileName);
                 $price->setCompany($company);
                 $paths[] = $fileName;
 
@@ -42,7 +42,7 @@ class PriceController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute('client_price_load', ['id' => $company->getId()]);
+            return $this->redirectToRoute('client_price_index', ['id' => $company->getId()]);
         }
 
         return $this->render('client/price/index.html.twig', [

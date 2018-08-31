@@ -47,7 +47,7 @@ class Fileupload {
                 let template = `
                     <li class='working'>
                         <input type='text' value='0' data-width='48' data-height='48' data-fgColor='#0788a5' data-readOnly='1' data-bgColor='#3e4043'>
-                     <p></p><span></span>
+                        <p></p><span>Удалить</span>
                     </li>`;
 
                 let tpl = $(template);
@@ -72,7 +72,6 @@ class Fileupload {
                     tpl.fadeOut(function() {
                         tpl.remove();
                     });
-
                 });
 
                 // Автоматически загружать файл после его добавления в очередь

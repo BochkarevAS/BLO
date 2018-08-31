@@ -19,11 +19,17 @@ class Price
     private $id;
 
     /**
-     * Путь куда был загружен прайс
      *
      * @ORM\Column(type="string")
      */
-    private $path;
+    private $file;
+
+    /**
+     * ID пользователя
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
+     */
+    private $user;
 
     /**
      * ID Компании которой пренадлежит прайс
@@ -44,14 +50,24 @@ class Price
      */
     private $updatedAt;
 
-    public function getPath()
+    public function getFile()
     {
-        return $this->path;
+        return $this->file;
     }
 
-    public function setPath($path): void
+    public function setFile($file): void
     {
-        $this->path = $path;
+        $this->file = $file;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user): void
+    {
+        $this->user = $user;
     }
 
     public function getCompany()

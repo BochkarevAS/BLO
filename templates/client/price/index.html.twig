@@ -3,7 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link href="{{ asset('build/js/appFileupload.css') }}" rel="stylesheet" />
+    {#<link href="{{ asset('build/js/appFileupload.css') }}" rel="stylesheet" />#}
 {% endblock %}
 
 {% block body %}
@@ -20,8 +20,10 @@
 
         {#{{ form_end(form) }}#}
 
-        <form id="fileupload" method="post" enctype="multipart/form-data">
+        <form id="fileupload" method="POST" action="{{ oneup_uploader_endpoint('gallery') }}" enctype="multipart/form-data">
             <div id="drop">
+                Drop Here
+
                 <a>Загрузить</a>
                 <input type="file" name="upl" multiple />
             </div>
