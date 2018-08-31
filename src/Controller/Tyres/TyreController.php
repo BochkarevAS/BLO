@@ -84,22 +84,7 @@ class TyreController extends AbstractController
 
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
             $tyre->setUser($user);
-
-            $hash = md5(
-                $this->getUser() .
-                $tyre->getBrand() .
-                $tyre->getModel() .
-                $tyre->getCity() .
-                $tyre->getWidth() .
-                $tyre->getAvailability() .
-                $tyre->getCondition() .
-                $tyre->getQuantity() .
-                $tyre->getDiameter()
-            );
-
-            $tyre->setHash($hash);
 
             $em->persist($tyre);
             $em->flush();

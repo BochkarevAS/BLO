@@ -119,9 +119,9 @@ class Part
     /**
      * Номер, маркировка запчасти
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Mark")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Marking")
      */
-    private $mark;
+    private $marking;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parts\Comment", mappedBy="part", fetch="EXTRA_LAZY")
@@ -327,14 +327,14 @@ class Part
         $this->condition = $condition;
     }
 
-    public function getMark()
+    public function getMarking()
     {
-        return $this->mark;
+        return $this->marking;
     }
 
-    public function setMark($mark): void
+    public function setMarking($marking): void
     {
-        $this->mark = $mark;
+        $this->marking = $marking;
     }
 
     public function getComments()

@@ -126,7 +126,7 @@ class LoadFixtures extends Fixture
             'Новосебирск', 'Пенза', 'Ростов-на-Дону', 'Якутск', 'Уссурийск'
         ];
         $models = [
-            'Camry', 'Corolla', 'Land Cruiser', 'Mark II', 'Prius', 'RAV4', 'Vitz', 'Allex', 'Allion', 'Alphard',
+            'Camry', 'Corolla', 'Land Cruiser', 'Marking II', 'Prius', 'RAV4', 'Vitz', 'Allex', 'Allion', 'Alphard',
             'Altis', 'Aqua', 'Aristo', 'Aurion', 'Auris', 'Avalon', 'Avanza', 'Avensis', 'Avensis Verso', 'Avensis Wagon',
             'Aygo', 'bB', 'Belta', 'Blade', 'Blizzard', 'Brevis', 'C-HR', 'Caldina', 'Caldina GT', 'Caldina Van', 'Cami',
             'Camry', 'Camry Gracia', 'Camry Gracia Wagon', 'Camry Prominent', 'Carib', 'Carib Rosso', 'Carina', 'Carina E',

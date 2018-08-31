@@ -6,7 +6,7 @@ use App\Entity\Client\Company;
 use App\Entity\Parts\Brand;
 use App\Entity\Parts\Carcase;
 use App\Entity\Parts\Engine;
-use App\Entity\Parts\Mark;
+use App\Entity\Parts\Marking;
 use App\Entity\Parts\Model;
 use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
@@ -139,7 +139,7 @@ class PartsCommand extends ContainerAwareCommand
         }
 
 //        if ($record['number_mark']) {
-//            $mark = $em->getRepository(Mark::class)->findByName(mb_convert_encoding($record['number_mark'], 'UTF-8', 'Windows-1251'));
+//            $mark = $em->getRepository(Marking::class)->findByName(mb_convert_encoding($record['number_mark'], 'UTF-8', 'Windows-1251'));
 //            $part->setMark($mark);
 //        }
 

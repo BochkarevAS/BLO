@@ -103,7 +103,7 @@ class Tyre
     /**
      * Хэш уникальный индефекатор шины
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $hash;
 

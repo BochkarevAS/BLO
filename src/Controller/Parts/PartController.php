@@ -4,7 +4,7 @@ namespace App\Controller\Parts;
 
 use App\Dto\Parts\SearchDTO;
 use App\Entity\Parts\Comment;
-use App\Entity\Parts\Mark;
+use App\Entity\Parts\Marking;
 use App\Entity\Parts\Part;
 use App\Form\Parts\CommentType;
 use App\Form\Parts\PartNewType;
@@ -108,29 +108,9 @@ class PartController extends AbstractController
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $mark = $em->getRepository(Mark::class)->findOneBy(['name' => $part->getMark()]);
+            $mark = $em->getRepository(Marking::class)->findOneBy(['name' => $part->getMarking()]);
             $part->setUser($user);
-            $part->setMark($mark);
-
-            $engines = $part->getEngines()->toArray();
-            $oems = $part->getOems()->toArray();
-
-            $hash = md5(
-                $this->getUser() .
-                $part->getName() .
-                $part->getBrand() .
-                $part->getModel() .
-                $part->getCarcase() .
-                $part->getCity() .
-                $part->getImage() .
-                $part->getAvailability() .
-                $part->getCondition() .
-                $part->getMark() .
-                json_encode($engines) .
-                json_encode($oems)
-            );
-
-            $part->setHash($hash);
+            $part->setMarking($mark);
 
             $em->persist($part);
             $em->flush();

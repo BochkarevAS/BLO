@@ -2,7 +2,9 @@
 
 namespace App\Form\Drives;
 
+use App\Entity\Client\Availability;
 use App\Entity\Client\Company;
+use App\Entity\Client\Condition;
 use App\Entity\Drives\Brand;
 use App\Entity\Drives\Drive;
 use App\Entity\Drives\Model;
@@ -58,6 +60,24 @@ class DriveType extends AbstractType
                 'label'    => 'Ширина',
                 'choices'  => $widths,
                 'required' => false
+            ])
+            ->add('availability',EntityType::class, [
+                'class'        => Availability::class,
+                'choice_label' => 'name',
+                'label'        => 'Наличие',
+                'placeholder'  => 'Все',
+                'multiple'     => false,
+                'required'     => false,
+                'expanded'     => true,
+            ])
+            ->add('condition', EntityType::class, [
+                'class'        => Condition::class,
+                'choice_label' => 'name',
+                'label'        => 'Состояние',
+                'placeholder'  => 'Все',
+                'multiple'     => false,
+                'required'     => false,
+                'expanded'     => true
             ])
             ->add('company', EntityType::class, [
                 'class'         => Company::class,

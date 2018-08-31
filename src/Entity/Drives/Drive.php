@@ -57,6 +57,20 @@ class Drive
     private $width;
 
     /**
+     * Состояние
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Availability")
+     */
+    private $availability;
+
+    /**
+     * Наличие
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Condition")
+     */
+    private $condition;
+
+    /**
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
@@ -141,6 +155,26 @@ class Drive
     public function setWidth($width)
     {
         $this->width = $width;
+    }
+
+    public function getAvailability()
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability($availability): void
+    {
+        $this->availability = $availability;
+    }
+
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    public function setCondition($condition): void
+    {
+        $this->condition = $condition;
     }
 
     public function getCity()

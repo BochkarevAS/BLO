@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="mark", schema="part")
  */
-class Mark
+class Marking
 {
     /**
      * @ORM\Id
