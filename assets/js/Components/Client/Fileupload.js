@@ -2,10 +2,11 @@
 
 import $ from 'jquery';
 import '../../../css/client/fileupload.css'
-// import 'blueimp-file-upload/js/jquery.fileupload'
-// import 'jquery-ui/ui/widget'
-import 'blueimp-file-upload/js/jquery.fileupload'
-import 'blueimp-file-upload/js/jquery.iframe-transport'
+import "blueimp-file-upload/js/vendor/jquery.ui.widget.js"
+import "blueimp-file-upload/js/jquery.iframe-transport.js"
+import "blueimp-file-upload/js/jquery.fileupload.js"
+import "blueimp-file-upload/js/jquery.fileupload-image.js"
+import "jquery-knob"
 
 class Fileupload {
 
@@ -16,22 +17,42 @@ class Fileupload {
             $(this).parent().find('input').click();
         });
 
-        $('#fileupload').fileupload({
+        const obj  = {
 
             // Этот элемент будет принимать загрузку перетаскивания файлов
             dropZone: $('#drop'),
 
-            // Эта функция вызывается, когда файл добавляется в очередь,
-            // либо с помощью кнопки обзора, либо с помощью перетаскивания:
-            add: function (e, data) {
+            // Функция помощника, которая форматирует размеры файлов
+            formatFileSize(bytes) {
+                const big     = 1000000000;
+                const average = 1000000;
+                const little  = 1000;
 
-                let tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
-                    ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
+                if (typeof bytes !== 'number') {
+                    return '';
+                }
+
+                if (bytes >= big) {
+                    return (bytes / big).toFixed(2) + ' GB';
+                }
+
+                if (bytes >= average) {
+                    return (bytes / average).toFixed(2) + ' MB';
+                }
+
+                return (bytes / little).toFixed(2) + ' KB';
+            },
+            add(e, data) {
+
+                let tpl = $('' +
+                    '<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
+                    ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>' +
+                '');
 
                 // Добавить имя файла и размер файла
-                let size = formatFileSize(data.files[0].size);
-                tpl.find('p').text(data.files[0].name)
-                    .append('<i>' + size + '</i>');
+                let file = data.files[0];
+                let size = obj.formatFileSize(file.size);
+                tpl.find('p').text(file.name).append('<i>' + size + '</i>');
 
                 // Добавьте HTML в элемент UL
                 data.context = tpl.appendTo(ul);
@@ -54,8 +75,7 @@ class Fileupload {
                 // Автоматически загружать файл после его добавления в очередь
                 let jqXHR = data.submit();
             },
-
-            progress: function (e, data) {
+            progress(e, data) {
                 let progress = parseInt(data.loaded / data.total * 100, 10);
 
                 // Обновление скрытого поля ввода и запуск изменения
@@ -66,28 +86,12 @@ class Fileupload {
                     data.context.removeClass('working');
                 }
             },
-
-            fail: function (e, data) {
+            fail(e, data) {
                 data.context.addClass('error');
             }
-        });
-    }
+        };
 
-    // Функция помощника, которая форматирует размеры файлов
-    static formatFileSize(bytes) {
-        if (typeof bytes !== 'number') {
-            return '';
-        }
-
-        if (bytes >= 1000000000) {
-            return (bytes / 1000000000).toFixed(2) + ' GB';
-        }
-
-        if (bytes >= 1000000) {
-            return (bytes / 1000000).toFixed(2) + ' MB';
-        }
-
-        return (bytes / 1000).toFixed(2) + ' KB';
+        $('#fileupload').fileupload(obj);
     }
 }
 

@@ -17,9 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class PriceController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="client_price_load")
+     * @Route("/{id}", name="client_price_index")
      */
-    public function load(Request $request, Company $company, FileUploader $fileUploader): Response
+    public function index(Request $request, Company $company, FileUploader $fileUploader): Response
     {
         $price = new Price();
         $form = $this->createForm(PriceType::class, $price);
@@ -45,7 +45,7 @@ class PriceController extends AbstractController
             return $this->redirectToRoute('client_price_load', ['id' => $company->getId()]);
         }
 
-        return $this->render('client/price/load.html.twig', [
+        return $this->render('client/price/index.html.twig', [
             'company' => $company,
             'form'    => $form->createView()
         ]);

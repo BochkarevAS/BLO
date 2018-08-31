@@ -1,6 +1,5 @@
 let Encore = require('@symfony/webpack-encore');
-
-let path = require('path');
+let path   = require('path');
 
 Encore
     // the project directory where compiled assets will be stored
@@ -32,8 +31,16 @@ Encore
 
 let config = Encore.getWebpackConfig();
 
-config.resolve.alias = {
-    'jquery-ui/ui/widget': path.resolve(__dirname, 'node_modules/jquery.ui.widget/jquery.ui.widget.js')
+config.resolve = {
+    // extensions: ['*', 'js', 'ts'],
+    alias: {
+        'load-image': 'blueimp-load-image/js/load-image.js',
+        'load-image-meta': 'blueimp-load-image/js/load-image-meta.js',
+        'load-image-exif': 'blueimp-load-image/js/load-image-exif.js',
+        'load-image-scale': 'blueimp-load-image/js/load-image-scale.js',
+        'canvas-to-blob': 'blueimp-canvas-to-blob/js/canvas-to-blob.js',
+        'jquery-ui/ui/widget': 'blueimp-file-upload/js/vendor/jquery.ui.widget.js'
+    }
 };
 
 module.exports = config;

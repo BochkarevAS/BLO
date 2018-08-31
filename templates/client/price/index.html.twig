@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        {#{{ form_start(form, {'action': path('client_price_index', {'id': company.id}), 'method': 'POST'}) }}#}
+
+            {#{{ form_row(form.path) }}#}
+
+            {#<div>#}
+                {#<button type="submit">Загрузить прайс</button>#}
+            {#</div>#}
+
+        {#{{ form_end(form) }}#}
+
+        <form id="fileupload" method="post" enctype="multipart/form-data">
+            <div id="drop">
+                Drop Here
+
+                <a>Browse</a>
+                <input type="file" name="upl" multiple />
+            </div>
+
+            <ul>
+                <!-- The file uploads will be shown here -->
+            </ul>
+
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('build/js/appFileupload.js') }}"></script>
+{% endblock %}
