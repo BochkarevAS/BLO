@@ -127,6 +127,21 @@
 
         {% endif %}
 
+        {% if tyre.comments %}
+            {% for comment in tyre.comments %}
+                <div class="row">
+                    {% if comment.user.avatar %}
+                        <div class="col-2"><img src="/images/avatar/{{ comment.user.avatar }}" width="80" height="80"></div>
+                        <div class="col-2">{{ comment.user.firstname }}</div>
+                    {% endif %}
+                    <div class="col-2">{{ comment }}</div>
+                    <div class="col-2">{{ comment.createdAt|date('d-m-Y H:i') }}</div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {{ include('/client/comment/_form.html.twig') }}
+
     </div>
 
 {% endblock %}

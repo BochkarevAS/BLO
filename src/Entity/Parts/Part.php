@@ -124,6 +124,11 @@ class Part
     private $mark;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Comment", mappedBy="part", fetch="EXTRA_LAZY")
+     */
+    private $comments;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -137,8 +142,9 @@ class Part
 
     public function __construct()
     {
-        $this->engines = new ArrayCollection();
-        $this->oems    = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->engines  = new ArrayCollection();
+        $this->oems     = new ArrayCollection();
     }
 
     public function getSlug()
@@ -329,6 +335,16 @@ class Part
     public function setMark($mark): void
     {
         $this->mark = $mark;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments): void
+    {
+        $this->comments[] = $comments;
     }
 
     public function getId()

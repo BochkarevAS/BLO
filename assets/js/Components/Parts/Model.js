@@ -29,6 +29,7 @@ class Model {
 
         $.ajax({
             url: Routing.generate('part_index'),
+            method: 'POST',
             data: data
         }).then((data) => {
             let $input = $(data).find(target);

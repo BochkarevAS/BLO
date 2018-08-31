@@ -5,7 +5,7 @@ namespace App\Repository\Tyres;
 use App\Entity\Tyres\Tyre;
 use Doctrine\ORM\EntityRepository;
 
-class TyresRepository extends EntityRepository
+class TyreRepository extends EntityRepository
 {
     public function search(Tyre $tyre)
     {

@@ -33,6 +33,7 @@ class Tyre {
 
         $.ajax({
             url: Routing.generate('tyre_index'),
+            method: 'POST',
             data: data
         }).then((data) => {
             let $input = $(data).find(target);

@@ -2,11 +2,12 @@
 
 namespace App\Entity\Drives;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="brand", schema="drives")
+ * @ORM\Table(name="brand", schema="drive")
  */
 class Brand
 {
@@ -23,14 +24,14 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Drives\Drive", mappedBy="brands")
+     * @ORM\OneToMany(targetEntity="App\Entity\Drives\Model", mappedBy="brand")
      */
-    private $drive;
+    private $models;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Drives\Model", mappedBy="brands")
-     */
-    private $model;
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
 
     public function getName()
     {
@@ -42,23 +43,18 @@ class Brand
         $this->name = $name;
     }
 
-    public function getDrive()
+    public function getModels()
     {
-        return $this->drive;
+        return $this->models;
     }
 
-    public function setDrive($drive): void
+    public function setModels($models): void
     {
-        $this->drive = $drive;
+        $this->models[] = $models;
     }
 
-    public function getModel()
+    public function getId()
     {
-        return $this->model;
-    }
-
-    public function setModel($model): void
-    {
-        $this->model = $model;
+        return $this->id;
     }
 }

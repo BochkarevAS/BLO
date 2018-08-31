@@ -2,10 +2,11 @@
 
 namespace App\Controller\Tyres;
 
+use App\Entity\Tyres\Comment;
 use App\Entity\Tyres\Tyre;
+use App\Form\Tyres\CommentType;
 use App\Form\Tyres\TyreNewType;
 use App\Form\Tyres\TyreType;
-use App\Service\FileUploader;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/tyre")
  */
-class TyresController extends AbstractController
+class TyreController extends AbstractController
 {
     /**
-     * @Route("/", name="tyre_index", options={"expose"=true})
+     * @Route("/", name="tyre_index", methods="GET|POST", options={"expose"=true})
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
@@ -28,10 +29,10 @@ class TyresController extends AbstractController
         $tyres = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $query  = $this->getDoctrine()->getRepository(Tyre::class)->search($tyre);
+            $tyres = $this->getDoctrine()->getRepository(Tyre::class)->search($tyre);
 
-            if ($query) {
-                $tyres = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
+            if (null !== $tyres) {
+                $tyres = $paginator->paginate($tyres, $request->query->getInt('page', 1), 20);
             }
         }
 
@@ -42,12 +43,32 @@ class TyresController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="tyre_show", methods="GET")
+     * @Route("/{id}/show", name="tyre_show", methods="GET|POST")
      */
-    public function show(Tyre $tyre): Response
+    public function show(Request $request, Tyre $tyre): Response
     {
+        $comment = new Comment();
+        $user = $this->getUser();
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $comment->setUser($user);
+            $comment->setTyre($tyre);
+            $comment->setApproved(true);
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('tyre_show', [
+                'id' => $tyre->getId()
+            ]);
+        }
+
         return $this->render('tyre/show.html.twig', [
-            'tyre' => $tyre
+            'tyre' => $tyre,
+            'form' => $form->createView()
         ]);
     }
 

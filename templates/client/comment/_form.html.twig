@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        <div class="form-row align-items-center">
+            <div class="col-4">
+                {{ form_row(form.comment, {'id': 'comment-message', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+    </div>
+
+{{ form_end(form) }}

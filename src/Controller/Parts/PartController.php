@@ -3,12 +3,12 @@
 namespace App\Controller\Parts;
 
 use App\Dto\Parts\SearchDTO;
-use App\Entity\Parts\Engine;
+use App\Entity\Parts\Comment;
 use App\Entity\Parts\Mark;
 use App\Entity\Parts\Part;
+use App\Form\Parts\CommentType;
 use App\Form\Parts\PartNewType;
 use App\Form\Parts\PartType;
-use App\Service\FileUploader;
 use FOS\ElasticaBundle\Finder\PaginatedFinderInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,17 +19,17 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/part")
  */
-class PartsController extends AbstractController
+class PartController extends AbstractController
 {
 //    private $finder;
 //
 //    public function __construct(PaginatedFinderInterface $finder)
 //    {
-//        $this->finder = $finder;
 //    }
+//        $this->finder = $finder;
 
     /**
-     * @Route("/", name="part_index", options={"expose"=true})
+     * @Route("/", name="part_index", methods="GET|POST", options={"expose"=true})
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
@@ -51,10 +51,10 @@ class PartsController extends AbstractController
                 $searchDTO->setEngine($search['engine']);
             }
 
-            $query = $this->getDoctrine()->getRepository(Part::class)->search($part, $searchDTO);
+            $parts = $this->getDoctrine()->getRepository(Part::class)->search($part, $searchDTO);
 
-            if ($query) {
-                $parts = $paginator->paginate($query, $request->query->getInt('page', 1), 20);
+            if (null !== $parts) {
+                $parts = $paginator->paginate($parts, $request->query->getInt('page', 1), 20);
             }
         }
 
@@ -65,12 +65,32 @@ class PartsController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="part_show", methods="GET")
+     * @Route("/{id}/show", name="part_show", methods="GET|POST")
      */
-    public function show(Part $part): Response
+    public function show(Request $request, Part $part): Response
     {
+        $comment = new Comment();
+        $user = $this->getUser();
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $comment->setUser($user);
+            $comment->setPart($part);
+            $comment->setApproved(true);
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('part_show', [
+                'id' => $part->getId()
+            ]);
+        }
+
         return $this->render('part/show.html.twig', [
-            'part' => $part
+            'part' => $part,
+            'form' => $form->createView()
         ]);
     }
 

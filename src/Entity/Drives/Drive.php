@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="drive", schema="drives")
+ * @ORM\Table(name="drive", schema="drive")
  */
 class Drive
 {
@@ -17,6 +17,16 @@ class Drive
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Brand")
+     */
+    private $brand;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Brand")
+     */
+    private $model;
 
     /**
      * Диамитер
@@ -47,15 +57,19 @@ class Drive
     private $width;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Brand", inversedBy="drive")
+     * Город
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
      */
-    private $brands;
+    private $city;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Brand", inversedBy="drive")
+     * Компания продавец
+     * ID может отсутствовать это значит, что объявление подано частным лицом
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client\Company")
      */
-    private $models;
-
+    private $company;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -68,6 +82,26 @@ class Drive
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
+
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function setBrand($brand): void
+    {
+        $this->brand = $brand;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function setModel($model): void
+    {
+        $this->model = $model;
+    }
 
     public function getDiameter()
     {
@@ -109,24 +143,29 @@ class Drive
         $this->width = $width;
     }
 
-    public function getBrands()
+    public function getCity()
     {
-        return $this->brands;
+        return $this->city;
     }
 
-    public function setBrands($brands): void
+    public function setCity($city): void
     {
-        $this->brands = $brands;
+        $this->city = $city;
     }
 
-    public function getModels()
+    public function getCompany()
     {
-        return $this->models;
+        return $this->company;
     }
 
-    public function setModels($models): void
+    public function setCompany($company): void
     {
-        $this->models = $models;
+        $this->company = $company;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getCreatedAt()

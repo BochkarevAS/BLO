@@ -2,11 +2,12 @@
 
 namespace App\Entity\Tyres;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Tyres\TyresRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Tyres\TyreRepository")
  * @ORM\Table(name="tyre", schema="tyre", indexes={
  *     @ORM\Index(name="width_idx", columns={"width"}),
  *     @ORM\Index(name="height_idx", columns={"height"}),
@@ -135,6 +136,11 @@ class Tyre
     private $image;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tyres\Comment", mappedBy="tyre", fetch="EXTRA_LAZY")
+     */
+    private $comments;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -145,6 +151,11 @@ class Tyre
      * @ORM\Column(type="datetime", name="updated_at")
      */
     private $updatedAt;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getWidth()
     {
@@ -304,6 +315,16 @@ class Tyre
     public function setImage($image): void
     {
         $this->image = $image;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments): void
+    {
+        $this->comments[] = $comments;
     }
 
     public function getId()

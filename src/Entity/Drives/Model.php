@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="model", schema="drives")
+ * @ORM\Table(name="model", schema="drive")
  */
 class Model
 {
@@ -23,14 +23,9 @@ class Model
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Drives\Drive", mappedBy="models")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Brand", inversedBy="models")
      */
-    private $drive;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Brand", inversedBy="model")
-     */
-    private $brands;
+    private $brand;
 
     public function getName()
     {
@@ -42,23 +37,18 @@ class Model
         $this->name = $name;
     }
 
-    public function getDrive()
+    public function getBrand()
     {
-        return $this->drive;
+        return $this->brand;
     }
 
-    public function setDrive($drive): void
+    public function setBrand($brand): void
     {
-        $this->drive = $drive;
+        $this->brand = $brand;
     }
 
-    public function getBrands()
+    public function getId()
     {
-        return $this->brands;
-    }
-
-    public function setBrands($brands): void
-    {
-        $this->brands = $brands;
+        return $this->id;
     }
 }
