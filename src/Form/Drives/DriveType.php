@@ -21,17 +21,9 @@ class DriveType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        for ($i = 4; $i <= 55; $i = $i + 0.5) {
-            $diameters[(string) $i] = $i;
-        }
-
-        for ($i = -20; $i <= 125; $i++) {
-            $departures[(string) $i] = $i;
-        }
-
-        for ($i = 4; $i <= 15; $i = $i + 0.5) {
-            $widths[(string) $i] = $i;
-        }
+        $diameters  = array_combine(range(4, 55, 0.5), range(4, 55, 0.5));
+        $departures = array_combine(range(-20, 125, 1), range(-20, 125, 1));
+        $widths     = array_combine(range(4, 15, 0.5), range(4, 15, 0.5));
 
         $builder
             ->add('brand', EntityType::class, [
