@@ -78,6 +78,20 @@ class Drive
     private $city;
 
     /**
+     * Стоимость диска
+     *
+     * @@ORM\Column(type="decimal", nullable=true)
+     */
+    private $price;
+
+    /**
+     * Фотографии
+     *
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $image;
+
+    /**
      * ID пользователя
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
@@ -182,6 +196,26 @@ class Drive
     public function setCondition($condition): void
     {
         $this->condition = $condition;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($price): void
+    {
+        $this->price = $price;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): void
+    {
+        $this->image = $image;
     }
 
     public function getCity()

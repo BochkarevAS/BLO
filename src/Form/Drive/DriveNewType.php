@@ -15,6 +15,8 @@ use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -92,6 +94,18 @@ class DriveNewType extends AbstractType
                 'query_builder' => function (CityRepository $repository) {
                     return $repository->orderBy();
                 },
+            ])
+            ->add('price', TextType::class, [
+                'label' => 'Цена'
+            ])
+            ->add('image', FileType::class, [
+                'label'      => 'Фото',
+                'required'   => false,
+                'data_class' => null,
+                'multiple'   => true,
+                'attr'       => [
+                    'accept' => 'image/*'
+                ]
             ])
         ;
 

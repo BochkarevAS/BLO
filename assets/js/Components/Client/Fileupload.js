@@ -12,6 +12,9 @@ class Fileupload {
 
     constructor() {
         let ul = $('#fileupload ul');
+        let $target = $('#attr-fileupload');
+        let company = $target.data('company');
+        let user = $target.data('user');
 
         $('#drop a').click(function() {
             $(this).parent().find('input').click();
@@ -21,6 +24,8 @@ class Fileupload {
 
             // Этот элемент будет принимать загрузку перетаскивания файлов
             dropZone: $('#drop'),
+
+            formData: {company: company, user: user},
 
             // Функция помощника, которая форматирует размеры файлов
             formatFileSize(bytes) {

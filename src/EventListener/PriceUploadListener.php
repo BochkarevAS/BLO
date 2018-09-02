@@ -2,6 +2,8 @@
 
 namespace App\EventListener;
 
+use App\Entity\Auth\User;
+use App\Entity\Client\Company;
 use App\Entity\Client\Price;
 use Doctrine\ORM\EntityManagerInterface;
 use Oneup\UploaderBundle\Event\PostPersistEvent;
@@ -17,18 +19,22 @@ class PriceUploadListener
 
     public function onUpload(PostPersistEvent $event)
     {
-        $file = $event->getFile();
         $request = $event->getRequest();
+        $company = $request->get('company');
+        $user = $request->get('user');
+        $file = $event->getFile();
 
-        dump($event);
-//        die;
-//
-//        $price = new Price();
-//        $price->setFile($file->getPathName());
-//
-//        $this->em->persist($price);
-//        $this->em->flush();
-//
+        $company = $this->em->getRepository(Company::class)->find($company);
+        $user = $this->em->getRepository(User::class)->find($user);
+
+        $price = new Price();
+        $price->setCompany($company);
+        $price->setUser($user);
+        $price->setFile($file->getPathName());
+
+        $this->em->persist($price);
+        $this->em->flush();
+
         $response = $event->getResponse();
         $response['success'] = true;
 

@@ -9,7 +9,8 @@ class DriveRepository extends EntityRepository
 {
     public function search(Drive $drive)
     {
-
+        return $this->createQueryBuilder('d')
+            ->select('d')
+            ->getQuery();
     }
-
 }

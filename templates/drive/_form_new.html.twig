@@ -29,6 +29,15 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-3">
+                {{ form_row(form.price, {'id': 'tyre-new-price', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_row(form.image, {'id': 'tyre-new-image', 'attr': {'class': 'custom-file-input form-control-sm'}}) }}
+            </div>
+        </div>
+
         <div class="btn-group btn-group-toggle">
             {{ form_row(form.availability, {'id': 'tyre-new-availability'}) }}
         </div>

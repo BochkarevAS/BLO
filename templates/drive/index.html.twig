@@ -6,7 +6,64 @@
 
         {{ include('/drive/_form.html.twig') }}
 
+        {% if drives %}
 
+            <div class="count">
+                <h4>Найдено объявлений {{ drives.getTotalItemCount }}</h4>
+            </div>
+
+            <div class="navigator">
+                {{ knp_pagination_render(drives) }}
+            </div>
+
+            {% for drive in drives %}
+                <div class="row">
+                    <div class="col-2">
+                        {% if drive.image %}
+                            {% set images = drive.image|json_decode %}
+
+                            {% if drives %}
+                                <img src="/images/files/{{ images[0] }}" width="110" height="110">
+                            {% else %}
+                                <img src="#" width="110" height="110">
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="col-4">
+                        <a href="{{ path('drive_show', {'id': drive.id}) }}" target="_blank">
+                            {% if drive.brand %}
+                                {{ drive.brand.name }}
+                            {% endif %}
+                            {% if drive.model %}
+                                {{ drive.model.name }}
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="col-1">
+                        {% if drive.price %}
+                            {{ drive.price }} руб.
+                        {% endif %}
+                    </div>
+                    <div class="col-3">
+                        {% if drive.company %}
+                            {{ drive.company.name }} {% if drive.city %} / {{ drive.city.name }} {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="col-2">
+                        {{ drive.updatedAt|date('d-m-Y H:i') }}
+                        <br>
+                        {% if drive.availability %}
+                            {{ drive.availability.name }}
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+
+            <div class="navigator">
+                {{ knp_pagination_render(drives) }}
+            </div>
+        {% endif %}
 
     </div>
 
