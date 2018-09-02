@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Tyre\BrandRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Drive\BrandRepository")
  * @ORM\Table(name="brand", schema="drive")
  */
 class Brand
