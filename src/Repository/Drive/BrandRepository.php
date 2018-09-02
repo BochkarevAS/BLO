@@ -2,8 +2,9 @@
 
 namespace App\Repository\Drive;
 
+use Doctrine\ORM\EntityRepository;
 
-class BrandRepository
+class BrandRepository extends EntityRepository
 {
 
 }

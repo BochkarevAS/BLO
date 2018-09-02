@@ -9,7 +9,7 @@ use App\Entity\Drives\Drive;
 use App\Entity\Region\City;
 use App\Entity\Drives\Brand;
 use App\Entity\Drives\Model;
-use App\Repository\Tyre\ModelRepository;
+use App\Repository\Drive\ModelRepository;
 use App\Repository\Client\CompanyRepository;
 use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

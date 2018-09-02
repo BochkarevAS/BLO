@@ -11,7 +11,7 @@ use App\Entity\Drives\Drive;
 use App\Entity\Region\City;
 use App\Repository\Client\CompanyRepository;
 use App\Repository\Region\CityRepository;
-use App\Repository\Tyre\ModelRepository;
+use App\Repository\Drive\ModelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
