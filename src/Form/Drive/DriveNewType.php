@@ -7,8 +7,8 @@ use App\Entity\Client\Company;
 use App\Entity\Client\Condition;
 use App\Entity\Drives\Drive;
 use App\Entity\Region\City;
-use App\Entity\Tyres\Brand;
-use App\Entity\Tyres\Model;
+use App\Entity\Drives\Brand;
+use App\Entity\Drives\Model;
 use App\Repository\Tyre\ModelRepository;
 use App\Repository\Client\CompanyRepository;
 use App\Repository\Region\CityRepository;
@@ -126,7 +126,6 @@ class DriveNewType extends AbstractType
         $form->add('model', EntityType::class, [
             'class'           => Model::class,
             'label'           => 'Модель',
-            'multiple'        => true,
             'required'        => false,
             'auto_initialize' => false,
             'choices'         => $brand ? $brand->getModels() : [],

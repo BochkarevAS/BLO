@@ -24,35 +24,35 @@ class Drive
     private $brand;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Brand")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Drives\Model")
      */
     private $model;
 
     /**
      * Диамитер
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $diameter;
 
     /**
      * Вылет
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $departure;
 
     /**
      * Сверловка
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $drilling;
 
     /**
      * Ширина
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $width;
 
@@ -76,6 +76,13 @@ class Drive
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
      */
     private $city;
+
+    /**
+     * ID пользователя
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Auth\User")
+     */
+    private $user;
 
     /**
      * Компания продавец
@@ -185,6 +192,16 @@ class Drive
     public function setCity($city): void
     {
         $this->city = $city;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user): void
+    {
+        $this->user = $user;
     }
 
     public function getCompany()
