@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Parts\PartRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\PartRepository")
  * @ORM\Table(name="part", schema="part")
  */
 class Part

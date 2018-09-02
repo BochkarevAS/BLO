@@ -59,6 +59,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
 
-#    App\Controller\Parts\PartController:
+#    App\Controller\Part\PartController:
 #        arguments:
 #            $finder: '@fos_elastica.finder.app.part'

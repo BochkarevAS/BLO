@@ -1,0 +1,44 @@
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-3">
+                {{ form_row(form.brand, {'id': 'drive-new-brand', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_row(form.model, {'id': 'drive-new-model', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_row(form.diameter, {'id': 'drive-new-diameter', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_row(form.departure, {'id': 'drive-new-departure', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-2">
+                {{ form_row(form.width, {'id': 'drive-new-width', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                {{ form_row(form.company, {'id': 'drive-new-company', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+            <div class="col-3">
+                {{ form_row(form.city, {'id': 'drive-new-city', 'attr': {'class': 'form-control form-control-sm'}}) }}
+            </div>
+        </div>
+
+        <div class="btn-group btn-group-toggle">
+            {{ form_row(form.availability, {'id': 'tyre-new-availability'}) }}
+        </div>
+        <div class="btn-group btn-group-toggle">
+            {{ form_row(form.condition, {'id': 'tyre-new-condition'}) }}
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Найти</button>
+        </div>
+    </div>
+
+{{ form_end(form) }}

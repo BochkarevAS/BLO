@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Parts\CommentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\CommentRepository")
  * @ORM\Table(name="comment", schema="part")
  */
 class Comment

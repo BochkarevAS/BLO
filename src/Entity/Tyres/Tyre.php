@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Tyres\TyreRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Tyre\TyreRepository")
  * @ORM\Table(name="tyre", schema="tyre", indexes={
  *     @ORM\Index(name="width_idx", columns={"width"}),
  *     @ORM\Index(name="height_idx", columns={"height"}),

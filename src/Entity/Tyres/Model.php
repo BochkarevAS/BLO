@@ -5,7 +5,7 @@ namespace App\Entity\Tyres;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Tyres\ModelRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Tyre\ModelRepository")
  * @ORM\Table(name="model", schema="tyre")
  */
 class Model

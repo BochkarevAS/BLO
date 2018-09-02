@@ -5,7 +5,7 @@ namespace App\Entity\Drives;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Tyre\ModelRepository")
  * @ORM\Table(name="model", schema="drive")
  */
 class Model

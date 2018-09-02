@@ -1,25 +1,29 @@
 'use strict';
 
 import $ from 'jquery';
-import Model from '../Components/Parts/Model';
-import Tyre from '../Components/Tyres/Tyre';
+import Model from '../Components/Part/Model';
+import Tyre from '../Components/Tyre/Tyre';
+import Drive from '../Components/Drive/Model';
 import Company from '../Components/Client/Company';
 import Region from '../Components/Client/Region';
 
-// import Part from "./Components/Parts/Part";
+// import Part from "./Components/Part/Part";
 
 $(document).ready(function() {
     let $wrapper = $('.js-part-module');
-    let model = new Model($wrapper);
+    new Model($wrapper);
 
     $wrapper = $('.js-company-module');
-    let company = new Company($wrapper);
+    new Company($wrapper);
 
     $wrapper = $('.js-tyre-module');
-    let tyre = new Tyre($wrapper);
+    new Tyre($wrapper);
+
+    $wrapper = $('.js-drive-module');
+    new Drive($wrapper);
 
     $wrapper = $('.js-user-module');
-    let region = new Region($wrapper);
+    new Region($wrapper);
 
     // let part = new Part();
 });

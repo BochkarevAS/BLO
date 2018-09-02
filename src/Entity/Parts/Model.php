@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Parts\ModelRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\ModelRepository")
  * @ORM\Table(name="model", schema="part")
  */
 class Model

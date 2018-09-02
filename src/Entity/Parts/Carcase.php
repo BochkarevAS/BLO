@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Parts\CarcaseRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\CarcaseRepository")
  * @ORM\Table(name="carcase", schema="part")
  */
 class Carcase

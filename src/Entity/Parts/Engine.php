@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Parts\EngineRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\EngineRepository")
  * @ORM\Table(name="engine", schema="part")
  */
 class Engine
