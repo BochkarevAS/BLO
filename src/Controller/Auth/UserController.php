@@ -45,14 +45,26 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/show/all", name="client_user_index_show_all", methods={"GET"})
+     * @Route("/show/all/tyre", name="client_user_index_show_all_tyre", methods={"GET"})
      */
-    public function showAll(UserRepository $repository)
+    public function showAllTyre(UserRepository $repository)
     {
         $user = $this->getUser();
 
-        return $this->render('client/user/show_all.html.twig', [
-            'posts' => $repository->findAllPost($user)
+        return $this->render('client/user/show_all_tyre.html.twig', [
+            'tyres' => $repository->findAllTyre($user)
+        ]);
+    }
+
+    /**
+     * @Route("/show/all/drive", name="client_user_index_show_all_drive", methods={"GET"})
+     */
+    public function showAllDrive(UserRepository $repository)
+    {
+        $user = $this->getUser();
+
+        return $this->render('client/user/show_all_drive.html.twig', [
+            'drives' => $repository->findAllDrive($user)
         ]);
     }
 }

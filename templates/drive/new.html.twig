@@ -7,6 +7,8 @@
     <div class="container js-drive-module">
         <h4>Добавить диск</h4>
 
+        <p><a href="{{ path('client_user_index_show_all_drive') }}">Ваши объявления диски</a></p>
+
         {% for msg in app.session.flashBag.get('success') %}
             <div class="alert alert-success">
                 {{ msg }}

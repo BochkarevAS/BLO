@@ -10,7 +10,6 @@ use App\Form\Tyre\TyreType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -45,7 +44,7 @@ class TyreController extends AbstractController
     /**
      * @Route("/{id}/show", name="tyre_show", methods="GET|POST")
      */
-    public function show(Request $request, Tyre $tyre): Response
+    public function show(Request $request, Tyre $tyre)
     {
         $comment = new Comment();
         $user = $this->getUser();
@@ -124,7 +123,7 @@ class TyreController extends AbstractController
     /**
      * @Route("/{id}", name="tyre_delete", methods="DELETE")
      */
-    public function delete(Request $request, Tyre $tyre): Response
+    public function delete(Request $request, Tyre $tyre)
     {
         if ($this->isCsrfTokenValid('delete'.$tyre->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();

@@ -3,6 +3,7 @@
 namespace App\Repository\Client;
 
 use App\Entity\Auth\User;
+use App\Entity\Drives\Drive;
 use App\Entity\Tyres\Tyre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -15,11 +16,22 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function findAllPost(User $user)
+    public function findAllTyre(User $user)
     {
         return $this->createQueryBuilder('u')
             ->select('t')
             ->leftJoin(Tyre::class, 't', Join::WITH, 't.user = u.id')
+            ->andWhere('u.id = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllDrive(User $user)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('d')
+            ->leftJoin(Drive::class, 'd', Join::WITH, 'd.user = u.id')
             ->andWhere('u.id = :user')
             ->setParameter('user', $user)
             ->getQuery()

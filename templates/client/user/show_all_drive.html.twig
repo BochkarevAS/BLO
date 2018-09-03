@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Объявления{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h4>Объявления</h4>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Название</th>
+                    <th>Дата</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for drive in drives %}
+                <tr>
+                    <td>{{ drive.id }}</td>
+                    <td>
+                        {% if drive.brand %}
+                            {{ drive.brand.name }}
+                        {% endif %}
+                        {% if drive.model %}
+                            {{ drive.model.name }}
+                        {% endif %}
+                    </td>
+                    <td>{{ drive.updatedAt|date('d-m-Y H:i') }}</td>
+                    <td>
+                        <a href="{{ path('drive_show', {'id': drive.id}) }}" target="_blank">Показать</a>
+                        <a href="{{ path('drive_edit', {'id': drive.id}) }}">Редактировать</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Объявлений нет</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('client_company_index') }}">Назад</a>
+
+    </div>
+
+{% endblock %}

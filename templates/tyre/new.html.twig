@@ -7,6 +7,8 @@
     <div class="container js-tyre-module">
         <h4>Добавить шины</h4>
 
+        <p><a href="{{ path('client_user_index_show_all_tyre') }}">Ваши объявления шины</a></p>
+
         {% for msg in app.session.flashBag.get('success') %}
             <div class="alert alert-success">
                 {{ msg }}

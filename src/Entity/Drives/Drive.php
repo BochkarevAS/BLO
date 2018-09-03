@@ -107,6 +107,11 @@ class Drive
     private $company;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Drives\Comment", mappedBy="drive", fetch="EXTRA_LAZY")
+     */
+    private $comments;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at")
      */
@@ -246,6 +251,16 @@ class Drive
     public function setCompany($company): void
     {
         $this->company = $company;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments): void
+    {
+        $this->comments[] = $comments;
     }
 
     public function getId()

@@ -18,35 +18,35 @@
                 </tr>
             </thead>
             <tbody>
-                {% for post in posts %}
+                {% for tyre in tyres %}
                     <tr>
-                        <td>{{ post.id }}</td>
+                        <td>{{ tyre.id }}</td>
                         <td>
                             Шины
-                            {% if post.brand %}
-                                {{ post.brand.name }}
+                            {% if tyre.brand %}
+                                {{ tyre.brand.name }}
                             {% endif %}
-                            {% if post.width %}
-                                {{ post.width }}
+                            {% if tyre.width %}
+                                {{ tyre.width }}
                             {% endif %}
-                            {% if post.height %}
-                                / {{ post.height }}
+                            {% if tyre.height %}
+                                / {{ tyre.height }}
                             {% endif %}
-                            {% if post.diameter %}
-                                / {{ post.diameter }}
+                            {% if tyre.diameter %}
+                                / {{ tyre.diameter }}
                             {% endif %}
-                            {% if post.model %}
-                                {{ post.model.name }}
+                            {% if tyre.model %}
+                                {{ tyre.model.name }}
                             {% endif %}
                             <br>
-                            {% if post.quantity %}
-                                Комплект {{ post.quantity }} шт.
+                            {% if tyre.quantity %}
+                                Комплект {{ tyre.quantity }} шт.
                             {% endif %}
                         </td>
-                        <td>{{ post.updatedAt|date('d-m-Y H:i') }}</td>
+                        <td>{{ tyre.updatedAt|date('d-m-Y H:i') }}</td>
                         <td>
-                            <a href="{{ path('tyre_show', {'id': post.id}) }}" target="_blank">Показать</a>
-                            <a href="{{ path('tyre_edit', {'id': post.id}) }}">Редактировать</a>
+                            <a href="{{ path('tyre_show', {'id': tyre.id}) }}" target="_blank">Показать</a>
+                            <a href="{{ path('tyre_edit', {'id': tyre.id}) }}">Редактировать</a>
                         </td>
                     </tr>
                 {% else %}
@@ -56,6 +56,8 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <a href="{{ path('client_company_index') }}">Назад</a>
 
     </div>
 
