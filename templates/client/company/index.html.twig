@@ -7,43 +7,47 @@
     <div class="container">
 
         <div>
-            <h4>Личный кабинет</h4>
+            <h4>Мой профиль</h4>
         </div>
 
         <hr>
 
-        <div class="row">
-            <div class="col-4">
-                <p><b>Профиль</b></p>
-                <div class="card" style="width:300px">
-                    <img class="card-img-top" src="/images/avatar/{{ user.avatar }}">
-                    <div class="card-body text-center">
-                        <h6 class="card-title">{{ user.firstName }}</h6>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><i class="fa fa-envelope mr-3"></i>{{ user.username }}</li>
-                        <li class="list-group-item"><i class="fa fa-phone mr-3"></i>{{ user.phone }}</li>
-                        <li class="list-group-item"><i class="fa fa-home mr-3"></i>{{ user.city }}</li>
-                    </ul>
-                    <div class="card-body text-center">
-                        <a href="{{ path('client_user_index', {'id': user.id}) }}" class="btn btn-primary">Редактировать профиль</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <p><b>Действия</b></p>
-                <p><a href="{{ path('client_company_new') }}">Добавить компанию</a></p>
-                <p><a href="{{ path('tyre_new') }}">Добавить обявление шины</a></p>
-                <p><a href="{{ path('part_new') }}">Добавить обявление запчасти</a></p>
-                <p><a href="{{ path('drive_new') }}">Добавить обявление диски</a></p>
-            </div>
-            <div class="col-4">
-                <p><b>Компании</b></p>
-                {% for company in companys %}
-                    <p><a href="{{ path('client_company_edit', {'id': company.id}) }}">{{ company.name }}</a></p>
-                {% endfor %}
-            </div>
-        </div>
+        <p><a href="{{ path('client_user_index', {'id': user.id}) }}">Редактировать профиль</a></p>
+        <p><a href="{{ path('client_user_declaration') }}">Подать объявление</a></p>
+        <p><a href="{{ path('client_user_show_all') }}">Мои объявления</a></p>
+
+        {#<div class="row">#}
+            {#<div class="col-4">#}
+                {#<p><b>Профиль</b></p>#}
+                {#<div class="card" style="width:300px">#}
+                    {#<img class="card-img-top" src="/images/avatar/{{ user.avatar }}">#}
+                    {#<div class="card-body text-center">#}
+                        {#<h6 class="card-title">{{ user.firstName }}</h6>#}
+                    {#</div>#}
+                    {#<ul class="list-group list-group-flush">#}
+                        {#<li class="list-group-item"><i class="fa fa-envelope mr-3"></i>{{ user.username }}</li>#}
+                        {#<li class="list-group-item"><i class="fa fa-phone mr-3"></i>{{ user.phone }}</li>#}
+                        {#<li class="list-group-item"><i class="fa fa-home mr-3"></i>{{ user.city }}</li>#}
+                    {#</ul>#}
+                    {#<div class="card-body text-center">#}
+                        {#<a href="{{ path('client_user_index', {'id': user.id}) }}" class="btn btn-primary">Редактировать профиль</a>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="col-3">#}
+                {#<p><b>Действия</b></p>#}
+                {#<p><a href="{{ path('client_company_new') }}">Добавить компанию</a></p>#}
+                {#<p><a href="{{ path('part_new') }}">Добавить обявление запчасти</a></p>#}
+                {#<p><a href="{{ path('tyre_new') }}">Добавить обявление шины</a></p>#}
+                {#<p><a href="{{ path('drive_new') }}">Добавить обявление диски</a></p>#}
+            {#</div>#}
+            {#<div class="col-4">#}
+                {#<p><b>Компании</b></p>#}
+                {#{% for company in companys %}#}
+                    {#<p><a href="{{ path('client_company_edit', {'id': company.id}) }}">{{ company.name }}</a></p>#}
+                {#{% endfor %}#}
+            {#</div>#}
+        {#</div>#}
 
     </div>
 
