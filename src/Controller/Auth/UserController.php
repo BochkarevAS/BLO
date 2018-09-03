@@ -61,6 +61,9 @@ class UserController extends AbstractController
      */
     public function showAll(UserRepository $repository)
     {
+
+
+
         $user = $this->getUser();
 
         return $this->render('client/user/show_all.html.twig', [
