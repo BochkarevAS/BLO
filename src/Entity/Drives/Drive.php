@@ -71,6 +71,13 @@ class Drive
     private $condition;
 
     /**
+     * Хэш уникальный индефекатор шины
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $hash;
+
+    /**
      * Город
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
@@ -80,7 +87,7 @@ class Drive
     /**
      * Стоимость диска
      *
-     * @@ORM\Column(type="decimal", nullable=true)
+     * @ORM\Column(type="decimal")
      */
     private $price;
 
@@ -181,6 +188,16 @@ class Drive
     public function setWidth($width)
     {
         $this->width = $width;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    public function setHash($hash): void
+    {
+        $this->hash = $hash;
     }
 
     public function getAvailability()

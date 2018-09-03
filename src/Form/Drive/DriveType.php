@@ -28,6 +28,7 @@ class DriveType extends AbstractType
         $diameters  = array_combine(range(4, 55, 0.5), range(4, 55, 0.5));
         $departures = array_combine(range(-20, 125, 1), range(-20, 125, 1));
         $widths     = array_combine(range(4, 15, 0.5), range(4, 15, 0.5));
+        $drilling   = array_combine(range(1, 15, 1), range(1, 15, 1));
 
         $builder
             ->add('brand', EntityType::class, [
@@ -55,6 +56,11 @@ class DriveType extends AbstractType
             ->add('width', ChoiceType::class, [
                 'label'    => 'Ширина',
                 'choices'  => $widths,
+                'required' => false
+            ])
+            ->add('drilling', ChoiceType::class, [
+                'label'    => 'Сверловка',
+                'choices'  => $drilling,
                 'required' => false
             ])
             ->add('availability',EntityType::class, [

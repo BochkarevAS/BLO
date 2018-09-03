@@ -2,6 +2,7 @@
 
 namespace App\EventListener;
 
+use App\Entity\Drives\Drive;
 use App\Entity\Parts\Part;
 use App\Entity\Tyres\Tyre;
 use App\Service\FilesystemFileDeleter;
@@ -26,7 +27,7 @@ class FileUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Tyre && !$entity instanceof Part) {
+        if (!$entity instanceof Tyre && !$entity instanceof Part && !$entity instanceof Drive) {
             return;
         }
 
@@ -37,7 +38,7 @@ class FileUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Tyre && !$entity instanceof Part) {
+        if (!$entity instanceof Tyre && !$entity instanceof Part && !$entity instanceof Drive) {
             return;
         }
 
@@ -55,7 +56,7 @@ class FileUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Tyre && !$entity instanceof Part) {
+        if (!$entity instanceof Tyre && !$entity instanceof Part && !$entity instanceof Drive) {
             return;
         }
 

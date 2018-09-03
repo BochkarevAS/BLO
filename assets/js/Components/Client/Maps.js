@@ -42,7 +42,7 @@ class Maps {
                     position: results[0].geometry.location
                 });
             } else {
-                alert('Запрос не был успешным по следующей причине: ' + status);
+                alert('Может быть ошибка в навигации причина: ' + status);
             }
         });
     }
