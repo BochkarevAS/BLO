@@ -33,7 +33,7 @@ class CompanyController extends Controller
      */
     public function showAll(CompanyRepository $repository)
     {
-        return $this->render('client/company/show_all_tyre.html.twig', [
+        return $this->render('client/company/show_all.html.twig', [
             'companys' => $repository->findAll()
         ]);
     }

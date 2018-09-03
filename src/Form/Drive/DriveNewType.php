@@ -3,14 +3,12 @@
 namespace App\Form\Drive;
 
 use App\Entity\Client\Availability;
-use App\Entity\Client\Company;
 use App\Entity\Client\Condition;
 use App\Entity\Drives\Drive;
 use App\Entity\Region\City;
 use App\Entity\Drives\Brand;
 use App\Entity\Drives\Model;
 use App\Repository\Drive\ModelRepository;
-use App\Repository\Client\CompanyRepository;
 use App\Repository\Region\CityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -82,15 +80,6 @@ class DriveNewType extends AbstractType
                 'multiple'     => false,
                 'required'     => false,
                 'expanded'     => true
-            ])
-            ->add('company', EntityType::class, [
-                'class'         => Company::class,
-                'label'         => 'Продавец',
-                'choice_label'  => 'name',
-                'required'      => false,
-                'query_builder' => function (CompanyRepository $repository) {
-                    return $repository->orderBy();
-                }
             ])
             ->add('city', EntityType::class, [
                 'class'         => City::class,

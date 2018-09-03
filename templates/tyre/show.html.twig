@@ -124,8 +124,10 @@
                 </div>
             </div>
         {% else %}
-
+            {# Секция пока пустая добавлю инфу о пользователе ... #}
         {% endif %}
+
+        <hr>
 
         {% if tyre.comments %}
             {% for comment in tyre.comments %}
@@ -139,6 +141,8 @@
                 </div>
             {% endfor %}
         {% endif %}
+
+        <hr>
 
         {{ include('/client/comment/_form.html.twig') }}
 
