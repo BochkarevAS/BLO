@@ -16,6 +16,23 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findAllDeclaration(User $user)
+    {
+        $connection = $this->_em->getConnection();
+
+        $query = $connection->prepare("
+            SELECT d.id, 1 module, d.updated_at FROM drive.drive d WHERE d.user_id=:user_id
+            UNION ALL
+            SELECT t.id, 2 module, t.updated_at FROM tyre.tyre t WHERE t.user_id=:user_id
+            UNION ALL
+            SELECT p.id, 3 module, p.updated_at FROM part.part p WHERE p.user_id=:user_id
+        ");
+        $query->bindValue('user_id', $user->getId());
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
     public function findAllTyre(User $user)
     {
         return $this->createQueryBuilder('u')

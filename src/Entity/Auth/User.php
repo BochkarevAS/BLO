@@ -23,7 +23,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(name="first_name", type="string")
+     * @ORM\Column(name="first_name", type="string", nullable=true)
      */
     protected $firstName;
 
@@ -54,16 +54,23 @@ class User extends BaseUser
     protected $avatar;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $githubId;
+
+    protected $githubAccessToken;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     public function getFirstName()
     {
@@ -137,6 +144,26 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getGithubId()
+    {
+        return $this->githubId;
+    }
+
+    public function setGithubId($githubId): void
+    {
+        $this->githubId = $githubId;
+    }
+
+    public function getGithubAccessToken()
+    {
+        return $this->githubAccessToken;
+    }
+
+    public function setGithubAccessToken($githubAccessToken): void
+    {
+        $this->githubAccessToken = $githubAccessToken;
     }
 
     public function getCreatedAt()

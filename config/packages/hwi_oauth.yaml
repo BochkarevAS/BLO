@@ -1,0 +1,13 @@
+hwi_oauth:
+    firewall_names: [main]
+    connect:
+        account_connector: app.fos_user.oauth_provider
+    fosub:
+        properties:
+            github: githubId
+    resource_owners:
+        github:
+            type:           github
+            client_id:      "%github_client_id%"
+            client_secret:  "%github_secret%"
+            scope: 'user:email,public_repo'

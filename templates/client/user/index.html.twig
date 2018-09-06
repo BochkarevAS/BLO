@@ -4,11 +4,11 @@
 
     <div class="container js-user-module">
 
-        <h4>Редактировать профиль {{ user.username }}</h4>
+        <h4>Настройки профиля {{ user.username }}</h4>
 
         {{ include('client/user/_form.html.twig') }}
 
-        <a href="{{ path('client_company_index') }}">Назад</a>
+        <a href="{{ path('auth_user_personal', {'id': user.id}) }}">Назад</a>
 
     </div>
 
