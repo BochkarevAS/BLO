@@ -3,7 +3,6 @@
 namespace App\Controller\Auth;
 
 use App\Entity\Auth\User;
-use App\Form\Auth\ProfileFormType;
 use App\Repository\Client\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,28 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/{id}/index", name="auth_user_index", options={"expose"=true})
-     */
-    public function index(Request $request, User $user)
-    {
-        $form = $this->createForm(ProfileFormType::class, $user);
-        $form->handleRequest($request);
-
-        if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('auth_user_index', [
-                'id' => $user->getId()
-            ]);
-        }
-
-        return $this->render('client/user/index.html.twig', [
-            'user' => $user,
-            'form' => $form->createView()
-        ]);
-    }
-
     /**
      * Доступ в личный кабинет
      *

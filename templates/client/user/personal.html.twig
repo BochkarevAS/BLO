@@ -12,7 +12,7 @@
 
         <hr>
 
-        <p><a href="{{ path('auth_user_index', {'id': user.id}) }}">Настройки профиля</a></p>
+        <p><a href="{{ path('auth_profile_edit', {'id': user.id}) }}">Настройки профиля</a></p>
         <p><a href="{{ path('auth_user_show_declaration') }}">Мои объявления</a></p>
         <p><a href="{{ path('auth_user_declaration') }}">Подать объявление</a></p>
         <p><a href="{{ path('client_company_index') }}">Мои компании</a></p>

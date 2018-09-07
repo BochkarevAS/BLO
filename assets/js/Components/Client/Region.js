@@ -25,7 +25,7 @@ class Region {
         data[$regionField.attr('name')] = $regionField.val();
 
         $.ajax({
-            url: Routing.generate('auth_user_index', {id: userId}),
+            url: Routing.generate('auth_profile_edit', {id: userId}),
             method: 'POST',
             data: data
         }).then((data) => {
