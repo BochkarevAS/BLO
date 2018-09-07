@@ -9,7 +9,6 @@ httplug:
                 verify: false
                 max_redirects: 1
                 ignore_errors: false
-                verify_peer: false
 
 hwi_oauth:
     http:

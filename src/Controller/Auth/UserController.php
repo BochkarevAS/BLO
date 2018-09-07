@@ -81,24 +81,36 @@ class UserController extends AbstractController
     /**
      * @Route("/show/tyre", name="auth_user_show_tyre", methods={"GET"})
      */
-    public function showAllTyre(UserRepository $repository)
+    public function showAllTyre(UserRepository $repository, Request $request, PaginatorInterface $paginator)
     {
         $user = $this->getUser();
+        $tyres = $repository->findAllTyre($user);
+
+        if (null !== $tyres) {
+            $tyres = $paginator->paginate($tyres, $request->query->getInt('page', 1), 20);
+        }
 
         return $this->render('client/user/show_tyre.html.twig', [
-            'tyres' => $repository->findAllTyre($user)
+            'tyres' => $tyres,
+            'user'  => $user
         ]);
     }
 
     /**
      * @Route("/show/drive", name="auth_user_show_drive", methods={"GET"})
      */
-    public function showAllDrive(UserRepository $repository)
+    public function showAllDrive(UserRepository $repository, Request $request, PaginatorInterface $paginator)
     {
         $user = $this->getUser();
+        $drives = $repository->findAllDrive($user);
+
+        if (null !== $drives) {
+            $drives = $paginator->paginate($drives, $request->query->getInt('page', 1), 20);
+        }
 
         return $this->render('client/user/show_drive.html.twig', [
-            'drives' => $repository->findAllDrive($user)
+            'drives' => $drives,
+            'user'   => $user
         ]);
     }
 }

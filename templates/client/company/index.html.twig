@@ -7,10 +7,14 @@
     <div class="container">
 
         <div>
-            <h4>Мой профиль</h4>
+            <h4>Мои компании</h4>
         </div>
 
         <hr>
+
+        {% for company in companys %}
+            <p><a href="{{ path('client_company_edit', {'id': company.id}) }}">{{ company.name }}</a></p>
+        {% endfor %}
 
         {#<p><a href="{{ path('client_user_index', {'id': user.id}) }}">Настройки профиля</a></p>#}
         {#<p><a href="{{ path('client_user_show_declaration') }}">Мои объявления</a></p>#}

@@ -40,8 +40,7 @@ class UserRepository extends ServiceEntityRepository
             ->leftJoin(Tyre::class, 't', Join::WITH, 't.user = u.id')
             ->andWhere('u.id = :user')
             ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 
     public function findAllDrive(User $user)
@@ -51,7 +50,6 @@ class UserRepository extends ServiceEntityRepository
             ->leftJoin(Drive::class, 'd', Join::WITH, 'd.user = u.id')
             ->andWhere('u.id = :user')
             ->setParameter('user', $user)
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
     }
 }

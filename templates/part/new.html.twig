@@ -15,7 +15,7 @@
 
         {{ include('part/_form_new.html.twig') }}
 
-        <a href="{{ path('client_company_index') }}">Назад</a>
+        <a href="{{ path('auth_user_personal', {'id': user.id}) }}">Назад</a>
     </div>
 
 {% endblock %}

@@ -7,7 +7,7 @@
     <div class="container js-drive-module">
         <h4>Добавить диск</h4>
 
-        <p><a href="{{ path('client_user_show_drive') }}">Ваши объявления диски</a></p>
+        <p><a href="{{ path('auth_user_show_drive') }}">Ваши объявления диски</a></p>
 
         {% for msg in app.session.flashBag.get('success') %}
             <div class="alert alert-success">
@@ -17,7 +17,8 @@
 
         {{ include('drive/_form_new.html.twig') }}
 
-        <a href="{{ path('client_company_index') }}">Назад</a>
+        <a href="{{ path('auth_user_personal', {'id': user.id}) }}">Назад</a>
+
     </div>
 
 {% endblock %}

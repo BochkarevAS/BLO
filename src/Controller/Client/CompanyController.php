@@ -43,8 +43,9 @@ class CompanyController extends Controller
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
         $company = new Company();
-        $company->setUser($this->getUser());
+        $company->setUser($user);
 
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
@@ -59,6 +60,7 @@ class CompanyController extends Controller
 
         return $this->render('client/company/new.html.twig', [
             'company' => $company,
+            'user'    => $user,
             'form'    => $form->createView(),
         ]);
     }
@@ -80,6 +82,7 @@ class CompanyController extends Controller
     {
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -91,6 +94,7 @@ class CompanyController extends Controller
 
         return $this->render('client/company/edit.html.twig', [
             'company' => $company,
+            'user'    => $user,
             'form'    => $form->createView()
         ]);
     }
