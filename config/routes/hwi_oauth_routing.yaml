@@ -21,4 +21,3 @@ custom_login:
 
 github_login:
     path: /login/check-github
-

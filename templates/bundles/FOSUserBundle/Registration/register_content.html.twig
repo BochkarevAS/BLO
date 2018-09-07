@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<h1>Регистрация</h1>
+<h4>Регистрация</h4>
 
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     {{ form_row(form.firstName, {'id': 'register_first_name', 'attr': {'class': 'form-control'}}) }}

@@ -3,7 +3,7 @@
 namespace App\Controller\Auth;
 
 use App\Entity\Auth\User;
-use App\Form\Auth\UserType;
+use App\Form\Auth\ProfileFormType;
 use App\Repository\Client\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +20,7 @@ class UserController extends AbstractController
      */
     public function index(Request $request, User $user)
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(ProfileFormType::class, $user);
         $form->handleRequest($request);
 
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {

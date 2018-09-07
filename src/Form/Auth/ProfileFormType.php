@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
-class UserType extends AbstractType
+class ProfileFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,12 +38,12 @@ class UserType extends AbstractType
                 'required'      => false
             ])
             ->add('file', VichFileType::class, [
-                 'required'       => false,
-                 'allow_delete'   => true,
-                 'download_label' => false,
-                 'download_uri'   => false,
-                 'label'          => 'Аватар'
-             ])
+                'required'       => false,
+                'allow_delete'   => true,
+                'download_label' => false,
+                'download_uri'   => false,
+                'label'          => 'Аватар'
+            ])
         ;
 
         $builder->addEventListener(

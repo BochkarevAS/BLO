@@ -46,6 +46,10 @@ services:
         tags:
             - { name: form.type }
 
+    App\Form\Auth\ProfileFormType:
+        tags:
+            - { name: form.type }
+
     App\EventListener\RedirectAfterRegistrationSubscriber:
         autowire: true
         tags:
