@@ -2,7 +2,6 @@
 
 namespace App\Controller\Auth;
 
-use App\Entity\Auth\User;
 use App\Repository\Client\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,10 +16,12 @@ class UserController extends AbstractController
     /**
      * Доступ в личный кабинет
      *
-     * @Route("/{id}/personal", name="auth_user_personal", options={"expose"=true})
+     * @Route("/personal", name="auth_user_personal", options={"expose"=true})
      */
-    public function personal(User $user)
+    public function personal()
     {
+        $user = $this->getUser();
+
         return $this->render('client/user/personal.html.twig', [
             'user' => $user
         ]);
