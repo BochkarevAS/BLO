@@ -6,11 +6,7 @@ import Routing from '../Routing';
 class Region {
 
     constructor($wrapper) {
-        this.$wrapper = $wrapper;
-
-        this.$wrapper.on('change', '#user-region',
-            this.setRelation.bind(this)
-        );
+        $wrapper.on('change', '#user-region', this.setRelation);
     }
 
     setRelation(e) {

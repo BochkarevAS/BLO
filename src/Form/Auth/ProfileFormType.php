@@ -82,7 +82,7 @@ class ProfileFormType extends AbstractType
             'required'        => false,
             'auto_initialize' => false,
             'choices'         => $region ? $region->getCitys() : [],
-            'query_builder' => function (CityRepository $repository) {
+            'query_builder'   => function (CityRepository $repository) {
                 return $repository->orderBy();
             }
         ]);
