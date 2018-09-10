@@ -52,7 +52,7 @@ class ProfileFormType extends AbstractType
                 $data = $event->getData();
 
                 /* @var City $city */
-                $city = $data->getCity();
+                $city = (null !== $data) ? $data->getCity() : null;
                 $form = $event->getForm();
 
                 if ($city) {

@@ -17,15 +17,13 @@ class Region {
         e.preventDefault();
 
         let $regionField = $('#user-region');
-        let $target = $('#data-user-id');
-        let userId = $target.data('id');
         let target = '#user-city';
         let data = {};
 
         data[$regionField.attr('name')] = $regionField.val();
 
         $.ajax({
-            url: Routing.generate('auth_profile_edit', {id: userId}),
+            url: Routing.generate('auth_profile_edit'),
             method: 'POST',
             data: data
         }).then((data) => {
