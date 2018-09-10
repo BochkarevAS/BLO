@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Routing from '../Routing';
 import 'select2/dist/js/select2.min'
 
-class Model {
+class Drive {
 
     constructor($wrapper) {
         this.$wrapper = $wrapper;
@@ -41,4 +41,4 @@ class Model {
     }
 }
 
-export default Model;
+export default Drive;
