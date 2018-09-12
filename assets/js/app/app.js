@@ -1,19 +1,19 @@
 'use strict';
 
-import $ from 'jquery';
-import Part from '../Components/Part/Model';
-import Tyre from '../Components/Tyre/Model';
-import Drive from '../Components/Drive/Model';
-import Company from '../Components/Client/Company';
-import Region from '../Components/Client/Region';
+import $ from 'jquery'
+import Part from '../Components/Part/Model'
+import Company from '../Components/Client/Company'
+import Region from '../Components/Client/Region'
+import Drive from '../Components/Product/Drive'
+import Tyre from '../Components/Product/Tyre'
 
 // import Part from "./Components/Part/Part";
 
 $(document).ready(function() {
-    $wrapper = $('.js-company-module');
+    let $wrapper = $('.js-company-module');
     new Company($wrapper);
 
-    let $wrapper = $('.js-part-module');
+    $wrapper = $('.js-part-module');
     new Part($wrapper);
 
     $wrapper = $('.js-tyre-module');

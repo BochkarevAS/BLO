@@ -1,28 +1,27 @@
 'use strict';
 
-import $ from 'jquery';
-import Routing from '../Routing';
+import $ from 'jquery'
+import Routing from '../Routing'
 import 'select2/dist/js/select2.min'
 
-class Model {
+class Tyre {
 
     constructor($wrapper) {
-        this.$wrapper = $wrapper;
-        this.$wrapper.on('change', '#drive-brand, #drive-new-brand', this.setModelRelation)
+        $wrapper.on('change', '#tyre-brand, #tyre-new-brand', this.setModelRelation);
     }
 
     setModelRelation(e) {
         let $brand = $(e.currentTarget);
         let id = $brand.closest('form').attr('id');
-        let model = '#drive-model';
-        let path = 'drive_index';
+        let model = '#tyre-model';
+        let path = 'tyre_index';
         let method = 'GET';
         let data = {};
 
-        if (id !== 'drive-form') { console.log(111);
-            model = '#drive-new-model';
+        if ('tyre-form' !== id) {
+            model = '#tyre-new-model';
             method = 'POST';
-            path = 'drive_new'
+            path = 'tyre_new';
         }
 
         data[$brand.attr('name')] = $brand.val();
@@ -41,4 +40,4 @@ class Model {
     }
 }
 
-export default Model;
+export default Tyre;

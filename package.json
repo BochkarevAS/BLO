@@ -19,7 +19,6 @@
     },
     "dependencies": {
         "@fancyapps/fancybox": "^3.3.5",
-        "@google/maps": "^0.5.5",
         "bloodhound-js": "^1.2.3",
         "blueimp-file-upload": "^9.22.0",
         "bootstrap": "^4.1.1",
@@ -27,6 +26,7 @@
         "jquery": "^3.3.1",
         "jquery-knob": "^1.2.11",
         "popper.js": "^1.14.3",
+        "react-google-maps": "^9.4.5",
         "select2": "^4.0.6-rc.1",
         "typeahead.js": "^0.11.1",
         "yarn-install": "^1.0.0"

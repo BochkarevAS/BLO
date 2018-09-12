@@ -1,13 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
-import RepLogApp from './RepLog/RepLogApp'
+import Geography from './RepLog/Geography'
+import MapComponent from './RepLog/GoogleMaps'
 
 const shouldShowHeart = true;
 
-render(
-    <div>
-        <RepLogApp withHeart={shouldShowHeart} />
-        <RepLogApp withHeart={false} />
-    </div>,
-    document.getElementById('lift-stuff-app')
-);
+// render(
+//     <Geography />,
+//     document.getElementById('lift-stuff-app')
+// );
+
+render(<MapComponent isMarkerShown />, document.getElementById("lift-stuff-app"));

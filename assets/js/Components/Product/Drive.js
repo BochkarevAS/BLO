@@ -1,14 +1,13 @@
 'use strict';
 
-import $ from 'jquery';
-import Routing from '../Routing';
+import $ from 'jquery'
+import Routing from '../Routing'
 import 'select2/dist/js/select2.min'
 
 class Drive {
 
     constructor($wrapper) {
-        this.$wrapper = $wrapper;
-        this.$wrapper.on('change', '#drive-brand, #drive-new-brand', this.setModelRelation)
+        $wrapper.on('change', '#drive-brand, #drive-new-brand', this.setModelRelation);
     }
 
     setModelRelation(e) {
@@ -19,10 +18,10 @@ class Drive {
         let method = 'GET';
         let data = {};
 
-        if (id !== 'drive-form') { console.log(111);
+        if ('drive-form' !== id) {
             model = '#drive-new-model';
             method = 'POST';
-            path = 'drive_new'
+            path = 'drive_new';
         }
 
         data[$brand.attr('name')] = $brand.val();
