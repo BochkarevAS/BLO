@@ -21,6 +21,11 @@ class DriveRepository extends EntityRepository
         $condition    = $drive->getCondition();
         $city         = $drive->getCity();
         $company      = $drive->getCompany();
+        $id           = 0;
+
+        if ($user) {
+            $id = $user->getId();
+        }
 
         $qb = $this->createQueryBuilder('d')
             ->addSelect('b, m, a, c, city, company, f.id as favorite')
@@ -30,7 +35,7 @@ class DriveRepository extends EntityRepository
             ->leftJoin('d.condition', 'c')
             ->leftJoin('d.city', 'city')
             ->leftJoin('d.company', 'company')
-            ->leftJoin(Favorite::class, 'f', \Doctrine\ORM\Query\Expr\Join::WITH, 'f.type=3 AND f.product=d.id AND f.user=' . $user->getId());
+            ->leftJoin(Favorite::class, 'f', \Doctrine\ORM\Query\Expr\Join::WITH, 'f.type=3 AND f.product=d.id AND f.user=' . $id);
 
         /* Фильтр по производителям */
         if ($brand) {

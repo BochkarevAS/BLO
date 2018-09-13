@@ -22,13 +22,15 @@ class TyreController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
+        $user = $this->getUser();
+
         $tyre = new Tyre();
         $form = $this->createForm(TyreType::class, $tyre, ['method' => 'GET']);
         $form->handleRequest($request);
         $tyres = null;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tyres = $this->getDoctrine()->getRepository(Tyre::class)->search($tyre);
+            $tyres = $this->getDoctrine()->getRepository(Tyre::class)->search($tyre, $user);
 
             if (null !== $tyres) {
                 $tyres = $paginator->paginate($tyres, $request->query->getInt('page', 1), 20);

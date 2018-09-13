@@ -16,7 +16,10 @@
                 {{ knp_pagination_render(tyres) }}
             </div>
 
-            {% for tyre in tyres %}
+            {% for list in tyres %}
+                {% set tyre = list[0] %}
+                {% set favorite = list['favorite'] %}
+
                 <div class="row">
                     <div class="col-2">
                         {% if tyre.image %}
@@ -68,6 +71,13 @@
                         <br>
                         {% if tyre.availability %}
                             {{ tyre.availability.name }}
+                        {% endif %}
+                    </div>
+                    <div class="col-1">
+                        {% if favorite %}
+                            <a href="#" class="js-remove-favorite" data-product="{{ tyre.id }}" data-type="2">Избранное удалить</a>
+                        {% else %}
+                            <a href="#" class="js-add-favorite" data-product="{{ tyre.id }}" data-type="2">Избранное</a>
                         {% endif %}
                     </div>
                 </div>

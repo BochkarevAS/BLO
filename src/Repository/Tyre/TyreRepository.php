@@ -2,12 +2,14 @@
 
 namespace App\Repository\Tyre;
 
+use App\Entity\Auth\User;
+use App\Entity\Client\Favorite;
 use App\Entity\Tyres\Tyre;
 use Doctrine\ORM\EntityRepository;
 
 class TyreRepository extends EntityRepository
 {
-    public function search(Tyre $tyre)
+    public function search(Tyre $tyre, User $user)
     {
         $brand        = $tyre->getBrand();
         $models       = $tyre->getModel();
@@ -21,9 +23,14 @@ class TyreRepository extends EntityRepository
         $condition    = $tyre->getCondition();
         $city         = $tyre->getCity();
         $company      = $tyre->getCompany();
+        $id           = 0;
+
+        if ($user) {
+            $id = $user->getId();
+        }
 
         $qb = $this->createQueryBuilder('t')
-            ->addSelect('b, m, s, a, c, th')
+            ->addSelect('b, m, s, a, c, th, f.id as favorite')
             ->leftJoin('t.brand', 'b')
             ->leftJoin('t.model', 'm')
             ->leftJoin('t.seasonality', 's')
@@ -31,7 +38,8 @@ class TyreRepository extends EntityRepository
             ->leftJoin('t.availability', 'a')
             ->leftJoin('t.condition', 'c')
             ->leftJoin('t.city', 'city')
-            ->leftJoin('t.company', 'company');
+            ->leftJoin('t.company', 'company')
+            ->leftJoin(Favorite::class, 'f', \Doctrine\ORM\Query\Expr\Join::WITH, 'f.type=2 AND f.product=t.id AND f.user=' . $id);
 
         /* Фильтр по производителям */
         if ($brand) {
