@@ -22,6 +22,8 @@ class DriveController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator)
     {
+        $user = $this->getUser();
+
         $drive = new Drive();
         $form = $this->createForm(DriveType::class, $drive, ['method' => 'GET']);
         $form->handleRequest($request);
@@ -37,6 +39,7 @@ class DriveController extends AbstractController
 
         return $this->render('drive/index.html.twig', [
             'drives' => $drives,
+            'user'   => $user,
             'form'   => $form->createView()
         ]);
     }

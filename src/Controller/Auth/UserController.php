@@ -2,10 +2,13 @@
 
 namespace App\Controller\Auth;
 
+use App\Entity\Client\Favorite;
 use App\Repository\Client\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +24,8 @@ class UserController extends AbstractController
     public function personal()
     {
         $user = $this->getUser();
+
+        dump($user->getFavorites()->toArray());
 
         return $this->render('client/user/personal.html.twig', [
             'user' => $user
@@ -40,6 +45,38 @@ class UserController extends AbstractController
     }
 
     /**
+     * Добавление в избранное
+     *
+     * @Route("/{product}/favorite/{type}/add", name="auth_user_add_favorite", options={"expose"=true}, methods="GET|POST")
+     */
+    public function addFavorite(Request $request, $product, $type)
+    {
+        $user = $this->getUser();
+
+        if (null === $product || null === $type) {
+            throw new BadRequestHttpException('Invalid JSON');
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $favorite = new Favorite();
+            $favorite->setUser($user);
+            $favorite->setProduct($product);
+            $favorite->setType($type);
+
+            $em->persist($favorite);
+            $em->flush();
+
+            return new JsonResponse(null, 200);
+        }
+
+        return new JsonResponse(null, 400);
+    }
+
+    /**
+     * Показать объявления
+     *
      * @Route("/show/declaration", name="auth_user_show_declaration", methods={"GET"})
      */
     public function showDeclaration(UserRepository $repository, Request $request, PaginatorInterface $paginator)

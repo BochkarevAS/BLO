@@ -2,6 +2,8 @@
 
 namespace App\Entity\Auth;
 
+use App\Entity\Client\Favorite;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -31,6 +33,13 @@ class User extends BaseUser
      * @ORM\Column(type="string", nullable=true)
      */
     protected $phone;
+
+    /**
+     * Избранное
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Client\Favorite", mappedBy="user")
+     */
+    protected $favorites;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Region\City")
@@ -71,6 +80,13 @@ class User extends BaseUser
      * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      */
     protected $updatedAt;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->favorites = new ArrayCollection();
+    }
 
     public function getFirstName()
     {
@@ -139,6 +155,14 @@ class User extends BaseUser
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return ArrayCollection|Favorite[]
+     */
+    public function getFavorites()
+    {
+        return $this->favorites;
     }
 
     public function getId()

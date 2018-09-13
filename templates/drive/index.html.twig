@@ -56,6 +56,9 @@
                             {{ drive.availability.name }}
                         {% endif %}
                     </div>
+                    <div class="col-1">
+                        <a href="#" class="js-favorite" data-product="{{ drive.id }}" data-type="3">Избранное</a>
+                    </div>
                 </div>
                 <br>
             {% endfor %}

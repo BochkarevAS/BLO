@@ -6,6 +6,7 @@ import Company from '../Components/Client/Company'
 import Region from '../Components/Client/Region'
 import Drive from '../Components/Product/Drive'
 import Tyre from '../Components/Product/Tyre'
+import User from '../Components/Client/User'
 
 // import Part from "./Components/Part/Part";
 
@@ -21,6 +22,9 @@ $(document).ready(function() {
 
     $wrapper = $('.js-drive-module');
     new Drive($wrapper);
+
+    $wrapper = $('body');
+    new User($wrapper);
 
     $wrapper = $('.js-user-module');
     new Region($wrapper);
