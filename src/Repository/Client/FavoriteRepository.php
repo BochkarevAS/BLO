@@ -15,4 +15,13 @@ class FavoriteRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findAllByUser(User $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.user=:user')
+            ->setParameter('user', $user->getId())
+            ->getQuery()
+            ->execute();
+    }
 }

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Избранное{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div>
+            <h4>Избранное</h4>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for favorite in favorites %}
+                    <tr>
+                        <td>{{ favorite.product }}</td>
+                        <td>
+                            {% if favorite.type %}
+                                {% if favorite.type == 1 %}
+                                    Запчасти
+                                {% elseif favorite.type == 2 %}
+                                    Шины
+                                {% elseif favorite.type == 3 %}
+                                    Диски
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if favorite.type == 1 %}
+                                <a href="{{ path('part_show', {'id': favorite.product}) }}" target="_blank">Показать</a>
+                            {% elseif favorite.type == 2 %}
+                                <a href="{{ path('tyre_show', {'id': favorite.product}) }}" target="_blank">Показать</a>
+                            {% elseif favorite.type == 3 %}
+                                <a href="{{ path('drive_show', {'id': favorite.product}) }}" target="_blank">Показать</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Объявлений нет</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('build/rep_log_react.js') }}"></script>
+{% endblock %}

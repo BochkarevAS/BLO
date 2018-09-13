@@ -24,11 +24,11 @@ class UserController extends AbstractController
     public function personal()
     {
         $user = $this->getUser();
-
-        dump($user->getFavorites()->toArray());
+        $favorites = $user->getFavorites()->toArray();
 
         return $this->render('client/user/personal.html.twig', [
-            'user' => $user
+            'favorites' => $favorites,
+            'user'      => $user
         ]);
     }
 
@@ -41,6 +41,19 @@ class UserController extends AbstractController
 
         return $this->render('client/user/declaration.html.twig', [
             'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/favorite", name="auth_user_favorite", methods={"GET"})
+     */
+    public function showFavorite()
+    {
+        $user = $this->getUser();
+        $favorites = $this->getDoctrine()->getRepository(Favorite::class)->findAllByUser($user);
+
+        return $this->render('client/user/show_favorite.html.twig', [
+            'favorites' => $favorites
         ]);
     }
 
