@@ -30,7 +30,7 @@ class DriveController extends AbstractController
         $drives = null;
 
         if (!$request->isXmlHttpRequest() && $form->isSubmitted() && $form->isValid()) {
-            $drives = $this->getDoctrine()->getRepository(Drive::class)->search($drive);
+            $drives = $this->getDoctrine()->getRepository(Drive::class)->search($drive, $user);
 
             if (null !== $drives) {
                 $drives = $paginator->paginate($drives, $request->query->getInt('page', 1), 20);
@@ -39,7 +39,6 @@ class DriveController extends AbstractController
 
         return $this->render('drive/index.html.twig', [
             'drives' => $drives,
-            'user'   => $user,
             'form'   => $form->createView()
         ]);
     }

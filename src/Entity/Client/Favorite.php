@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Избранное
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\Client\FavoriteRepository")
  * @ORM\Table(name="favorite", schema="client")
  */
 class Favorite

@@ -2,12 +2,14 @@
 
 namespace App\Repository\Drive;
 
+use App\Entity\Auth\User;
+use App\Entity\Client\Favorite;
 use App\Entity\Drives\Drive;
 use Doctrine\ORM\EntityRepository;
 
 class DriveRepository extends EntityRepository
 {
-    public function search(Drive $drive)
+    public function search(Drive $drive, User $user = null)
     {
         $brand        = $drive->getBrand();
         $models       = $drive->getModel();
@@ -21,13 +23,14 @@ class DriveRepository extends EntityRepository
         $company      = $drive->getCompany();
 
         $qb = $this->createQueryBuilder('d')
-            ->addSelect('b, m, a, c, city, company')
+            ->addSelect('b, m, a, c, city, company, f.id as favorite')
             ->leftJoin('d.brand', 'b')
             ->leftJoin('d.model', 'm')
             ->leftJoin('d.availability', 'a')
             ->leftJoin('d.condition', 'c')
             ->leftJoin('d.city', 'city')
-            ->leftJoin('d.company', 'company');
+            ->leftJoin('d.company', 'company')
+            ->leftJoin(Favorite::class, 'f', \Doctrine\ORM\Query\Expr\Join::WITH, 'f.type=3 AND f.product=d.id AND f.user=' . $user->getId());
 
         /* Фильтр по производителям */
         if ($brand) {

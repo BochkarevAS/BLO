@@ -16,7 +16,10 @@
                 {{ knp_pagination_render(drives) }}
             </div>
 
-            {% for drive in drives %}
+            {% for list in drives %}
+                {% set drive = list[0] %}
+                {% set favorite = list['favorite'] %}
+
                 <div class="row">
                     <div class="col-2">
                         {% if drive.image %}
@@ -57,7 +60,11 @@
                         {% endif %}
                     </div>
                     <div class="col-1">
-                        <a href="#" class="js-favorite" data-product="{{ drive.id }}" data-type="3">Избранное</a>
+                        {% if favorite %}
+                            <a href="#" class="js-remove-favorite" data-product="{{ drive.id }}" data-type="3">Избранное удалить</a>
+                        {% else %}
+                            <a href="#" class="js-add-favorite" data-product="{{ drive.id }}" data-type="3">Избранное</a>
+                        {% endif %}
                     </div>
                 </div>
                 <br>

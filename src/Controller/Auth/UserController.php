@@ -75,6 +75,31 @@ class UserController extends AbstractController
     }
 
     /**
+     * Удаление из избранного
+     *
+     * @Route("/{product}/favorite/{type}/remove", name="auth_user_remove_favorite", options={"expose"=true}, methods="GET|POST")
+     */
+    public function removeFavorite(Request $request, $product, $type)
+    {
+        $user = $this->getUser();
+
+        if (null === $product || null === $type) {
+            throw new BadRequestHttpException('Invalid JSON');
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $favorite = $em->getRepository(Favorite::class)->findByProduct($user, $product, $type);
+            $em->remove($favorite);
+            $em->flush();
+
+            return new JsonResponse(null, 200);
+        }
+
+        return new JsonResponse(null, 400);
+    }
+
+    /**
      * Показать объявления
      *
      * @Route("/show/declaration", name="auth_user_show_declaration", methods={"GET"})
