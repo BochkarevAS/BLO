@@ -47,14 +47,14 @@
                             </td>
                             <td>
                                 {% if declaration.module == 1 %}
-                                    <a href="{{ path('drive_show', {'id': declaration.id}) }}" target="_blank">Показать</a>
-                                    <a href="{{ path('drive_edit', {'id': declaration.id}) }}">Редактировать</a>
+                                    <a href="{{ path('part_show', {'id': declaration.id}) }}" target="_blank">Показать</a>
+                                    {#<a href="{{ path('part_edit', {'id': declaration.id}) }}">Редактировать</a>#}
                                 {% elseif declaration.module == 2 %}
                                     <a href="{{ path('tyre_show', {'id': declaration.id}) }}" target="_blank">Показать</a>
                                     <a href="{{ path('tyre_edit', {'id': declaration.id}) }}">Редактировать</a>
                                 {% elseif declaration.module == 3 %}
-                                    <a href="{{ path('part_show', {'id': declaration.id}) }}" target="_blank">Показать</a>
-                                    {#<a href="{{ path('part_edit', {'id': declaration.id}) }}">Редактировать</a>#}
+                                    <a href="{{ path('drive_show', {'id': declaration.id}) }}" target="_blank">Показать</a>
+                                    <a href="{{ path('drive_edit', {'id': declaration.id}) }}">Редактировать</a>
                                 {% endif %}
                             </td>
                         </tr>
