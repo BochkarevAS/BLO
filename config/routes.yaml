@@ -2,6 +2,10 @@ oneup_uploader:
     resource: .
     type: uploader
 
+mgilet_notification:
+    resource: "@MgiletNotificationBundle/Controller/"
+    prefix: /notifications
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 

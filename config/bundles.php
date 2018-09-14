@@ -26,4 +26,7 @@ return [
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     HWI\Bundle\OAuthBundle\HWIOAuthBundle::class => ['all' => true],
     Http\HttplugBundle\HttplugBundle::class => ['all' => true],
+    FOS\RestBundle\FOSRestBundle::class => ['all' => true],
+    JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
+    Mgilet\NotificationBundle\MgiletNotificationBundle::class => ['all' => true],
 ];

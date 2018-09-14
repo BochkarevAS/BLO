@@ -92,6 +92,7 @@
             </div>
         </header>
 
+        {{ mgilet_notification_render(app.user) }}
 
         <a href="{{ path('hwi_oauth_service_redirect', {'service': 'github'}) }}">
             <span>Github</span>

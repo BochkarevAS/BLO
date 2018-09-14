@@ -20,6 +20,10 @@
         <env name="FB_ID" value=""/>
         <env name="FB_SECRET" value=""/>
         <!-- ###- hwi/oauth-bundle ### -->
+
+        <!-- ###+ enqueue/amqp-lib ### -->
+        <env name="ENQUEUE_DSN" value="amqp+lib:"/>
+        <!-- ###- enqueue/amqp-lib ### -->
     </php>
 
     <testsuites>
