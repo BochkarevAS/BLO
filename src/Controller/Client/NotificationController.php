@@ -22,7 +22,7 @@ class NotificationController extends Controller
         $notif->setMessage('This a notification.');
         $notif->setLink('http://symfony.com/');
 
-        $manager->addNotification(array($this->getUser()), $notif, true);
+        $manager->addNotification([$this->getUser()], $notif, true);
 
         return $this->redirectToRoute('homepage');
     }
