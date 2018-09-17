@@ -17,6 +17,9 @@ class NotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
+
+
+
         $manager = $this->get('mgilet.notification');
         $notif = $manager->createNotification('Hello world !');
         $notif->setMessage('This a notification.');
