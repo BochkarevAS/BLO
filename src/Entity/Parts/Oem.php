@@ -2,18 +2,17 @@
 
 namespace App\Entity\Parts;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Part\OemRepository")
+ * @ORM\Entity
  * @ORM\Table(name="oem", schema="part")
  */
 class Oem
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -22,16 +21,6 @@ class Oem
      * @ORM\Column(type="string")
      */
     private $name;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="oems")
-     */
-    private $parts;
-
-    public function __construct()
-    {
-        return $this->parts = new ArrayCollection();
-    }
 
     public function getName()
     {
@@ -43,30 +32,20 @@ class Oem
         $this->name = $name;
     }
 
-    /**
-     * @return ArrayCollection|Part[]
-     */
-    public function getParts()
-    {
-        return $this->parts;
-    }
-
-    public function addParts(Part $part)
-    {
-        if ($this->parts->contains($part)) {
-            return;
-        }
-
-        $this->parts[] = $part;
-    }
-
-    public function removeParts(Part $part)
-    {
-        $this->parts->removeElement($part);
-    }
-
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getNameSuggest()
+    {
+        return [
+            'input' => explode(' ', $this->getName())
+        ];
+    }
+
+    public function getOutput()
+    {
+        return $this->getName();
     }
 }

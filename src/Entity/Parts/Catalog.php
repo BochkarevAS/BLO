@@ -5,16 +5,14 @@ namespace App\Entity\Parts;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Номер, маркировка запчасти
- *
  * @ORM\Entity
- * @ORM\Table(name="mark", schema="part")
+ * @ORM\Table(name="catalog", schema="part")
  */
-class Marking
+class Catalog
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -29,7 +27,7 @@ class Marking
         return $this->name;
     }
 
-    public function setName($name): void
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -39,8 +37,17 @@ class Marking
         return $this->id;
     }
 
-    public function __toString()
+    public function getNameSuggest()
     {
-        return (string) $this->getName();
+        $name = preg_replace('/^ +| +$|( ) +/m', '$1', $this->getName());
+
+        return [
+            'input' => explode(' ', $name)
+        ];
+    }
+
+    public function getOutput()
+    {
+        return trim($this->getName());
     }
 }

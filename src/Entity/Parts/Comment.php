@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Part\CommentRepository")
+ * @ORM\Entity
  * @ORM\Table(name="comment", schema="part")
  */
 class Comment
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -31,7 +31,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Parts\Part", inversedBy="comments")
      */
-    private $part;
+    private $product;
 
     /**
      * Одобрен или нет
@@ -72,14 +72,14 @@ class Comment
         $this->comment = $comment;
     }
 
-    public function getPart()
+    public function getProduct()
     {
-        return $this->part;
+        return $this->product;
     }
 
-    public function setPart($part): void
+    public function setProduct($product)
     {
-        $this->part = $part;
+        $this->product = $product;
     }
 
     public function getApproved()
@@ -110,5 +110,17 @@ class Comment
     public function __toString()
     {
         return (string) $this->getComment();
+    }
+
+    public static function createFromDto($dto): self
+    {
+        $comment = new self();
+
+        $comment->setUser($dto->user);
+        $comment->setComment($dto->comment);
+        $comment->setProduct($dto->product);
+        $comment->setApproved(true);
+
+        return $comment;
     }
 }

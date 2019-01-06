@@ -2,25 +2,28 @@
 
 namespace App\Command;
 
+use App\Dto\PartDto;
+use App\Entity\Auth\User;
 use App\Entity\Client\Company;
 use App\Entity\Parts\Brand;
-use App\Entity\Parts\Carcase;
+use App\Entity\Parts\Frame;
 use App\Entity\Parts\Engine;
-use App\Entity\Parts\Marking;
 use App\Entity\Parts\Model;
-use App\Entity\Parts\Oem;
 use App\Entity\Parts\Part;
+use App\Entity\ProductInterface;
 use App\Entity\Region\City;
-use Doctrine\ORM\EntityManager;
 use League\Csv\Reader;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Stopwatch\Stopwatch;
 
-class PartCommand extends ContainerAwareCommand
+class PartCommand extends AbstractProductCommand
 {
+    const HEADER = [
+        'name', 'brand', 'models', 'frames', 'engines', 'oem', 'marking','UD', 'FR', 'RL',
+        'declaration', 'condition', 'availability', 'price', 'image'
+    ];
+
     protected function configure()
     {
         $this
@@ -29,152 +32,217 @@ class PartCommand extends ContainerAwareCommand
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $now = new \DateTime();
-        $output->writeln('<comment>Start : ' . $now->format('d-m-Y G:i:s') . ' ---</comment>');
-
-        $this->import($input, $output);
-
-        $now = new \DateTime();
-        $output->writeln('<comment>End : ' . $now->format('d-m-Y G:i:s') . ' ---</comment>');
-    }
-
     protected function import(InputInterface $input, OutputInterface $output)
     {
+        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 
-//        $file = 'parts_test.csv';
-//        $file = 'parts_1.csv';
-        $file = 'big_parts.csv';
+        $file = 'example.csv';
+        $file = 'example1.csv';
+//        $file = 'test3.csv';
 
-        $path = $this->getContainer()->get('kernel')->getProjectDir() . '/public/uploads/' . DIRECTORY_SEPARATOR . $file;
-        $em   = $this->getContainer()->get('doctrine')->getManager();
-
-        $em->getConnection()->getConfiguration()->setSQLLogger(null);
-
-        $stopwatch = new Stopwatch();
-        $stopwatch->start('sanitize');
+        $path = $this->params->get('prices_part') . DIRECTORY_SEPARATOR . $file;
 
         $reader = Reader::createFromPath($path);
         $reader->setDelimiter(';');
         $reader->setHeaderOffset(0);
-        $header = [
-            'part', 'brand', 'model', 'availability', 'carcase', 'engine', 'number_mark', 'oem',
-            'year', 'colour', 'horizontally', 'vertically', 'order', 'price', 'type', 'tuning',
-            'proporty', 'image', 'opt', 'vendor', 'condition', 'region', 'city', 'youtube'
-        ];
-        $records = $reader->getRecords($header);
+
+        $records = $reader->getRecords(self::HEADER);
+
+        $dto = new PartDto();
+
+        /** @var ProgressBar $progress */
+        $progress = $this->runProgressBar($output, (int) count($reader));
 
         $i = 0;
-        $batchSize = 1000;
-        $company = 'Vladmotors';
 
-        $progress = new ProgressBar($output, count($reader));
-        $progress->start();
+        $brands  = [];
+        $models  = [];
+        $frames  = [];
+        $engines = [];
 
-        foreach ($records as $offset => $record) {
-            $hash = md5(
-                $record['part'] .
-                $record['brand'] .
-                $record['model'] .
-                $record['carcase'] .
-                $record['engine'] .
-                $record['oem'] .
-                $record['city'] .
-                $record['image'] .
-                $record['availability'] .
-                $record['condition'] .
-                $record['number_mark']
-            );
+        $allBrands = $this->em->getRepository(Brand::class)->findAll();
+        foreach ($allBrands as $brand) {
+            /** @var Brand $brand */
+            $name = mb_strtolower($brand->getName());
+            $brands[$name] = $brand;
+        }
 
-            $part = $em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
+        $allModels = $this->em->getRepository(Model::class)->findAll();
+        foreach ($allModels as $model) {
+            /** @var Model $model */
+            $name = mb_strtolower($model->getName());
+            $models[$name] = $model;
+        }
 
-            if ($part === null) {
-                $part = new Part();
-                $this->insert($part, $hash, $record, $em, $company);
-                $em->persist($part);
-            } else {
-                $this->insert($part, $hash, $record, $em, $company);
-                $em->merge($part);
+        $allFrames = $this->em->getRepository(Frame::class)->findAll();
+        foreach ($allFrames as $frame) {
+            /** @var Frame $frame */
+            $name = mb_strtolower($frame->getName());
+            $frames[$name] = $frame;
+        }
+
+        $allEngines = $this->em->getRepository(Engine::class)->findAll();
+        foreach ($allEngines as $engine) {
+            /** @var Engine $engine */
+            $name = mb_strtolower($engine->getName());
+            $engines[$name] = $engine;
+        }
+
+        $dto->brands  = $brands;
+        $dto->models  = $models;
+        $dto->frames  = $frames;
+        $dto->engines = $engines;
+
+        $dto->city    = $this->em->getRepository(City::class)->find(1);
+        $dto->company = $this->em->getRepository(Company::class)->find(1);
+
+        $user = $this->em->getRepository(User::class)->find(1);
+
+        foreach ($records as $record) {
+            $hash = $this->hash($record);
+
+            /** @var Part $part */
+            $part = $this->em->getRepository(Part::class)->findOneBy(['hash' => $hash]);
+
+            if (!$part) {
+                /** Получем текущие заплонированные вставки объекта */
+                $insertions = $this->em->getUnitOfWork()->getScheduledEntityInsertions();
+                foreach ($insertions as $insertion) {
+                    /** @var Part $insertion */
+                    if ($insertion instanceof Part && $hash === $insertion->getHash()) {
+                        $part = $insertion;
+                        break;
+                    }
+                }
             }
 
-            if (($i % $batchSize) === 0) {
-                $em->flush();
-                $em->clear();
+            if (null === $part) {
+                $part = new Part();
+                $this->assemble($part, $record, $hash, $dto, $user);
+                $this->insertImage($part, $record);
+                $this->em->persist($part);
+            } else {
+                $this->assemble($part, $record, $hash, $dto, $user);
+                $this->em->merge($part);
+            }
 
-                $event = $stopwatch->lap('sanitize');
-                $progress->advance($batchSize);
-                $now = new \DateTime();
-                $output->writeln(' of part imported ... | ' . $now->format('d-m-Y G:i:s') . ' | memory used : ' . number_format($event->getMemory() / 1048576, 2) . ' MB');
+            if (0 === ($i % self::BATCH_SIZE)) {
+                $this->em->flush();
+                $this->em->clear(Part::class);
+
+                $progress->setMessage($i, 'item');
+                $progress->advance(self::BATCH_SIZE);
             }
 
             $i++;
         }
 
-        $em->flush();
-        $em->clear();
+        $this->em->flush();
+        $this->em->clear();
 
         $progress->finish();
     }
 
-    private function insert(Part $part, $hash, array $record, EntityManager $em, $company)
+    protected function hash(array $record)
     {
-        $part->setName(mb_convert_encoding($record['part'], 'UTF-8', 'Windows-1251'));
-        $part->setHash($hash);
-        $part->setPrice((int) $record['price']);
+        return md5(
+            $record['name'] .
+            $record['brand'] .
+            $record['models'] .
+            $record['frames'] .
+            $record['engines'] .
+            $record['oem'] .
+            $record['marking'] .
+            $record['image'] .
+            $record['availability'] .
+            $record['condition'] .
+            $record['UD'] .
+            $record['FR'] .
+            $record['RL']
+        );
+    }
 
-        if ($record['brand']) {
-            $brand = $em->getRepository(Brand::class)->findByName(mb_convert_encoding($record['brand'], 'UTF-8', 'Windows-1251'));
+    /**
+     * @var Part $part
+     */
+    protected function assemble(ProductInterface $part, array $record, $hash, $dto, $user)
+    {
+        $part->setName($record['name']);
+        $part->setOem($record['oem']);
+        $part->setMarking($record['marking']);
+        $part->setHash($hash);
+
+        $brands  = $dto->brands;
+        $models  = $dto->models;
+        $frames  = $dto->frames;
+        $engines = $dto->engines;
+        $city    = $dto->city;
+        $company = $dto->company;
+
+        $brand = mb_strtolower($record['brand']);
+        if (array_key_exists($brand, $brands)) {
+            $brand = $brands[$brand];
             $part->setBrand($brand);
         }
 
-        if ($record['model']) {
-            $model = $em->getRepository(Model::class)->findByName(mb_convert_encoding($record['model'], 'UTF-8', 'Windows-1251'));
-            $part->setModel($model);
+        $patterns = array_map('strtolower', explode(',', $record['models']));
+        foreach ($patterns as $model) {
+            if (array_key_exists($model, $models)) {
+                $model = $models[$model];
+                $part->addModel($model);
+            }
         }
 
-        if ($record['carcase']) {
-            $carcase = $em->getRepository(Carcase::class)->findByName(mb_convert_encoding($record['carcase'], 'UTF-8', 'Windows-1251'));
-            $part->setCarcase($carcase);
+        $patterns = array_map('strtolower', explode(',', $record['frames']));
+        foreach ($patterns as $frame) {
+            if (array_key_exists($frame, $frames)) {
+                $frame = $frames[$frame];
+                $part->addFrame($frame);
+            }
         }
 
-//        if ($record['number_mark']) {
-//            $mark = $em->getRepository(Marking::class)->findByName(mb_convert_encoding($record['number_mark'], 'UTF-8', 'Windows-1251'));
-//            $part->setMark($mark);
-//        }
-
-        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['engine']));
-
-        if ($patterns) {
-            $engines = $em->getRepository(Engine::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
-            foreach ($engines as $engine) {
+        $patterns = array_map('strtolower', explode(',', $record['engines']));
+        foreach ($patterns as $engine) {
+            if (array_key_exists($engine, $engines)) {
+                $engine = $engines[$engine];
                 $part->addEngine($engine);
             }
         }
 
-        $patterns = array_map('strtoupper', preg_split("/[\s,#\/]+/", $record['oem']));
-
-        if ($patterns) {
-            $oems = $em->getRepository(Oem::class)->findAllByNames(mb_convert_encoding($patterns, 'UTF-8', 'Windows-1251'));
-            foreach ($oems as $oem) {
-                $part->addOem($oem);
-            }
+        if ($record['price']) {
+            $part->setPrice($record['price']);
         }
 
-        $city = $em->getRepository(City::class)->findByName(mb_convert_encoding($record['city'], 'UTF-8', 'Windows-1251'));
+        if ($record['UD']) {
+            $part->setUd($record['UD']);
+        }
+
+        if ($record['FR']) {
+            $part->setFr($record['FR']);
+        }
+
+        if ($record['RL']) {
+            $part->setRl($record['RL']);
+        }
+
+        if ($record['availability']) {
+            $part->setAvailability($record['availability']);
+        }
+
+        if ($record['condition']) {
+            $part->setCondition($record['condition']);
+        }
 
         if ($city) {
             $part->setCity($city);
         }
 
-        $company = $em->getRepository(Company::class)->findByName($company);
-
         if ($company) {
             $part->setCompany($company);
         }
 
-        $images = explode(',', $record['image']);
-        $json = json_encode($images);
-        $part->setImage($json);
+        if ($user) {
+            $part->setUser($user);
+        }
     }
 }

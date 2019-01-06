@@ -14,15 +14,10 @@ class Model
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $rank;
 
     /**
      * @ORM\Column(type="string")
@@ -35,24 +30,21 @@ class Model
     private $brand;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Carcase", inversedBy="models")
-     * @JoinTable(name="models_carcases", schema="part")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Frame", inversedBy="models")
+     * @JoinTable(name="models_frames", schema="part")
      */
-    private $carcases;
+    private $frames;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="models")
+     * @JoinTable(name="models_engines", schema="part")
+     */
+    private $engines;
 
     public function __construct()
     {
-        $this->carcases = new ArrayCollection();
-    }
-
-    public function getRank()
-    {
-        return $this->rank;
-    }
-
-    public function setRank($rank): void
-    {
-        $this->rank = $rank;
+        $this->frames  = new ArrayCollection();
+        $this->engines = new ArrayCollection();
     }
 
     public function getName()
@@ -76,31 +68,55 @@ class Model
     }
 
     /**
-     * @return ArrayCollection|Carcase[]
+     * @return ArrayCollection|Frame[]
      */
-    public function getCarcases()
+    public function getFrames()
     {
-        return $this->carcases;
+        return $this->frames;
     }
 
-    public function addCarcase(Carcase $carcase)
+    public function addFrame(Frame $frame)
     {
-        if ($this->carcases->contains($carcase)) {
+        if ($this->frames->contains($frame)) {
             return;
         }
 
-        $this->carcases[] = $carcase;
-        $carcase->addModels($this);
+        $this->frames[] = $frame;
     }
 
-    public function removeCarcase(Carcase $carcase)
+    public function removeFrame(Frame $frame)
     {
-        if (!$this->carcases->contains($carcase)) {
+        if (!$this->frames->contains($frame)) {
             return;
         }
 
-        $this->carcases->removeElement($carcase);
-        $carcase->removeModels($this);
+        $this->frames->removeElement($frame);
+    }
+
+    /**
+     * @return ArrayCollection|Model[]
+     */
+    public function getEngines()
+    {
+        return $this->engines;
+    }
+
+    public function addEngine(Engine $engine)
+    {
+        if ($this->engines->contains($engine)) {
+            return;
+        }
+
+        $this->engines[] = $engine;
+    }
+
+    public function removeEngine(Engine $engine)
+    {
+        if (!$this->engines->contains($engine)) {
+            return;
+        }
+
+        $this->engines->removeElement($engine);
     }
 
     public function getId()

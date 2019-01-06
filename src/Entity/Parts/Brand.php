@@ -13,7 +13,7 @@ class Brand
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -43,14 +43,12 @@ class Brand
         $this->name = $name;
     }
 
+    /**
+     * @return ArrayCollection|Model[]
+     */
     public function getModels()
     {
         return $this->models;
-    }
-
-    public function setModels($models): void
-    {
-        $this->models[] = $models;
     }
 
     public function getId()

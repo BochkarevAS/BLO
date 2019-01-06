@@ -7,14 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinTable;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\Part\CarcaseRepository")
- * @ORM\Table(name="carcase", schema="part")
+ * @ORM\Entity(repositoryClass="App\Repository\Part\FrameRepository")
+ * @ORM\Table(name="frame", schema="part")
  */
-class Carcase
+class Frame
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -25,20 +25,20 @@ class Carcase
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="carcases")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="frames")
      */
     private $models;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine")
-     * @JoinTable(name="carcases_engines", schema="part")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Engine", inversedBy="frames")
+     * @JoinTable(name="frames_engines", schema="part")
      */
     private $engines;
 
     public function __construct()
     {
-        $this->models  = new ArrayCollection();
         $this->engines = new ArrayCollection();
+        $this->models  = new ArrayCollection();
     }
 
     public function getName()
@@ -59,7 +59,7 @@ class Carcase
         return $this->engines;
     }
 
-    public function addEngines(Engine $engine)
+    public function addEngine(Engine $engine)
     {
         if ($this->engines->contains($engine)) {
             return;
@@ -68,7 +68,7 @@ class Carcase
         $this->engines[] = $engine;
     }
 
-    public function removeEngines(Engine $engine)
+    public function removeEngine(Engine $engine)
     {
         if (!$this->engines->contains($engine)) {
             return;
@@ -85,22 +85,16 @@ class Carcase
         return $this->models;
     }
 
-    public function addModels(Model $models): void
+    public function getNameSuggest()
     {
-        if ($this->models->contains($models)) {
-            return;
-        }
-
-        $this->models[] = $models;
+        return [
+            'input' => trim($this->getName())
+        ];
     }
 
-    public function removeModels(Model $model)
+    public function getOutput()
     {
-        if (!$this->models->contains($model)) {
-            return;
-        }
-
-        $this->models->removeElement($this);
+        return trim($this->getName());
     }
 
     public function getId()

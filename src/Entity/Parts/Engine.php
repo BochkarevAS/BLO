@@ -13,7 +13,7 @@ class Engine
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -24,13 +24,35 @@ class Engine
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Part", mappedBy="engines")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Model", mappedBy="engines")
      */
-    private $parts;
+    private $models;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Parts\Frame", mappedBy="engines")
+     */
+    private $frames;
 
     public function __construct()
     {
-        $this->parts = new ArrayCollection();
+        $this->models = new ArrayCollection();
+        $this->frames = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection|Model[]
+     */
+    public function getModels()
+    {
+        return $this->models;
+    }
+
+    /**
+     * @return ArrayCollection|Frame[]
+     */
+    public function getFrames()
+    {
+        return $this->frames;
     }
 
     public function getName()
@@ -43,32 +65,6 @@ class Engine
         $this->name = $name;
     }
 
-    /**
-     * @return ArrayCollection|Part[]
-     */
-    public function getParts()
-    {
-        return $this->parts;
-    }
-
-    public function addParts(Part $part)
-    {
-        if ($this->parts->contains($part)) {
-            return;
-        }
-
-        $this->parts[] = $part;
-    }
-
-    public function removeParts(Part $part)
-    {
-        if (!$this->parts->contains($part)) {
-            return;
-        }
-
-        $this->parts->removeElement($part);
-    }
-
     public function getId()
     {
         return $this->id;
@@ -77,5 +73,17 @@ class Engine
     public function __toString()
     {
         return (string) $this->getName();
+    }
+
+    public function getNameSuggest()
+    {
+        return [
+            'input' => trim($this->getName())
+        ];
+    }
+
+    public function getOutput()
+    {
+        return trim($this->getName());
     }
 }
