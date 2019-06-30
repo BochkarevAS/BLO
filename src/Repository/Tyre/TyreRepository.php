@@ -1,106 +1,124 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Tyre;
 
-use App\Entity\Auth\User;
-use App\Entity\Client\Favorite;
-use App\Entity\Tyres\Tyre;
+use App\Dto\TyreDto;
 use Doctrine\ORM\EntityRepository;
 
 class TyreRepository extends EntityRepository
 {
-    public function search(Tyre $tyre, User $user)
+    public function search(TyreDto $tyre)
     {
-        $brand        = $tyre->getBrand();
-        $models       = $tyre->getModel();
-        $thorn        = $tyre->getThorn();
-        $seasonality  = $tyre->getSeasonality();
-        $quantity     = $tyre->getQuantity();
-        $diameter     = $tyre->getDiameter();
-        $width        = $tyre->getWidth();
-        $height       = $tyre->getHeight();
-        $availability = $tyre->getAvailability();
-        $condition    = $tyre->getCondition();
-        $city         = $tyre->getCity();
-        $company      = $tyre->getCompany();
-        $id           = 0;
+        $qb = $this->createQueryBuilder('t');
 
-        if ($user) {
-            $id = $user->getId();
+        if (null !== $tyre->brand) {
+            $qb
+                ->addSelect('b')
+                ->leftJoin('t.brand', 'b')
+                ->andWhere('t.brand = :brand')
+                ->setParameter('brand', $tyre->brand);
         }
 
-        $qb = $this->createQueryBuilder('t')
-            ->addSelect('b, m, s, a, c, th, f.id as favorite')
-            ->leftJoin('t.brand', 'b')
-            ->leftJoin('t.model', 'm')
-            ->leftJoin('t.seasonality', 's')
-            ->leftJoin('t.thorn', 'th')
-            ->leftJoin('t.availability', 'a')
-            ->leftJoin('t.condition', 'c')
-            ->leftJoin('t.city', 'city')
-            ->leftJoin('t.company', 'company')
-            ->leftJoin(Favorite::class, 'f', \Doctrine\ORM\Query\Expr\Join::WITH, 'f.type=2 AND f.product=t.id AND f.user=' . $id);
-
-        /* Фильтр по производителям */
-        if ($brand) {
-            $qb->andWhere('b.id = :bid')->setParameter('bid', $brand);
+        if (false === $tyre->model->isEmpty()) {
+            $qb
+                ->addSelect('m')
+                ->leftJoin('t.model', 'm')
+                ->andWhere('t.model IN (:model)')
+                ->setParameter('model', $tyre->model);
         }
 
-        /* Фильтр по моделям */
-        if (!$models->isEmpty()) {
-            $qb->andWhere('m.id IN (:models)')->setParameter('models', $models);
+        /**
+         * Вот запрос:
+         *
+         * SELECT *
+         * FROM tyre t
+         * LEFT JOIN company c ON (c.id=t.company_id)
+         * WHERE t.company_id=c.id
+         *
+         * Может быть его можно как то оптимищъзировать написать его лучше ???
+         */
+        if (null !== $tyre->company) {
+            $qb
+                ->addSelect('c')
+                ->leftJoin('t.company', 'c')
+                ->andWhere('t.company = :company')
+                ->setParameter('company', $tyre->company);
         }
 
-        /* Фильтр по шипам */
-        if ($thorn) {
-            $qb->andWhere('th.id = :thorn')->setParameter('thorn', $thorn);
+        if (null !== $tyre->user) {
+            $qb
+                ->addSelect('u')
+                ->leftJoin('t.user', 'u')
+                ->andWhere('t.user = :user')
+                ->setParameter('user', $tyre->company);
         }
 
-        /* Фильтр по сезонам */
-        if ($seasonality) {
-            $qb->andWhere('s.id = :seasonalityId')->setParameter('seasonalityId', $seasonality);
+        if (null !== $tyre->city) {
+            $qb
+                ->addSelect('c')
+                ->leftJoin('t.city', 'city')
+                ->andWhere('t.city = :city')
+                ->setParameter('city', $tyre->city);
         }
 
-        /* Фильтр по количеству шин */
-        if ($quantity) {
-            $qb->andWhere('t.quantity = :quantity')->setParameter('quantity', $quantity);
+        if ('metric' == $tyre->metrics && null !== $tyre->diameter) {
+            $qb->andWhere('t.diameter = :diameter')->setParameter('diameter', $tyre->diameter);
         }
 
-        /* Фильтр по посадочный диаметр (мм) */
-        if ($diameter) {
-            $qb->andWhere('t.diameter = :diameter')->setParameter('diameter', $diameter);
+        if ('metric' == $tyre->metrics && null !== $tyre->width) {
+            $qb->andWhere('t.width = :width')->setParameter('width', $tyre->width);
         }
 
-        /* Фильтр по высота ширина (мм) */
-        if ($width) {
-            $qb->andWhere('t.width = :width')->setParameter('width', $width);
+        if ('metric' == $tyre->metrics && null !== $tyre->height) {
+            $qb->andWhere('t.height = :height')->setParameter('height', $tyre->height);
         }
 
-        /* Фильтр по высота профиля (%) */
-        if ($height) {
-            $qb->andWhere('t.height = :height')->setParameter('height', $height);
+        if ('inch' == $tyre->metrics && null !== $tyre->diameterIn) {
+            $qb->andWhere('t.diameterIn = :diameterIn')->setParameter('diameterIn', $tyre->diameterIn);
         }
 
-        /* Фильтр по состоянию */
-        if ($availability) {
-            $qb->andWhere('t.availability = :availability')->setParameter('availability', $availability);
+        if ('inch' == $tyre->metrics && null !== $tyre->widthIn) {
+            $qb->andWhere('t.widthIn = :widthIn')->setParameter('widthIn', $tyre->widthIn);
         }
 
-        /* Фильтр по наличию */
-        if ($condition) {
-            $qb->andWhere('t.condition = :condition')->setParameter('condition', $condition);
+        if ('inch' == $tyre->metrics && null !== $tyre->heightIn) {
+            $qb->andWhere('t.height = :heightIn')->setParameter('heightIn', $tyre->heightIn);
         }
 
-        /* Фильтр по городам */
-        if ($city) {
-            $qb->andWhere('t.city = :city')->setParameter('city', $city);
+        if (null !== $tyre->availability) {
+            $qb->andWhere('t.availability = :availability')->setParameter('availability', $tyre->availability);
         }
 
-        /* Фильтр по компаниям */
-        if ($company) {
-            $qb->andWhere('t.company = :company')->setParameter('company', $company);
+        if (null !== $tyre->condition) {
+            $qb->andWhere('t.condition = :condition')->setParameter('condition', $tyre->condition);
         }
 
-        return $qb->getQuery();
+        if (null !== $tyre->year) {
+            $qb->andWhere('t.year = :year')->setParameter('year', $tyre->year);
+        }
+
+        if (null !== $tyre->quantity) {
+            $qb->andWhere('t.quantity = :quantity')->setParameter('quantity', $tyre->quantity);
+        }
+
+        if (null !== $tyre->type) {
+            $qb->andWhere('t.type = :type')->setParameter('type', $tyre->type);
+        }
+
+        if (null !== $tyre->protector) {
+            $qb->andWhere('t.protector = :protector')->setParameter('protector', $tyre->protector);
+        }
+
+        if (0 < $tyre->priceFrom || 0 < $tyre->priceTo) {
+            $qb
+                ->andWhere('t.price >= :priceFrom AND t.price <= :priceTo')
+                ->setParameters(['priceFrom' => $tyre->priceFrom, 'priceTo' => $tyre->priceTo]);
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
     }
 }

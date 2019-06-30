@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Parts;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,7 +26,7 @@ class Brand
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brand", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Model", mappedBy="brand")
      */
     private $models;
 

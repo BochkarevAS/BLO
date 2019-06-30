@@ -1,0 +1,49 @@
+liip_imagine:
+    driver: "imagick"
+    loaders:
+        loader_aws_s3_images:
+            stream:
+                wrapper: gaufrette://aws_s3_images_filesystem/
+    # Кэширование
+    resolvers:
+        cache_resolver_aws_s3:
+            aws_s3:
+                client_config:
+                    credentials:
+                        key:    '%env(AWS_KEY)%'
+                        secret: '%env(AWS_SECRET)%'
+                    region: 'us-east-1'
+                    version: latest
+                bucket: '%env(AWS_BUCKET_NAME)%'
+                get_options:
+                    Scheme: 'https'
+                put_options:
+                    CacheControl: 'max-age=86400'
+    default_image: /build/images/empty.jpg
+    # Ресайз изображения
+    filter_sets:
+        original_thumb:
+            data_loader: loader_aws_s3_images
+            cache: cache_resolver_aws_s3
+            quality: 100
+        small_thumb:
+            data_loader: loader_aws_s3_images
+            cache: cache_resolver_aws_s3
+            quality: 100
+            filters:
+                thumbnail: { size: [220, 165], mode: inset }
+                background : { size : [224, 169], position : center, color : '#000000' }
+        min_thumb:
+            data_loader: loader_aws_s3_images
+            cache: cache_resolver_aws_s3
+            quality: 100
+            filters:
+                thumbnail: { size: [120, 90], mode: inset }
+                background : { size : [124, 94], position : center, color : '#000000' }
+        medium_thumb:
+            data_loader: loader_aws_s3_images
+            cache: cache_resolver_aws_s3
+            quality: 100
+            filters:
+                thumbnail: { size: [360, 270], mode: inset }
+                background : { size : [364, 274], position : center, color : '#000000' }

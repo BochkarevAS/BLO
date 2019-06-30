@@ -6,23 +6,30 @@ namespace App\Form\Tyre;
 
 use App\DBAL\Types\AvailabilityType;
 use App\DBAL\Types\ConditionType;
+use App\DBAL\Types\ProtectorTypes;
+use App\DBAL\Types\TyreTypes;
 use App\Dto\TyreDto;
-use App\Repository\Client\CompanyRepository;
+use App\Entity\Region\City;
+use App\Entity\Tyres\Brand;
+use App\Entity\Tyres\Model;
 use App\Repository\Region\CityRepository;
-use App\Repository\Tyre\BrandRepository;
 use App\Repository\Tyre\ModelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Image;
 
-class TyreType extends AbstractType
+class TyreCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -58,7 +65,6 @@ class TyreType extends AbstractType
             '67', '67.5', '68', '68.5', '71.5', '72', '73.5', '74', '76', '76.5', '79', '79.5', '80.5', '81.5', '84', '85.5',
             '87.5', '88', '90.5', '91'
         ];
-
         $heightsIn = array_combine($heightsIn, $heightsIn);
 
         /** Диаметр колеса в дюймах */
@@ -79,10 +85,7 @@ class TyreType extends AbstractType
                 'class'         => Brand::class,
                 'label'         => 'Производитель',
                 'required'      => false,
-                'choice_label'  => 'name',
-                'query_builder' => function (BrandRepository $repository) {
-                    return $repository->orderBy();
-                }
+                'choice_label'  => 'name'
             ])
             ->add('protector', ChoiceType::class, [
                 'choices'     => ProtectorTypes::getChoices(),
@@ -96,15 +99,6 @@ class TyreType extends AbstractType
                 'required'    => false,
                 'placeholder' => 'Все'
             ])
-            ->add('company', EntityType::class, [
-                'class'         => Company::class,
-                'label'         => 'Продавец',
-                'choice_label'  => 'name',
-                'required'      => false,
-                'query_builder' => function (CompanyRepository $repository) {
-                    return $repository->orderBy();
-                }
-            ])
             ->add('city', EntityType::class, [
                 'class'         => City::class,
                 'label'         => 'Город',
@@ -112,7 +106,7 @@ class TyreType extends AbstractType
                 'required'      => false,
                 'query_builder' => function (CityRepository $repository) {
                     return $repository->orderBy();
-                },
+                }
             ])
             ->add('diameter', ChoiceType::class, [
                 'choices'  => $diameters,
@@ -147,7 +141,12 @@ class TyreType extends AbstractType
             ->add('quantity', ChoiceType::class, [
                 'choices'  => $quantitys,
                 'label'    => 'Количество',
-                'required' => false,
+                'required' => false
+            ])
+            ->add('year', ChoiceType::class, [
+                'choices'  => $years,
+                'label'    => 'Год',
+                'required' => false
             ])
             ->add('availability', ChoiceType::class, [
                 'choices'     => AvailabilityType::getChoices(),
@@ -170,47 +169,85 @@ class TyreType extends AbstractType
                 'expanded'    => true,
                 'placeholder' => 'Все'
             ])
-            ->add('year', ChoiceType::class, [
-                'choices'  => $years,
-                'label'    => 'Год',
+            ->add('textDeclaration', TextareaType::class, [
+                'label'    => 'Текст объявления',
                 'required' => false
             ])
-            ->add('priceFrom', TextType::class, [
-                'label'    => 'Цена от',
+            ->add('address', TextType::class, [
+                'label'    => 'Адрес самовывоза',
                 'required' => false
             ])
-            ->add('priceTo', TextType::class, [
-                'label'    => 'Цена до',
+            ->add('deliveryCity', CheckboxType::class, [
+                'label'    => 'По городу',
                 'required' => false
             ])
-            ->add('metrics', HiddenType::class, [
-                'data' => 'metric',
+            ->add('deliveryCompany', CheckboxType::class, [
+                'label'    => 'До транспортной компании',
+                'required' => false
             ])
-            ->add('user', HiddenType::class)
-            ->add('settings', HiddenType::class)
+            ->add('deliveryPost', CheckboxType::class, [
+                'label'    => 'Почтой России',
+                'required' => false
+            ])
+            ->add('deliveryPayment', TextareaType::class, [
+                'label'    => 'Условия доставки и оплаты',
+                'required' => false
+            ])
+            ->add('price', TextType::class, [
+                'label'    => 'Цена',
+                'required' => false
+            ])
+            ->add('images', FileType::class, [
+                'label'      => 'Фото',
+                'required'   => false,
+                'data_class' => null,
+                'multiple'   => true,
+                'attr'       => [
+                    'accept' => 'image/*'
+                ],
+                'constraints' => [
+                    new All([
+                        'constraints' => [
+                            new Image([
+                                'maxSize' => '2M'
+                            ])
+                        ]
+                    ])
+                ]
+            ])
         ;
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             function (FormEvent $event) {
-                $form = $event->getForm();
-                $this->formModel($form, null);
-        });
+                $data = $event->getData();
+
+                /* @var Brand $brand */
+                $brand = $data->brand;
+                $form  = $event->getForm();
+
+                if ($brand) {
+                    $this->formModel($form, $brand);
+                } else {
+                    $this->formModel($form, null);
+                }
+            }
+        );
 
         $builder->get('brand')->addEventListener(
             FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
                 $form = $event->getForm();
                 $this->formModel($form->getParent(), $form->getData());
-        });
+            }
+        );
     }
 
-    private function formModel(FormInterface $form, $brand = null)
+    private function formModel(FormInterface $form, ?Brand $brand = null)
     {
         $form->add('model', EntityType::class, [
             'class'           => Model::class,
             'label'           => 'Модель',
-            'multiple'        => true,
             'required'        => false,
             'auto_initialize' => false,
             'choices'         => $brand ? $brand->getModels() : [],

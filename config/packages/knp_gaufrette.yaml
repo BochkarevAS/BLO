@@ -1,0 +1,24 @@
+knp_gaufrette:
+    stream_wrapper: ~
+
+    adapters:
+        # S3 adapter
+        aws_s3_images_adapter:
+            aws_s3:
+                service_id: aws.amazon.s3
+                bucket_name: '%env(AWS_BUCKET_NAME)%'
+                options:
+                    directory: 'images'
+                    create: true
+        # Local adapter
+        local_images_adapter:
+            local:
+                directory: '%images%'
+
+    filesystems:
+        aws_s3_images_filesystem:
+            adapter: aws_s3_images_adapter
+            alias: s3_adapter_fs
+        local_images_filesystem:
+            adapter: local_images_adapter
+            alias: local_adapter_fs

@@ -1,12 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Parts;
 
-use App\DBAL\Types\AvailabilityType;
-use App\DBAL\Types\ConditionType;
-use App\DBAL\Types\FrontRearType;
-use App\DBAL\Types\RightLeftType;
-use App\DBAL\Types\UpDownType;
 use App\Entity\ProductInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,10 +16,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  * @ORM\Entity(repositoryClass="App\Repository\Part\PartRepository")
  * @ORM\Table(name="part", schema="part", indexes={
  *     @ORM\Index(name="availability_idx", columns={"availability"}),
- *     @ORM\Index(name="condition_idx", columns={"condition"}),
- *     @ORM\Index(name="delivery1_idx", columns={"delivery1"}),
- *     @ORM\Index(name="delivery2_idx", columns={"delivery2"}),
- *     @ORM\Index(name="delivery3_idx", columns={"delivery3"})
+ *     @ORM\Index(name="condition_idx", columns={"condition"})
  * })
  */
 class Part implements ProductInterface
@@ -193,21 +187,20 @@ class Part implements ProductInterface
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $delivery1;
-
+    private $deliveryCity;
     /**
      * Доставка и оплата: До транспортной компании
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $delivery2;
+    private $deliveryCompany;
 
     /**
      * Доставка и оплата: Почтой России
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $delivery3;
+    private $deliveryPost;
 
     /**
      * Адрес самовывоза
@@ -217,6 +210,13 @@ class Part implements ProductInterface
     private $address;
 
     /**
+     * Код товара
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $code;
+
+    /**
      * Условия доставки и оплаты
      *
      * @ORM\Column(type="text", name="delivery_payment", nullable=true)
@@ -224,9 +224,11 @@ class Part implements ProductInterface
     private $deliveryPayment;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parts\Comment", mappedBy="product", fetch="EXTRA_LAZY", orphanRemoval=true)
+     * Количество хитов (просмотров страниц)
+     *
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $comments;
+    private $views;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -428,11 +430,6 @@ class Part implements ProductInterface
         $this->rl = $rl;
     }
 
-    public function getDelivery1()
-    {
-        return $this->delivery1;
-    }
-
     public function getYear()
     {
         return $this->year;
@@ -441,31 +438,6 @@ class Part implements ProductInterface
     public function setYear($year): void
     {
         $this->year = $year;
-    }
-
-    public function setDelivery1($delivery1): void
-    {
-        $this->delivery1 = $delivery1;
-    }
-
-    public function getDelivery2()
-    {
-        return $this->delivery2;
-    }
-
-    public function setDelivery2($delivery2): void
-    {
-        $this->delivery2 = $delivery2;
-    }
-
-    public function getDelivery3()
-    {
-        return $this->delivery3;
-    }
-
-    public function setDelivery3($delivery3): void
-    {
-        $this->delivery3 = $delivery3;
     }
 
     public function getAddress()
@@ -578,6 +550,46 @@ class Part implements ProductInterface
         $this->user = $user;
     }
 
+    public function getDeliveryCity()
+    {
+        return $this->deliveryCity;
+    }
+
+    public function setDeliveryCity($deliveryCity)
+    {
+        $this->deliveryCity = $deliveryCity;
+    }
+
+    public function getDeliveryCompany()
+    {
+        return $this->deliveryCompany;
+    }
+
+    public function setDeliveryCompany($deliveryCompany)
+    {
+        $this->deliveryCompany = $deliveryCompany;
+    }
+
+    public function getDeliveryPost()
+    {
+        return $this->deliveryPost;
+    }
+
+    public function setDeliveryPost($deliveryPost)
+    {
+        $this->deliveryPost = $deliveryPost;
+    }
+
+    public function getDeclaration()
+    {
+        return $this->declaration;
+    }
+
+    public function setDeclaration($declaration)
+    {
+        $this->declaration = $declaration;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -622,15 +634,50 @@ class Part implements ProductInterface
         return $result;
     }
 
-    public static function createFromDto($dto): self
+    public static function transform(PartDto $dto, Part $part, EntityManagerInterface $em, FileUploaderInterface $uploader)
     {
-        $part = new self();
+        if (!empty($dto->brand)) {
+            $dto->brand = $em->getRepository(Brand::class)->find($dto->brand['value']);
+        }
 
-        $dto->availability = AvailabilityType::$availability[$dto->availability];
-        $dto->condition    = ConditionType::$condition[$dto->condition];
-        $dto->ud           = UpDownType::$locations[$dto->ud];
-        $dto->fr           = FrontRearType::$locations[$dto->fr];
-        $dto->rl           = RightLeftType::$locations[$dto->rl];
+        if (!empty($dto->models)) {
+            $ids = array_column($dto->models, 'value');
+            $dto->models = $em->getRepository(Model::class)->findModels($ids);
+        }
+
+        if (!empty($dto->frames)) {
+            $ids = array_column($dto->frames, 'value');
+            $dto->frames = $em->getRepository(Frame::class)->findFrames($ids);
+        }
+
+        if (!empty($dto->engines)) {
+            $ids = array_column($dto->engines, 'value');
+            $dto->engines = $em->getRepository(Engine::class)->findEngines($ids);
+        }
+
+        if (!empty($dto->city)) {
+            $dto->city = $em->getRepository(City::class)->find($dto->city['value']);
+        }
+
+        if (!empty($dto->user)) {
+            $dto->user = $em->getRepository(User::class)->find($dto->user);
+        }
+
+        if (!empty($dto->company)) {
+            $dto->company = $em->getRepository(Company::class)->find($dto->company);
+        }
+
+        if (!empty($dto->name)) {
+            $dto->name = $dto->name['label'];
+        }
+
+        if (null === $dto->price) {
+            $dto->price = 0;
+        }
+
+        if (!empty($dto->images)) {
+            $dto->images = $uploader->uploadMultiple($dto->images);
+        }
 
         $part->setBrand($dto->brand);
         $part->setModels($dto->models);
@@ -642,49 +689,20 @@ class Part implements ProductInterface
         $part->setUd($dto->ud);
         $part->setFr($dto->fr);
         $part->setRl($dto->rl);
-        $part->setUser($dto->user);
-        $part->setCompany($dto->company);
+        $part->setAvailability($dto->availability);
+        $part->setCondition($dto->condition);
         $part->setCity($dto->city);
         $part->setYear($dto->year);
-        $part->setAvailability($dto->availability);
-        $part->setTextDeclaration($dto->textDeclaration);
+        $part->setDeclaration($dto->declaration);
         $part->setAddress($dto->address);
-        $part->setDelivery1($dto->delivery1);
-        $part->setDelivery2($dto->delivery2);
-        $part->setDelivery3($dto->delivery3);
+        $part->setDeliveryCity($dto->deliveryCity);
+        $part->setDeliveryCompany($dto->deliveryCompany);
+        $part->setDeliveryPost($dto->deliveryPost);
         $part->setDeliveryPayment($dto->deliveryPayment);
         $part->setPrice($dto->price);
-        $part->setCondition($dto->condition);
+        $part->setUser($dto->user);
+        $part->setCompany($dto->company);
         $part->setImages($dto->images);
-
         return $part;
-    }
-
-    public function updateFromDto($dto): self
-    {
-        $this->setBrand($dto->brand);
-        $this->setModels($dto->models);
-        $this->setFrames($dto->frames);
-        $this->setEngines($dto->engines);
-        $this->setName($dto->name);
-        $this->setOem($dto->oem);
-        $this->setMarking($dto->marking);
-        $this->setUd($dto->ud);
-        $this->setFr($dto->fr);
-        $this->setRl($dto->rl);
-        $this->setCity($dto->city);
-        $this->setYear($dto->year);
-        $this->setAvailability($dto->availability);
-        $this->setTextDeclaration($dto->textDeclaration);
-        $this->setAddress($dto->address);
-        $this->setDelivery1($dto->delivery1);
-        $this->setDelivery2($dto->delivery2);
-        $this->setDelivery3($dto->delivery3);
-        $this->setDeliveryPayment($dto->deliveryPayment);
-        $this->setPrice($dto->price);
-        $this->setCondition($dto->condition);
-        $this->setImages($dto->images);
-
-        return $this;
     }
 }
