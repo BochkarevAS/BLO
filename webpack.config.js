@@ -1,4 +1,8 @@
 let Encore = require('@symfony/webpack-encore');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+
+let path = require('path');
+
 Encore
 // the project directory where compiled assets will be stored
     .setOutputPath('public/build/')
@@ -11,30 +15,51 @@ Encore
     // .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    .createSharedEntry('layout', './assets/js/layout.js')
-    .addEntry('js/app', './assets/js/app/app.js')
-    .addEntry('js/appMap', './assets/js/app/appMap.js')
-    .addEntry('js/appFancybox', './assets/js/app/appFancybox.js')
-    .addEntry('js/appFileupload', './assets/js/app/appFileupload.js')
-    .addEntry('rep_log_react', './assets/js/rep_log_react.js')
-    .addStyleEntry('css/tyre/show_tyre', './assets/css/tyre/show_tyre.css')
+    // .createSharedEntry('layout', './assets/src/layout.src')
+
+    .addEntry('index', './assets/src/index.js')
+
+    .addStyleEntry('css/style', './assets/css/style.css')
+
+    // will require an extra script tag for runtime.src
+    // but, you probably want this, unless you're building a single-page app
+    .enableSingleRuntimeChunk()
+
+    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
+    .splitEntryChunks()
     .cleanupOutputBeforeBuild()
-    // .addStyleEntry('css/app', './assets/css/app.scss')
-
-    // uncomment if you use Sass/SCSS files
     .enableSassLoader()
-
-    // uncomment for legacy applications that require $/jQuery as a global variable
     .autoProvidejQuery()
-
     .enableReactPreset()
-;
 
-let path = require('path');
+    // enables @babel/preset-env polyfills
+    .configureBabel((babelConfig) => {
+        babelConfig.plugins.push('@babel/plugin-proposal-class-properties');
+        babelConfig.presets.push('@babel/preset-flow');
+        // babelConfig.plugins.push('@babel/plugin-proposal-async-generator-functions');
+        // babelConfig.presets.push('@babel/preset-es2017');
+    }, {
+        useBuiltIns: 'usage',
+        corejs: 3
+    })
+
+    // IMAGES
+    .addPlugin(new CopyWebpackPlugin([
+        { from: './assets/images', to: 'images', force: true }
+    ]))
+
+    .copyFiles([
+        {from: './node_modules/ckeditor/', to: 'ckeditor/[path][name].[ext]', pattern: /\.(js|css)$/, includeSubdirectories: false},
+        {from: './node_modules/ckeditor/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'}
+    ])
+;
 let config = Encore.getWebpackConfig();
 
 config.resolve = {
-    // extensions: ['*', 'js', 'ts'],
+    extensions: [".jsx", ".js"],
     alias: {
         'load-image': 'blueimp-load-image/js/load-image.js',
         'load-image-meta': 'blueimp-load-image/js/load-image-meta.js',

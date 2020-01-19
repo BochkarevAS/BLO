@@ -2,10 +2,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    prices_directory: '%kernel.project_dir%/public/uploads/prices'
-    images_directory: '%kernel.project_dir%/public/images/files'
-    github_client_id: 088fb5c22b3796b083ce
-    github_secret: 3a2ddd8b43216ee446d0f9967d069ab63381d1c2
+#    images: '%kernel.project_dir%/public/images'
+    images: '%kernel.project_dir%/assets/images'
+    avatars: '%kernel.project_dir%/public/avatars'
 
 services:
     # default configuration for services in *this* file
@@ -31,18 +30,27 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    app.fos_user.oauth_provider:
-        class: App\Security\Provider\FOSUBUserProvider
-        arguments: ['@fos_user.user_manager', { github: githubId }]
-
 #********************************File********************************
-
-    App\Service\FileUploader:
-        arguments: ['@local_adapter_fs', '@doctrine.orm.entity_manager', '%images%']
 
     App\Service\FileDeleter:
         arguments:
             - "@local_adapter_fs"
+
+#****************************AWS*************************************
+
+    aws.amazon.credentials:
+        class: Aws\Credentials\Credentials
+        arguments: ['%env(AWS_KEY)%', '%env(AWS_SECRET)%']
+
+    # https://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Sns.SnsClient.html
+    aws.amazon.sns:
+        class: Aws\Sns\SnsClient
+        factory: [Aws\Sns\SnsClient, 'factory']
+        arguments:
+            - version: latest
+              region: 'us-east-1'
+              credentials: '@aws.amazon.credentials'
+    Aws\Sns\SnsClient: '@aws.amazon.sns'
 
 #****************************ParamConverter**************************
 

@@ -3,28 +3,39 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2.7",
+        "ext-curl": "*",
+        "ext-dom": "*",
         "ext-iconv": "*",
-        "easycorp/easyadmin-bundle": "^1.17",
-        "enqueue/amqp-lib": "^0.8.37",
-        "friendsofsymfony/ckeditor-bundle": "^1.1",
-        "friendsofsymfony/elastica-bundle": "^5.0",
-        "friendsofsymfony/jsrouting-bundle": "^2.2",
-        "friendsofsymfony/rest-bundle": "^2.4",
-        "friendsofsymfony/user-bundle": "^2.1",
+        "aws/aws-sdk-php": "^3.81",
+        "doctrine/annotations": "^1.6",
+        "enqueue/amqp-lib": "^0.9.1",
+        "enqueue/fs": "^0.9.12",
+        "enqueue/sqs": "^0.9.2",
+        "fabpot/goutte": "^3.2",
+        "fresh/doctrine-enum-bundle": "~6.2",
+        "friendsofsymfony/ckeditor-bundle": "^2.1",
+        "friendsofsymfony/jsrouting-bundle": "^2.5",
+        "google/apiclient": "^2.0",
         "guzzlehttp/guzzle": "^6.3",
-        "hwi/oauth-bundle": "^0.6.3",
+        "intervention/image": "^2.4",
         "javiereguiluz/easyadmin-bundle": "^1.17",
         "jms/serializer-bundle": "^2.4",
+        "jsor/doctrine-postgis": "^1.7",
+        "knplabs/knp-gaufrette-bundle": "^0.5.3",
         "knplabs/knp-paginator-bundle": "^2.8",
         "league/csv": "^9.1",
-        "mgilet/notification-bundle": "^3.1",
+        "liip/imagine-bundle": "^2.1",
         "oneup/uploader-bundle": "^2.0",
+        "php-amqplib/php-amqplib": "^2.8",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.11",
+        "phpoffice/phpspreadsheet": "^1.6",
+        "predis/predis": "^1.1",
         "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "dev-master",
         "symfony/asset": "^4.1",
         "symfony/console": "^4.1",
+        "symfony/dom-crawler": "^4.1",
         "symfony/expression-language": "^4.1",
         "symfony/flex": "^1.0",
         "symfony/form": "^4.1",
@@ -35,16 +46,18 @@
         "symfony/process": "^4.1",
         "symfony/security-bundle": "^4.1",
         "symfony/serializer-pack": "*",
-        "symfony/swiftmailer-bundle": "^3.1",
+        "symfony/swiftmailer-bundle": "^3.2",
         "symfony/twig-bundle": "^4.1",
+        "symfony/twig-pack": "^1.0",
         "symfony/validator": "^4.1",
         "symfony/web-link": "^4.1",
-        "symfony/webpack-encore-pack": "*",
+        "symfony/webpack-encore-bundle": "^1.1",
         "symfony/yaml": "^4.1",
         "twig/extensions": "^1.5",
         "vich/uploader-bundle": "^1.8"
     },
     "require-dev": {
+        "behat/behat": "^3.5",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "easycorp/easy-log-handler": "^1.0.2",
         "fzaninotto/faker": "^1.7",
@@ -52,8 +65,8 @@
         "symfony/dotenv": "^4.1",
         "symfony/maker-bundle": "^1.0",
         "symfony/monolog-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^4.1",
         "symfony/profiler-pack": "^1.0",
-        "symfony/test-pack": "^1.0",
         "symfony/var-dumper": "^3.3|^4.0",
         "symfony/web-server-bundle": "^4.1"
     },
@@ -74,7 +87,11 @@
         }
     },
     "repositories": {
-        "packagist": { "url": "https://packagist.org", "type": "composer" }
+        "packagist": { "url": "https://packagist.org", "type": "composer" },
+        "phpunit-bridge": {
+            "type": "path",
+            "url": "C:\\PHP_project\\BLO\\vendor\\symfony\\phpunit-bridge"
+        }
     },
     "replace": {
         "symfony/polyfill-iconv": "*",
@@ -85,7 +102,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

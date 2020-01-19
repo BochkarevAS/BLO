@@ -5,8 +5,8 @@ liip_imagine:
                 data_root:
                     - "%images%"
     resolvers:
-       profile_photos:
-          web_path: ~
+        profile_photos:
+            web_path: ~
     default_image: /build/images/empty.jpg
     filter_sets:
         cache: ~

@@ -3,4 +3,4 @@ oneup_uploader:
         gallery:
             frontend: blueimp
             storage:
-                directory: "%prices_directory%"
+                directory: "%images%"
