@@ -51,7 +51,7 @@
         "antd": "^3.23.3",
         "axios": "^0.18.0",
         "bloodhound-js": "^1.2.3",
-        "blueimp-file-upload": "^9.22.0",
+        "blueimp-file-upload": "^9.22.1",
         "bootstrap": "^4.1.1",
         "bootstrap-select": "^1.13.11",
         "chart.js": "^2.8.0",
