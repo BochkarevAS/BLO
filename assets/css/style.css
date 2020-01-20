@@ -1,3 +1,65 @@
-body {
-    background-color: lightgray;
+.main-search__field {
+    margin-bottom: 9px;
+}
+
+.main-search__field .form-group {
+    margin-bottom: 0;
+}
+
+.main-search__field-price {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.bootstrap-select {
+    font-family: "Muller", sans-serif !important;
+    width: 100% !important;
+}
+
+.bootstrap-select .bs-select-all {
+    display: none;
+}
+
+.bootstrap-select .actions-btn {
+    height: 35px;
+    border-radius: 3px !important;
+}
+
+.bootstrap-select .dropdown-menu.active {
+    display: block;
+}
+
+.bootstrap-select .dropdown-item {
+    font-size: 14px;
+    color: #757575 !important;
+}
+
+.bootstrap-select .dropdown-menu {
+    min-width: 0 !important;
+}
+
+.bootstrap-select .dropdown-item.active,
+.bootstrap-select .dropdown-item:active {
+    background-color: #e6e6e6 !important;
+}
+
+.bootstrap-select .bs-searchbox input {
+    display: block;
+    max-width: 100%;
+    height: 33px;
+    padding: 0 11px;
+    margin-bottom: 2px;
+    border: 1px solid #ebebeb;
+    font-family: "Muller", sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #979696;
+    border-radius: 2px;
 }

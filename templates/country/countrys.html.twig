@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if countrys %}
+        {% for country in countrys %}
+            <a href="{{ path('country_edit', {'id': country.id}) }}">{{ country.id }}</a>
+        {% endfor %}
+    {% endif %}
+
+    <a href="{{ path('country_create') }}">Создать</a>
+
+{% endblock %}

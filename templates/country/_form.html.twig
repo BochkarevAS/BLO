@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+
+    <div class="main-search__field main-search__fileds-group">
+        {{ form_row(form.region, {
+            'id': 'region',
+            'attr': {
+                'class': 'selectric-wrapper select-field selectpicker'
+            }})
+        }}
+
+        {{ form_row(form.department, {
+            'id': 'department',
+            'attr': {
+                'class': 'selectpicker'
+            }})
+        }}
+
+        {{ form_row(form.city, {
+            'id': 'city',
+            'attr': {
+                'class': 'selectpicker'
+            }})
+        }}
+    </div>
+
+    <div class="row justify-content-center">
+        <input type="submit" class="btn btn-primary" value="{{ 'Сохранить'|trans }}" />
+    </div>
+{{ form_end(form) }}

@@ -36,7 +36,6 @@ class Department
      */
     private $region;
 
-
     public function __construct()
     {
         $this->citys = new ArrayCollection();
@@ -100,5 +99,10 @@ class Department
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

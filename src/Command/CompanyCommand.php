@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\Auth\User;
-use App\Entity\Client\Company;
-use App\Entity\Client\Email;
-use App\Entity\Client\Phone;
-use App\Entity\Region\City;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
