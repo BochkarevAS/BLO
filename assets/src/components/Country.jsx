@@ -61,7 +61,7 @@ class Country {
 
                     $($select).find('option').remove();
 
-                    $(target).append($("<option/>").attr("value", '').text(''));
+                    $($select).append($("<option/>").attr("value", '').text(''));
 
                     $(data).each(function (index, o) {
                         let $option = $("<option/>").attr("value", o.id).text(o.name);
@@ -69,6 +69,7 @@ class Country {
                     });
 
                     $(target).replaceWith($select);
+                    $(target).selectpicker('refresh');
                 })
                 .catch((err) => {
                     console.error('err', err);
@@ -93,7 +94,7 @@ class Country {
 
                     $($select).find('option').remove();
 
-                    $(target).append($("<option/>").attr("value", '').text(''));
+                    $($select).append($("<option/>").attr("value", '').text(''));
 
                     $(data).each(function (index, o) {
                         let $option = $("<option/>").attr("value", o.id).text(o.name);
@@ -101,6 +102,7 @@ class Country {
                     });
 
                     $(target).replaceWith($select);
+                    $(target).selectpicker('refresh');
                 })
                 .catch((err) => {
                     console.error('err', err);
