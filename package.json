@@ -49,7 +49,7 @@
         "@material-ui/icons": "^3.0.2",
         "@material-ui/styles": "^4.0.0-rc.0",
         "antd": "^3.23.3",
-        "axios": "^0.18.0",
+        "axios": "^0.21.1",
         "bloodhound-js": "^1.2.3",
         "blueimp-file-upload": "^9.22.0",
         "bootstrap": "^4.1.1",
