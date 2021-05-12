@@ -54,7 +54,7 @@
         "blueimp-file-upload": "^9.22.0",
         "bootstrap": "^4.1.1",
         "bootstrap-select": "^1.13.11",
-        "chart.js": "^2.8.0",
+        "chart.js": "^2.9.4",
         "ckeditor": "^4.0.0",
         "copy-webpack-plugin": "^4.6.0",
         "dropzone": "^5.5.1",
